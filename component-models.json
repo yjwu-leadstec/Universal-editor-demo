@@ -142,6 +142,66 @@
     ]
   },
   {
+    "id": "avatar",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Avatar Image",
+        "description": "Upload an avatar image",
+        "required": true,
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "description": "Alternative text for accessibility",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "personName",
+        "label": "Name",
+        "description": "Person's name",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title/Position",
+        "description": "Person's title or position",
+        "value": ""
+      },
+      {
+        "component": "select",
+        "name": "size",
+        "value": "medium",
+        "label": "Avatar Size",
+        "description": "Choose the avatar size",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Small (64px)",
+            "value": "small"
+          },
+          {
+            "name": "Medium (128px)",
+            "value": "medium"
+          },
+          {
+            "name": "Large (256px)",
+            "value": "large"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
