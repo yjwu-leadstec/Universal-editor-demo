@@ -6,12 +6,20 @@
   padding: 2rem 0;
 }
 
+/* When avatar is inside columns, ensure it maintains its layout */
+.columns .block.avatar {
+  width: 100%;
+  margin: 0;
+}
+
+/* Container styles */
 .avatar-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   max-width: 400px;
+  margin: 0 auto; /* Center the avatar */
 }
 
 /* Image wrapper - this creates the circular avatar */

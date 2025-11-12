@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avatar Component Demo</title>
+  <link rel="stylesheet" href="../../styles/styles.css">
+  <link rel="stylesheet" href="../columns/columns.css">
+  <link rel="stylesheet" href="avatar.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .demo-section {
+      background: white;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    h2 {
+      margin-top: 0;
+      color: #555;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+    .demo-note {
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      padding: 12px 16px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: #1976d2;
+    }
+    code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Avatar Component Demo</h1>
+
+  <!-- Scenario 1: Single Avatar Standalone -->
+  <div class="demo-section">
+    <h2>1. 独立使用 - 单个头像居中显示</h2>
+    <div class="demo-note">
+      标准用法：单个头像自动居中显示。使用 <code>&lt;div class="block avatar"&gt;</code>
+    </div>
+
+    <div class="block avatar">
+      <div class="avatar-container size-large">
+        <div class="avatar-image-wrapper">
+          <picture>
+            <img src="https://via.placeholder.com/256/4a90e2/ffffff?text=CEO" alt="CEO">
+          </picture>
+        </div>
+        <div class="avatar-info">
+          <h3 class="avatar-name">张明远</h3>
+          <p class="avatar-title">首席执行官</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario 2: Avatar in Columns -->
+  <div class="demo-section">
+    <h2>2. 在Column布局中使用</h2>
+    <div class="demo-note">
+      Avatar组件可以放在Columns布局中，与其他内容并排显示。CSS会自动适配Column环境。
+    </div>
+
+    <div class="columns columns-2-cols">
+      <div>
+        <!-- Column 1: Avatar -->
+        <div>
+          <div class="block avatar">
+            <div class="avatar-container size-medium">
+              <div class="avatar-image-wrapper">
+                <picture>
+                  <img src="https://via.placeholder.com/128/e91e63/ffffff?text=PM" alt="Product Manager">
+                </picture>
+              </div>
+              <div class="avatar-info">
+                <h3 class="avatar-name">李娜</h3>
+                <p class="avatar-title">产品经理</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Text Content -->
+        <div>
+          <h3>团队负责人</h3>
+          <p>李娜女士是我们的产品经理，拥有10年的产品设计和管理经验。她曾在多家知名科技公司任职，负责过多个成功的产品项目。</p>
+          <p>她的专长包括：</p>
+          <ul>
+            <li>用户体验设计</li>
+            <li>产品策略制定</li>
+            <li>敏捷开发管理</li>
+            <li>数据驱动决策</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Different Sizes Demo -->
+  <div class="demo-section">
+    <h2>3. 不同尺寸展示</h2>
+    <div class="demo-note">
+      Avatar组件支持三种尺寸：small (64px), medium (128px), large (256px)
+    </div>
+
+    <h3>Small Size (64px)</h3>
+    <div class="block avatar">
+      <div class="avatar-container size-small">
+        <div class="avatar-image-wrapper">
+          <picture>
+            <img src="https://via.placeholder.com/64/673ab7/ffffff?text=S" alt="Small">
+          </picture>
+        </div>
+        <div class="avatar-info">
+          <h3 class="avatar-name">小尺寸</h3>
+          <p class="avatar-title">64px</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Medium Size (128px)</h3>
+    <div class="block avatar">
+      <div class="avatar-container size-medium">
+        <div class="avatar-image-wrapper">
+          <picture>
+            <img src="https://via.placeholder.com/128/2196f3/ffffff?text=M" alt="Medium">
+          </picture>
+        </div>
+        <div class="avatar-info">
+          <h3 class="avatar-name">中尺寸</h3>
+          <p class="avatar-title">128px</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Large Size (256px)</h3>
+    <div class="block avatar">
+      <div class="avatar-container size-large">
+        <div class="avatar-image-wrapper">
+          <picture>
+            <img src="https://via.placeholder.com/256/4caf50/ffffff?text=L" alt="Large">
+          </picture>
+        </div>
+        <div class="avatar-info">
+          <h3 class="avatar-name">大尺寸</h3>
+          <p class="avatar-title">256px</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Usage Instructions -->
+  <div class="demo-section">
+    <h2>使用说明</h2>
+
+    <h3>基本HTML结构</h3>
+    <pre><code>&lt;div class="block avatar"&gt;
+  &lt;div class="avatar-container size-medium"&gt;
+    &lt;div class="avatar-image-wrapper"&gt;
+      &lt;picture&gt;
+        &lt;img src="avatar.jpg" alt="Avatar"&gt;
+      &lt;/picture&gt;
+    &lt;/div&gt;
+    &lt;div class="avatar-info"&gt;
+      &lt;h3 class="avatar-name"&gt;姓名&lt;/h3&gt;
+      &lt;p class="avatar-title"&gt;职位&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+    <h3>尺寸选项</h3>
+    <ul>
+      <li><code>size-small</code>: 64px 头像</li>
+      <li><code>size-medium</code>: 128px 头像（默认）</li>
+      <li><code>size-large</code>: 256px 头像</li>
+    </ul>
+
+    <h3>响应式特性</h3>
+    <ul>
+      <li><strong>平板端 (≤768px):</strong> Large尺寸自动缩小到200px</li>
+      <li><strong>手机端 (≤480px):</strong> Large尺寸缩小到150px，Medium尺寸缩小到100px</li>
+      <li><strong>Column内:</strong> 自动适应容器宽度，保持居中</li>
+    </ul>
+  </div>
+
+</body>
+</html>
