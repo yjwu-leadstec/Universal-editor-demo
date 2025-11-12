@@ -8,11 +8,38 @@ export default function decorate(block) {
   const avatarContainer = document.createElement('div');
   avatarContainer.className = 'avatar-container';
 
-  // Extract data from rows (following the model field order)
-  // Row 0: image, Row 1: name, Row 2: title
-  const imageRow = rows[0];
-  const nameRow = rows[1];
-  const titleRow = rows[2];
+  // Initialize variables for each field
+  let imageRow = null;
+  let nameRow = null;
+  let titleRow = null;
+  let sizeValue = 'medium'; // Default size
+
+  // Process rows based on content
+  // The Universal Editor may include additional rows for metadata
+  rows.forEach((row, index) => {
+    const text = row.textContent.trim().toLowerCase();
+
+    // Debug: Log each row to understand the structure
+    // console.log(`Row ${index}: "${row.textContent.trim()}"`, row);
+
+    // First row with picture is the image
+    if (!imageRow && row.querySelector('picture')) {
+      imageRow = row;
+    }
+    // Check if this row contains size data
+    else if (text === 'small' || text === 'medium' || text === 'large') {
+      sizeValue = text;
+      // console.log(`Found size value: ${sizeValue}`);
+    }
+    // Other rows with text content (not size) are name and title
+    else if (row.textContent.trim() && text !== 'small' && text !== 'medium' && text !== 'large') {
+      if (!nameRow) {
+        nameRow = row;
+      } else if (!titleRow) {
+        titleRow = row;
+      }
+    }
+  });
 
   // Create the image wrapper
   if (imageRow) {
@@ -55,13 +82,26 @@ export default function decorate(block) {
     avatarContainer.appendChild(infoSection);
   }
 
-  // Apply size class based on the size variant
+  // Apply size class based on the size value from data or block class
   let sizeClass = 'size-medium';
+
+  // First check block classes (for backward compatibility)
   if (block.classList.contains('small')) {
     sizeClass = 'size-small';
   } else if (block.classList.contains('large')) {
     sizeClass = 'size-large';
+  } else if (block.classList.contains('medium')) {
+    sizeClass = 'size-medium';
   }
+  // Then check the size value from data (takes precedence)
+  else if (sizeValue === 'small') {
+    sizeClass = 'size-small';
+  } else if (sizeValue === 'large') {
+    sizeClass = 'size-large';
+  } else if (sizeValue === 'medium') {
+    sizeClass = 'size-medium';
+  }
+
   avatarContainer.classList.add(sizeClass);
 
   // Clear the block and append the new structure
