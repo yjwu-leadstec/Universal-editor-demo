@@ -6,12 +6,6 @@
   padding: 2rem 0;
 }
 
-/* When avatar is inside columns, ensure it maintains its layout */
-.columns .block.avatar {
-  width: 100%;
-  margin: 0;
-}
-
 /* Container styles */
 .avatar-container {
   display: flex;
@@ -177,3 +171,45 @@
     font-size: 1.25rem;
   }
 }
+
+/* Columns-specific overrides - placed at the end for specificity */
+
+/* stylelint-disable no-descending-specificity */
+.columns .block.avatar {
+  width: 100%;
+  margin: 0;
+}
+
+/* Ensure avatar maintains circular shape in columns */
+.columns .avatar-image-wrapper {
+  flex-shrink: 0; /* Prevent shrinking */
+
+  /* Explicitly set dimensions to override columns img width */
+  width: auto;
+  height: auto;
+}
+
+/* Override columns img styles to maintain circular avatar */
+.columns .avatar-image-wrapper img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Ensure size variations work correctly in columns */
+.columns .avatar-container.size-small .avatar-image-wrapper {
+  width: 64px !important;
+  height: 64px !important;
+}
+
+.columns .avatar-container.size-medium .avatar-image-wrapper {
+  width: 128px !important;
+  height: 128px !important;
+}
+
+.columns .avatar-container.size-large .avatar-image-wrapper {
+  width: 256px !important;
+  height: 256px !important;
+}
+
+/* stylelint-enable no-descending-specificity */
