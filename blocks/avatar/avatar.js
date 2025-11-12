@@ -16,23 +16,21 @@ export default function decorate(block) {
 
   // Process rows based on content
   // The Universal Editor may include additional rows for metadata
-  rows.forEach((row, index) => {
+  rows.forEach((row) => {
     const text = row.textContent.trim().toLowerCase();
 
     // Debug: Log each row to understand the structure
-    // console.log(`Row ${index}: "${row.textContent.trim()}"`, row);
+    // console.log(`Row: "${row.textContent.trim()}"`, row);
 
     // First row with picture is the image
     if (!imageRow && row.querySelector('picture')) {
       imageRow = row;
-    }
-    // Check if this row contains size data
-    else if (text === 'small' || text === 'medium' || text === 'large') {
+    } else if (text === 'small' || text === 'medium' || text === 'large') {
+      // Check if this row contains size data
       sizeValue = text;
       // console.log(`Found size value: ${sizeValue}`);
-    }
-    // Other rows with text content (not size) are name and title
-    else if (row.textContent.trim() && text !== 'small' && text !== 'medium' && text !== 'large') {
+    } else if (row.textContent.trim() && text !== 'small' && text !== 'medium' && text !== 'large') {
+      // Other rows with text content (not size) are name and title
       if (!nameRow) {
         nameRow = row;
       } else if (!titleRow) {
@@ -92,9 +90,8 @@ export default function decorate(block) {
     sizeClass = 'size-large';
   } else if (block.classList.contains('medium')) {
     sizeClass = 'size-medium';
-  }
-  // Then check the size value from data (takes precedence)
-  else if (sizeValue === 'small') {
+  } else if (sizeValue === 'small') {
+    // Then check the size value from data (takes precedence)
     sizeClass = 'size-small';
   } else if (sizeValue === 'large') {
     sizeClass = 'size-large';
