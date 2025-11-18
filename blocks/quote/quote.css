@@ -28,3 +28,13 @@
     width: 30px;
     background-color: darkgray;
 }
+
+.block.quote.bg-red {
+    background-color: #ffcccc;
+}
+.block.quote.bg-green {
+    background-color: #ccffcc;
+}
+.block.quote.bg-blue {
+    background-color: #ccccff;
+}
