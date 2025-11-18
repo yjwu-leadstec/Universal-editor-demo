@@ -16,7 +16,8 @@
       "cards",
       "columns",
       "fragment",
-      "avatar"
+      "avatar",
+      "quote"
     ]
   },
   {
@@ -38,7 +39,8 @@
       "image",
       "button",
       "title",
-      "avatar"
+      "avatar",
+      "quote"
     ]
   }
 ]
