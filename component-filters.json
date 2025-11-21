@@ -16,8 +16,7 @@
       "cards",
       "columns",
       "fragment",
-      "avatar",
-      "quote"
+      "avatar"
     ]
   },
   {
@@ -41,5 +40,9 @@
       "title",
       "avatar"
     ]
+  },
+  {
+    "id": "product-table",
+    "components": []
   }
 ]

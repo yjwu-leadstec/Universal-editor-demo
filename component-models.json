@@ -276,45 +276,69 @@
     ]
   },
   {
-    "id": "quote",
+    "id": "product-table",
     "fields": [
       {
-        "component": "richtext",
-        "name": "quote",
-        "value": "",
-        "label": "Quote",
-        "valueType": "string"
+        "component": "text",
+        "name": "title",
+        "label": "Table Title",
+        "valueType": "string",
+        "description": "Title to display above the table"
       },
       {
         "component": "text",
+        "name": "source",
+        "label": "Data Source Path",
         "valueType": "string",
-        "name": "author",
-        "label": "Author",
-        "value": ""
+        "required": true,
+        "description": "Path to JSON file in DAM",
+        "value": "/content/dam/demo-site/dummy-data/rt5760_series.json"
       },
       {
         "component": "select",
-        "name": "classes",
-        "value": "",
-        "label": "Background Color",
-        "description": "The quote background color",
+        "name": "display_mode",
+        "label": "Display Mode",
         "valueType": "string",
         "options": [
           {
-            "name": "Red",
-            "value": "bg-red"
+            "value": "table",
+            "name": "Table View"
           },
           {
-            "name": "Green",
-            "value": "bg-green"
-          },
-          {
-            "name": "Blue",
-            "value": "bg-blue"
+            "value": "cards",
+            "name": "Card View"
           }
-        ]
+        ],
+        "value": "table"
+      },
+      {
+        "component": "checkbox",
+        "name": "enable_search",
+        "label": "Enable Search",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "checkbox",
+        "name": "enable_filters",
+        "label": "Enable Filters",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "checkbox",
+        "name": "sticky_header",
+        "label": "Sticky Table Header",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "checkbox",
+        "name": "sticky_first_column",
+        "label": "Sticky First Column",
+        "valueType": "boolean",
+        "value": true
       }
     ]
   }
-  
 ]

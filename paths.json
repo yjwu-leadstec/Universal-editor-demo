@@ -1,7 +1,8 @@
 {
   "mappings": [
     "/content/demo-site/:/",
-    "/content/dam/demo-site/dummy-data/rt5760_series.json:/.helix/config.json",
+    "/content/dam/demo-site/dummy-data/:/dummy-data/",
+    "/content/demo-site/configuration:/.helix/config.json",
     "/content/demo-site/metadata:/metadata.json"
   ],
   "includes": [
