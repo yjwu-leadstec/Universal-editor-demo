@@ -5,6 +5,7 @@
     "/content/demo-site/metadata:/metadata.json"
   ],
   "includes": [
-    "/content/demo-site/"
+    "/content/demo-site/",
+    "/content/dam/demo-site/dummy-data/rt5760_series.json"
   ]
 }
