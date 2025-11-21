@@ -187,7 +187,7 @@
                 "template": {
                   "name": "Product Table",
                   "model": "product-table",
-                  "source": "/content/dam/demo-site/dummy-data/rt5760_series.json",
+                  "source": "/dummy-data/rt5760_series.json",
                   "title": "RT5760 Series Comparison"
                 }
               }

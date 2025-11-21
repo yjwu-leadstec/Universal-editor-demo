@@ -10,7 +10,7 @@
             "template": {
               "name": "Product Table",
               "model": "product-table",
-              "source": "/content/dam/demo-site/dummy-data/rt5760_series.json",
+              "source": "/dummy-data/rt5760_series.json",
               "title": "RT5760 Series Comparison"
             }
           }
@@ -34,9 +34,9 @@
           "name": "source",
           "label": "Data Source Path",
           "valueType": "string",
-          "required": true,
-          "description": "Path to JSON file in DAM",
-          "value": "/content/dam/demo-site/dummy-data/rt5760_series.json"
+          "required": false,
+          "description": "Path to JSON file (e.g. /dummy-data/rt5760_series.json)",
+          "value": "/dummy-data/rt5760_series.json"
         }
       ]
     }

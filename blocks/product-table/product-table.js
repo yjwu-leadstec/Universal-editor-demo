@@ -1,6 +1,60 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
+ * Gets possible JSON paths for AEM Edge Delivery Services
+ * @param {string} configSource The configured source path
+ * @returns {Array<string>} Array of possible paths to try
+ */
+function getJsonPaths(configSource) {
+  const paths = [];
+
+  if (configSource) {
+    // Add configured path as is
+    paths.push(configSource);
+
+    // If it's a full AEM DAM path, try various mappings
+    if (configSource.includes('/content/dam/')) {
+      // Try the mapped path according to paths.json
+      const mappedPath = configSource.replace('/content/dam/demo-site/dummy-data/', '/dummy-data/');
+      paths.push(mappedPath);
+
+      // Try without /content/dam/demo-site prefix
+      const simplePath = configSource.replace('/content/dam/demo-site/', '/');
+      paths.push(simplePath);
+
+      // Try adding .json extension if not present
+      if (!configSource.endsWith('.json')) {
+        paths.push(`${configSource}.json`);
+      }
+    }
+  }
+
+  // Default fallback paths
+  paths.push('/dummy-data/rt5760_series.json');
+
+  // Check if we're in AEM environment
+  const { hostname, pathname } = window.location;
+  const isAEM = hostname.includes('.aem.')
+    || hostname.includes('author')
+    || hostname.includes('publish')
+    || pathname.includes('.html');
+
+  if (isAEM) {
+    // For AEM Edge Delivery, try with media endpoint
+    paths.push('/dummy-data/rt5760_series.media.json');
+
+    // Try direct DAM path
+    paths.push('/content/dam/demo-site/dummy-data/rt5760_series.json');
+
+    // Try with _jcr_content
+    paths.push('/content/dam/demo-site/dummy-data/rt5760_series.json/_jcr_content/renditions/original');
+  }
+
+  // Remove duplicates and filter out empty values
+  return [...new Set(paths.filter(Boolean))];
+}
+
+/**
  * Reads configuration from block content
  * @param {Element} block The block element
  * @returns {Object} Configuration object
@@ -251,23 +305,53 @@ function createFilters(data, tableWrapper) {
 export default async function decorate(block) {
   // Read block configuration (if any)
   const config = readBlockConfig(block);
-  const jsonPath = config.source || '/dummy-data/rt5760_series.json';
+
+  // Get possible paths for AEM Edge Delivery compatibility
+  const possiblePaths = getJsonPaths(config.source);
+
+  let jsonPath = possiblePaths[0];
+  let response;
 
   try {
     // Create container for loading state
     const container = document.createElement('div');
     container.className = 'product-table-container';
 
-    // Show loading state
-    container.innerHTML = '<p class="loading">Loading product data...</p>';
+    // Show loading state with path info for debugging
+    container.innerHTML = `<p class="loading">Loading product data from ${jsonPath}...</p>`;
     block.textContent = '';
     block.appendChild(container);
 
-    // Fetch JSON data
-    const response = await fetch(jsonPath);
+    // Try fetching from multiple paths
+    // eslint-disable-next-line no-console
+    console.log('Attempting to load product data from paths:', possiblePaths);
 
-    if (!response.ok) {
-      throw new Error(`Failed to load data: ${response.status}`);
+    // Try each path in sequence until one succeeds
+    let pathIndex = 0;
+    while (pathIndex < possiblePaths.length) {
+      jsonPath = possiblePaths[pathIndex];
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        response = await fetch(jsonPath);
+        if (response.ok) {
+          // eslint-disable-next-line no-console
+          console.log(`Successfully loaded data from: ${jsonPath}`);
+          break;
+        }
+        // eslint-disable-next-line no-console
+        console.warn(`Failed to load from ${jsonPath}, status: ${response.status}`);
+      } catch (fetchError) {
+        // eslint-disable-next-line no-console
+        console.warn(`Error fetching ${jsonPath}:`, fetchError);
+      }
+      pathIndex += 1;
+    }
+
+    if (!response || !response.ok) {
+      const errorMsg = `Failed to load data from any of the following paths:\n${possiblePaths.join('\n')}`;
+      // eslint-disable-next-line no-console
+      console.error(errorMsg);
+      throw new Error(errorMsg);
     }
 
     const data = await response.json();
@@ -312,6 +396,10 @@ export default async function decorate(block) {
       <div class="error-message">
         <p>Error loading product data</p>
         <p class="error-details">${error.message}</p>
+        <p class="error-details" style="font-size: 10px; margin-top: 10px;">
+          Current URL: ${window.location.href}<br>
+          Check browser console for attempted paths
+        </p>
       </div>
     `;
   }
