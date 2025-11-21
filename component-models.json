@@ -293,51 +293,6 @@
         "required": true,
         "description": "Path to JSON file in DAM",
         "value": "/content/dam/demo-site/dummy-data/rt5760_series.json"
-      },
-      {
-        "component": "select",
-        "name": "display_mode",
-        "label": "Display Mode",
-        "valueType": "string",
-        "options": [
-          {
-            "value": "table",
-            "name": "Table View"
-          },
-          {
-            "value": "cards",
-            "name": "Card View"
-          }
-        ],
-        "value": "table"
-      },
-      {
-        "component": "checkbox",
-        "name": "enable_search",
-        "label": "Enable Search",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "checkbox",
-        "name": "enable_filters",
-        "label": "Enable Filters",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "checkbox",
-        "name": "sticky_header",
-        "label": "Sticky Table Header",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "checkbox",
-        "name": "sticky_first_column",
-        "label": "Sticky First Column",
-        "valueType": "boolean",
-        "value": true
       }
     ]
   }

@@ -10,13 +10,13 @@
   font-size: 24px;
   font-weight: bold;
   color: #333;
-  margin: 0 0 10px 0;
+  margin: 0 0 10px;
 }
 
 .source-info {
   font-size: 12px;
   color: #666;
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   font-style: italic;
 }
 
@@ -51,7 +51,7 @@
 .search-input:focus {
   outline: none;
   border-color: #007acc;
-  box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.1);
+  box-shadow: 0 0 0 2px rgb(0 122 204 / 10%);
 }
 
 .feature-select {
@@ -96,7 +96,7 @@
   border-radius: 8px;
   border: 1px solid #e0e0e0;
   background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
 }
 
 /* Table Styles */
@@ -123,7 +123,7 @@
   position: relative;
 }
 
-.product-table th:after {
+.product-table th::after {
   content: '';
   position: absolute;
   right: 0;
@@ -133,7 +133,7 @@
   background: #dee2e6;
 }
 
-.product-table th:last-child:after {
+.product-table th:last-child::after {
   display: none;
 }
 
@@ -205,7 +205,7 @@
   font-size: 16px;
 }
 
-.loading:before {
+.loading::before {
   content: '';
   display: inline-block;
   width: 20px;
@@ -242,7 +242,7 @@
 }
 
 /* Mobile Responsiveness */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .product-table-container {
     padding: 10px;
   }
@@ -278,7 +278,7 @@
 }
 
 /* High Contrast Mode Support */
-@media (prefers-contrast: high) {
+@media (prefers-contrast) {
   .product-table thead {
     background: #333;
   }
