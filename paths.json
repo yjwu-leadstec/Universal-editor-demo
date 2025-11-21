@@ -1,11 +1,10 @@
 {
   "mappings": [
     "/content/demo-site/:/",
-    "/content/demo-site/configuration:/.helix/config.json",
+    "/content/dam/demo-site/dummy-data/rt5760_series.json:/.helix/config.json",
     "/content/demo-site/metadata:/metadata.json"
   ],
   "includes": [
-    "/content/demo-site/",
-    "/content/dam/demo-site/dummy-data/rt5760_series.json"
+    "/content/demo-site/"
   ]
 }
