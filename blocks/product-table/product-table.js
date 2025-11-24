@@ -11,8 +11,8 @@ function getApiUrl(configSource) {
     return configSource;
   }
 
-  // 默认使用AEM API端点
-  return 'https://publish-p80707-e1685574.adobeaemcloud.com/services/products/comparison';
+  // 默认使用AEM API端点（注意添加.json后缀）
+  return 'https://publish-p80707-e1685574.adobeaemcloud.com/services/products/comparison.json';
 }
 
 /**
@@ -37,7 +37,7 @@ function readBlockConfig(block) {
 
 /**
  * Creates the product comparison table
- * @param {Object} data The product data
+ * @param {Object} data The product data from API
  * @returns {HTMLTableElement} The created table element
  */
 function createProductTable(data) {
@@ -48,18 +48,25 @@ function createProductTable(data) {
   const thead = document.createElement('thead');
   const headerRow = document.createElement('tr');
 
-  // Define columns to display
+  // Define columns to display - 顺序与API返回数据一致
   const columns = [
-    { key: 'product_number', label: 'Product', sticky: true },
+    { key: 'productNumber', label: 'Product Number', sticky: true },
+    { key: 'dataSheet', label: 'Data Sheet' },
     { key: 'status', label: 'Status' },
-    { key: 'product_differences', label: 'Key Features' },
-    { key: 'iq_typ_mA', label: 'IQ (mA)' },
-    { key: 'vin_range', label: 'VIN Range (V)' },
-    { key: 'vout_range', label: 'VOUT Range (V)' },
-    { key: 'iout_max_a', label: 'Max Current (A)' },
-    { key: 'freq_typ_khz', label: 'Frequency (kHz)' },
-    { key: 'ron_hs_typ_mohm', label: 'RON HS (mΩ)' },
-    { key: 'ron_ls_typ_mohm', label: 'RON LS (mΩ)' },
+    { key: 'productDifferences', label: 'Product Differences' },
+    { key: 'iq_typ_mA', label: 'IQ (mA)', spec: true },
+    { key: 'vin_min_V', label: 'VIN Min (V)', spec: true },
+    { key: 'vin_max_V', label: 'VIN Max (V)', spec: true },
+    { key: 'vout_min_V', label: 'VOUT Min (V)', spec: true },
+    { key: 'vout_max_V', label: 'VOUT Max (V)', spec: true },
+    { key: 'outputAdjMethod', label: 'Output Adj Method', spec: true },
+    { key: 'iout_max_A', label: 'IOUT Max (A)', spec: true },
+    { key: 'currentLimit_typ_A', label: 'Current Limit (A)', spec: true },
+    { key: 'freq_typ_kHz', label: 'Frequency (kHz)', spec: true },
+    { key: 'ron_hs_typ_mOhm', label: 'RON HS (mΩ)', spec: true },
+    { key: 'numberOfOutputs', label: 'Number of Outputs', spec: true },
+    { key: 'extSync', label: 'Ext Sync', spec: true },
+    { key: 'ron_ls_typ_mOhm', label: 'RON LS (mΩ)', spec: true },
   ];
 
   // Create header cells
@@ -79,9 +86,12 @@ function createProductTable(data) {
   // Create table body
   const tbody = document.createElement('tbody');
 
-  data.products.forEach((product) => {
+  // 从新的数据结构中获取产品数组
+  const products = data.productComparison?.products || data.products || [];
+
+  products.forEach((product) => {
     const row = document.createElement('tr');
-    row.setAttribute('data-product', product.product_number);
+    row.setAttribute('data-product', product.productNumber || product.product_number);
 
     columns.forEach((col) => {
       const td = document.createElement('td');
@@ -90,30 +100,37 @@ function createProductTable(data) {
         td.className = 'sticky-column';
       }
 
+      // 从specifications对象或直接从产品对象获取值
+      let value;
+      if (col.spec && product.specifications) {
+        value = product.specifications[col.key];
+      } else {
+        value = product[col.key];
+      }
+
       // Handle special formatting for certain columns
       switch (col.key) {
-        case 'product_differences':
+        case 'productDifferences':
           // Display as comma-separated list
-          td.textContent = product[col.key] ? product[col.key].join(', ') : '-';
+          td.textContent = value ? value.join(', ') : '-';
           break;
-        case 'vin_range':
-          // Combine min and max voltage
-          td.textContent = `${product.vin_min_v} - ${product.vin_max_v}`;
+        case 'dataSheet':
+          // Display boolean as Yes/No
+          td.textContent = value ? 'Yes' : 'No';
           break;
-        case 'vout_range':
-          // Combine min and max voltage
-          td.textContent = `${product.vout_min_v} - ${product.vout_max_v}`;
+        case 'extSync':
+          // Display boolean as Yes/No
+          td.textContent = value ? 'Yes' : 'No';
           break;
         case 'status': {
           // Add status class for styling
-          td.textContent = product[col.key] || '-';
-          const statusClass = product[col.key] ? `status-${product[col.key].toLowerCase()}` : '';
+          td.textContent = value || '-';
+          const statusClass = value ? `status-${value.toLowerCase()}` : '';
           td.className = statusClass ? `${td.className} ${statusClass}` : td.className;
           break;
         }
         default: {
           // Default formatting
-          const value = product[col.key];
           td.textContent = value !== undefined && value !== null ? value : '-';
         }
       }
@@ -134,130 +151,6 @@ function createProductTable(data) {
   return tableWrapper;
 }
 
-/**
- * Creates filter controls for the table
- * @param {Object} data The product data
- * @param {HTMLElement} tableWrapper The table wrapper element
- * @returns {HTMLElement} The filters container
- */
-function createFilters(data, tableWrapper) {
-  const filtersContainer = document.createElement('div');
-  filtersContainer.className = 'filters-container';
-
-  // Search box
-  const searchWrapper = document.createElement('div');
-  searchWrapper.className = 'search-wrapper';
-
-  const searchInput = document.createElement('input');
-  searchInput.type = 'text';
-  searchInput.placeholder = 'Search products (e.g., RT5760A, PSM, PWM)...';
-  searchInput.className = 'search-input';
-
-  // Filter by features
-  const featureSelect = document.createElement('select');
-  featureSelect.className = 'feature-select';
-
-  // Collect unique features
-  const uniqueFeatures = new Set();
-  data.products.forEach((product) => {
-    if (product.product_differences) {
-      product.product_differences.forEach((feature) => uniqueFeatures.add(feature));
-    }
-  });
-
-  // Add options to select
-  const defaultOption = document.createElement('option');
-  defaultOption.value = '';
-  defaultOption.textContent = 'All Features';
-  featureSelect.appendChild(defaultOption);
-
-  Array.from(uniqueFeatures).sort().forEach((feature) => {
-    const option = document.createElement('option');
-    option.value = feature;
-    option.textContent = feature;
-    featureSelect.appendChild(option);
-  });
-
-  // Clear filters button
-  const clearButton = document.createElement('button');
-  clearButton.className = 'clear-filters';
-  clearButton.textContent = 'Clear Filters';
-  clearButton.style.display = 'none';
-
-  // Results count element
-  const resultsCount = document.createElement('span');
-  resultsCount.className = 'results-count';
-
-  // Update results count function
-  const updateResultsCount = (visible, total) => {
-    if (visible === total) {
-      resultsCount.textContent = `Showing all ${total} products`;
-    } else {
-      resultsCount.textContent = `Showing ${visible} of ${total} products`;
-    }
-  };
-
-  // Filter function
-  const filterTable = () => {
-    const searchTerm = searchInput.value.toLowerCase();
-    const selectedFeature = featureSelect.value;
-    const table = tableWrapper.querySelector('table');
-    const rows = table.querySelectorAll('tbody tr');
-
-    let visibleCount = 0;
-
-    rows.forEach((row) => {
-      const productNumber = row.getAttribute('data-product').toLowerCase();
-      const featureCell = row.cells[2].textContent.toLowerCase(); // Features column
-
-      let shouldShow = true;
-
-      // Apply search filter
-      if (searchTerm) {
-        // Search in product number and features
-        shouldShow = productNumber.includes(searchTerm)
-          || featureCell.includes(searchTerm);
-      }
-
-      // Apply feature filter
-      if (shouldShow && selectedFeature) {
-        shouldShow = featureCell.includes(selectedFeature.toLowerCase());
-      }
-
-      row.style.display = shouldShow ? '' : 'none';
-      if (shouldShow) visibleCount += 1;
-    });
-
-    // Show/hide clear button
-    clearButton.style.display = searchTerm || selectedFeature ? 'inline-block' : 'none';
-
-    // Update results count
-    updateResultsCount(visibleCount, data.products.length);
-  };
-
-  // Initial count
-  updateResultsCount(data.products.length, data.products.length);
-
-  // Event listeners
-  searchInput.addEventListener('input', filterTable);
-  featureSelect.addEventListener('change', filterTable);
-
-  clearButton.addEventListener('click', () => {
-    searchInput.value = '';
-    featureSelect.value = '';
-    filterTable();
-  });
-
-  // Assemble filters
-  searchWrapper.appendChild(searchInput);
-  searchWrapper.appendChild(featureSelect);
-  searchWrapper.appendChild(clearButton);
-
-  filtersContainer.appendChild(searchWrapper);
-  filtersContainer.appendChild(resultsCount);
-
-  return filtersContainer;
-}
 
 /**
  * Loads and decorates the product table block
@@ -302,32 +195,10 @@ export default async function decorate(block) {
     // Create table
     const table = createProductTable(data);
 
-    // Create filters section
-    const filters = createFilters(data, table);
-
     // Clear loading state and add content
     container.innerHTML = '';
 
-    // Add title if available
-    if (config.title) {
-      const title = document.createElement('h2');
-      title.className = 'product-table-title';
-      title.textContent = config.title;
-      container.appendChild(title);
-    }
-
-    // Add data source info
-    if (data.source) {
-      const sourceInfo = document.createElement('p');
-      sourceInfo.className = 'source-info';
-      sourceInfo.textContent = `Source: ${data.source}`;
-      container.appendChild(sourceInfo);
-    }
-
-    // Add filters
-    container.appendChild(filters);
-
-    // Add table
+    // 直接添加表格，不添加额外的标题和过滤器
     container.appendChild(table);
 
     // Preserve Universal Editor instrumentation
