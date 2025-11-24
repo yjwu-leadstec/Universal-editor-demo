@@ -151,7 +151,6 @@ function createProductTable(data) {
   return tableWrapper;
 }
 
-
 /**
  * Loads and decorates the product table block
  * @param {Element} block The product table block element
