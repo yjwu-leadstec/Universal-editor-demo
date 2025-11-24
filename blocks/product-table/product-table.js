@@ -1,57 +1,18 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
- * Gets possible JSON paths for AEM Edge Delivery Services
+ * Gets API URL for product data
  * @param {string} configSource The configured source path
- * @returns {Array<string>} Array of possible paths to try
+ * @returns {string} The API URL to use
  */
-function getJsonPaths(configSource) {
-  const paths = [];
-
-  if (configSource) {
-    // Add configured path as is
-    paths.push(configSource);
-
-    // If it's a full AEM DAM path, try various mappings
-    if (configSource.includes('/content/dam/')) {
-      // Try the mapped path according to paths.json
-      const mappedPath = configSource.replace('/content/dam/demo-site/dummy-data/', '/dummy-data/');
-      paths.push(mappedPath);
-
-      // Try without /content/dam/demo-site prefix
-      const simplePath = configSource.replace('/content/dam/demo-site/', '/');
-      paths.push(simplePath);
-
-      // Try adding .json extension if not present
-      if (!configSource.endsWith('.json')) {
-        paths.push(`${configSource}.json`);
-      }
-    }
+function getApiUrl(configSource) {
+  // 如果配置了URL，使用配置的URL
+  if (configSource && (configSource.startsWith('http://') || configSource.startsWith('https://'))) {
+    return configSource;
   }
 
-  // Default fallback paths
-  paths.push('/dummy-data/rt5760_series.json');
-
-  // Check if we're in AEM environment
-  const { hostname, pathname } = window.location;
-  const isAEM = hostname.includes('.aem.')
-    || hostname.includes('author')
-    || hostname.includes('publish')
-    || pathname.includes('.html');
-
-  if (isAEM) {
-    // For AEM Edge Delivery, try with media endpoint
-    paths.push('/dummy-data/rt5760_series.media.json');
-
-    // Try direct DAM path
-    paths.push('/content/dam/demo-site/dummy-data/rt5760_series.json');
-
-    // Try with _jcr_content
-    paths.push('/content/dam/demo-site/dummy-data/rt5760_series.json/_jcr_content/renditions/original');
-  }
-
-  // Remove duplicates and filter out empty values
-  return [...new Set(paths.filter(Boolean))];
+  // 默认使用AEM API端点
+  return 'https://publish-p80707-e1685574.adobeaemcloud.com/services/products/comparison';
 }
 
 /**
@@ -306,52 +267,34 @@ export default async function decorate(block) {
   // Read block configuration (if any)
   const config = readBlockConfig(block);
 
-  // Get possible paths for AEM Edge Delivery compatibility
-  const possiblePaths = getJsonPaths(config.source);
-
-  let jsonPath = possiblePaths[0];
-  let response;
+  // Get API URL
+  const apiUrl = getApiUrl(config.source);
 
   try {
     // Create container for loading state
     const container = document.createElement('div');
     container.className = 'product-table-container';
 
-    // Show loading state with path info for debugging
-    container.innerHTML = `<p class="loading">Loading product data from ${jsonPath}...</p>`;
+    // Show loading state
+    container.innerHTML = '<p class="loading">Loading product data from API...</p>';
     block.textContent = '';
     block.appendChild(container);
 
-    // Try fetching from multiple paths
     // eslint-disable-next-line no-console
-    console.log('Attempting to load product data from paths:', possiblePaths);
+    console.log('Fetching product data from:', apiUrl);
 
-    // Try each path in sequence until one succeeds
-    let pathIndex = 0;
-    while (pathIndex < possiblePaths.length) {
-      jsonPath = possiblePaths[pathIndex];
-      try {
-        // eslint-disable-next-line no-await-in-loop
-        response = await fetch(jsonPath);
-        if (response.ok) {
-          // eslint-disable-next-line no-console
-          console.log(`Successfully loaded data from: ${jsonPath}`);
-          break;
-        }
-        // eslint-disable-next-line no-console
-        console.warn(`Failed to load from ${jsonPath}, status: ${response.status}`);
-      } catch (fetchError) {
-        // eslint-disable-next-line no-console
-        console.warn(`Error fetching ${jsonPath}:`, fetchError);
-      }
-      pathIndex += 1;
-    }
+    // Fetch from API
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+    });
 
-    if (!response || !response.ok) {
-      const errorMsg = `Failed to load data from any of the following paths:\n${possiblePaths.join('\n')}`;
-      // eslint-disable-next-line no-console
-      console.error(errorMsg);
-      throw new Error(errorMsg);
+    if (!response.ok) {
+      throw new Error(`API responded with status: ${response.status}`);
     }
 
     const data = await response.json();
@@ -391,14 +334,21 @@ export default async function decorate(block) {
     moveInstrumentation(block, container);
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Product table error:', error);
+    console.error('Product table API error:', error);
+
+    // 如果是CORS错误，提供更详细的信息
+    if (error.message.includes('Failed to fetch')) {
+      // eslint-disable-next-line no-console
+      console.error('CORS issue detected. Please ensure the API server allows cross-origin requests.');
+    }
+
     block.innerHTML = `
       <div class="error-message">
-        <p>Error loading product data</p>
+        <p>Error loading product data from API</p>
         <p class="error-details">${error.message}</p>
-        <p class="error-details" style="font-size: 10px; margin-top: 10px;">
-          Current URL: ${window.location.href}<br>
-          Check browser console for attempted paths
+        <p class="error-details" style="font-size: 12px; margin-top: 10px;">
+          API URL: ${apiUrl}<br>
+          Check browser console for details
         </p>
       </div>
     `;
