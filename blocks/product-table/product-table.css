@@ -1,59 +1,71 @@
-/* Product Table Block Styles */
+/* ========================================
+   Product Table Block 样式表
+   用于产品对比表格的完整样式定义
+   ======================================== */
 
+/* 主容器样式 - 包含整个产品表格组件 */
 .product-table-container {
-  padding: 20px;
-  max-width: 100%;
+  padding: 20px; /* 内边距提供适当的留白 */
+  max-width: 100%; /* 确保不超出父容器 */
 }
 
-/* Title and Source Info */
+/* 标题和数据源信息样式（当前版本未使用，但保留以备扩展） */
 .product-table-title {
   font-size: 24px;
   font-weight: bold;
   color: #333;
-  margin: 0 0 10px;
+  margin: 0 0 10px; /* 底部间距 */
 }
 
 .source-info {
   font-size: 12px;
-  color: #666;
+  color: #666; /* 次要文字颜色 */
   margin: 0 0 20px;
-  font-style: italic;
+  font-style: italic; /* 斜体显示 */
 }
 
-/* Filters Container */
+/* ========================================
+   过滤器相关样式（当前版本未使用，保留以备扩展）
+   ======================================== */
+
+/* 过滤器容器 - 包含搜索和筛选控件 */
 .filters-container {
   margin-bottom: 20px;
   padding: 15px;
-  background: #f8f9fa;
-  border-radius: 8px;
+  background: #f8f9fa; /* 浅灰背景 */
+  border-radius: 8px; /* 圆角边框 */
   border: 1px solid #e0e0e0;
 }
 
+/* 搜索控件包装器 */
 .search-wrapper {
   display: flex;
-  gap: 10px;
-  align-items: center;
+  gap: 10px; /* 元素间距 */
+  align-items: center; /* 垂直居中对齐 */
   margin-bottom: 10px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* 响应式换行 */
 }
 
+/* 搜索输入框样式 */
 .search-input {
-  flex: 1;
-  min-width: 200px;
+  flex: 1; /* 弹性增长 */
+  min-width: 200px; /* 最小宽度 */
   padding: 10px 15px;
   font-size: 14px;
   border: 1px solid #ddd;
   border-radius: 4px;
   background: white;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s; /* 边框颜色过渡效果 */
 }
 
+/* 搜索框获得焦点时的样式 */
 .search-input:focus {
-  outline: none;
-  border-color: #007acc;
-  box-shadow: 0 0 0 2px rgb(0 122 204 / 10%);
+  outline: none; /* 移除默认轮廓 */
+  border-color: #007acc; /* 蓝色边框 */
+  box-shadow: 0 0 0 2px rgb(0 122 204 / 10%); /* 焦点阴影 */
 }
 
+/* 特性选择下拉框 */
 .feature-select {
   padding: 10px 15px;
   font-size: 14px;
@@ -64,15 +76,17 @@
   min-width: 150px;
 }
 
+/* 下拉框焦点样式 */
 .feature-select:focus {
   outline: none;
   border-color: #007acc;
 }
 
+/* 清除过滤器按钮 */
 .clear-filters {
   padding: 10px 20px;
   font-size: 14px;
-  background: #dc3545;
+  background: #dc3545; /* 红色背景 */
   color: white;
   border: none;
   border-radius: 4px;
@@ -80,49 +94,58 @@
   transition: background 0.2s;
 }
 
+/* 清除按钮悬停效果 */
 .clear-filters:hover {
-  background: #c82333;
+  background: #c82333; /* 深红色 */
 }
 
+/* 结果计数显示 */
 .results-count {
   font-size: 14px;
   color: #666;
   display: block;
 }
 
-/* Table Wrapper */
+/* ========================================
+   表格包装器和主体样式
+   ======================================== */
+
+/* 表格外层包装器 - 处理横向滚动 */
 .table-wrapper {
-  overflow-x: auto;
-  border-radius: 8px;
+  overflow-x: auto; /* 内容超宽时允许横向滚动 */
+  border-radius: 8px; /* 圆角 */
   border: 1px solid #e0e0e0;
   background: white;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 5%); /* 轻微阴影增加层次感 */
 }
 
-/* Table Styles */
+/* 主表格样式 */
 .product-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: collapse; /* 合并边框 */
   font-size: 14px;
 }
 
+/* 表格头部样式 */
 .product-table thead {
-  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
-  position: sticky;
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef); /* 渐变背景 */
+  position: sticky; /* 滚动时固定在顶部 */
   top: 0;
-  z-index: 10;
+  z-index: 10; /* 确保在其他元素上方 */
 }
 
+/* 表头单元格样式 */
 .product-table th {
   padding: 12px 15px;
   text-align: left;
   font-weight: 600;
   color: #333;
-  border-bottom: 2px solid #dee2e6;
-  white-space: nowrap;
+  border-bottom: 2px solid #dee2e6; /* 底部边框 */
+  white-space: nowrap; /* 防止文字换行 */
   position: relative;
 }
 
+/* 表头单元格间的分隔线 */
 .product-table th::after {
   content: '';
   position: absolute;
@@ -130,74 +153,98 @@
   top: 25%;
   height: 50%;
   width: 1px;
-  background: #dee2e6;
+  background: #dee2e6; /* 垂直分隔线 */
 }
 
+/* 最后一个表头单元格不显示分隔线 */
 .product-table th:last-child::after {
   display: none;
 }
 
-/* Sticky First Column */
+/* ========================================
+   固定列样式（第一列在横向滚动时保持可见）
+   ======================================== */
+
+/* 固定列基础样式 */
 .product-table .sticky-column {
   position: sticky;
-  left: 0;
+  left: 0; /* 固定在左侧 */
   background: white;
   z-index: 5;
 }
 
+/* 表头中的固定列样式 */
 .product-table thead .sticky-column {
-  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
-  z-index: 11;
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef); /* 保持表头背景一致 */
+  z-index: 11; /* 层级高于普通固定列 */
 }
 
+/* 鼠标悬停时固定列的样式 */
 .product-table tbody tr:hover .sticky-column {
-  background: #f0f4ff;
+  background: #f0f4ff; /* 与行悬停背景色一致 */
 }
 
-/* Table Body */
+/* ========================================
+   表格主体样式
+   ======================================== */
+
+/* 表格行样式 */
 .product-table tbody tr {
-  border-bottom: 1px solid #e0e0e0;
-  transition: background 0.2s;
+  border-bottom: 1px solid #e0e0e0; /* 行间分隔线 */
+  transition: background 0.2s; /* 背景色过渡动画 */
 }
 
+/* 鼠标悬停行效果 */
 .product-table tbody tr:hover {
-  background: #f0f4ff;
+  background: #f0f4ff; /* 浅蓝色背景 */
 }
 
+/* 最后一行无底边框 */
 .product-table tbody tr:last-child {
   border-bottom: none;
 }
 
+/* 表格数据单元格样式 */
 .product-table td {
   padding: 10px 15px;
-  color: #495057;
-  white-space: nowrap;
+  color: #495057; /* 主文本颜色 */
+  white-space: nowrap; /* 防止文字换行 */
 }
 
-/* Status Styling */
+/* ========================================
+   状态字段特殊样式
+   ======================================== */
+
+/* 活跃状态 - 绿色 */
 .product-table .status-active {
   color: #28a745;
   font-weight: 600;
 }
 
+/* 非活跃状态 - 灰色 */
 .product-table .status-inactive {
   color: #6c757d;
   font-weight: 600;
 }
 
+/* 停产状态 - 红色 */
 .product-table .status-discontinued {
   color: #dc3545;
   font-weight: 600;
 }
 
-/* Product Number (First Column) */
+/* 产品编号列（第一列）特殊样式 */
 .product-table tbody td:first-child {
-  font-weight: 600;
-  color: #007acc;
-  border-right: 2px solid #e0e0e0;
+  font-weight: 600; /* 加粗 */
+  color: #007acc; /* 蓝色文字 */
+  border-right: 2px solid #e0e0e0; /* 右侧边框分隔 */
 }
 
-/* Loading and Error States */
+/* ========================================
+   加载和错误状态样式
+   ======================================== */
+
+/* 加载状态提示样式 */
 .loading {
   text-align: center;
   padding: 40px;
@@ -205,110 +252,139 @@
   font-size: 16px;
 }
 
+/* 加载动画 - 旋转圆圈 */
 .loading::before {
   content: '';
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid #007acc;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+  border: 3px solid #f3f3f3; /* 浅色边框 */
+  border-top: 3px solid #007acc; /* 顶部蓝色边框形成旋转效果 */
+  border-radius: 50%; /* 圆形 */
+  animation: spin 1s linear infinite; /* 持续旋转动画 */
   margin-right: 10px;
   vertical-align: middle;
 }
 
+/* 旋转动画定义 */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
+/* 错误消息容器样式 */
 .error-message {
   padding: 20px;
-  background: #f8d7da;
-  border: 1px solid #f5c6cb;
+  background: #f8d7da; /* 淡红色背景 */
+  border: 1px solid #f5c6cb; /* 红色边框 */
   border-radius: 4px;
-  color: #721c24;
+  color: #721c24; /* 深红色文字 */
   text-align: center;
 }
 
+/* 错误消息段落 */
 .error-message p {
   margin: 5px 0;
 }
 
+/* 错误详情文字 */
 .error-details {
-  font-size: 12px;
-  opacity: 0.8;
+  font-size: 12px; /* 小号字体 */
+  opacity: 0.8; /* 半透明效果 */
 }
 
-/* Mobile Responsiveness */
+/* ========================================
+   响应式设计 - 移动设备适配
+   ======================================== */
+
 @media (width <= 768px) {
+  /* 容器内边距减少 */
   .product-table-container {
     padding: 10px;
   }
 
+  /* 过滤器容器内边距减少 */
   .filters-container {
     padding: 10px;
   }
 
+  /* 搜索控件垂直排列 */
   .search-wrapper {
     flex-direction: column;
   }
 
+  /* 输入框全宽显示 */
   .search-input {
     width: 100%;
   }
 
+  /* 下拉框全宽显示 */
   .feature-select {
     width: 100%;
   }
 
+  /* 表格字体缩小 */
   .product-table {
     font-size: 12px;
   }
 
+  /* 单元格内边距减少 */
   .product-table th,
   .product-table td {
     padding: 8px 10px;
   }
 
+  /* 标题字体缩小 */
   .product-table-title {
     font-size: 20px;
   }
 }
 
-/* High Contrast Mode Support */
+/* ========================================
+   高对比度模式支持 - 提升可访问性
+   ======================================== */
+
 @media (prefers-contrast) {
+  /* 表头深色背景 */
   .product-table thead {
     background: #333;
   }
 
+  /* 表头白色文字 */
   .product-table th {
     color: white;
     border-color: white;
   }
 
+  /* 悬停时高对比效果 */
   .product-table tbody tr:hover {
     background: #333;
     color: white;
   }
 }
 
-/* Dark Mode Support */
+/* ========================================
+   深色模式支持 - 夜间阅读体验
+   ======================================== */
+
 @media (prefers-color-scheme: dark) {
+  /* 容器文字颜色 */
   .product-table-container {
     color: #e0e0e0;
   }
 
+  /* 标题文字颜色 */
   .product-table-title {
     color: #e0e0e0;
   }
 
+  /* 过滤器容器深色背景 */
   .filters-container {
     background: #2d2d2d;
     border-color: #444;
   }
 
+  /* 输入控件深色样式 */
   .search-input,
   .feature-select {
     background: #1a1a1a;
@@ -316,37 +392,45 @@
     border-color: #444;
   }
 
+  /* 表格包装器深色背景 */
   .table-wrapper {
     background: #1a1a1a;
     border-color: #444;
   }
 
+  /* 表头深色渐变背景 */
   .product-table thead {
     background: linear-gradient(to bottom, #2d2d2d, #1a1a1a);
   }
 
+  /* 表头单元格深色样式 */
   .product-table th {
     color: #e0e0e0;
     border-color: #444;
   }
 
+  /* 表格行边框颜色 */
   .product-table tbody tr {
     border-color: #444;
   }
 
+  /* 行悬停深色背景 */
   .product-table tbody tr:hover {
     background: #2d2d2d;
   }
 
+  /* 表格单元格文字颜色 */
   .product-table td {
     color: #b0b0b0;
   }
 
+  /* 固定列深色背景 */
   .product-table .sticky-column,
   .product-table thead .sticky-column {
     background: #1a1a1a;
   }
 
+  /* 固定列悬停背景 */
   .product-table tbody tr:hover .sticky-column {
     background: #2d2d2d;
   }
