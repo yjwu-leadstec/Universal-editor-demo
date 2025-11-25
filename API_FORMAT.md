@@ -1,7 +1,7 @@
 # Product Table API Format
 
 ## 默认API端点
-`https://publish-p80707-e1685574.adobeaemcloud.com/services/products/comparison.json`
+`https://author-p80707-e1685574.adobeaemcloud.com/bin/venia/products/comparison.json`
 
 ## 数据格式
 

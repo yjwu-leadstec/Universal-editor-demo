@@ -7,7 +7,7 @@
 将Product Table block的数据源从本地JSON文件改为支持API调用
 
 ## API端点
-https://publish-p80707-e1685574.adobeaemcloud.com/services/products/comparison.json
+https://author-p80707-e1685574.adobeaemcloud.com/bin/venia/products/comparison.json
 
 ## 核心改动
 
@@ -65,3 +65,9 @@ response = await fetch(jsonPath, {
 - 产品标识：`productNumber`（而非`product_number`）
 - 规格数据在`specifications`对象中
 - 字段名大小写变化：如`vin_min_V`而非`vin_min_v`
+
+## 最终实现（简化版）
+- 移除所有过滤器和搜索功能
+- 只显示核心数据表格
+- 列顺序与API返回数据完全一致
+- 支持所有API字段，包括dataSheet、extSync等布尔值显示为Yes/No

@@ -11,8 +11,8 @@ function getApiUrl(configSource) {
     return configSource;
   }
 
-  // 默认使用AEM API端点（注意添加.json后缀）
-  return 'https://publish-p80707-e1685574.adobeaemcloud.com/services/products/comparison.json';
+  // 默认使用AEM API端点
+  return 'https://author-p80707-e1685574.adobeaemcloud.com/bin/venia/products/comparison.json';
 }
 
 /**
