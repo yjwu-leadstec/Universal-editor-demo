@@ -1,3 +1,5 @@
 mountpoints:
   /:
-    url: "https://drive.google.com/drive/folders/1Da6x7YRZzyPC7cvtQrzI7KXr0GjGpK08"
+    url: "https://author-p80707-e1685574.adobeaemcloud.com/bin/franklin.delivery/yjwu-leadstec/Universal-editor-demo/main"
+    type: "markup"
+    suffix: ".html"
