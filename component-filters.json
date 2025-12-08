@@ -8,6 +8,7 @@
   {
     "id": "section",
     "components": [
+      "text",
       "image",
       "button",
       "title",
@@ -41,6 +42,7 @@
   {
     "id": "column",
     "components": [
+      "text",
       "image",
       "button",
       "title",

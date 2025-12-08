@@ -4,8 +4,8 @@
 - [x] 1.1 创建 `blocks/carousel/_carousel.json`
 - [x] 1.2 配置 `definitions`: Carousel 容器（filter: carousel）
 - [x] 1.3 配置 `definitions`: Slide 子项（model: slide）
-- [x] 1.4 配置 `models.carousel`: autoPlay, autoPlayInterval, loop, transition 字段
-- [x] 1.5 配置 `models.slide`: image, imageAlt, text, link 字段
+- [x] 1.4 配置 `models.carousel`: autoPlay, autoPlayInterval, loop, transition 字段 (已完成)
+- [x] 1.5 配置 `models.slide`: image, imageAlt, text, link 字段 (已完成)
 - [x] 1.6 配置 `filters`: carousel filter 只允许 slide 组件
 
 ## 2. Block 基础结构

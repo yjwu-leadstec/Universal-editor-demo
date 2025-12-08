@@ -9,6 +9,7 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Carousel",
+              "model": "carousel",
               "filter": "carousel"
             }
           }
@@ -33,6 +34,57 @@
   ],
   "models": [
     {
+      "id": "carousel",
+      "fields": [
+        {
+          "component": "boolean",
+          "name": "autoPlay",
+          "label": "Auto Play",
+          "description": "Enable automatic slide rotation",
+          "value": true,
+          "valueType": "boolean"
+        },
+        {
+          "component": "number",
+          "name": "autoPlayInterval",
+          "label": "Auto Play Interval (ms)",
+          "description": "Time between automatic slide changes",
+          "value": 5000,
+          "valueType": "number"
+        },
+        {
+          "component": "boolean",
+          "name": "loop",
+          "label": "Loop",
+          "description": "Enable infinite loop playback",
+          "value": true,
+          "valueType": "boolean"
+        },
+        {
+          "component": "select",
+          "name": "transition",
+          "label": "Transition Effect",
+          "description": "Animation type for slide transitions",
+          "value": "slide",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Slide",
+              "value": "slide"
+            },
+            {
+              "name": "Fade",
+              "value": "fade"
+            },
+            {
+              "name": "None",
+              "value": "none"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "slide",
       "fields": [
         {
@@ -43,10 +95,24 @@
           "multi": false
         },
         {
+          "component": "text",
+          "name": "imageAlt",
+          "label": "Image Alt Text",
+          "description": "Alternative text for accessibility",
+          "valueType": "string"
+        },
+        {
           "component": "richtext",
           "name": "text",
           "value": "",
           "label": "Text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "CTA Link",
+          "description": "Optional call-to-action button link",
           "valueType": "string"
         }
       ]
