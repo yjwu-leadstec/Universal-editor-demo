@@ -1,0 +1,219 @@
+/* Carousel Block Styles */
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Slides Container */
+.carousel-slides {
+  display: flex;
+  width: 100%;
+}
+
+/* Individual Slide */
+.carousel-slide {
+  flex: 0 0 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Slide Transition: Slide */
+.carousel-container.transition-slide .carousel-slides {
+  transition: transform 0.5s ease-in-out;
+  transform: translateX(calc(-100% * var(--current-slide, 0)));
+}
+
+.carousel-container.transition-slide .carousel-slide {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+}
+
+/* Slide Transition: Fade */
+.carousel-container.transition-fade .carousel-slides {
+  position: relative;
+}
+
+.carousel-container.transition-fade .carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-container.transition-fade .carousel-slide.active {
+  position: relative;
+}
+
+/* Slide Transition: None */
+.carousel-container.transition-none .carousel-slide {
+  transition: none;
+}
+
+/* Slide Image */
+.slide-image {
+  width: 100%;
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.slide-image picture {
+  display: block;
+  width: 100%;
+}
+
+.slide-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Slide Content */
+.slide-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  background: linear-gradient(transparent, rgb(0 0 0 / 70%));
+  color: white;
+  text-align: center;
+}
+
+.slide-text {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.slide-text h1,
+.slide-text h2,
+.slide-text h3 {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.slide-text p {
+  margin: 0 0 0.5rem;
+}
+
+/* CTA Button */
+.slide-cta {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--link-color, #035fe6);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.slide-cta:hover {
+  background-color: var(--link-hover-color, #024bb5);
+  color: white;
+}
+
+/* Dots Navigation */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.carousel-dot:hover {
+  transform: scale(1.2);
+}
+
+.carousel-dot.active {
+  background-color: white;
+}
+
+/* Responsive */
+@media (width >= 768px) {
+  .carousel-slide {
+    min-height: 500px;
+  }
+
+  .slide-text h1,
+  .slide-text h2,
+  .slide-text h3 {
+    font-size: 2.5rem;
+  }
+
+  .slide-text {
+    font-size: 1.125rem;
+  }
+
+  .slide-content {
+    padding: 3rem;
+  }
+}
+
+@media (width >= 1024px) {
+  .carousel-slide {
+    min-height: 600px;
+  }
+
+  .slide-text h1,
+  .slide-text h2,
+  .slide-text h3 {
+    font-size: 3rem;
+  }
+
+  .slide-content {
+    padding: 4rem;
+    max-width: 800px;
+    margin: 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-container.transition-slide .carousel-slides,
+  .carousel-container.transition-fade .carousel-slide,
+  .carousel-dot {
+    transition: none;
+  }
+}
