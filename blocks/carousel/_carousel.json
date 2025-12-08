@@ -39,17 +39,8 @@
           "component": "reference",
           "valueType": "string",
           "name": "image",
-          "label": "Slide Image",
-          "description": "Background or main image for this slide",
+          "label": "Image",
           "multi": false
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "imageAlt",
-          "label": "Image Alt Text",
-          "description": "Alternative text for accessibility",
-          "value": ""
         },
         {
           "component": "richtext",
@@ -57,14 +48,6 @@
           "value": "",
           "label": "Text",
           "valueType": "string"
-        },
-        {
-          "component": "aem-content",
-          "valueType": "string",
-          "name": "link",
-          "label": "CTA Button Link",
-          "description": "URL for the call-to-action button",
-          "value": ""
         }
       ]
     }
