@@ -5,6 +5,12 @@
       {
         "component": "text",
         "valueType": "string",
+        "name": "jcr:title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
         "name": "jcr:description",
         "label": "Description"
       },
@@ -14,22 +20,6 @@
         "name": "keywords",
         "multi": true,
         "label": "Keywords"
-      }
-    ]
-  },
-  {
-    "id": "image",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "imageAlt",
-        "label": "Alt Text"
       }
     ]
   },
