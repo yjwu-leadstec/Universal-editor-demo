@@ -1,107 +1,95 @@
+/**
+ * Avatar Block - Optimized with lit-html
+ *
+ * This version uses:
+ * - `ref` directive to avoid querySelector calls
+ * - Cleaner data extraction with reduce
+ * - Single-pass instrumentation application
+ */
+import {
+  html, render, nothing, createRef, ref,
+} from '../../scripts/lit.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
-  // The block structure from Universal Editor will have rows for each field
+const SIZES = ['small', 'medium', 'large'];
+
+/**
+ * Extract data from block rows
+ */
+function extractData(block) {
   const rows = [...block.children];
 
-  // Create the avatar container
-  const avatarContainer = document.createElement('div');
-  avatarContainer.className = 'avatar-container';
-
-  // Initialize variables for each field
-  let imageRow = null;
-  let nameRow = null;
-  let titleRow = null;
-  let sizeValue = 'medium'; // Default size
-
-  // Process rows based on content
-  // The Universal Editor may include additional rows for metadata
-  rows.forEach((row) => {
+  // Use reduce for cleaner extraction
+  const extracted = rows.reduce((acc, row) => {
     const text = row.textContent.trim().toLowerCase();
 
-    // Debug: Log each row to understand the structure
-    // console.log(`Row: "${row.textContent.trim()}"`, row);
-
-    // First row with picture is the image
-    if (!imageRow && row.querySelector('picture')) {
-      imageRow = row;
-    } else if (text === 'small' || text === 'medium' || text === 'large') {
-      // Check if this row contains size data
-      sizeValue = text;
-      // console.log(`Found size value: ${sizeValue}`);
-    } else if (row.textContent.trim() && text !== 'small' && text !== 'medium' && text !== 'large') {
-      // Other rows with text content (not size) are name and title
-      if (!nameRow) {
-        nameRow = row;
-      } else if (!titleRow) {
-        titleRow = row;
+    if (!acc.imageRow && row.querySelector('picture')) {
+      acc.imageRow = row;
+      acc.picture = row.querySelector('picture');
+    } else if (SIZES.includes(text)) {
+      acc.size = text;
+    } else if (text && !SIZES.includes(text)) {
+      if (!acc.nameRow) {
+        acc.nameRow = row;
+        acc.name = row.textContent.trim();
+      } else if (!acc.titleRow) {
+        acc.titleRow = row;
+        acc.title = row.textContent.trim();
       }
     }
-  });
+    return acc;
+  }, { size: 'medium' });
 
-  // Create the image wrapper
-  if (imageRow) {
-    const imageWrapper = document.createElement('div');
-    imageWrapper.className = 'avatar-image-wrapper';
+  // Block class takes precedence
+  const blockSize = SIZES.find((s) => block.classList.contains(s));
+  extracted.sizeClass = `size-${blockSize || extracted.size}`;
 
-    // Move existing image element (preserves instrumentation)
-    const picture = imageRow.querySelector('picture');
-    if (picture) {
-      moveInstrumentation(imageRow, imageWrapper);
-      imageWrapper.appendChild(picture);
-      avatarContainer.appendChild(imageWrapper);
-    }
+  return extracted;
+}
+
+/**
+ * Apply instrumentation from source row to target element
+ */
+function applyField(sourceRow, targetRef, content, isElement = false) {
+  const el = targetRef.value;
+  if (!sourceRow || !el) return;
+
+  moveInstrumentation(sourceRow, el);
+  if (isElement) {
+    el.appendChild(content);
+  } else {
+    el.textContent = content;
   }
+}
 
-  // Create info section
-  const infoSection = document.createElement('div');
-  infoSection.className = 'avatar-info';
+/**
+ * Decorate the avatar block
+ */
+export default function decorate(block) {
+  const data = extractData(block);
+  const { sizeClass, name, title } = data;
 
-  // Add name
-  if (nameRow && nameRow.textContent.trim()) {
-    const nameElement = document.createElement('h3');
-    nameElement.className = 'avatar-name';
-    moveInstrumentation(nameRow, nameElement);
-    nameElement.textContent = nameRow.textContent.trim();
-    infoSection.appendChild(nameElement);
-  }
+  // Create refs for instrumented elements
+  const imageRef = createRef();
+  const nameRef = createRef();
+  const titleRef = createRef();
 
-  // Add title
-  if (titleRow && titleRow.textContent.trim()) {
-    const titleElement = document.createElement('p');
-    titleElement.className = 'avatar-title';
-    moveInstrumentation(titleRow, titleElement);
-    titleElement.textContent = titleRow.textContent.trim();
-    infoSection.appendChild(titleElement);
-  }
-
-  // Only append info section if it has content
-  if (infoSection.children.length > 0) {
-    avatarContainer.appendChild(infoSection);
-  }
-
-  // Apply size class based on the size value from data or block class
-  let sizeClass = 'size-medium';
-
-  // First check block classes (for backward compatibility)
-  if (block.classList.contains('small')) {
-    sizeClass = 'size-small';
-  } else if (block.classList.contains('large')) {
-    sizeClass = 'size-large';
-  } else if (block.classList.contains('medium')) {
-    sizeClass = 'size-medium';
-  } else if (sizeValue === 'small') {
-    // Then check the size value from data (takes precedence)
-    sizeClass = 'size-small';
-  } else if (sizeValue === 'large') {
-    sizeClass = 'size-large';
-  } else if (sizeValue === 'medium') {
-    sizeClass = 'size-medium';
-  }
-
-  avatarContainer.classList.add(sizeClass);
-
-  // Clear the block and append the new structure
+  // Clear and render
   block.textContent = '';
-  block.appendChild(avatarContainer);
+  render(html`
+    <div class="avatar-container ${sizeClass}">
+      <div class="avatar-image-wrapper" ${ref(imageRef)}></div>
+      ${(name || title) ? html`
+        <div class="avatar-info">
+          ${name ? html`<h3 class="avatar-name" ${ref(nameRef)}></h3>` : nothing}
+          ${title ? html`<p class="avatar-title" ${ref(titleRef)}></p>` : nothing}
+        </div>
+      ` : nothing}
+    </div>
+  `, block);
+
+  // Apply instrumentation in one go
+  applyField(data.imageRow, imageRef, data.picture, true);
+  applyField(data.nameRow, nameRef, data.name);
+  applyField(data.titleRow, titleRef, data.title);
 }
