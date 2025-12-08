@@ -5,18 +5,6 @@
       "id": "default",
       "components": [
         {
-          "title": "Text",
-          "id": "text",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/text/v1/text",
-                "template": {}
-              }
-            }
-          }
-        },
-        {
           "title": "Title",
           "id": "title",
           "plugins": {
