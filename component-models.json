@@ -221,60 +221,6 @@
     ]
   },
   {
-    "id": "carousel",
-    "fields": [
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "autoPlay",
-        "label": "Auto Play",
-        "description": "Enable automatic slide advancement",
-        "value": true
-      },
-      {
-        "component": "number",
-        "valueType": "number",
-        "name": "autoPlayInterval",
-        "label": "Auto-play Interval (ms)",
-        "description": "Time between slide transitions in milliseconds",
-        "value": 5000,
-        "min": 1000,
-        "max": 30000,
-        "step": 500
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "loop",
-        "label": "Loop",
-        "description": "Enable infinite loop (last slide connects to first)",
-        "value": true
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "transition",
-        "label": "Transition Effect",
-        "description": "Animation style for slide transitions",
-        "value": "slide",
-        "options": [
-          {
-            "name": "Slide",
-            "value": "slide"
-          },
-          {
-            "name": "Fade",
-            "value": "fade"
-          },
-          {
-            "name": "None",
-            "value": "none"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "slide",
     "fields": [
       {

@@ -1,114 +1,126 @@
+<!-- OPENSPEC:START -->
+# OpenSpec Instructions
+
+These instructions are for AI assistants working in this project.
+
+Always open `@/openspec/AGENTS.md` when the request:
+- Mentions planning or proposals (words like proposal, spec, change, plan)
+- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
+- Sounds ambiguous and you need the authoritative spec before coding
+
+Use `@/openspec/AGENTS.md` to learn:
+- How to create and apply change proposals
+- Spec format and conventions
+- Project structure and guidelines
+
+Keep this managed block so 'openspec update' can refresh the instructions.
+
+<!-- OPENSPEC:END -->
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
-This is an AEM Edge Delivery Services project configured for the Universal Editor, providing visual editing capabilities for Franklin blocks. It uses JavaScript/TypeScript with component-based architecture for creating editable content blocks.
+This is an AEM Edge Delivery Services project configured for the Universal Editor, providing visual editing capabilities for Franklin blocks. Content is sourced from AEM Cloud Service author instance and delivered through Edge Delivery.
 
 ## Development Commands
 
-### Build & Validation
 ```bash
+# Install dependencies
+npm i
+
+# Start local development server (opens http://localhost:3000)
+aem up
+
 # Run all linters
 npm run lint
 
-# Run JavaScript linting only
+# Run JavaScript/CSS linting separately
 npm run lint:js
-
-# Run CSS linting only
 npm run lint:css
 
 # Fix linting issues automatically
 npm run lint:fix
 
-# Build component JSON models (merges _component-*.json from models/)
+# Build component JSON models (merges models/*.json into root)
 npm run build:json
 ```
 
-### Local Development
-```bash
-# Start local development server (requires @adobe/aem-cli)
-aem up
-# Opens browser at http://localhost:3000
+**Prerequisites**: Node.js 18.3.x+, AEM CLI (`npm install -g @adobe/aem-cli`)
 
-# Install AEM CLI if not already installed
-npm install -g @adobe/aem-cli
+## Architecture
+
+### Block System
+Each block in `/blocks/[name]/` contains:
+- `[name].js` - Main `decorate(block)` function
+- `[name].css` - Block styles
+- `_[name].json` - Universal Editor model (optional)
+
+### lit-html Integration
+This project uses lit-html for templating. Import from the wrapper:
+
+```javascript
+import { html, render, nothing, createRef, ref } from '../../scripts/lit.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  // Extract data from block rows
+  const rows = [...block.children];
+
+  // Create refs for elements needing instrumentation
+  const fieldRef = createRef();
+
+  block.textContent = '';
+  render(html`
+    <div class="my-block">
+      <div ${ref(fieldRef)}></div>
+    </div>
+  `, block);
+
+  // Apply Universal Editor instrumentation
+  moveInstrumentation(sourceRow, fieldRef.value);
+}
 ```
 
-## Project Architecture
+Available lit-html exports: `html`, `svg`, `render`, `nothing`, `noChange`, `unsafeHTML`, `repeat`, `classMap`, `styleMap`, `ref`, `createRef`
 
-### Core Structure
-- **Franklin blocks system**: Components in `/blocks/*` with each block containing `.js`, `.css`, and optional `_*.json` files
-- **Universal Editor integration**: Component definitions, models, and filters in root JSON files
-- **Instrumentation pattern**: Uses `moveInstrumentation()` to enable Universal Editor authoring
+### Universal Editor Instrumentation
+The `moveInstrumentation(source, target)` function transfers `data-aue-*` attributes from content rows to decorated elements, enabling in-context editing.
 
-### Key Files & Patterns
+### Component Model System
+- Source models in `/models/_*.json` define field types
+- `npm run build:json` merges into root JSON files:
+  - `component-models.json` - Field definitions
+  - `component-definition.json` - UI configuration
+  - `component-filters.json` - Placement rules
 
-#### Block Development Pattern
-Each block follows this structure:
-```
-/blocks/[block-name]/
-  ├── [block-name].js   # Main decorate() function
-  ├── [block-name].css  # Block styles
-  └── _[block-name].json # Universal Editor model (if editable)
-```
-
-The `decorate()` function pattern:
-- Receives block element with rows of data from Universal Editor
-- Transforms content into desired HTML structure
-- Preserves Universal Editor instrumentation via `moveInstrumentation()`
-
-#### Component Model System
-1. **Source models** in `/models/_*.json` define base models and UI components
-2. **Build process** merges models into:
-   - `component-models.json`: Field definitions for Universal Editor
-   - `component-definition.json`: Component UI configuration
-   - `component-filters.json`: Component placement rules
-
-#### Script Loading Phases
-- **Eager**: Core functionality (`loadEager`)
-- **Lazy**: Below-the-fold content (`loadLazy`)
-- **Delayed**: Analytics and non-critical features (`loadDelayed`)
-
-### Universal Editor Integration
-- **Instrumentation**: Data attributes for editable regions are moved from source to decorated elements
-- **Editor support**: `scripts/editor-support.js` handles real-time updates
-- **RTE support**: `scripts/editor-support-rte.js` enables rich text editing
+### Script Loading Phases
+- **Eager** (`loadEager`): Critical above-the-fold content
+- **Lazy** (`loadLazy`): Below-the-fold, blocks
+- **Delayed** (`loadDelayed`): Analytics, non-critical features
 
 ### Core Utilities (scripts/aem.js)
-- `loadBlock()`: Dynamically loads and decorates blocks
-- `decorateBlock()`: Applies block decoration pattern
-- `buildBlock()`: Creates block elements programmatically
-- `decorateSections()`: Processes page sections
-- `decorateButtons()`: Standardizes button styling
+- `loadBlock()` / `decorateBlock()` - Block loading and decoration
+- `buildBlock()` - Programmatic block creation
+- `decorateSections()` - Section processing
+- `decorateButtons()` / `decorateIcons()` - Standard decorations
 
-## Development Guidelines
+### Editor Support
+- `scripts/editor-support.js` - Real-time Universal Editor updates
+- `scripts/editor-support-rte.js` - Rich text editing support
 
-### Adding New Blocks
-1. Create `/blocks/[name]/` directory
-2. Implement `[name].js` with `export default function decorate(block)`
-3. Add `[name].css` for styling
-4. For Universal Editor support, create `_[name].json` model
-5. Register in component models if needed
+## Content Source
 
-### CSS Classes Pattern
-- Container: `.block-name-container`
-- Elements: `.block-name-element`
-- Variants: `.block-name-variant`
-
-### Universal Editor Models
-When creating editable components:
-1. Define field models in `/blocks/[name]/_[name].json`
-2. Ensure unique IDs across all models
-3. Use appropriate field types from base models (_text.json, _image.json, etc.)
-4. Models are auto-merged during build via `npm run build:json`
+Content is delivered from AEM Cloud Service via the `fstab.yaml` mountpoint configuration pointing to the author instance.
 
 ## Environment URLs
 - Preview: `https://main--{repo}--{owner}.aem.page/`
 - Live: `https://main--{repo}--{owner}.aem.live/`
 
-## Prerequisites
-- Node.js 18.3.x or newer
-- AEM Cloud Service release 2024.8 or newer (>= 17465)
-- AEM Code Sync GitHub App installed on repository
+## ESLint Configuration
+Uses `airbnb-base` + `plugin:xwalk/recommended`. Key rules:
+- Require `.js` extension in imports
+- Unix linebreaks enforced
+- Parameter property modification allowed
