@@ -43,5 +43,5 @@
 ## 8. 验证
 - [x] 8.1 运行 `npm run build:json` 合并 JSON 配置
 - [x] 8.2 运行 `npm run lint` 验证代码规范
-- [ ] 8.3 本地 `aem up` 测试渲染和交互
-- [ ] 8.4 在 Universal Editor 中测试编辑功能
+- [x] 8.3 本地 `aem up` 测试渲染和交互
+- [x] 8.4 在 Universal Editor 中测试编辑功能
