@@ -10,7 +10,7 @@
  * - 支持 Universal Editor 可视化编辑
  */
 import {
-  html, render, nothing, repeat, createRef, ref,
+  html, render, nothing, repeat, createRef, ref, unsafeHTML,
 } from '../../scripts/lit.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
@@ -73,6 +73,8 @@ function extractSlideData(row, index) {
 function renderSlide(slide, currentIndex, refs) {
   const isActive = slide.index === currentIndex;
   const slideRef = refs[slide.index];
+  // 获取 picture 的 HTML 字符串
+  const pictureHtml = slide.picture ? slide.picture.outerHTML : '';
 
   return html`
     <div
@@ -81,10 +83,10 @@ function renderSlide(slide, currentIndex, refs) {
       data-index="${slide.index}"
     >
       ${slide.picture ? html`
-        <div class="slide-image">${slide.picture}</div>
+        <div class="slide-image">${unsafeHTML(pictureHtml)}</div>
       ` : nothing}
       <div class="slide-content">
-        ${slide.text ? html`<div class="slide-text">${slide.text}</div>` : nothing}
+        ${slide.text ? html`<div class="slide-text">${unsafeHTML(slide.text)}</div>` : nothing}
         ${slide.link ? html`
           <a href="${slide.link.href}" class="slide-cta">${slide.link.textContent}</a>
         ` : nothing}
