@@ -242,8 +242,11 @@ export default function decorate(block) {
   const config = getConfig(block);
   const rows = [...block.children];
 
-  // 提取所有 slide 数据
-  const slides = rows.map((row, index) => extractSlideData(row, index));
+  // 提取所有 slide 数据，过滤空行并重新索引
+  const slides = rows
+    .map((row, index) => extractSlideData(row, index))
+    .filter((slide) => slide.picture || slide.text || slide.link)
+    .map((slide, index) => ({ ...slide, index }));
 
   // 如果没有 slides，不渲染
   if (slides.length === 0) return;
