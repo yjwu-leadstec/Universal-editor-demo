@@ -35,6 +35,15 @@ function goToSlide(container, index) {
  */
 export default function decorate(block) {
   const rows = [...block.children];
+
+  // 调试：查看实际收到的内容
+  // eslint-disable-next-line no-console
+  console.log('[Carousel] block.children count:', rows.length);
+  rows.forEach((row, i) => {
+    // eslint-disable-next-line no-console
+    console.log(`[Carousel] Row ${i}:`, row.innerHTML.substring(0, 100));
+  });
+
   if (rows.length === 0) return;
 
   // 创建容器
