@@ -30,19 +30,31 @@ function goToSlide(container, index) {
 }
 
 /**
+ * 检查 row 是否有实际内容（图片、文字等）
+ * @param {HTMLElement} row
+ * @returns {boolean}
+ */
+function hasContent(row) {
+  // 检查是否有图片
+  if (row.querySelector('picture, img')) return true;
+  // 检查是否有非空文本
+  const text = row.textContent.trim();
+  if (text) return true;
+  // 检查是否有链接
+  if (row.querySelector('a')) return true;
+  return false;
+}
+
+/**
  * Decorate carousel block
  * @param {HTMLElement} block
  */
 export default function decorate(block) {
-  const rows = [...block.children];
+  // 过滤掉空的 rows
+  const rows = [...block.children].filter(hasContent);
 
-  // 调试：查看实际收到的内容
   // eslint-disable-next-line no-console
-  console.log('[Carousel] block.children count:', rows.length);
-  rows.forEach((row, i) => {
-    // eslint-disable-next-line no-console
-    console.log(`[Carousel] Row ${i}:`, row.innerHTML.substring(0, 100));
-  });
+  console.log('[Carousel] Valid slides count:', rows.length);
 
   if (rows.length === 0) return;
 
