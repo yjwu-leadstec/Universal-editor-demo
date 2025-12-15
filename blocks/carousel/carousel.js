@@ -1,5 +1,5 @@
 /**
- * Carousel Block - 轮播组件 (简化版)
+ * Carousel Block - 轮播组件 (lit-html 版本)
  *
  * 功能特性:
  * - 多 slide 支持
@@ -7,27 +7,8 @@
  * - 底部圆点导航
  * - 支持 Universal Editor 可视化编辑
  */
+import { html, render, classMap, createRef, ref } from '../../scripts/lit.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-
-/**
- * 切换到指定 slide
- * @param {HTMLElement} container - carousel 容器
- * @param {number} index - 目标 slide 索引
- */
-function goToSlide(container, index) {
-  const slides = container.querySelectorAll('.carousel-slide');
-  const dots = container.querySelectorAll('.carousel-dot');
-
-  slides.forEach((slide, i) => {
-    slide.classList.toggle('active', i === index);
-  });
-
-  dots.forEach((dot, i) => {
-    dot.classList.toggle('active', i === index);
-  });
-
-  container.querySelector('.carousel-slides').style.setProperty('--current-slide', index);
-}
 
 /**
  * 检查 row 是否有实际内容（图片、文字等）
@@ -35,14 +16,33 @@ function goToSlide(container, index) {
  * @returns {boolean}
  */
 function hasContent(row) {
-  // 检查是否有图片
   if (row.querySelector('picture, img')) return true;
-  // 检查是否有非空文本
   const text = row.textContent.trim();
   if (text) return true;
-  // 检查是否有链接
   if (row.querySelector('a')) return true;
   return false;
+}
+
+/**
+ * 提取 slide 数据
+ * @param {HTMLElement} row
+ * @param {number} index
+ * @returns {Object}
+ */
+function extractSlideData(row, index) {
+  const cells = [...row.children];
+  const imageCell = cells.find((cell) => cell.querySelector('picture'));
+  const contentCell = cells.find((cell) => !cell.querySelector('picture'));
+
+  return {
+    index,
+    row,
+    imageCell,
+    contentCell,
+    slideRef: createRef(),
+    imageCellRef: createRef(),
+    contentCellRef: createRef(),
+  };
 }
 
 /**
@@ -58,72 +58,97 @@ export default function decorate(block) {
 
   if (rows.length === 0) return;
 
-  // 创建容器
-  const container = document.createElement('div');
-  container.className = 'carousel-container transition-slide';
+  // 提取所有 slide 数据
+  const slides = rows.map((row, index) => extractSlideData(row, index));
+  const slideCount = slides.length;
 
-  const slidesWrapper = document.createElement('div');
-  slidesWrapper.className = 'carousel-slides';
-
-  // 处理每个 slide
-  rows.forEach((row, index) => {
-    const slide = document.createElement('div');
-    slide.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
-    slide.dataset.index = index;
-    moveInstrumentation(row, slide);
-
-    // 将 row 中的内容移动到 slide
-    while (row.firstElementChild) {
-      const cell = row.firstElementChild;
-      // 检查是否是图片
-      if (cell.querySelector('picture')) {
-        cell.className = 'slide-image';
-      } else {
-        cell.className = 'slide-content';
-      }
-      slide.append(cell);
-    }
-    slidesWrapper.append(slide);
-  });
-
-  container.append(slidesWrapper);
-
-  // 添加圆点导航
-  const slideCount = rows.length;
-  if (slideCount > 1) {
-    const dotsContainer = document.createElement('div');
-    dotsContainer.className = 'carousel-dots';
-
-    for (let i = 0; i < slideCount; i += 1) {
-      const dot = document.createElement('button');
-      dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
-      dot.dataset.index = i;
-      dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-      dotsContainer.append(dot);
-    }
-    container.append(dotsContainer);
-  }
-
-  // 清空并添加新内容
-  block.textContent = '';
-  block.append(container);
-
-  // 自动轮播状态
+  // 当前 slide 索引
   let currentIndex = 0;
 
-  // 添加点击事件
-  container.querySelectorAll('.carousel-dot').forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      currentIndex = i;
-      goToSlide(container, i);
+  // 切换到指定 slide
+  const goToSlide = (index) => {
+    currentIndex = index;
+    renderCarousel();
+  };
+
+  // 渲染轮播组件
+  const renderCarousel = () => {
+    const template = html`
+      <div class="carousel-container transition-slide">
+        <div class="carousel-slides" style="--current-slide: ${currentIndex}">
+          ${slides.map((slide) => html`
+            <div
+              class=${classMap({
+                'carousel-slide': true,
+                active: slide.index === currentIndex,
+              })}
+              data-index=${slide.index}
+              ${ref(slide.slideRef)}
+            >
+              ${slide.imageCell ? html`
+                <div class="slide-image" ${ref(slide.imageCellRef)}></div>
+              ` : ''}
+              ${slide.contentCell ? html`
+                <div class="slide-content" ${ref(slide.contentCellRef)}></div>
+              ` : ''}
+            </div>
+          `)}
+        </div>
+        ${slideCount > 1 ? html`
+          <div class="carousel-dots">
+            ${slides.map((slide) => html`
+              <button
+                class=${classMap({
+                  'carousel-dot': true,
+                  active: slide.index === currentIndex,
+                })}
+                data-index=${slide.index}
+                aria-label="Go to slide ${slide.index + 1}"
+                @click=${() => goToSlide(slide.index)}
+              ></button>
+            `)}
+          </div>
+        ` : ''}
+      </div>
+    `;
+
+    render(template, block);
+
+    // 首次渲染后，移动内容和应用 instrumentation
+    slides.forEach((slide) => {
+      // 应用 Universal Editor instrumentation
+      if (slide.slideRef.value && slide.row) {
+        moveInstrumentation(slide.row, slide.slideRef.value);
+      }
+
+      // 移动图片内容
+      if (slide.imageCellRef.value && slide.imageCell) {
+        if (slide.imageCellRef.value.children.length === 0) {
+          while (slide.imageCell.firstChild) {
+            slide.imageCellRef.value.appendChild(slide.imageCell.firstChild);
+          }
+        }
+      }
+
+      // 移动文字内容
+      if (slide.contentCellRef.value && slide.contentCell) {
+        if (slide.contentCellRef.value.children.length === 0) {
+          while (slide.contentCell.firstChild) {
+            slide.contentCellRef.value.appendChild(slide.contentCell.firstChild);
+          }
+        }
+      }
     });
-  });
+  };
+
+  // 初始渲染
+  renderCarousel();
 
   // 自动轮播
   if (slideCount > 1) {
     setInterval(() => {
       currentIndex = (currentIndex + 1) % slideCount;
-      goToSlide(container, currentIndex);
+      renderCarousel();
     }, 5000);
   }
 }
