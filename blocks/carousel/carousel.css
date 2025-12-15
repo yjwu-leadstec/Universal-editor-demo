@@ -91,11 +91,11 @@
 /* Slide Content */
 .slide-content {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
   padding: 2rem;
-  background: linear-gradient(transparent, rgb(0 0 0 / 70%));
+  background: linear-gradient(rgb(0 0 0 / 70%), transparent);
   color: white;
   text-align: center;
 }
@@ -202,10 +202,6 @@
 
   .slide-content {
     padding: 4rem;
-    max-width: 800px;
-    margin: 0 auto;
-    left: 50%;
-    transform: translateX(-50%);
   }
 }
 
