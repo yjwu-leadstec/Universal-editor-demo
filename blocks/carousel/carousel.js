@@ -7,7 +7,13 @@
  * - 底部圆点导航
  * - 支持 Universal Editor 可视化编辑
  */
-import { html, render, classMap, createRef, ref } from '../../scripts/lit.js';
+import {
+  html,
+  render,
+  classMap,
+  createRef,
+  ref,
+} from '../../scripts/lit.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
@@ -65,23 +71,31 @@ export default function decorate(block) {
   // 当前 slide 索引
   let currentIndex = 0;
 
-  // 切换到指定 slide
+  // 切换到指定 slide (声明提前以避免 no-use-before-define)
   const goToSlide = (index) => {
     currentIndex = index;
+    // eslint-disable-next-line no-use-before-define
     renderCarousel();
   };
 
   // 渲染轮播组件
   const renderCarousel = () => {
+    const slideClasses = (slide) => classMap({
+      'carousel-slide': true,
+      active: slide.index === currentIndex,
+    });
+
+    const dotClasses = (slide) => classMap({
+      'carousel-dot': true,
+      active: slide.index === currentIndex,
+    });
+
     const template = html`
       <div class="carousel-container transition-slide">
         <div class="carousel-slides" style="--current-slide: ${currentIndex}">
           ${slides.map((slide) => html`
             <div
-              class=${classMap({
-                'carousel-slide': true,
-                active: slide.index === currentIndex,
-              })}
+              class=${slideClasses(slide)}
               data-index=${slide.index}
               ${ref(slide.slideRef)}
             >
@@ -98,10 +112,7 @@ export default function decorate(block) {
           <div class="carousel-dots">
             ${slides.map((slide) => html`
               <button
-                class=${classMap({
-                  'carousel-dot': true,
-                  active: slide.index === currentIndex,
-                })}
+                class=${dotClasses(slide)}
                 data-index=${slide.index}
                 aria-label="Go to slide ${slide.index + 1}"
                 @click=${() => goToSlide(slide.index)}
