@@ -95,8 +95,8 @@
   top: 0;
   left: 0;
   right: 0;
-  padding: 2rem;
-  background: linear-gradient(rgb(0 0 0 / 70%), transparent);
+  padding: 2rem 2rem 4rem;
+  background: linear-gradient(to bottom, rgb(0 0 0 / 70%) 0%, rgb(0 0 0 / 30%) 60%, transparent 100%);
   color: white;
   text-align: center;
 }
@@ -144,7 +144,7 @@
   gap: 0.5rem;
   padding: 1rem 0;
   position: absolute;
-  bottom: 1rem;
+  bottom: 2rem;
   left: 0;
   right: 0;
   z-index: 10;
@@ -186,7 +186,7 @@
   }
 
   .slide-content {
-    padding: 3rem;
+    padding: 3rem 3rem 5rem;
   }
 }
 
@@ -202,7 +202,11 @@
   }
 
   .slide-content {
-    padding: 4rem;
+    padding: 4rem 4rem 6rem;
+  }
+
+  .carousel-dots {
+    bottom: 3rem;
   }
 }
 
