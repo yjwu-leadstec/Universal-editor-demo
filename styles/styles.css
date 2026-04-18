@@ -368,6 +368,15 @@ main .section.cta .button-container a.button:focus {
   color: var(--dark-color, #1a1a1a);
 }
 
+main .section.cta .button-container a.button:focus-visible {
+  outline: 2px solid var(--background-color, #fff);
+  outline-offset: 2px;
+}
+
+main .section.cta .button-container a.button:active {
+  transform: scale(0.96);
+}
+
 @media (width >= 768px) {
   main .section.cta {
     padding: 80px 32px;
