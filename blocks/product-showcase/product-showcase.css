@@ -1,0 +1,277 @@
+/* Product Showcase Block - 产品展示（双层布局：背景轮播 + 卡片网格） */
+
+.product-showcase {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  min-height: 520px;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: #0a0a0a;
+}
+
+/* -------------------- Background layer -------------------- */
+
+.product-showcase-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.product-showcase-bg-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+  pointer-events: none;
+}
+
+.product-showcase-bg-slide.is-active {
+  opacity: 1;
+}
+
+.product-showcase-bg-slide picture,
+.product-showcase-bg-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Subtle vignette so cards stay readable over any bg */
+.product-showcase::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      rgb(0 0 0 / 25%) 0%,
+      rgb(0 0 0 / 10%) 40%,
+      rgb(0 0 0 / 55%) 100%
+    );
+}
+
+/* -------------------- Card grid -------------------- */
+
+.product-showcase-grid {
+  position: relative;
+  z-index: 2;
+  list-style: none;
+  margin: 0;
+  padding: 2rem 1rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 1600px;
+  margin-inline: auto;
+}
+
+.product-showcase-card {
+  display: block;
+}
+
+a.product-showcase-card-link:any-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  padding: 1rem 0.75rem 1.25rem;
+  color: #fff;
+  text-decoration: none;
+  background-color: rgb(255 255 255 / 6%);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 12px;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+a.product-showcase-card-link:hover,
+a.product-showcase-card-link:focus-visible {
+  transform: translateY(-4px);
+  background-color: rgb(255 255 255 / 12%);
+  border-color: rgb(255 255 255 / 24%);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 30%);
+  color: #fff;
+  text-decoration: none;
+}
+
+a.product-showcase-card-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.product-showcase-card-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.product-showcase-card-image picture,
+.product-showcase-card-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.product-showcase-card-link:hover .product-showcase-card-image img {
+  transform: scale(1.04);
+}
+
+.product-showcase-card-body {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0 0.25rem;
+}
+
+.product-showcase-card-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+.product-showcase-card-subtitle {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  opacity: 0.85;
+}
+
+.product-showcase-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.product-showcase-card-cta-arrow {
+  transition: transform 0.2s ease;
+}
+
+.product-showcase-card-link:hover .product-showcase-card-cta-arrow {
+  transform: translateX(3px);
+}
+
+/* -------------------- Responsive -------------------- */
+
+/* Tablet */
+@media (width >= 768px) {
+  .product-showcase {
+    min-height: 620px;
+  }
+
+  .product-showcase-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 3rem 1.5rem;
+  }
+}
+
+/* Desktop: all cards on one row */
+@media (width >= 1200px) {
+  .product-showcase {
+    min-height: 720px;
+  }
+
+  .product-showcase-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding: 4rem 2rem;
+  }
+
+  .product-showcase-card {
+    flex: 1 1 200px;
+    max-width: 240px;
+  }
+
+  .product-showcase-card-image {
+    max-width: none;
+  }
+}
+
+/* -------------------- Variants -------------------- */
+
+/* Theme: Light */
+.product-showcase.light {
+  background-color: #f5f5f5;
+}
+
+.product-showcase.light::after {
+  background:
+    linear-gradient(
+      to bottom,
+      rgb(255 255 255 / 35%) 0%,
+      rgb(255 255 255 / 10%) 50%,
+      rgb(255 255 255 / 45%) 100%
+    );
+}
+
+.product-showcase.light a.product-showcase-card-link:any-link {
+  color: #1a1a1a;
+  background-color: rgb(255 255 255 / 80%);
+  border-color: rgb(0 0 0 / 10%);
+}
+
+.product-showcase.light a.product-showcase-card-link:hover,
+.product-showcase.light a.product-showcase-card-link:focus-visible {
+  background-color: #fff;
+  border-color: rgb(0 0 0 / 20%);
+  color: #1a1a1a;
+}
+
+.product-showcase.light a.product-showcase-card-link:focus-visible {
+  outline-color: #1a1a1a;
+}
+
+.product-showcase.light .product-showcase-card-cta {
+  color: #1a1a1a;
+}
+
+/* Layout: Flex Row (single-row preference even at tablet) */
+.product-showcase.flex-row .product-showcase-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Layout: Grid (default, already applied) */
+
+/* -------------------- Accessibility -------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .product-showcase-bg-slide,
+  .product-showcase-card-link,
+  .product-showcase-card-image img,
+  .product-showcase-card-cta-arrow {
+    transition: none !important;
+  }
+
+  .product-showcase-card-link:hover {
+    transform: none;
+  }
+}
