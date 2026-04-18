@@ -158,12 +158,12 @@ function prefersReducedMotion() {
  * @returns {Object}
  */
 function getBlockConfig(block) {
-  const isHero = block.closest('.section.hero') !== null;
+  const isShowcase = block.closest('.section.hero, .section.feature') !== null;
   return {
     showArrows: block.dataset.showArrows !== 'false',
     showDots: block.dataset.showDots !== 'false',
     loop: block.dataset.loop !== 'false',
-    autoPlay: isHero ? false : block.dataset.autoPlay !== 'false',
+    autoPlay: isShowcase ? false : block.dataset.autoPlay !== 'false',
   };
 }
 

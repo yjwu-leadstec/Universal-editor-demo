@@ -406,6 +406,81 @@
   }
 }
 
+/* ==========================================
+   Feature Variant — .section.feature .carousel
+   Tech feature showcase carousel
+   ========================================== */
+
+.section.feature .carousel .carousel-slide {
+  min-height: 500px;
+}
+
+/* Feature: content centered at bottom over image */
+.section.feature .carousel .slide-content {
+  top: auto;
+  bottom: 0;
+  padding: 4rem 2rem;
+  background: linear-gradient(transparent, rgb(0 0 0 / 60%) 40%, rgb(0 0 0 / 80%) 100%);
+  text-align: center;
+}
+
+.section.feature .carousel .slide-text h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.section.feature .carousel .slide-text p {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* Feature: dots below the carousel */
+.section.feature .carousel .carousel-dots {
+  position: relative;
+  bottom: auto;
+  padding: 1.5rem 0 0;
+}
+
+.section.feature .carousel .carousel-dot {
+  border-color: var(--text-color, #131313);
+}
+
+.section.feature .carousel .carousel-dot.active {
+  background-color: var(--text-color, #131313);
+}
+
+/* Feature responsive: tablet */
+@media (width >= 768px) {
+  .section.feature .carousel .carousel-slide {
+    min-height: 560px;
+  }
+
+  .section.feature .carousel .slide-text h3 {
+    font-size: 2rem;
+  }
+
+  .section.feature .carousel .slide-text p {
+    font-size: 1.125rem;
+  }
+}
+
+/* Feature responsive: desktop */
+@media (width >= 1024px) {
+  .section.feature .carousel .carousel-slide {
+    min-height: 640px;
+  }
+
+  .section.feature .carousel .slide-content {
+    padding: 5rem 4rem 4rem;
+  }
+
+  .section.feature .carousel .slide-text h3 {
+    font-size: 2.25rem;
+  }
+}
+
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   .carousel-container.transition-slide .carousel-slides,
