@@ -290,19 +290,19 @@ main .section.hero > .carousel-wrapper {
 
 /* feature showcase */
 main .section.feature {
-  padding: 80px 0;
+  padding: 48px 0;
   margin: 0;
   text-align: center;
 }
 
 main .section.feature > .default-content-wrapper {
   max-width: 1200px;
-  margin: 0 auto 40px;
+  margin: 0 auto 24px;
   padding: 0 32px;
 }
 
 main .section.feature > .default-content-wrapper h2 {
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 12px;
@@ -319,36 +319,36 @@ main .section.feature > .carousel-wrapper {
   padding: 0;
 }
 
-@media (width < 768px) {
+@media (width >= 768px) {
   main .section.feature {
-    padding: 48px 0;
+    padding: 80px 0;
   }
 
   main .section.feature > .default-content-wrapper {
-    margin-bottom: 24px;
+    margin-bottom: 40px;
   }
 
   main .section.feature > .default-content-wrapper h2 {
-    font-size: 1.75rem;
+    font-size: 2.5rem;
   }
 }
 
 /* cta banner */
 main .section.cta {
-  padding: 80px 32px;
+  padding: 48px 16px;
   margin: 0;
 }
 
 main .section.cta > .default-content-wrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 24px;
   max-width: 1400px;
   margin: 0 auto;
 }
 
 main .section.cta > .default-content-wrapper h2 {
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   line-height: 1.2;
   margin-bottom: 24px;
 }
@@ -368,17 +368,17 @@ main .section.cta .button-container a.button:focus {
   color: var(--dark-color, #1a1a1a);
 }
 
-@media (width < 768px) {
+@media (width >= 768px) {
   main .section.cta {
-    padding: 48px 16px;
+    padding: 80px 32px;
   }
 
   main .section.cta > .default-content-wrapper {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
-  main .section.cta h2 {
-    font-size: 1.75rem;
+  main .section.cta > .default-content-wrapper h2 {
+    font-size: 2.5rem;
   }
 }
 
