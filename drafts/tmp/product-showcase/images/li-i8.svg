@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" width="220" height="220">
+  <rect width="220" height="220" fill="#2a2e3a"/>
+  <g transform="translate(110 120)" fill="#ffffff" opacity="0.9">
+    <path d="M-60 0 q-8 -18 8 -22 q15 -5 28 -12 q18 -10 38 -10 q22 0 38 10 q13 7 28 12 q16 4 8 22 l-4 10 q-1 4 -6 4 h-128 q-5 0 -6 -4 z" stroke="#ffffff" stroke-width="1.5" fill="#ffffff" fill-opacity="0.18"/>
+    <circle cx="-36" cy="10" r="9" fill="#ffffff"/>
+    <circle cx="36" cy="10" r="9" fill="#ffffff"/>
+  </g>
+  <text x="110" y="180" font-family="Helvetica,Arial,sans-serif" font-size="22" font-weight="700" text-anchor="middle" fill="#ffffff">Li i8</text>
+</svg>

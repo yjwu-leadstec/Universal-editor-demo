@@ -255,3 +255,77 @@ main .section.highlight {
   margin: 0;
   padding: 40px 0;
 }
+
+/* Visual: Dark Background */
+main > .section.dark-bg {
+  background-color: var(--dark-color, #1a1a1a);
+  color: var(--background-color, #fff);
+}
+
+main > .section.dark-bg a:any-link {
+  color: var(--background-color, #fff);
+}
+
+main > .section.dark-bg a:focus-visible,
+main > .section.dark-bg button:focus-visible {
+  outline: 2px solid var(--background-color, #fff);
+  outline-offset: 2px;
+}
+
+/* Layout: Hero (Full Height) */
+main > .section.hero {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+main > .section.hero > div {
+  max-width: unset;
+  padding: 0;
+}
+
+/* Layout: Feature Showcase */
+main > .section.feature {
+  margin: 0;
+  padding: 60px 0;
+}
+
+main > .section.feature > div {
+  max-width: unset;
+  padding: 0;
+}
+
+/* Layout: CTA Banner (mobile-first) */
+main > .section.cta {
+  margin: 0;
+  padding: 48px 24px;
+}
+
+main > .section.cta > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 1400px;
+  padding: 0;
+}
+
+main > .section.cta h2 {
+  font-size: var(--heading-font-size-xl);
+  margin-bottom: 16px;
+}
+
+@media (width >= 768px) {
+  main > .section.cta {
+    padding: 80px 32px;
+  }
+
+  main > .section.cta > div {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Layout: Full Width */
+main > .section.full-width > div {
+  max-width: unset;
+  padding: 0;
+}
