@@ -427,7 +427,7 @@
 .section.feature .carousel .slide-text h3 {
   font-size: 1.75rem;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .section.feature .carousel .slide-text p {
