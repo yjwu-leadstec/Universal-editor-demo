@@ -298,6 +298,22 @@
             "value": "none"
           }
         ]
+      },
+      {
+        "component": "boolean",
+        "name": "showArrows",
+        "label": "Show Navigation Arrows",
+        "description": "Display prev/next arrow buttons",
+        "value": true,
+        "valueType": "boolean"
+      },
+      {
+        "component": "boolean",
+        "name": "showDots",
+        "label": "Show Dot Indicators",
+        "description": "Display slide position dots",
+        "value": true,
+        "valueType": "boolean"
       }
     ]
   },
@@ -305,18 +321,83 @@
     "id": "slide",
     "fields": [
       {
+        "component": "select",
+        "name": "mediaKind",
+        "label": "Media Type",
+        "description": "Choose between image or video background",
+        "value": "image",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Image",
+            "value": "image"
+          },
+          {
+            "name": "Video",
+            "value": "video"
+          }
+        ]
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "image",
         "label": "Image",
-        "multi": false
+        "multi": false,
+        "condition": {
+          "===": [
+            {
+              "var": "mediaKind"
+            },
+            "image"
+          ]
+        }
       },
       {
         "component": "text",
         "name": "imageAlt",
         "label": "Image Alt Text",
         "description": "Alternative text for accessibility",
-        "valueType": "string"
+        "valueType": "string",
+        "condition": {
+          "===": [
+            {
+              "var": "mediaKind"
+            },
+            "image"
+          ]
+        }
+      },
+      {
+        "component": "aem-content",
+        "name": "video",
+        "label": "Video",
+        "description": "Video asset from DAM or external URL",
+        "valueType": "string",
+        "condition": {
+          "===": [
+            {
+              "var": "mediaKind"
+            },
+            "video"
+          ]
+        }
+      },
+      {
+        "component": "reference",
+        "name": "videoPoster",
+        "label": "Video Poster Image",
+        "description": "Thumbnail shown before video plays",
+        "valueType": "string",
+        "multi": false,
+        "condition": {
+          "===": [
+            {
+              "var": "mediaKind"
+            },
+            "video"
+          ]
+        }
       },
       {
         "component": "richtext",
@@ -330,6 +411,14 @@
         "name": "link",
         "label": "CTA Link",
         "description": "Optional call-to-action button link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "CTA Button Text",
+        "description": "Text displayed on the CTA button",
+        "value": "",
         "valueType": "string"
       }
     ]

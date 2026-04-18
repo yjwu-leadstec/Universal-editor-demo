@@ -71,8 +71,8 @@
   transition: none;
 }
 
-/* Slide Image */
-.slide-image {
+/* Slide Media (shared for image and video) */
+.slide-media {
   position: absolute;
   top: 0;
   left: 0;
@@ -81,6 +81,7 @@
   overflow: hidden;
 }
 
+/* Slide Image */
 .slide-image picture {
   display: block;
   width: 100%;
@@ -88,6 +89,13 @@
 }
 
 .slide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Slide Video */
+.slide-video video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -139,6 +147,56 @@
 .slide-cta:hover {
   background-color: var(--link-hover-color, #024bb5);
   color: white;
+}
+
+/* Arrow Navigation */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 40%);
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease, background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-arrow:hover {
+  background: rgb(0 0 0 / 60%);
+}
+
+.carousel-arrow:focus-visible {
+  opacity: 1;
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.carousel-container:hover .carousel-arrow,
+.carousel-container:focus-within .carousel-arrow {
+  opacity: 1;
+}
+
+.carousel-arrow.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.carousel-arrow-prev {
+  left: 1rem;
+}
+
+.carousel-arrow-next {
+  right: 1rem;
 }
 
 /* Dots Navigation */
@@ -218,7 +276,8 @@
 @media (prefers-reduced-motion: reduce) {
   .carousel-container.transition-slide .carousel-slides,
   .carousel-container.transition-fade .carousel-slide,
-  .carousel-dot {
+  .carousel-dot,
+  .carousel-arrow {
     transition: none;
   }
 }

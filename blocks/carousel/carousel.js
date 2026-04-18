@@ -2,14 +2,17 @@
  * Carousel Block - 轮播组件 (lit-html 版本)
  *
  * 功能特性:
- * - 多 slide 支持
- * - 自动轮播（5秒间隔）
- * - 底部圆点导航
+ * - 多 slide 支持（图片 + 视频）
+ * - 自动轮播（可配置间隔）
+ * - 底部圆点导航 + 箭头导航
+ * - 键盘导航（← →）
+ * - 视频懒加载（IntersectionObserver）
  * - 支持 Universal Editor 可视化编辑
  */
 import {
   html,
   render,
+  nothing,
   classMap,
   createRef,
   ref,
@@ -17,16 +20,60 @@ import {
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
- * 检查 row 是否有实际内容（图片、文字等）
+ * 检查 row 是否有实际内容（图片、文字、视频等）
  * @param {HTMLElement} row
  * @returns {boolean}
  */
 function hasContent(row) {
-  if (row.querySelector('picture, img')) return true;
+  if (row.querySelector('picture, img, video, a[href*=".mp4"]')) return true;
   const text = row.textContent.trim();
   if (text) return true;
   if (row.querySelector('a')) return true;
   return false;
+}
+
+/**
+ * 检测 slide 的媒体类型
+ * @param {HTMLElement} cell
+ * @returns {'video'|'image'}
+ */
+function detectMediaType(cell) {
+  if (!cell) return 'image';
+  if (cell.querySelector('video')) return 'video';
+  const videoLink = cell.querySelector('a[href*=".mp4"]');
+  if (videoLink) return 'video';
+  return 'image';
+}
+
+/**
+ * 提取视频源 URL
+ * @param {HTMLElement} cell
+ * @returns {string|null}
+ */
+function extractVideoSrc(cell) {
+  if (!cell) return null;
+  const video = cell.querySelector('video');
+  if (video) {
+    const source = video.querySelector('source');
+    return source ? source.getAttribute('src') : video.getAttribute('src');
+  }
+  const videoLink = cell.querySelector('a[href*=".mp4"]');
+  if (videoLink) return videoLink.href;
+  return null;
+}
+
+/**
+ * 提取视频封面图
+ * @param {HTMLElement} cell
+ * @returns {string|null}
+ */
+function extractVideoPoster(cell) {
+  if (!cell) return null;
+  const video = cell.querySelector('video');
+  if (video && video.poster) return video.poster;
+  const picture = cell.querySelector('picture img');
+  if (picture) return picture.src;
+  return null;
 }
 
 /**
@@ -37,17 +84,62 @@ function hasContent(row) {
  */
 function extractSlideData(row, index) {
   const cells = [...row.children];
-  const imageCell = cells.find((cell) => cell.querySelector('picture'));
-  const contentCell = cells.find((cell) => !cell.querySelector('picture'));
+  const imageCell = cells.find((cell) => cell.querySelector('picture, video, a[href*=".mp4"]'));
+  const contentCell = cells.find((cell) => !cell.querySelector('picture, video, a[href*=".mp4"]'));
+
+  const mediaType = detectMediaType(imageCell);
 
   return {
     index,
     row,
     imageCell,
     contentCell,
+    mediaType,
+    videoSrc: mediaType === 'video' ? extractVideoSrc(imageCell) : null,
+    videoPoster: mediaType === 'video' ? extractVideoPoster(imageCell) : null,
     slideRef: createRef(),
     imageCellRef: createRef(),
     contentCellRef: createRef(),
+    videoRef: createRef(),
+  };
+}
+
+/**
+ * 设置视频懒加载 IntersectionObserver
+ * @param {HTMLElement} block
+ */
+function setupVideoObserver(block) {
+  const videos = block.querySelectorAll('video[data-src]');
+  if (videos.length === 0) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const video = entry.target;
+      if (entry.isIntersecting) {
+        if (!video.src && video.dataset.src) {
+          video.src = video.dataset.src;
+          video.load();
+        }
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.25 });
+
+  videos.forEach((video) => observer.observe(video));
+}
+
+/**
+ * 读取 block 上的 data attribute 配置
+ * @param {HTMLElement} block
+ * @returns {Object}
+ */
+function getBlockConfig(block) {
+  return {
+    showArrows: block.dataset.showArrows !== 'false',
+    showDots: block.dataset.showDots !== 'false',
+    loop: block.dataset.loop !== 'false',
   };
 }
 
@@ -56,29 +148,43 @@ function extractSlideData(row, index) {
  * @param {HTMLElement} block
  */
 export default function decorate(block) {
-  // 过滤掉空的 rows
   const rows = [...block.children].filter(hasContent);
-
-  // eslint-disable-next-line no-console
-  console.log('[Carousel] Valid slides count:', rows.length);
 
   if (rows.length === 0) return;
 
-  // 提取所有 slide 数据
   const slides = rows.map((row, index) => extractSlideData(row, index));
   const slideCount = slides.length;
+  const config = getBlockConfig(block);
 
-  // 当前 slide 索引
   let currentIndex = 0;
 
-  // 切换到指定 slide (声明提前以避免 no-use-before-define)
+  const canGoPrev = () => config.loop || currentIndex > 0;
+  const canGoNext = () => config.loop || currentIndex < slideCount - 1;
+
   const goToSlide = (index) => {
-    currentIndex = index;
+    if (config.loop) {
+      currentIndex = (index + slideCount) % slideCount;
+    } else {
+      currentIndex = Math.max(0, Math.min(index, slideCount - 1));
+    }
     // eslint-disable-next-line no-use-before-define
     renderCarousel();
   };
 
-  // 渲染轮播组件
+  const goPrev = () => { if (canGoPrev()) goToSlide(currentIndex - 1); };
+  const goNext = () => { if (canGoNext()) goToSlide(currentIndex + 1); };
+
+  // 键盘导航
+  const handleKeydown = (e) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goPrev();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      goNext();
+    }
+  };
+
   const renderCarousel = () => {
     const slideClasses = (slide) => classMap({
       'carousel-slide': true,
@@ -90,36 +196,95 @@ export default function decorate(block) {
       active: slide.index === currentIndex,
     });
 
+    const arrowPrevClasses = classMap({
+      'carousel-arrow': true,
+      'carousel-arrow-prev': true,
+      hidden: !canGoPrev(),
+    });
+
+    const arrowNextClasses = classMap({
+      'carousel-arrow': true,
+      'carousel-arrow-next': true,
+      hidden: !canGoNext(),
+    });
+
+    const renderSlideMedia = (slide) => {
+      if (slide.mediaType === 'video' && slide.videoSrc) {
+        return html`
+          <div class="slide-media slide-video" ${ref(slide.imageCellRef)}>
+            <video
+              ${ref(slide.videoRef)}
+              data-src="${slide.videoSrc}"
+              poster="${slide.videoPoster || ''}"
+              muted
+              loop
+              playsinline
+              preload="none"
+              aria-hidden="true"
+            ></video>
+          </div>
+        `;
+      }
+      if (slide.imageCell) {
+        return html`
+          <div class="slide-media slide-image" ${ref(slide.imageCellRef)}></div>
+        `;
+      }
+      return nothing;
+    };
+
     const template = html`
-      <div class="carousel-container transition-slide">
+      <div
+        class="carousel-container transition-slide"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Carousel"
+        tabindex="0"
+        @keydown=${handleKeydown}
+      >
         <div class="carousel-slides" style="--current-slide: ${currentIndex}">
           ${slides.map((slide) => html`
             <div
               class=${slideClasses(slide)}
+              role="group"
+              aria-roledescription="slide"
+              aria-label="Slide ${slide.index + 1} of ${slideCount}"
               data-index=${slide.index}
               ${ref(slide.slideRef)}
             >
-              ${slide.imageCell ? html`
-                <div class="slide-image" ${ref(slide.imageCellRef)}></div>
-              ` : ''}
+              ${renderSlideMedia(slide)}
               ${slide.contentCell ? html`
                 <div class="slide-content" ${ref(slide.contentCellRef)}></div>
               ` : ''}
             </div>
           `)}
         </div>
-        ${slideCount > 1 ? html`
-          <div class="carousel-dots">
+        ${slideCount > 1 && config.showArrows ? html`
+          <button
+            class=${arrowPrevClasses}
+            aria-label="Previous slide"
+            @click=${goPrev}
+          >&#8249;</button>
+          <button
+            class=${arrowNextClasses}
+            aria-label="Next slide"
+            @click=${goNext}
+          >&#8250;</button>
+        ` : nothing}
+        ${slideCount > 1 && config.showDots ? html`
+          <div class="carousel-dots" role="tablist" aria-label="Slide controls">
             ${slides.map((slide) => html`
               <button
                 class=${dotClasses(slide)}
-                data-index=${slide.index}
+                role="tab"
+                aria-selected=${slide.index === currentIndex}
                 aria-label="Go to slide ${slide.index + 1}"
+                data-index=${slide.index}
                 @click=${() => goToSlide(slide.index)}
               ></button>
             `)}
           </div>
-        ` : ''}
+        ` : nothing}
       </div>
     `;
 
@@ -127,13 +292,12 @@ export default function decorate(block) {
 
     // 首次渲染后，移动内容和应用 instrumentation
     slides.forEach((slide) => {
-      // 应用 Universal Editor instrumentation
       if (slide.slideRef.value && slide.row) {
         moveInstrumentation(slide.row, slide.slideRef.value);
       }
 
-      // 移动图片内容
-      if (slide.imageCellRef.value && slide.imageCell) {
+      // 移动图片内容（仅限 image 类型）
+      if (slide.mediaType === 'image' && slide.imageCellRef.value && slide.imageCell) {
         if (slide.imageCellRef.value.children.length === 0) {
           while (slide.imageCell.firstChild) {
             slide.imageCellRef.value.appendChild(slide.imageCell.firstChild);
@@ -155,11 +319,21 @@ export default function decorate(block) {
   // 初始渲染
   renderCarousel();
 
+  // 设置视频懒加载
+  setupVideoObserver(block);
+
   // 自动轮播
   if (slideCount > 1) {
-    setInterval(() => {
+    const autoAdvance = () => {
       currentIndex = (currentIndex + 1) % slideCount;
       renderCarousel();
-    }, 5000);
+    };
+
+    let autoPlayTimer = setInterval(autoAdvance, 5000);
+
+    block.addEventListener('mouseenter', () => clearInterval(autoPlayTimer));
+    block.addEventListener('mouseleave', () => {
+      autoPlayTimer = setInterval(autoAdvance, 5000);
+    });
   }
 }
