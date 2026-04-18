@@ -1,0 +1,210 @@
+/* Product Showcase Block */
+
+.product-showcase {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  min-height: 400px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background Layer */
+.product-showcase .product-showcase-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.product-showcase .product-showcase-bg-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.product-showcase .product-showcase-bg-slide.active {
+  opacity: 1;
+}
+
+.product-showcase .product-showcase-bg-slide picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.product-showcase .product-showcase-bg-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Foreground Grid */
+.product-showcase .product-showcase-grid {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 16px;
+  max-width: 1400px;
+  width: 100%;
+}
+
+/* Product Card — Mobile-first base (2-column grid) */
+.product-showcase .product-showcase-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(50% - 5px);
+  min-height: 180px;
+  background: rgb(255 255 255 / 92%);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.product-showcase .product-showcase-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+}
+
+/* Card Image */
+.product-showcase .product-showcase-card-image {
+  width: 100%;
+  height: 90px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.product-showcase .product-showcase-card-image picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.product-showcase .product-showcase-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Card Body */
+.product-showcase .product-showcase-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  text-align: center;
+  flex: 1;
+}
+
+.product-showcase .product-showcase-card-name {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1a1a1a;
+}
+
+.product-showcase .product-showcase-card-subtitle {
+  margin: 2px 0 4px;
+  font-size: 0.75rem;
+  color: #666;
+  line-height: 1.3;
+}
+
+.product-showcase .product-showcase-card-cta {
+  font-size: 0.7rem;
+  color: var(--link-color, #035fe6);
+  font-weight: 600;
+}
+
+.product-showcase .product-showcase-card:hover .product-showcase-card-cta {
+  text-decoration: underline;
+}
+
+/* Tablet (600px+) */
+@media (width >= 600px) {
+  .product-showcase {
+    min-height: 500px;
+  }
+
+  .product-showcase .product-showcase-grid {
+    gap: 14px;
+    padding: 30px 20px;
+    max-width: 900px;
+  }
+
+  .product-showcase .product-showcase-card {
+    width: 180px;
+    height: 200px;
+  }
+
+  .product-showcase .product-showcase-card-image {
+    height: 100px;
+  }
+}
+
+/* Desktop (900px+) */
+@media (width >= 900px) {
+  .product-showcase .product-showcase-grid {
+    max-width: 1200px;
+    gap: 16px;
+    padding: 40px 24px;
+  }
+
+  .product-showcase .product-showcase-card {
+    width: 200px;
+    height: 210px;
+  }
+
+  .product-showcase .product-showcase-card-image {
+    height: 105px;
+  }
+}
+
+/* Large Desktop (1200px+) */
+@media (width >= 1200px) {
+  .product-showcase {
+    min-height: 650px;
+  }
+
+  .product-showcase .product-showcase-grid {
+    max-width: 1400px;
+  }
+
+  .product-showcase .product-showcase-card {
+    width: 220px;
+    height: 220px;
+  }
+
+  .product-showcase .product-showcase-card-image {
+    height: 110px;
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .product-showcase .product-showcase-bg-slide {
+    transition: none;
+  }
+
+  .product-showcase .product-showcase-card {
+    transition: none;
+  }
+}

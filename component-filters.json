@@ -18,7 +18,8 @@
       "columns",
       "fragment",
       "avatar",
-      "product-table"
+      "product-table",
+      "product-showcase"
     ]
   },
   {
@@ -47,6 +48,12 @@
       "button",
       "title",
       "avatar"
+    ]
+  },
+  {
+    "id": "product-showcase",
+    "components": [
+      "product-card"
     ]
   },
   {

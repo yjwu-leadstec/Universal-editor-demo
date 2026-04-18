@@ -390,6 +390,119 @@
     ]
   },
   {
+    "id": "product-showcase",
+    "fields": [
+      {
+        "component": "tab",
+        "name": "backgroundTab",
+        "label": "Background"
+      },
+      {
+        "component": "reference",
+        "name": "backgroundImages",
+        "label": "Background Images",
+        "description": "Vehicle showcase images displayed behind the product grid",
+        "valueType": "string",
+        "multi": true
+      },
+      {
+        "component": "number",
+        "name": "backgroundInterval",
+        "label": "Background Switch Interval (ms)",
+        "description": "Auto-switch interval for background images",
+        "value": 5000,
+        "valueType": "number"
+      },
+      {
+        "component": "tab",
+        "name": "optionsTab",
+        "label": "Options"
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Layout",
+        "description": "Visual style options",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Layout",
+            "children": [
+              {
+                "name": "Grid (Default)",
+                "value": "grid"
+              },
+              {
+                "name": "Flex Row",
+                "value": "flex-row"
+              }
+            ]
+          },
+          {
+            "name": "Theme",
+            "children": [
+              {
+                "name": "Light",
+                "value": "light"
+              },
+              {
+                "name": "Dark",
+                "value": "dark"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "product-card",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Product Image",
+        "description": "Product thumbnail (square recommended, 220x220px)",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "productName",
+        "label": "Product Name",
+        "description": "e.g. Li i6, Li L9",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "subtitle",
+        "label": "Subtitle",
+        "description": "Short description, e.g. 'Luxury 5-Seat Family SUV'",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Product Page Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "CTA Text",
+        "description": "Button text, e.g. 'Learn More'",
+        "value": "Learn More",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "product-table",
     "fields": [
       {
