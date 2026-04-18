@@ -105,12 +105,26 @@ function extractSlideData(row, index) {
 }
 
 /**
- * 设置视频懒加载 IntersectionObserver
+ * 设置视频懒加载 IntersectionObserver + 错误回退
  * @param {HTMLElement} block
  */
 function setupVideoObserver(block) {
   const videos = block.querySelectorAll('video[data-src]');
   if (videos.length === 0) return;
+
+  videos.forEach((video) => {
+    // 视频加载失败时回退到 poster
+    video.addEventListener('error', () => {
+      const { poster } = video;
+      if (poster) {
+        const img = document.createElement('img');
+        img.src = poster;
+        img.alt = '';
+        img.classList.add('video-fallback');
+        video.parentElement.replaceChild(img, video);
+      }
+    });
+  });
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -128,6 +142,14 @@ function setupVideoObserver(block) {
   }, { threshold: 0.25 });
 
   videos.forEach((video) => observer.observe(video));
+}
+
+/**
+ * 检查用户是否偏好减少动画
+ * @returns {boolean}
+ */
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
 /**
@@ -176,6 +198,14 @@ export default function decorate(block) {
   const goPrev = () => { if (canGoPrev()) goToSlide(currentIndex - 1); };
   const goNext = () => { if (canGoNext()) goToSlide(currentIndex + 1); };
 
+  // 自动轮播状态
+  let autoPlayPaused = false;
+  let autoPlayTimer = null;
+
+  const toggleAutoPlay = () => {
+    autoPlayPaused = !autoPlayPaused;
+  };
+
   // 键盘导航
   const handleKeydown = (e) => {
     if (e.key === 'ArrowLeft') {
@@ -184,6 +214,24 @@ export default function decorate(block) {
     } else if (e.key === 'ArrowRight') {
       e.preventDefault();
       goNext();
+    } else if (e.key === ' ') {
+      e.preventDefault();
+      toggleAutoPlay();
+    }
+  };
+
+  // 触摸 swipe 支持
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const SWIPE_THRESHOLD = 50;
+
+  const handleTouchStart = (e) => { touchStartX = e.changedTouches[0].screenX; };
+  const handleTouchEnd = (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > SWIPE_THRESHOLD) {
+      if (diff > 0) goNext();
+      else goPrev();
     }
   };
 
@@ -201,13 +249,11 @@ export default function decorate(block) {
     const arrowPrevClasses = classMap({
       'carousel-arrow': true,
       'carousel-arrow-prev': true,
-      hidden: !canGoPrev(),
     });
 
     const arrowNextClasses = classMap({
       'carousel-arrow': true,
       'carousel-arrow-next': true,
-      hidden: !canGoNext(),
     });
 
     const renderSlideMedia = (slide) => {
@@ -243,6 +289,8 @@ export default function decorate(block) {
         aria-label="Carousel"
         tabindex="0"
         @keydown=${handleKeydown}
+        @touchstart=${handleTouchStart}
+        @touchend=${handleTouchEnd}
       >
         <div class="carousel-slides" style="--current-slide: ${currentIndex}">
           ${slides.map((slide) => html`
@@ -251,6 +299,7 @@ export default function decorate(block) {
               role="group"
               aria-roledescription="slide"
               aria-label="Slide ${slide.index + 1} of ${slideCount}"
+              aria-hidden=${slide.index !== currentIndex}
               data-index=${slide.index}
               ${ref(slide.slideRef)}
             >
@@ -265,11 +314,13 @@ export default function decorate(block) {
           <button
             class=${arrowPrevClasses}
             aria-label="Previous slide"
+            ?disabled=${!canGoPrev()}
             @click=${goPrev}
           >&#8249;</button>
           <button
             class=${arrowNextClasses}
             aria-label="Next slide"
+            ?disabled=${!canGoNext()}
             @click=${goNext}
           >&#8250;</button>
         ` : nothing}
@@ -333,14 +384,16 @@ export default function decorate(block) {
     }
   }
 
-  // 自动轮播（hero 变体默认关闭）
-  if (slideCount > 1 && config.autoPlay) {
+  // 自动轮播（hero 变体默认关闭，reduced-motion 时禁用）
+  if (slideCount > 1 && config.autoPlay && !prefersReducedMotion()) {
     const autoAdvance = () => {
-      currentIndex = (currentIndex + 1) % slideCount;
-      renderCarousel();
+      if (!autoPlayPaused) {
+        currentIndex = (currentIndex + 1) % slideCount;
+        renderCarousel();
+      }
     };
 
-    let autoPlayTimer = setInterval(autoAdvance, 5000);
+    autoPlayTimer = setInterval(autoAdvance, 5000);
 
     block.addEventListener('mouseenter', () => clearInterval(autoPlayTimer));
     block.addEventListener('mouseleave', () => {
