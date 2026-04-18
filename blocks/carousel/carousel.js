@@ -136,10 +136,12 @@ function setupVideoObserver(block) {
  * @returns {Object}
  */
 function getBlockConfig(block) {
+  const isHero = block.closest('.section.hero') !== null;
   return {
     showArrows: block.dataset.showArrows !== 'false',
     showDots: block.dataset.showDots !== 'false',
     loop: block.dataset.loop !== 'false',
+    autoPlay: isHero ? false : block.dataset.autoPlay !== 'false',
   };
 }
 
@@ -322,8 +324,17 @@ export default function decorate(block) {
   // 设置视频懒加载
   setupVideoObserver(block);
 
-  // 自动轮播
-  if (slideCount > 1) {
+  // Hero 变体：首张幻灯片图片 eager 加载（LCP 优化）
+  if (block.closest('.section.hero')) {
+    const firstSlideImg = block.querySelector('.carousel-slide:first-child img');
+    if (firstSlideImg) {
+      firstSlideImg.loading = 'eager';
+      firstSlideImg.fetchPriority = 'high';
+    }
+  }
+
+  // 自动轮播（hero 变体默认关闭）
+  if (slideCount > 1 && config.autoPlay) {
     const autoAdvance = () => {
       currentIndex = (currentIndex + 1) % slideCount;
       renderCarousel();
