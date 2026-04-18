@@ -222,13 +222,11 @@ export default function decorate(block) {
 
   // 触摸 swipe 支持
   let touchStartX = 0;
-  let touchEndX = 0;
   const SWIPE_THRESHOLD = 50;
 
   const handleTouchStart = (e) => { touchStartX = e.changedTouches[0].screenX; };
   const handleTouchEnd = (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    const diff = touchStartX - touchEndX;
+    const diff = touchStartX - e.changedTouches[0].screenX;
     if (Math.abs(diff) > SWIPE_THRESHOLD) {
       if (diff > 0) goNext();
       else goPrev();
