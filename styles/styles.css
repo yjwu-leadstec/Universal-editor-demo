@@ -304,16 +304,33 @@ main .section.cta {
   margin: 0;
 }
 
-main .section.cta > div {
+main .section.cta > .default-content-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
   max-width: 1400px;
+  margin: 0 auto;
 }
 
 main .section.cta h2 {
   font-size: 2.5rem;
-  margin-bottom: 16px;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+/* CTA buttons: ghost/outlined style */
+main .section.cta .button-container a.button {
+  background: transparent;
+  border: 2px solid var(--background-color, #fff);
+  color: var(--background-color, #fff);
+  padding: 12px 32px;
+  font-size: 1rem;
+}
+
+main .section.cta .button-container a.button:hover,
+main .section.cta .button-container a.button:focus {
+  background: var(--background-color, #fff);
+  color: var(--dark-color, #1a1a1a);
 }
 
 @media (width < 768px) {
@@ -321,8 +338,12 @@ main .section.cta h2 {
     padding: 48px 16px;
   }
 
-  main .section.cta > div {
+  main .section.cta > .default-content-wrapper {
     grid-template-columns: 1fr;
+  }
+
+  main .section.cta h2 {
+    font-size: 1.75rem;
   }
 }
 
