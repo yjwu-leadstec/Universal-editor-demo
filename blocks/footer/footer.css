@@ -1,20 +1,276 @@
+/* Footer Block — Li Auto style */
+
+/* ==========================================
+   Base: Pure black footer
+   ========================================== */
+
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+  background-color: #000;
+  height: auto;
 }
 
-footer .footer > div {
-  margin: auto;
+footer .footer {
+  background-color: #000;
+}
+
+footer .footer .footer-inner {
+  position: relative;
   max-width: 1200px;
-  padding: 40px 24px 24px;
+  margin: 0 auto;
+  padding: 48px 24px 32px;
 }
 
-footer .footer p {
+/* ==========================================
+   Back-to-top Button
+   ========================================== */
+
+.footer-back-to-top {
+  position: fixed;
+  bottom: 40px;
+  right: 24px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgb(255 255 255 / 30%);
+  background: rgb(0 0 0 / 60%);
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.2s ease;
+  padding: 0;
   margin: 0;
 }
 
+.footer-back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.footer-back-to-top:hover {
+  background: rgb(255 255 255 / 15%);
+}
+
+.footer-back-to-top:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.footer-back-to-top svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ==========================================
+   Desktop Nav Grid (hidden on mobile)
+   ========================================== */
+
+.footer-nav {
+  display: none;
+}
+
+.footer-nav-column h3.footer-nav-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 20px;
+  line-height: 1.4;
+  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.footer-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-nav-list li {
+  margin-bottom: 12px;
+}
+
+/* ==========================================
+   Mobile Accordion Nav
+   ========================================== */
+
+.footer-nav-mobile {
+  display: block;
+}
+
+.footer-accordion-item {
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+}
+
+.footer-accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+}
+
+.footer-accordion-header:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+  border-radius: 2px;
+}
+
+/* Chevron */
+.footer-accordion-chevron {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid rgb(255 255 255 / 50%);
+  border-bottom: 2px solid rgb(255 255 255 / 50%);
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.footer-accordion-header[aria-expanded="true"] .footer-accordion-chevron {
+  transform: rotate(-135deg);
+}
+
+/* Accordion content */
+.footer-accordion-content {
+  display: none;
+  padding: 0 0 12px;
+}
+
+.footer-accordion-header[aria-expanded="true"] + .footer-accordion-content {
+  display: block;
+}
+
+.footer-accordion-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-accordion-content li {
+  margin-bottom: 10px;
+}
+
+footer .footer .footer-accordion-content a,
+footer .footer .footer-nav-list a {
+  font-size: 13px;
+  color: rgb(255 255 255 / 65%);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  line-height: 1.5;
+}
+
+footer .footer .footer-accordion-content a:hover,
+footer .footer .footer-nav-list a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+footer .footer .footer-accordion-content a:focus-visible,
+footer .footer .footer-nav-list a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ==========================================
+   Bottom Bar
+   ========================================== */
+
+.footer-bottom {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgb(255 255 255 / 12%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+footer .footer .footer-bottom-link,
+footer .footer .footer-bottom-text {
+  font-size: 12px;
+  color: rgb(255 255 255 / 45%);
+  text-decoration: none;
+  line-height: 1.6;
+}
+
+footer .footer .footer-bottom-link:hover {
+  color: rgb(255 255 255 / 70%);
+  text-decoration: none;
+}
+
+footer .footer .footer-bottom-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ==========================================
+   Desktop (900px+)
+   ========================================== */
+
 @media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+  footer .footer .footer-inner {
+    padding: 56px 32px 40px;
+  }
+
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+  }
+
+  .footer-nav-mobile {
+    display: none;
+  }
+
+  .footer-back-to-top {
+    bottom: 48px;
+    right: 32px;
+  }
+
+  .footer-bottom {
+    flex-flow: row wrap;
+    gap: 16px;
+    align-items: center;
+    margin-top: 48px;
+  }
+}
+
+/* ==========================================
+   Large Desktop (1200px+)
+   ========================================== */
+
+@media (width >= 1200px) {
+  .footer-nav {
+    gap: 32px;
+  }
+
+  .footer-back-to-top {
+    right: 48px;
+  }
+}
+
+/* ==========================================
+   Accessibility: Reduced Motion
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-back-to-top,
+  .footer-accordion-chevron,
+  .footer-nav-list a,
+  .footer-accordion-content a {
+    transition: none;
   }
 }
