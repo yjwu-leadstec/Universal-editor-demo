@@ -255,3 +255,79 @@ main .section.highlight {
   margin: 0;
   padding: 40px 0;
 }
+
+/* dark background */
+main .section.dark-bg {
+  background-color: var(--dark-color, #1a1a1a);
+  color: var(--background-color, #fff);
+  margin: 0;
+  padding: 40px 0;
+}
+
+main .section.dark-bg a:any-link {
+  color: var(--background-color, #fff);
+}
+
+main .section.dark-bg a.button.secondary,
+main .section.dark-bg button.secondary {
+  color: var(--background-color, #fff);
+  border-color: var(--background-color, #fff);
+}
+
+/* hero (full height) */
+main .section.hero {
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+}
+
+main .section.hero > .hero-wrapper,
+main .section.hero > .carousel-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+/* feature showcase */
+main .section.feature {
+  padding: 60px 0;
+  margin: 0;
+}
+
+main .section.feature > .carousel-wrapper {
+  max-width: unset;
+}
+
+/* cta banner */
+main .section.cta {
+  padding: 80px 32px;
+  margin: 0;
+}
+
+main .section.cta > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 1400px;
+}
+
+main .section.cta h2 {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+@media (width < 768px) {
+  main .section.cta {
+    padding: 48px 16px;
+  }
+
+  main .section.cta > div {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* full width */
+main .section.full-width > div {
+  max-width: unset;
+  padding: 0;
+}

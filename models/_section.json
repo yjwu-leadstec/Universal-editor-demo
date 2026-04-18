@@ -31,8 +31,20 @@
           "label": "Style",
           "options": [
             {
-              "name": "Highlight",
-              "value": "highlight"
+              "name": "Visual",
+              "children": [
+                { "name": "Highlight", "value": "highlight" },
+                { "name": "Dark Background", "value": "dark-bg" }
+              ]
+            },
+            {
+              "name": "Layout",
+              "children": [
+                { "name": "Hero (Full Height)", "value": "hero" },
+                { "name": "Feature Showcase", "value": "feature" },
+                { "name": "CTA Banner", "value": "cta" },
+                { "name": "Full Width", "value": "full-width" }
+              ]
             }
           ]
         }
