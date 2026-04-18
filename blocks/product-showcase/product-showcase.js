@@ -112,7 +112,7 @@ export default function decorate(block) {
           ></div>
         `)}
       </div>
-      <div class="product-showcase-grid">
+      <div class="product-showcase-grid" role="list" aria-label="Product showcase">
         ${cards.map((card) => {
     const hasLink = !!card.linkUrl;
     const cardContent = html`
@@ -124,8 +124,8 @@ export default function decorate(block) {
               </div>
             `;
     return hasLink
-      ? html`<a class="product-showcase-card" href=${card.linkUrl} ${ref(card.cardRef)}>${cardContent}</a>`
-      : html`<div class="product-showcase-card" ${ref(card.cardRef)}>${cardContent}</div>`;
+      ? html`<a class="product-showcase-card" role="listitem" href=${card.linkUrl} aria-label="${card.productName} — ${card.linkText || card.subtitle}" ${ref(card.cardRef)}>${cardContent}</a>`
+      : html`<div class="product-showcase-card" role="listitem" ${ref(card.cardRef)}>${cardContent}</div>`;
   })}
       </div>
     `;
