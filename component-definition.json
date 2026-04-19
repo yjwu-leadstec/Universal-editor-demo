@@ -133,7 +133,7 @@
           }
         },
         {
-          "title": "Carousel",
+          "title": "Li Carousel",
           "id": "carousel",
           "plugins": {
             "xwalk": {
@@ -149,7 +149,7 @@
           }
         },
         {
-          "title": "Slide",
+          "title": "Li Slide",
           "id": "slide",
           "plugins": {
             "xwalk": {
@@ -209,7 +209,7 @@
           }
         },
         {
-          "title": "Product Showcase",
+          "title": "Li Product Showcase",
           "id": "product-showcase",
           "plugins": {
             "xwalk": {
@@ -225,7 +225,7 @@
           }
         },
         {
-          "title": "Product Card",
+          "title": "Li Product Card",
           "id": "product-card",
           "plugins": {
             "xwalk": {

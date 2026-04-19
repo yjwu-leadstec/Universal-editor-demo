@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Carousel",
+      "title": "Li Carousel",
       "id": "carousel",
       "plugins": {
         "xwalk": {
@@ -17,7 +17,7 @@
       }
     },
     {
-      "title": "Slide",
+      "title": "Li Slide",
       "id": "slide",
       "plugins": {
         "xwalk": {
