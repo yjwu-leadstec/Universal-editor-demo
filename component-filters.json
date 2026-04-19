@@ -14,24 +14,18 @@
       "title",
       "hero",
       "cards",
-      "carousel",
+      "li-carousel",
       "columns",
       "fragment",
       "avatar",
       "product-table",
-      "product-showcase"
+      "li-product-showcase"
     ]
   },
   {
     "id": "cards",
     "components": [
       "card"
-    ]
-  },
-  {
-    "id": "carousel",
-    "components": [
-      "slide"
     ]
   },
   {
@@ -51,7 +45,13 @@
     ]
   },
   {
-    "id": "product-showcase",
+    "id": "li-carousel",
+    "components": [
+      "slide"
+    ]
+  },
+  {
+    "id": "li-product-showcase",
     "components": [
       "product-card"
     ]

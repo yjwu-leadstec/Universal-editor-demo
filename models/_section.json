@@ -61,12 +61,12 @@
         "title",
         "hero",
         "cards",
-        "carousel",
+        "li-carousel",
         "columns",
         "fragment",
         "avatar",
         "product-table",
-        "product-showcase"
+        "li-product-showcase"
       ]
     }
   ]
