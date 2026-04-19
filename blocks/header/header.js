@@ -156,7 +156,11 @@ export default async function decorate(block) {
   hamburger.className = 'header-hamburger';
   hamburger.setAttribute('aria-label', 'Open navigation');
   hamburger.setAttribute('aria-controls', 'nav');
-  hamburger.innerHTML = '<span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>';
+  for (let i = 0; i < 3; i += 1) {
+    const line = document.createElement('span');
+    line.className = 'hamburger-line';
+    hamburger.appendChild(line);
+  }
 
   inner.append(brand, navList, tools, hamburger);
   nav.appendChild(inner);
@@ -171,7 +175,7 @@ export default async function decorate(block) {
     const panelItem = document.createElement('div');
     panelItem.className = 'header-panel-item';
     panelItem.setAttribute('data-panel-id', item.index);
-    panelItem.style.display = 'none';
+    panelItem.setAttribute('aria-hidden', 'true');
 
     const panelCards = document.createElement('div');
     panelCards.className = 'panel-cards';
@@ -252,7 +256,7 @@ export default async function decorate(block) {
   function closePanel() {
     activeNavId = null;
     panel.setAttribute('aria-hidden', 'true');
-    panel.querySelectorAll('.header-panel-item').forEach((p) => { p.style.display = 'none'; });
+    panel.querySelectorAll('.header-panel-item').forEach((p) => { p.setAttribute('aria-hidden', 'true'); });
     navListInner.querySelectorAll('[aria-expanded]').forEach((el) => el.setAttribute('aria-expanded', 'false'));
   }
 
@@ -261,7 +265,7 @@ export default async function decorate(block) {
     activeNavId = navId;
     const target = panel.querySelector(`[data-panel-id="${navId}"]`);
     if (target) {
-      target.style.display = '';
+      target.setAttribute('aria-hidden', 'false');
       panel.setAttribute('aria-hidden', 'false');
       const trigger = navListInner.querySelector(`[data-nav-id="${navId}"]`);
       if (trigger) trigger.setAttribute('aria-expanded', 'true');
@@ -286,9 +290,6 @@ export default async function decorate(block) {
     if (DESKTOP_MQ.matches) closePanel();
   });
 
-  panel.addEventListener('mouseenter', () => {
-    // keep panel open when hovering over it
-  });
   panel.addEventListener('mouseleave', () => {
     if (DESKTOP_MQ.matches) closePanel();
   });
@@ -299,7 +300,7 @@ export default async function decorate(block) {
     const shouldClose = forceClose === true || isOpen;
     nav.setAttribute('aria-expanded', shouldClose ? 'false' : 'true');
     hamburger.setAttribute('aria-label', shouldClose ? 'Open navigation' : 'Close navigation');
-    document.body.style.overflowY = shouldClose ? '' : 'hidden';
+    document.body.classList.toggle('nav-open', !shouldClose);
   }
 
   hamburger.addEventListener('click', () => toggleMobileMenu());

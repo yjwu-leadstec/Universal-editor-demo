@@ -170,6 +170,15 @@ header .header[data-block-status="loaded"] {
   display: none;
 }
 
+.header-panel-item[aria-hidden="true"] {
+  display: none;
+}
+
+/* Body scroll lock when mobile nav is open */
+body.nav-open {
+  overflow-y: hidden;
+}
+
 /* ==========================================
    Mobile Menu
    ========================================== */
