@@ -9,11 +9,11 @@ footer {
   height: auto;
 }
 
-footer .li-footer {
+footer .footer {
   background-color: #000;
 }
 
-footer .li-footer .footer-inner {
+footer .footer .footer-inner {
   position: relative;
   max-width: 1200px;
   margin: 0 auto;
@@ -162,8 +162,8 @@ footer .li-footer .footer-inner {
   margin-bottom: 10px;
 }
 
-footer .li-footer .footer-accordion-content a,
-footer .li-footer .footer-nav-list a {
+footer .footer .footer-accordion-content a,
+footer .footer .footer-nav-list a {
   font-size: 13px;
   color: rgb(255 255 255 / 65%);
   text-decoration: none;
@@ -171,14 +171,14 @@ footer .li-footer .footer-nav-list a {
   line-height: 1.5;
 }
 
-footer .li-footer .footer-accordion-content a:hover,
-footer .li-footer .footer-nav-list a:hover {
+footer .footer .footer-accordion-content a:hover,
+footer .footer .footer-nav-list a:hover {
   color: #fff;
   text-decoration: none;
 }
 
-footer .li-footer .footer-accordion-content a:focus-visible,
-footer .li-footer .footer-nav-list a:focus-visible {
+footer .footer .footer-accordion-content a:focus-visible,
+footer .footer .footer-nav-list a:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
   border-radius: 2px;
@@ -197,20 +197,20 @@ footer .li-footer .footer-nav-list a:focus-visible {
   gap: 8px;
 }
 
-footer .li-footer .footer-bottom-link,
-footer .li-footer .footer-bottom-text {
+footer .footer .footer-bottom-link,
+footer .footer .footer-bottom-text {
   font-size: 12px;
   color: rgb(255 255 255 / 45%);
   text-decoration: none;
   line-height: 1.6;
 }
 
-footer .li-footer .footer-bottom-link:hover {
+footer .footer .footer-bottom-link:hover {
   color: rgb(255 255 255 / 70%);
   text-decoration: none;
 }
 
-footer .li-footer .footer-bottom-link:focus-visible {
+footer .footer .footer-bottom-link:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
   border-radius: 2px;
@@ -221,7 +221,7 @@ footer .li-footer .footer-bottom-link:focus-visible {
    ========================================== */
 
 @media (width >= 900px) {
-  footer .li-footer .footer-inner {
+  footer .footer .footer-inner {
     padding: 56px 32px 40px;
   }
 

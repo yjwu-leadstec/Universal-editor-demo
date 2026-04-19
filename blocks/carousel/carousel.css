@@ -1,6 +1,6 @@
 /* Carousel Block Styles */
 
-.li-carousel {
+.carousel {
   position: relative;
   width: 100vw;
   margin-left: calc(50% - 50vw);
@@ -289,22 +289,22 @@
 }
 
 /* ==========================================
-   Hero Variant — .section.hero .li-carousel
+   Hero Variant — .section.hero .carousel
    Full-viewport brand story carousel
    ========================================== */
 
-.section.hero .li-carousel {
+.section.hero .carousel {
   height: 100vh;
   height: 100dvh;
 }
 
-.section.hero .li-carousel .carousel-slide {
+.section.hero .carousel .carousel-slide {
   min-height: 100vh;
   min-height: 100dvh;
 }
 
 /* Hero: content at bottom-left instead of top-center */
-.section.hero .li-carousel .slide-content {
+.section.hero .carousel .slide-content {
   top: auto;
   bottom: 0;
   right: auto;
@@ -316,7 +316,7 @@
 }
 
 /* Hero: gradient overlay on the slide itself (bottom-up) */
-.section.hero .li-carousel .carousel-slide::after {
+.section.hero .carousel .carousel-slide::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -329,22 +329,22 @@
 }
 
 /* Hero: larger headings */
-.section.hero .li-carousel .slide-text h1,
-.section.hero .li-carousel .slide-text h2,
-.section.hero .li-carousel .slide-text h3 {
+.section.hero .carousel .slide-text h1,
+.section.hero .carousel .slide-text h2,
+.section.hero .carousel .slide-text h3 {
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 1.3;
   text-shadow: 0 2px 8px rgb(0 0 0 / 40%);
 }
 
-.section.hero .li-carousel .slide-text p {
+.section.hero .carousel .slide-text p {
   font-size: 1rem;
   text-shadow: 0 1px 4px rgb(0 0 0 / 40%);
 }
 
 /* Hero: CTA as subtle text link */
-.section.hero .li-carousel .slide-cta {
+.section.hero .carousel .slide-cta {
   background: none;
   padding: 0.5rem 0;
   border: none;
@@ -355,68 +355,68 @@
   transition: border-color 0.2s ease;
 }
 
-.section.hero .li-carousel .slide-cta:hover {
+.section.hero .carousel .slide-cta:hover {
   background: none;
   border-bottom-color: white;
 }
 
 /* Hero: arrows more subtle */
-.section.hero .li-carousel .carousel-arrow {
+.section.hero .carousel .carousel-arrow {
   background: rgb(255 255 255 / 15%);
   backdrop-filter: blur(4px);
 }
 
-.section.hero .li-carousel .carousel-arrow:hover {
+.section.hero .carousel .carousel-arrow:hover {
   background: rgb(255 255 255 / 30%);
 }
 
-.section.hero .li-carousel .carousel-arrow:active {
+.section.hero .carousel .carousel-arrow:active {
   background: rgb(255 255 255 / 45%);
 }
 
 /* Hero responsive: tablet */
 @media (width >= 768px) {
-  .section.hero .li-carousel .slide-content {
+  .section.hero .carousel .slide-content {
     width: 60%;
     padding: 6rem 3rem 5rem;
   }
 
-  .section.hero .li-carousel .slide-text h1,
-  .section.hero .li-carousel .slide-text h2,
-  .section.hero .li-carousel .slide-text h3 {
+  .section.hero .carousel .slide-text h1,
+  .section.hero .carousel .slide-text h2,
+  .section.hero .carousel .slide-text h3 {
     font-size: 2.5rem;
   }
 
-  .section.hero .li-carousel .slide-text p {
+  .section.hero .carousel .slide-text p {
     font-size: 1.125rem;
   }
 }
 
 /* Hero responsive: desktop */
 @media (width >= 1024px) {
-  .section.hero .li-carousel .slide-content {
+  .section.hero .carousel .slide-content {
     width: 50%;
     padding: 6rem 4rem 5rem;
   }
 
-  .section.hero .li-carousel .slide-text h1,
-  .section.hero .li-carousel .slide-text h2,
-  .section.hero .li-carousel .slide-text h3 {
+  .section.hero .carousel .slide-text h1,
+  .section.hero .carousel .slide-text h2,
+  .section.hero .carousel .slide-text h3 {
     font-size: 3rem;
   }
 }
 
 /* ==========================================
-   Feature Variant — .section.feature .li-carousel
+   Feature Variant — .section.feature .carousel
    Tech feature showcase carousel
    ========================================== */
 
-.section.feature .li-carousel .carousel-slide {
+.section.feature .carousel .carousel-slide {
   min-height: 500px;
 }
 
 /* Feature: content centered at bottom over image */
-.section.feature .li-carousel .slide-content {
+.section.feature .carousel .slide-content {
   top: auto;
   bottom: 0;
   padding: 4rem 2rem;
@@ -424,59 +424,59 @@
   text-align: center;
 }
 
-.section.feature .li-carousel .slide-text h3 {
+.section.feature .carousel .slide-text h3 {
   font-size: 1.75rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
-.section.feature .li-carousel .slide-text p {
+.section.feature .carousel .slide-text p {
   font-size: 1rem;
   opacity: 0.8;
   margin: 0;
 }
 
 /* Feature: dots below the carousel */
-.section.feature .li-carousel .carousel-dots {
+.section.feature .carousel .carousel-dots {
   position: relative;
   bottom: auto;
   padding: 1.5rem 0 0;
 }
 
-.section.feature .li-carousel .carousel-dot {
+.section.feature .carousel .carousel-dot {
   border-color: var(--text-color, #131313);
 }
 
-.section.feature .li-carousel .carousel-dot.active {
+.section.feature .carousel .carousel-dot.active {
   background-color: var(--text-color, #131313);
 }
 
 /* Feature responsive: tablet */
 @media (width >= 768px) {
-  .section.feature .li-carousel .carousel-slide {
+  .section.feature .carousel .carousel-slide {
     min-height: 560px;
   }
 
-  .section.feature .li-carousel .slide-text h3 {
+  .section.feature .carousel .slide-text h3 {
     font-size: 2rem;
   }
 
-  .section.feature .li-carousel .slide-text p {
+  .section.feature .carousel .slide-text p {
     font-size: 1.125rem;
   }
 }
 
 /* Feature responsive: desktop */
 @media (width >= 1024px) {
-  .section.feature .li-carousel .carousel-slide {
+  .section.feature .carousel .carousel-slide {
     min-height: 640px;
   }
 
-  .section.feature .li-carousel .slide-content {
+  .section.feature .carousel .slide-content {
     padding: 5rem 4rem 4rem;
   }
 
-  .section.feature .li-carousel .slide-text h3 {
+  .section.feature .carousel .slide-text h3 {
     font-size: 2.25rem;
   }
 }

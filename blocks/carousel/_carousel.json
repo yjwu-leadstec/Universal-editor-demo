@@ -1,16 +1,16 @@
 {
   "definitions": [
     {
-      "title": "Li Carousel",
-      "id": "li-carousel",
+      "title": "Carousel",
+      "id": "carousel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "Li Carousel",
-              "model": "li-carousel",
-              "filter": "li-carousel"
+              "name": "Carousel",
+              "model": "carousel",
+              "filter": "carousel"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "li-carousel",
+      "id": "carousel",
       "fields": [
         {
           "component": "boolean",
@@ -181,7 +181,7 @@
   ],
   "filters": [
     {
-      "id": "li-carousel",
+      "id": "carousel",
       "components": [
         "slide"
       ]

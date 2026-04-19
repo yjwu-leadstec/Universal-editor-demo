@@ -88,13 +88,13 @@ header {
   height: var(--nav-height);
 }
 
-header .li-header,
-footer .li-footer {
+header .header,
+footer .footer {
   visibility: hidden;
 }
 
-header .li-header[data-block-status="loaded"],
-footer .li-footer[data-block-status="loaded"] {
+header .header[data-block-status="loaded"],
+footer .footer[data-block-status="loaded"] {
   visibility: visible;
 }
 
@@ -283,7 +283,7 @@ main .section.hero {
 }
 
 main .section.hero > .hero-wrapper,
-main .section.hero > .li-carousel-wrapper {
+main .section.hero > .carousel-wrapper {
   max-width: unset;
   padding: 0;
 }
@@ -314,7 +314,7 @@ main .section.feature > .default-content-wrapper p {
   margin: 0;
 }
 
-main .section.feature > .li-carousel-wrapper {
+main .section.feature > .carousel-wrapper {
   max-width: unset;
   padding: 0;
 }
