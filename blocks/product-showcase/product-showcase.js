@@ -1,43 +1,19 @@
 /**
  * Product Showcase Block
  *
- * Double-layer layout:
- * - Background: vehicle showcase image carousel with crossfade
- * - Foreground: product card grid with responsive layout
+ * CSS Grid card layout with full-bleed background images,
+ * logo overlays, gradient masks, and bottom-aligned text.
+ * Supports big (span 2) and small (span 1) card sizes.
  */
 import {
   html,
   render,
   nothing,
-  classMap,
   createRef,
   ref,
 } from '../../scripts/lit.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-
-const AUTOPLAY_INTERVAL = 5000;
-
-/**
- * Check if a row has actual content
- * @param {HTMLElement} row
- * @returns {boolean}
- */
-function hasContent(row) {
-  if (row.querySelector('picture, img')) return true;
-  if (row.textContent.trim()) return true;
-  if (row.querySelector('a')) return true;
-  return false;
-}
-
-/**
- * Extract background images from the first row
- * @param {HTMLElement} row
- * @returns {HTMLElement[]}
- */
-function extractBackgroundImages(row) {
-  return [...row.querySelectorAll('picture')];
-}
 
 /**
  * Extract product card data from a row
@@ -47,35 +23,43 @@ function extractBackgroundImages(row) {
  */
 function extractCardData(row, index) {
   const cells = [...row.children];
-  const imageCell = cells.find((cell) => cell.querySelector('picture'));
-  const contentCell = cells.find((cell) => !cell.querySelector('picture') && cell.textContent.trim());
-
+  const pictures = row.querySelectorAll('picture');
   const link = row.querySelector('a');
-  // Filter out paragraphs that only contain a link (CTA row)
-  const textElements = contentCell
-    ? [...contentCell.querySelectorAll('h1, h2, h3, h4, h5, h6, p')].filter(
-      (el) => !(el.children.length === 1 && el.querySelector('a')),
-    ) : [];
+
+  // First picture = background image, second picture = logo (if present)
+  const bgPicture = pictures[0] || null;
+  const logoPicture = pictures[1] || null;
+
+  // Find the content cell (non-picture text content)
+  const textElements = [];
+  cells.forEach((cell) => {
+    cell.querySelectorAll('h1, h2, h3, h4, h5, h6, p').forEach((el) => {
+      // Skip paragraphs that only contain a link or a picture
+      if (el.children.length === 1 && (el.querySelector('a') || el.querySelector('picture'))) return;
+      if (el.textContent.trim()) textElements.push(el);
+    });
+  });
+
+  // Detect size: check for 'big' class on block or text content
+  const sizeText = [...cells]
+    .map((c) => c.textContent.trim().toLowerCase())
+    .find((t) => t === 'big' || t === 'small');
+  const size = row.classList.contains('big') || sizeText === 'big' ? 'big' : 'small';
 
   return {
     index,
     row,
-    imageCell,
+    bgPicture,
+    logoPicture,
     productName: textElements[0]?.textContent.trim() || '',
     subtitle: textElements[1]?.textContent.trim() || '',
     linkUrl: link?.href || '',
     linkText: link?.textContent.trim() || '',
+    size,
     cardRef: createRef(),
-    imageRef: createRef(),
+    bgRef: createRef(),
+    logoRef: createRef(),
   };
-}
-
-/**
- * Check if reduced motion is preferred
- * @returns {boolean}
- */
-function prefersReducedMotion() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
 /**
@@ -83,131 +67,70 @@ function prefersReducedMotion() {
  * @param {HTMLElement} block
  */
 export default function decorate(block) {
-  const rows = [...block.children].filter(hasContent);
+  const rows = [...block.children].filter((row) => row.textContent.trim() || row.querySelector('picture, img'));
   if (rows.length === 0) return;
 
-  // First row = background images, remaining rows = product cards
-  const bgRow = rows[0];
-  const cardRows = rows.slice(1);
-
-  const bgPictures = extractBackgroundImages(bgRow);
-  const cards = cardRows.map((row, index) => extractCardData(row, index));
-
-  let currentBgIndex = 0;
-  let autoplayTimer = null;
+  const cards = rows.map((row, index) => extractCardData(row, index));
   let instrumentationApplied = false;
 
-  const bgRefs = bgPictures.map(() => createRef());
-
-  const renderBlock = () => {
-    const template = html`
-      <div class="product-showcase-background" aria-hidden="true">
-        ${bgPictures.map((_, i) => html`
-          <div
-            class=${classMap({
-    'product-showcase-bg-slide': true,
-    active: i === currentBgIndex,
-  })}
-            ${ref(bgRefs[i])}
-          ></div>
-        `)}
-      </div>
-      <div class="product-showcase-grid" role="list" aria-label="Product showcase">
-        ${cards.map((card) => {
+  const template = html`
+    ${cards.map((card) => {
     const hasLink = !!card.linkUrl;
     const cardContent = html`
-              <div class="product-showcase-card-image" ${ref(card.imageRef)}></div>
-              <div class="product-showcase-card-body">
-                <h3 class="product-showcase-card-name">${card.productName}</h3>
-                <p class="product-showcase-card-subtitle">${card.subtitle}</p>
-                ${card.linkText ? html`<span class="product-showcase-card-cta">${card.linkText}</span>` : nothing}
-              </div>
-            `;
+        <div class="product-showcase-card-bg" ${ref(card.bgRef)} aria-hidden="true"></div>
+        ${card.logoPicture ? html`<div class="product-showcase-card-logo" ${ref(card.logoRef)} aria-hidden="true"></div>` : nothing}
+        <div class="product-showcase-card-mask" aria-hidden="true"></div>
+        <div class="product-showcase-card-bottom">
+          ${card.productName ? html`<h3 class="product-showcase-card-name">${card.productName}</h3>` : nothing}
+          ${card.subtitle ? html`<p class="product-showcase-card-subtitle">${card.subtitle}</p>` : nothing}
+          ${card.linkText ? html`<span class="product-showcase-card-cta">${card.linkText}</span>` : nothing}
+        </div>
+      `;
+
     return hasLink
-      ? html`<a class="product-showcase-card" role="listitem" href=${card.linkUrl} aria-label="${card.productName} — ${card.linkText || card.subtitle}" ${ref(card.cardRef)}>${cardContent}</a>`
-      : html`<div class="product-showcase-card" role="listitem" ${ref(card.cardRef)}>${cardContent}</div>`;
+      ? html`<a class="product-showcase-card" data-size=${card.size} role="listitem" href=${card.linkUrl} aria-label="${card.productName}" ${ref(card.cardRef)}>${cardContent}</a>`
+      : html`<div class="product-showcase-card" data-size=${card.size} role="listitem" ${ref(card.cardRef)}>${cardContent}</div>`;
   })}
-      </div>
-    `;
+  `;
 
-    render(template, block);
+  block.textContent = '';
+  block.setAttribute('role', 'list');
+  block.setAttribute('aria-label', 'Product showcase');
+  render(template, block);
 
-    // Move background images and optimize (first render only)
-    if (!instrumentationApplied) {
-      bgPictures.forEach((pic, i) => {
-        if (bgRefs[i].value && bgRefs[i].value.children.length === 0) {
-          const img = pic.querySelector('img');
-          if (img) {
-            const optimized = createOptimizedPicture(img.src, img.alt || '', false, [
-              { media: '(min-width: 1200px)', width: '1920' },
-              { media: '(min-width: 600px)', width: '1200' },
-              { width: '750' },
-            ]);
-            bgRefs[i].value.appendChild(optimized);
-          }
-        }
-      });
-
-      cards.forEach((card) => {
-        if (card.cardRef.value && card.row) {
-          moveInstrumentation(card.row, card.cardRef.value);
-        }
-        if (card.imageRef.value && card.imageCell) {
-          if (card.imageRef.value.children.length === 0) {
-            const img = card.imageCell.querySelector('img');
-            if (img) {
-              const optimized = createOptimizedPicture(img.src, img.alt || '', false, [
-                { width: '440' },
-              ]);
-              card.imageRef.value.appendChild(optimized);
-            }
-          }
-        }
-      });
-
-      instrumentationApplied = true;
-    }
-  };
-
-  renderBlock();
-
-  // Background autoplay with IntersectionObserver
-  if (bgPictures.length > 1 && !prefersReducedMotion()) {
-    const advanceSlide = () => {
-      currentBgIndex = (currentBgIndex + 1) % bgPictures.length;
-      // Only toggle active class, no full re-render
-      bgRefs.forEach((bgRef, i) => {
-        if (bgRef.value) {
-          bgRef.value.classList.toggle('active', i === currentBgIndex);
-        }
-      });
-    };
-
-    const startAutoplay = () => {
-      if (autoplayTimer) return;
-      autoplayTimer = setInterval(advanceSlide, AUTOPLAY_INTERVAL);
-    };
-
-    const stopAutoplay = () => {
-      if (autoplayTimer) {
-        clearInterval(autoplayTimer);
-        autoplayTimer = null;
+  // Apply images and instrumentation (once)
+  if (!instrumentationApplied) {
+    cards.forEach((card) => {
+      // Move UE instrumentation
+      if (card.cardRef.value && card.row) {
+        moveInstrumentation(card.row, card.cardRef.value);
       }
-    };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            startAutoplay();
-          } else {
-            stopAutoplay();
-          }
-        });
-      },
-      { threshold: 0.25 },
-    );
+      // Background image
+      if (card.bgRef.value && card.bgPicture) {
+        const img = card.bgPicture.querySelector('img');
+        if (img) {
+          const optimized = createOptimizedPicture(img.src, img.alt || '', false, [
+            { media: '(min-width: 1200px)', width: '1920' },
+            { media: '(min-width: 600px)', width: '1200' },
+            { width: '750' },
+          ]);
+          card.bgRef.value.appendChild(optimized);
+        }
+      }
 
-    observer.observe(block);
+      // Logo image
+      if (card.logoRef.value && card.logoPicture) {
+        const img = card.logoPicture.querySelector('img');
+        if (img) {
+          const optimized = createOptimizedPicture(img.src, img.alt || '', false, [
+            { width: '440' },
+          ]);
+          card.logoRef.value.appendChild(optimized);
+        }
+      }
+    });
+
+    instrumentationApplied = true;
   }
 }

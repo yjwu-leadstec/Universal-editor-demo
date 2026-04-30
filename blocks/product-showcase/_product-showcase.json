@@ -37,45 +37,12 @@
       "id": "product-showcase",
       "fields": [
         {
-          "component": "tab",
-          "name": "backgroundTab",
-          "label": "Background"
-        },
-        {
-          "component": "reference",
-          "name": "backgroundImages",
-          "label": "Background Images",
-          "description": "Vehicle showcase images displayed behind the product grid",
-          "valueType": "string",
-          "multi": true
-        },
-        {
-          "component": "number",
-          "name": "backgroundInterval",
-          "label": "Background Switch Interval (ms)",
-          "description": "Auto-switch interval for background images",
-          "value": 5000,
-          "valueType": "number"
-        },
-        {
-          "component": "tab",
-          "name": "optionsTab",
-          "label": "Options"
-        },
-        {
           "component": "multiselect",
           "name": "classes",
-          "label": "Layout",
-          "description": "Visual style options",
+          "label": "Theme",
+          "description": "Visual theme for the showcase grid",
           "valueType": "string",
           "options": [
-            {
-              "name": "Layout",
-              "children": [
-                { "name": "Grid (Default)", "value": "grid" },
-                { "name": "Flex Row", "value": "flex-row" }
-              ]
-            },
             {
               "name": "Theme",
               "children": [
@@ -93,8 +60,8 @@
         {
           "component": "reference",
           "name": "image",
-          "label": "Product Image",
-          "description": "Product thumbnail (square recommended, 220x220px)",
+          "label": "Background Image",
+          "description": "Full-bleed background image for the card",
           "valueType": "string",
           "multi": false
         },
@@ -103,6 +70,14 @@
           "name": "imageAlt",
           "label": "Image Alt Text",
           "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "logo",
+          "label": "Product Logo",
+          "description": "Brand logo image overlaid on the card (transparent PNG recommended)",
+          "valueType": "string",
+          "multi": false
         },
         {
           "component": "text",
@@ -117,6 +92,18 @@
           "label": "Subtitle",
           "description": "Short description, e.g. 'Luxury 5-Seat Family SUV'",
           "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "size",
+          "label": "Card Size",
+          "description": "Big cards span 2 columns in the grid",
+          "value": "small",
+          "valueType": "string",
+          "options": [
+            { "name": "Small (1 column)", "value": "small" },
+            { "name": "Big (2 columns)", "value": "big" }
+          ]
         },
         {
           "component": "aem-content",
