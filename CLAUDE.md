@@ -56,20 +56,31 @@ npm run build:json
 Each block in `/blocks/[name]/` contains:
 - `[name].js` - Main `decorate(block)` function
 - `[name].css` - Block styles
-- `_[name].json` - Universal Editor model (optional)
+- `_[name].json` - Universal Editor model (optional, lives in `/models/`)
 
-### lit-html Integration
-This project uses lit-html for templating. Import from the wrapper:
+### Two Block Patterns
 
+**DOM manipulation (traditional)** — Used by blocks like `cards`:
+```javascript
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+export default function decorate(block) {
+  const rows = [...block.children];
+  // Restructure DOM, move instrumentation, append to block
+  moveInstrumentation(row, newElement);
+  block.textContent = '';
+  block.append(newElement);
+}
+```
+
+**lit-html templating** — Preferred for new blocks with complex rendering:
 ```javascript
 import { html, render, nothing, createRef, ref } from '../../scripts/lit.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Extract data from block rows
   const rows = [...block.children];
-
-  // Create refs for elements needing instrumentation
   const fieldRef = createRef();
 
   block.textContent = '';
@@ -79,7 +90,6 @@ export default function decorate(block) {
     </div>
   `, block);
 
-  // Apply Universal Editor instrumentation
   moveInstrumentation(sourceRow, fieldRef.value);
 }
 ```
@@ -87,7 +97,7 @@ export default function decorate(block) {
 Available lit-html exports: `html`, `svg`, `render`, `nothing`, `noChange`, `unsafeHTML`, `repeat`, `classMap`, `styleMap`, `ref`, `createRef`
 
 ### Universal Editor Instrumentation
-The `moveInstrumentation(source, target)` function transfers `data-aue-*` attributes from content rows to decorated elements, enabling in-context editing.
+The `moveInstrumentation(source, target)` function transfers `data-aue-*` and `data-richtext-*` attributes from content rows to decorated elements, enabling in-context editing. Every block must preserve instrumentation for the Universal Editor to work.
 
 ### Component Model System
 - Source models in `/models/_*.json` define field types
@@ -95,32 +105,37 @@ The `moveInstrumentation(source, target)` function transfers `data-aue-*` attrib
   - `component-models.json` - Field definitions
   - `component-definition.json` - UI configuration
   - `component-filters.json` - Placement rules
+- **Husky pre-commit hook** automatically runs `build:json` and stages the merged files when any `_*.json` model file is committed — no manual rebuild needed.
 
 ### Script Loading Phases
-- **Eager** (`loadEager`): Critical above-the-fold content
-- **Lazy** (`loadLazy`): Below-the-fold, blocks
-- **Delayed** (`loadDelayed`): Analytics, non-critical features
+- **Eager** (`loadEager`): Critical above-the-fold content, first section only
+- **Lazy** (`loadLazy`): Remaining sections, header, footer, lazy-styles.css
+- **Delayed** (`loadDelayed`): Analytics and non-critical features (3s delay)
 
 ### Core Utilities (scripts/aem.js)
 - `loadBlock()` / `decorateBlock()` - Block loading and decoration
 - `buildBlock()` - Programmatic block creation
-- `decorateSections()` - Section processing
-- `decorateButtons()` / `decorateIcons()` - Standard decorations
+- `createOptimizedPicture(src, alt, eager, breakpoints)` - Generate responsive `<picture>` elements with WebP
+- `decorateSections()` / `decorateButtons()` / `decorateIcons()` - Standard decorations
 
 ### Editor Support
-- `scripts/editor-support.js` - Real-time Universal Editor updates
-- `scripts/editor-support-rte.js` - Rich text editing support
+- `scripts/editor-support.js` - Handles `aue:content-patch/update/add/move/remove/copy` events for live re-decoration without full reload
+- `scripts/editor-support-rte.js` - Rich text editing support with MutationObserver for dynamic instrumentation
+
+## Linting Rules
+
+**ESLint**: `airbnb-base` + `plugin:xwalk/recommended`
+- `.js` extension required in all imports
+- Unix linebreaks enforced
+- Parameter property modification allowed (`no-param-reassign` props: false)
+- Custom cell limits: carousel: 6, slide: 8 (`xwalk/max-cells`)
+
+**Stylelint**: `stylelint-config-standard`
 
 ## Content Source
 
-Content is delivered from AEM Cloud Service via the `fstab.yaml` mountpoint configuration pointing to the author instance.
+Content is delivered from AEM Cloud Service via the `fstab.yaml` mountpoint configuration pointing to the author instance (markup type with `.html` suffix).
 
 ## Environment URLs
 - Preview: `https://main--{repo}--{owner}.aem.page/`
 - Live: `https://main--{repo}--{owner}.aem.live/`
-
-## ESLint Configuration
-Uses `airbnb-base` + `plugin:xwalk/recommended`. Key rules:
-- Require `.js` extension in imports
-- Unix linebreaks enforced
-- Parameter property modification allowed
