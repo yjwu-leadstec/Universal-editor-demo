@@ -84,14 +84,31 @@ function extractVideoPoster(cell) {
  */
 function extractSlideData(row, index) {
   const cells = [...row.children];
-  const imageCell = cells.find((cell) => cell.querySelector('picture, video, a[href*=".mp4"]'));
-  const contentCell = cells.find((cell) => !cell.querySelector('picture, video, a[href*=".mp4"]'));
 
+  // Classify each cell by its content
+  const mediaCells = cells.filter((cell) => cell.querySelector('video, a[href*=".mp4"]'));
+  const pictureCells = cells.filter((cell) => cell.querySelector('picture') && !cell.querySelector('video, a[href*=".mp4"]'));
+
+  // First media or picture cell = background image/video
+  const imageCell = mediaCells[0] || pictureCells[0] || null;
   const mediaType = detectMediaType(imageCell);
 
-  // Logo: second picture in a separate cell (not the media cell)
-  const logoCells = cells.filter((cell) => cell !== imageCell && cell.querySelector('picture'));
-  const logoCell = logoCells.length > 0 ? logoCells[0] : null;
+  // Second picture cell (not the image cell) = logo
+  const logoCell = pictureCells.find((cell) => cell !== imageCell) || null;
+
+  // Remaining cells with text content (not image, not logo) = content
+  const contentCells = cells.filter(
+    (cell) => cell !== imageCell && cell !== logoCell,
+  );
+
+  // Merge remaining content cells into one virtual content cell
+  const contentCell = contentCells.length > 0 ? contentCells[0] : null;
+  // Append extra content cells into the first one
+  contentCells.slice(1).forEach((extra) => {
+    while (extra.firstChild) {
+      contentCell.appendChild(extra.firstChild);
+    }
+  });
 
   return {
     index,
@@ -387,6 +404,14 @@ export default function decorate(block) {
           while (slide.contentCell.firstChild) {
             slide.contentCellRef.value.appendChild(slide.contentCell.firstChild);
           }
+          // Restyle CTA links: remove EDS default button class, add slide-cta
+          slide.contentCellRef.value.querySelectorAll('a').forEach((a) => {
+            a.classList.remove('button', 'primary', 'secondary');
+            a.classList.add('slide-cta');
+            // Unwrap from button-container if present
+            const wrapper = a.closest('.button-container');
+            if (wrapper) wrapper.replaceWith(a);
+          });
         }
       }
     });
