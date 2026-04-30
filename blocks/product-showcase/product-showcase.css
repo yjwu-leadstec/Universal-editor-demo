@@ -82,17 +82,16 @@
   pointer-events: none;
 }
 
-/* ── Bottom content layer ── */
+/* ── Bottom content layer — full card height, content pushed to bottom center ── */
 .product-showcase .product-showcase-card-bottom {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  inset: 0;
   z-index: 4;
   padding: 2.5rem 5rem 1.25rem;
   display: flex;
   flex-direction: column;
-  transition: opacity 0.8s linear 0.3s, transform 0.8s cubic-bezier(0.26, 0.67, 0.48, 0.91) 0.3s;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .product-showcase .product-showcase-card-name {
@@ -111,8 +110,9 @@
   color: rgb(255 255 255 / 70%);
 }
 
-/* CTA button wrapper — hidden by default, slides up on hover */
+/* CTA button wrapper — hidden by default, fades in on hover */
 .product-showcase .product-showcase-card-cta-wrap {
+  margin-top: 0.5rem;
   opacity: 0;
   transition: opacity 0.5s linear;
 }
@@ -120,7 +120,6 @@
 /* CTA button — white border pill, transparent bg */
 .product-showcase .product-showcase-card-cta {
   display: inline-block;
-  margin-top: 0.75rem;
   padding: 0.4375rem 1.4375rem;
   font-size: 0.875rem;
   font-weight: 400;
@@ -128,7 +127,6 @@
   background: transparent;
   border: 1px solid #fff;
   border-radius: 12.5rem;
-  width: fit-content;
 }
 
 /* ── Hover effects ── */
@@ -164,10 +162,6 @@
   font-size: 0.875rem;
 }
 
-.product-showcase .product-showcase-card[data-size="big"] .product-showcase-card-bottom {
-  padding: 2.5rem 5rem 1.25rem;
-}
-
 /* ── Mobile: 2 columns ── */
 @media (width < 600px) {
   .product-showcase {
@@ -187,10 +181,6 @@
   }
 
   .product-showcase .product-showcase-card-bottom {
-    padding: 1.25rem 1rem 0.625rem;
-  }
-
-  .product-showcase .product-showcase-card[data-size="big"] .product-showcase-card-bottom {
     padding: 1.25rem 1rem 0.625rem;
   }
 
@@ -226,10 +216,6 @@
     padding: 1.875rem 2.5rem 1rem;
   }
 
-  .product-showcase .product-showcase-card[data-size="big"] .product-showcase-card-bottom {
-    padding: 1.875rem 2.5rem 1rem;
-  }
-
   .product-showcase .product-showcase-card-cta {
     font-size: 0.75rem;
     padding: 0.375rem 1rem;
@@ -250,7 +236,7 @@
     transition: none;
   }
 
-  .product-showcase .product-showcase-card-cta {
+  .product-showcase .product-showcase-card-cta-wrap {
     transition: none;
   }
 }
