@@ -1,8 +1,9 @@
 /* Product Showcase Block — Full-bleed CSS Grid card layout */
 
+/* ── Mobile-first: 1 column, all cards full width ── */
 .product-showcase {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr;
   width: 100vw;
   margin-left: calc(50% - 50vw);
   overflow: hidden;
@@ -12,16 +13,16 @@
 .product-showcase .product-showcase-card {
   position: relative;
   overflow: hidden;
-  height: 25.375rem;
+  height: 13.2rem;
   display: block;
   text-decoration: none;
   color: #fff;
   cursor: pointer;
 }
 
-/* Big card spans 2 columns */
+/* Big card — no span on mobile */
 .product-showcase .product-showcase-card[data-size="big"] {
-  grid-column: span 2;
+  grid-column: auto;
 }
 
 /* ── Background image layer ── */
@@ -51,7 +52,7 @@
   left: 0;
   right: 0;
   z-index: 3;
-  padding: 5.625rem 2.5rem;
+  padding: 2rem 1.5rem;
   height: 100%;
   text-align: center;
   transition: opacity 0.5s linear;
@@ -60,13 +61,13 @@
 .product-showcase .product-showcase-card-logo picture {
   display: block;
   width: 100%;
-  max-height: 3.125rem;
+  max-height: 2.5rem;
 }
 
 .product-showcase .product-showcase-card-logo img {
   width: 100%;
   height: auto;
-  max-height: 3.125rem;
+  max-height: 2.5rem;
   object-fit: contain;
   object-position: center;
 }
@@ -87,7 +88,7 @@
   position: absolute;
   inset: 0;
   z-index: 4;
-  padding: 2.5rem 5rem 1.25rem;
+  padding: 1.5rem 1.5rem 0.75rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -104,7 +105,7 @@
 
 .product-showcase .product-showcase-card-subtitle {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: 0.625rem;
   font-weight: 400;
   line-height: 1.4;
   color: rgb(255 255 255 / 70%);
@@ -112,7 +113,7 @@
 
 /* CTA button wrapper — hidden by default, fades in on hover */
 .product-showcase .product-showcase-card-cta-wrap {
-  margin-top: 0.5rem;
+  margin-top: 0.375rem;
   opacity: 0;
   transition: opacity 0.5s linear;
 }
@@ -120,8 +121,8 @@
 /* CTA button — white border pill, transparent bg */
 .product-showcase .product-showcase-card-cta {
   display: inline-block;
-  padding: 0.4375rem 1.4375rem;
-  font-size: 0.875rem;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.625rem;
   font-weight: 400;
   color: #fff;
   background: transparent;
@@ -157,68 +158,78 @@
   outline-offset: -2px;
 }
 
-/* ── Big card adjustments ── */
-.product-showcase .product-showcase-card[data-size="big"] .product-showcase-card-subtitle {
-  font-size: 0.875rem;
-}
-
-/* ── Mobile: 2 columns ── */
-@media (width < 600px) {
+/* ── Tablet: 2 columns, big card spans 2 (full width) ── */
+@media (width >= 768px) {
   .product-showcase {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .product-showcase .product-showcase-card {
-    height: 14rem;
+    height: 13.5rem;
+  }
+
+  .product-showcase .product-showcase-card[data-size="big"] {
+    grid-column: span 2;
+    height: 27rem;
   }
 
   .product-showcase .product-showcase-card-logo {
-    padding: 2.5rem 1rem;
+    padding: 3.5rem 2.5rem;
+  }
+
+  .product-showcase .product-showcase-card-logo picture {
+    max-height: 3.125rem;
   }
 
   .product-showcase .product-showcase-card-logo img {
-    max-height: 1.875rem;
+    max-height: 3.125rem;
   }
 
   .product-showcase .product-showcase-card-bottom {
-    padding: 1.25rem 1rem 0.625rem;
+    padding: 2.5rem 5rem 1.25rem;
   }
 
   .product-showcase .product-showcase-card-subtitle {
-    font-size: 0.625rem;
+    font-size: 0.75rem;
+  }
+
+  .product-showcase .product-showcase-card[data-size="big"] .product-showcase-card-subtitle {
+    font-size: 0.875rem;
   }
 
   .product-showcase .product-showcase-card-cta {
-    font-size: 0.625rem;
-    padding: 0.3rem 0.75rem;
+    font-size: 0.875rem;
+    padding: 0.4375rem 1.4375rem;
   }
 }
 
-/* ── Tablet: 3 columns ── */
-@media (width >= 600px) and (width < 900px) {
+/* ── Desktop: 4 columns, big card spans 2 ── */
+@media (width >= 1024px) {
   .product-showcase {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .product-showcase .product-showcase-card {
     height: 18rem;
   }
 
+  .product-showcase .product-showcase-card[data-size="big"] {
+    height: 36rem;
+  }
+
   .product-showcase .product-showcase-card-logo {
-    padding: 3.75rem 1.5rem;
+    padding: 5.625rem 2.5rem;
+  }
+}
+
+/* ── Large Desktop: taller cards ── */
+@media (width >= 1440px) {
+  .product-showcase .product-showcase-card {
+    height: 25.375rem;
   }
 
-  .product-showcase .product-showcase-card-logo img {
-    max-height: 2.25rem;
-  }
-
-  .product-showcase .product-showcase-card-bottom {
-    padding: 1.875rem 2.5rem 1rem;
-  }
-
-  .product-showcase .product-showcase-card-cta {
-    font-size: 0.75rem;
-    padding: 0.375rem 1rem;
+  .product-showcase .product-showcase-card[data-size="big"] {
+    height: 25.375rem;
   }
 }
 
