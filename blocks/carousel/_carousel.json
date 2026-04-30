@@ -37,66 +37,34 @@
       "id": "carousel",
       "fields": [
         {
-          "component": "boolean",
-          "name": "autoPlay",
-          "label": "Auto Play",
-          "description": "Enable automatic slide rotation",
-          "value": true,
-          "valueType": "boolean"
-        },
-        {
-          "component": "number",
-          "name": "autoPlayInterval",
-          "label": "Auto Play Interval (ms)",
-          "description": "Time between automatic slide changes",
-          "value": 5000,
-          "valueType": "number"
-        },
-        {
-          "component": "boolean",
-          "name": "loop",
-          "label": "Loop",
-          "description": "Enable infinite loop playback",
-          "value": true,
-          "valueType": "boolean"
-        },
-        {
-          "component": "select",
-          "name": "transition",
-          "label": "Transition Effect",
-          "description": "Animation type for slide transitions",
-          "value": "slide",
+          "component": "multiselect",
+          "name": "classes",
+          "label": "Options",
+          "description": "Carousel behavior and navigation options",
           "valueType": "string",
           "options": [
             {
-              "name": "Slide",
-              "value": "slide"
+              "name": "Autoplay",
+              "children": [
+                { "name": "Auto Play On", "value": "auto-play" },
+                { "name": "No Loop", "value": "no-loop" }
+              ]
             },
             {
-              "name": "Fade",
-              "value": "fade"
+              "name": "Transition",
+              "children": [
+                { "name": "Fade", "value": "fade" },
+                { "name": "No Transition", "value": "no-transition" }
+              ]
             },
             {
-              "name": "None",
-              "value": "none"
+              "name": "Navigation",
+              "children": [
+                { "name": "Hide Arrows", "value": "hide-arrows" },
+                { "name": "Hide Dots", "value": "hide-dots" }
+              ]
             }
           ]
-        },
-        {
-          "component": "boolean",
-          "name": "showArrows",
-          "label": "Show Navigation Arrows",
-          "description": "Display prev/next arrow buttons",
-          "value": true,
-          "valueType": "boolean"
-        },
-        {
-          "component": "boolean",
-          "name": "showDots",
-          "label": "Show Dot Indicators",
-          "description": "Display slide position dots",
-          "value": true,
-          "valueType": "boolean"
         }
       ]
     },
@@ -111,14 +79,8 @@
           "value": "image",
           "valueType": "string",
           "options": [
-            {
-              "name": "Image",
-              "value": "image"
-            },
-            {
-              "name": "Video",
-              "value": "video"
-            }
+            { "name": "Image", "value": "image" },
+            { "name": "Video", "value": "video" }
           ]
         },
         {

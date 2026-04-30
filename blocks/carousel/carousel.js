@@ -163,14 +163,20 @@ function prefersReducedMotion() {
  * @param {HTMLElement} block
  * @returns {Object}
  */
+function getTransition(classes) {
+  if (classes.includes('fade')) return 'fade';
+  if (classes.includes('no-transition')) return 'none';
+  return 'slide';
+}
+
 function getBlockConfig(block) {
-  const isHeroOrFeature = block.closest('.section.hero, .section.feature') !== null;
-  const isBanner = block.closest('.section.banner') !== null;
+  const classes = [...block.classList];
   return {
-    showArrows: block.dataset.showArrows !== 'false',
-    showDots: block.dataset.showDots !== 'false',
-    loop: block.dataset.loop !== 'false',
-    autoPlay: isHeroOrFeature && !isBanner ? false : block.dataset.autoPlay !== 'false',
+    showArrows: !classes.includes('hide-arrows'),
+    showDots: !classes.includes('hide-dots'),
+    loop: !classes.includes('no-loop'),
+    autoPlay: classes.includes('auto-play'),
+    transition: getTransition(classes),
   };
 }
 
@@ -288,7 +294,7 @@ export default function decorate(block) {
 
     const template = html`
       <div
-        class="carousel-container transition-slide"
+        class=${`carousel-container transition-${config.transition}`}
         role="region"
         aria-roledescription="carousel"
         aria-label="Carousel"
