@@ -44,7 +44,7 @@
   object-fit: cover;
 }
 
-/* ── Logo overlay layer — top-left aligned ── */
+/* ── Logo overlay layer — horizontally centered ── */
 .product-showcase .product-showcase-card-logo {
   position: absolute;
   top: 0;
@@ -53,6 +53,7 @@
   z-index: 3;
   padding: 5.625rem 2.5rem;
   height: 100%;
+  text-align: center;
   transition: opacity 0.5s linear;
 }
 
@@ -67,12 +68,7 @@
   height: auto;
   max-height: 3.125rem;
   object-fit: contain;
-  object-position: left center;
-}
-
-/* Big card: logo can be larger */
-.product-showcase .product-showcase-card[data-size="big"] .product-showcase-card-logo img {
-  max-height: 3.125rem;
+  object-position: center;
 }
 
 /* ── Gradient mask layer — hidden by default, visible on hover ── */
@@ -96,6 +92,7 @@
   padding: 2.5rem 5rem 1.25rem;
   display: flex;
   flex-direction: column;
+  transition: opacity 0.8s linear 0.3s, transform 0.8s cubic-bezier(0.26, 0.67, 0.48, 0.91) 0.3s;
 }
 
 .product-showcase .product-showcase-card-name {
@@ -114,6 +111,12 @@
   color: rgb(255 255 255 / 70%);
 }
 
+/* CTA button wrapper — hidden by default, slides up on hover */
+.product-showcase .product-showcase-card-cta-wrap {
+  opacity: 0;
+  transition: opacity 0.5s linear;
+}
+
 /* CTA button — white border pill, transparent bg */
 .product-showcase .product-showcase-card-cta {
   display: inline-block;
@@ -126,7 +129,6 @@
   border: 1px solid #fff;
   border-radius: 12.5rem;
   width: fit-content;
-  transition: background 0.3s ease;
 }
 
 /* ── Hover effects ── */
@@ -146,9 +148,9 @@
   opacity: 0.4;
 }
 
-/* CTA button gets subtle bg */
-.product-showcase .product-showcase-card:hover .product-showcase-card-cta {
-  background: rgb(255 255 255 / 15%);
+/* CTA button fades in on hover */
+.product-showcase .product-showcase-card:hover .product-showcase-card-cta-wrap {
+  opacity: 1;
 }
 
 /* Focus-visible */

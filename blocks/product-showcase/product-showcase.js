@@ -83,7 +83,7 @@ export default function decorate(block) {
         <div class="product-showcase-card-bottom">
           ${card.productName ? html`<h3 class="product-showcase-card-name">${card.productName}</h3>` : nothing}
           ${card.subtitle ? html`<p class="product-showcase-card-subtitle">${card.subtitle}</p>` : nothing}
-          ${card.linkText ? html`<span class="product-showcase-card-cta">${card.linkText}</span>` : nothing}
+          ${card.linkText ? html`<div class="product-showcase-card-cta-wrap"><span class="product-showcase-card-cta">${card.linkText}</span></div>` : nothing}
         </div>
       `;
 
