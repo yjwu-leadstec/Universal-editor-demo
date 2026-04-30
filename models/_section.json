@@ -42,6 +42,7 @@
               "children": [
                 { "name": "Hero (Full Height)", "value": "hero" },
                 { "name": "Feature Showcase", "value": "feature" },
+                { "name": "Banner Carousel", "value": "banner" },
                 { "name": "CTA Banner", "value": "cta" },
                 { "name": "Full Width", "value": "full-width" }
               ]

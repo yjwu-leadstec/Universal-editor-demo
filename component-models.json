@@ -158,6 +158,10 @@
                 "value": "feature"
               },
               {
+                "name": "Banner Carousel",
+                "value": "banner"
+              },
+              {
                 "name": "CTA Banner",
                 "value": "cta"
               },
@@ -398,6 +402,14 @@
             "video"
           ]
         }
+      },
+      {
+        "component": "reference",
+        "name": "logo",
+        "label": "Logo Image",
+        "description": "Brand logo overlaid on the slide (transparent PNG recommended)",
+        "valueType": "string",
+        "multi": false
       },
       {
         "component": "richtext",

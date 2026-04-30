@@ -481,12 +481,187 @@
   }
 }
 
+/* ==========================================
+   Banner Variant — .section.banner .carousel
+   Product banner carousel (liauto.com style)
+   ========================================== */
+
+.section.banner .carousel .carousel-slide {
+  min-height: 39.6rem;
+}
+
+/* Banner: no gradient overlay */
+.section.banner .carousel .carousel-slide::after {
+  content: none;
+}
+
+/* Banner: logo layer — centered, top area */
+.section.banner .carousel .slide-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4.375rem 0 0;
+  height: 100%;
+  pointer-events: none;
+}
+
+.section.banner .carousel .slide-logo picture {
+  display: block;
+  max-width: 80%;
+  max-height: 4.375rem;
+}
+
+.section.banner .carousel .slide-logo img {
+  width: 100%;
+  height: auto;
+  max-height: 4.375rem;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Banner: content centered below logo */
+.section.banner .carousel .slide-content {
+  inset: 0;
+  width: 100%;
+  padding: 9rem 2rem 5rem;
+  background: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 4;
+}
+
+.section.banner .carousel .slide-content p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: rgb(255 255 255 / 70%);
+}
+
+/* Banner: CTA — white border pill, hidden by default */
+.section.banner .carousel .carousel-slide .slide-cta {
+  margin-top: 1.5rem;
+  padding: 0.4375rem 1.4375rem;
+  background: transparent;
+  border: 1px solid #fff;
+  border-radius: 12.5rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: 0;
+  opacity: 0;
+  transition: opacity 0.5s linear;
+}
+
+.section.banner .carousel .carousel-slide .slide-cta:hover {
+  background: rgb(255 255 255 / 15%);
+}
+
+/* Banner: show CTA on slide hover */
+.section.banner .carousel .carousel-slide:hover .slide-cta {
+  opacity: 1;
+}
+
+/* Banner: bg zoom on hover */
+.section.banner .carousel .slide-media {
+  transition: transform 0.5s linear;
+}
+
+.section.banner .carousel .carousel-slide:hover .slide-media {
+  transform: scale(1.03);
+}
+
+/* Banner: dots — bottom centered */
+.section.banner .carousel .carousel-dots {
+  bottom: 3.375rem;
+}
+
+.section.banner .carousel .carousel-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border: none;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 40%);
+}
+
+.section.banner .carousel .carousel-dot.active {
+  background: #fff;
+}
+
+.section.banner .carousel .carousel-dot:hover {
+  transform: none;
+  background: rgb(255 255 255 / 70%);
+}
+
+/* Banner responsive: mobile */
+@media (width < 600px) {
+  .section.banner .carousel .carousel-slide {
+    min-height: 20rem;
+  }
+
+  .section.banner .carousel .slide-logo {
+    padding: 2.5rem 0 0;
+  }
+
+  .section.banner .carousel .slide-logo picture {
+    max-height: 2.5rem;
+  }
+
+  .section.banner .carousel .slide-logo img {
+    max-height: 2.5rem;
+  }
+
+  .section.banner .carousel .slide-content {
+    padding: 6rem 1rem 3rem;
+  }
+
+  .section.banner .carousel .slide-content p {
+    font-size: 0.75rem;
+  }
+
+  .section.banner .carousel .slide-cta {
+    font-size: 0.75rem;
+    padding: 0.3rem 1rem;
+  }
+
+  .section.banner .carousel .carousel-dots {
+    bottom: 1.5rem;
+  }
+}
+
+/* Banner responsive: tablet */
+@media (width >= 600px) and (width < 1024px) {
+  .section.banner .carousel .carousel-slide {
+    min-height: 28rem;
+  }
+
+  .section.banner .carousel .slide-logo {
+    padding: 3.5rem 0 0;
+  }
+
+  .section.banner .carousel .slide-content {
+    padding: 7.5rem 2rem 4rem;
+  }
+
+  .section.banner .carousel .carousel-dots {
+    bottom: 2.5rem;
+  }
+}
+
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   .carousel-container.transition-slide .carousel-slides,
   .carousel-container.transition-fade .carousel-slide,
   .carousel-dot,
-  .carousel-arrow {
+  .carousel-arrow,
+  .section.banner .carousel .slide-media,
+  .section.banner .carousel .slide-cta {
     transition: none;
   }
 }

@@ -89,17 +89,23 @@ function extractSlideData(row, index) {
 
   const mediaType = detectMediaType(imageCell);
 
+  // Logo: second picture in a separate cell (not the media cell)
+  const logoCells = cells.filter((cell) => cell !== imageCell && cell.querySelector('picture'));
+  const logoCell = logoCells.length > 0 ? logoCells[0] : null;
+
   return {
     index,
     row,
     imageCell,
     contentCell,
+    logoCell,
     mediaType,
     videoSrc: mediaType === 'video' ? extractVideoSrc(imageCell) : null,
     videoPoster: mediaType === 'video' ? extractVideoPoster(imageCell) : null,
     slideRef: createRef(),
     imageCellRef: createRef(),
     contentCellRef: createRef(),
+    logoCellRef: createRef(),
     videoRef: createRef(),
   };
 }
@@ -158,12 +164,13 @@ function prefersReducedMotion() {
  * @returns {Object}
  */
 function getBlockConfig(block) {
-  const isShowcase = block.closest('.section.hero, .section.feature') !== null;
+  const isHeroOrFeature = block.closest('.section.hero, .section.feature') !== null;
+  const isBanner = block.closest('.section.banner') !== null;
   return {
     showArrows: block.dataset.showArrows !== 'false',
     showDots: block.dataset.showDots !== 'false',
     loop: block.dataset.loop !== 'false',
-    autoPlay: isShowcase ? false : block.dataset.autoPlay !== 'false',
+    autoPlay: isHeroOrFeature && !isBanner ? false : block.dataset.autoPlay !== 'false',
   };
 }
 
@@ -302,6 +309,9 @@ export default function decorate(block) {
               ${ref(slide.slideRef)}
             >
               ${renderSlideMedia(slide)}
+              ${slide.logoCell ? html`
+                <div class="slide-logo" ${ref(slide.logoCellRef)}></div>
+              ` : nothing}
               ${slide.contentCell ? html`
                 <div class="slide-content" ${ref(slide.contentCellRef)}></div>
               ` : ''}
@@ -352,6 +362,15 @@ export default function decorate(block) {
         if (slide.imageCellRef.value.children.length === 0) {
           while (slide.imageCell.firstChild) {
             slide.imageCellRef.value.appendChild(slide.imageCell.firstChild);
+          }
+        }
+      }
+
+      // 移动 logo 内容
+      if (slide.logoCellRef.value && slide.logoCell) {
+        if (slide.logoCellRef.value.children.length === 0) {
+          while (slide.logoCell.firstChild) {
+            slide.logoCellRef.value.appendChild(slide.logoCell.firstChild);
           }
         }
       }
