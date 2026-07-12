@@ -1,3 +1,4 @@
+/* Li Auto Service download cards block. */
 import {
   addBlockAnchor,
   appendPicture,

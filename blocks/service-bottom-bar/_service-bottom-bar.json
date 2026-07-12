@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Service Bottom Bar",
+      "title": "Li Auto Service Bottom Bar",
       "id": "support-bottom-bar",
       "plugins": {
         "xwalk": {

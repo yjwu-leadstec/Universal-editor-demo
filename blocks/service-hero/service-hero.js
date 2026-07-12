@@ -1,3 +1,4 @@
+/* Li Auto Service hero block. */
 import {
   addBlockAnchor,
   appendPicture,

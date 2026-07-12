@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Service Download Cards",
+      "title": "Li Auto Service Download Cards",
       "id": "support-download-cards",
       "plugins": {
         "xwalk": {

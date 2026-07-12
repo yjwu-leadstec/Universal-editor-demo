@@ -1,3 +1,4 @@
+/* Li Auto Service bottom bar block. */
 import {
   addBlockAnchor,
   appendPicture,

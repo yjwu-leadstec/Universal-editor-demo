@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Service Contact Cards",
+      "title": "Li Auto Service Contact Cards",
       "id": "support-contact-cards",
       "plugins": {
         "xwalk": {

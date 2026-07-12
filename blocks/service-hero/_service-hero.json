@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Service Hero",
+      "title": "Li Auto Service Hero",
       "id": "support-hero",
       "plugins": {
         "xwalk": {

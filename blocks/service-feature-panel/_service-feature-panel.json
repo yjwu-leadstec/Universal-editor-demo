@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Service Feature Panel",
+      "title": "Li Auto Service Feature Panel",
       "id": "support-feature-panel",
       "plugins": {
         "xwalk": {

@@ -381,7 +381,7 @@
           }
         },
         {
-          "title": "Service Bottom Bar",
+          "title": "Li Auto Service Bottom Bar",
           "id": "support-bottom-bar",
           "plugins": {
             "xwalk": {
@@ -396,7 +396,7 @@
           }
         },
         {
-          "title": "Service Contact Cards",
+          "title": "Li Auto Service Contact Cards",
           "id": "support-contact-cards",
           "plugins": {
             "xwalk": {
@@ -442,7 +442,7 @@
           }
         },
         {
-          "title": "Service Download Cards",
+          "title": "Li Auto Service Download Cards",
           "id": "support-download-cards",
           "plugins": {
             "xwalk": {
@@ -488,7 +488,7 @@
           }
         },
         {
-          "title": "Service Feature Panel",
+          "title": "Li Auto Service Feature Panel",
           "id": "support-feature-panel",
           "plugins": {
             "xwalk": {
@@ -519,7 +519,7 @@
           }
         },
         {
-          "title": "Service Hero",
+          "title": "Li Auto Service Hero",
           "id": "support-hero",
           "plugins": {
             "xwalk": {

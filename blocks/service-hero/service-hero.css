@@ -1,4 +1,4 @@
-main .support-hero {
+main .service-hero {
   --service-font-regular: licium-regular, "Segoe UI", arial, sans-serif;
   --service-font-medium: licium-medium, "Segoe UI", arial, sans-serif;
 
@@ -11,7 +11,7 @@ main .support-hero {
   background: #fff;
 }
 
-main .support-hero .support-hero-copy {
+main .service-hero .support-hero-copy {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,14 +21,14 @@ main .support-hero .support-hero-copy {
   text-align: center;
 }
 
-main .support-hero .support-hero-eyebrow {
+main .service-hero .support-hero-eyebrow {
   margin: 0 0 8px;
   font-family: var(--service-font-medium);
   font-size: 14px;
   line-height: 1.34;
 }
 
-main .support-hero h1 {
+main .service-hero h1 {
   margin: 0;
   font-family: var(--service-font-medium);
   font-size: clamp(38px, 10vw, 52px);
@@ -37,7 +37,7 @@ main .support-hero h1 {
   letter-spacing: -0.02em;
 }
 
-main .support-hero .support-hero-description {
+main .service-hero .support-hero-description {
   max-width: 760px;
   margin-top: 24px;
   color: rgb(0 0 0 / 60%);
@@ -45,43 +45,43 @@ main .support-hero .support-hero-description {
   line-height: 1.55;
 }
 
-main .support-hero .support-hero-description p {
+main .service-hero .support-hero-description p {
   margin: 0;
 }
 
-main .support-hero .support-hero-media {
+main .service-hero .support-hero-media {
   position: relative;
   height: clamp(300px, 78vw, 500px);
   overflow: hidden;
   background: #f8f8f8;
 }
 
-main .support-hero .support-hero-picture,
-main .support-hero .support-hero-picture picture,
-main .support-hero .support-hero-picture img {
+main .service-hero .support-hero-picture,
+main .service-hero .support-hero-picture picture,
+main .service-hero .support-hero-picture img {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-main .support-hero .support-hero-picture img {
+main .service-hero .support-hero-picture img {
   object-fit: cover;
   object-position: center;
 }
 
-main .support-hero .support-hero-picture-mobile {
+main .service-hero .support-hero-picture-mobile {
   display: none;
 }
 
-main .support-hero .support-hero-media.has-mobile-media .support-hero-picture-desktop {
+main .service-hero .support-hero-media.has-mobile-media .support-hero-picture-desktop {
   display: none;
 }
 
-main .support-hero .support-hero-media.has-mobile-media .support-hero-picture-mobile {
+main .service-hero .support-hero-media.has-mobile-media .support-hero-picture-mobile {
   display: block;
 }
 
-main .support-hero .is-media-fallback::after {
+main .service-hero .is-media-fallback::after {
   position: absolute;
   inset: 0;
   display: grid;
@@ -92,63 +92,63 @@ main .support-hero .is-media-fallback::after {
   content: attr(data-fallback-label);
 }
 
-main .support-hero .service-aue-anchor {
+main .service-hero .service-aue-anchor {
   position: absolute;
   width: 1px;
   height: 1px;
   overflow: hidden;
 }
 
-main .support-hero .service-reveal {
+main .service-hero .service-reveal {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-main .support-hero .service-reveal.is-visible {
+main .service-hero .service-reveal.is-visible {
   opacity: 1;
   transform: none;
 }
 
 @media (width >= 600px) {
-  main .support-hero .support-hero-media.has-mobile-media .support-hero-picture-desktop {
+  main .service-hero .support-hero-media.has-mobile-media .support-hero-picture-desktop {
     display: block;
   }
 
-  main .support-hero .support-hero-media.has-mobile-media .support-hero-picture-mobile {
+  main .service-hero .support-hero-media.has-mobile-media .support-hero-picture-mobile {
     display: none;
   }
 }
 
 @media (width >= 900px) {
-  main .support-hero .support-hero-copy {
+  main .service-hero .support-hero-copy {
     padding-top: 126px;
     padding-bottom: 80px;
   }
 
-  main .support-hero .support-hero-eyebrow {
+  main .service-hero .support-hero-eyebrow {
     margin-bottom: 6px;
     font-size: 24px;
   }
 
-  main .support-hero h1 {
+  main .service-hero h1 {
     font-size: 64px;
     line-height: 1.3125;
   }
 
-  main .support-hero .support-hero-description {
+  main .service-hero .support-hero-description {
     margin-top: 32px;
     font-size: 16px;
     line-height: 1.5;
   }
 
-  main .support-hero .support-hero-media {
+  main .service-hero .support-hero-media {
     height: 620px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  main .support-hero .service-reveal {
+  main .service-hero .service-reveal {
     opacity: 1;
     transform: none;
     transition: none;

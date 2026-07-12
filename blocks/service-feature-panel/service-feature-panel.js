@@ -1,3 +1,4 @@
+/* Li Auto Service feature panel block. */
 import {
   addBlockAnchor,
   appendPicture,
