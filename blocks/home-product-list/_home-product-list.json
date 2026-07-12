@@ -77,7 +77,7 @@
         },
         {
           "component": "text",
-          "name": "ctaText",
+          "name": "linkText",
           "label": "CTA Text",
           "value": "Learn More",
           "valueType": "string"

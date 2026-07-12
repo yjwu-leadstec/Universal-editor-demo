@@ -30,19 +30,25 @@ function cellLink(cell) {
   return a ? a.getAttribute('href') : '';
 }
 
+function pictureAlt(picture) {
+  const img = picture ? picture.querySelector('img') : null;
+  return img ? (img.getAttribute('alt') || '') : '';
+}
+
 function multiline(value) {
   const parts = String(value || '').split('\n');
   return parts.flatMap((line, i) => (i ? [html`<br>`, line] : [line]));
 }
 
 function extractCard(row, index) {
-  const [imageCell, altCell, videoCell, titleCell, actionCell, linkCell] = [...row.children];
+  const [imageCell, videoCell, titleCell, actionCell, linkCell] = [...row.children];
+  const posterPicture = cellPicture(imageCell);
   return {
     index,
     row,
-    posterPicture: cellPicture(imageCell),
-    alt: cellText(altCell),
-    videoSrc: cellLink(videoCell) || cellText(videoCell),
+    posterPicture,
+    alt: pictureAlt(posterPicture),
+    videoSrc: cellLink(videoCell),
     title: cellText(titleCell),
     action: cellText(actionCell),
     link: cellLink(linkCell),

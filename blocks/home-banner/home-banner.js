@@ -23,32 +23,36 @@ function cellPicture(cell) {
   return cell ? cell.querySelector('picture') : null;
 }
 
-function cellLink(cell) {
-  const a = cell ? cell.querySelector('a') : null;
-  return a ? a.getAttribute('href') : '';
+function cellAnchor(cell) {
+  return cell ? cell.querySelector('a') : null;
+}
+
+function pictureAlt(picture) {
+  const img = picture ? picture.querySelector('img') : null;
+  return img ? (img.getAttribute('alt') || '') : '';
 }
 
 function extractSlide(row, index) {
   const [
-    imageCell, altCell, mobileImageCell, logoCell, titleCell, subtitleCell,
-    linkCell, ctaCell,
+    imageCell, mobileImageCell, logoCell, titleCell, subtitleCell, linkCell,
   ] = [...row.children];
 
   const bgPicture = cellPicture(imageCell);
   const img = bgPicture ? bgPicture.querySelector('img') : null;
+  const anchor = cellAnchor(linkCell);
 
   return {
     index,
     row,
     bgPicture,
     bgSrc: img ? img.getAttribute('src') : '',
+    alt: pictureAlt(bgPicture),
     mobilePicture: cellPicture(mobileImageCell),
     logoPicture: cellPicture(logoCell),
-    alt: cellText(altCell),
     title: cellText(titleCell),
     subtitle: cellText(subtitleCell),
-    link: cellLink(linkCell),
-    ctaText: cellText(ctaCell) || 'Learn More',
+    link: anchor ? anchor.getAttribute('href') : '',
+    ctaText: (anchor && anchor.textContent.trim()) || 'Learn More',
     mediaRef: createRef(),
     logoRef: createRef(),
     articleRef: createRef(),

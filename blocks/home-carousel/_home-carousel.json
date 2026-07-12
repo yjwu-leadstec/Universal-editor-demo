@@ -111,7 +111,7 @@
         },
         {
           "component": "text",
-          "name": "actionText",
+          "name": "actionLabel",
           "label": "Action Text (optional)",
           "description": "如 View Full Video（story 卡片显示）",
           "valueType": "string"

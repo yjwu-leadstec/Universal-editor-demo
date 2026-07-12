@@ -22,21 +22,23 @@ function cellPicture(cell) {
   return cell ? cell.querySelector('picture') : null;
 }
 
-function cellLink(cell) {
-  const a = cell ? cell.querySelector('a') : null;
-  return a ? a.getAttribute('href') : '';
+function pictureAlt(picture) {
+  const img = picture ? picture.querySelector('img') : null;
+  return img ? (img.getAttribute('alt') || '') : '';
 }
 
 function extractPanel(row, index) {
-  const [imageCell, altCell, titleCell, linkCell, ctaCell] = [...row.children];
+  const [imageCell, titleCell, linkCell] = [...row.children];
+  const bgPicture = cellPicture(imageCell);
+  const anchor = linkCell ? linkCell.querySelector('a') : null;
   return {
     index,
     row,
-    bgPicture: cellPicture(imageCell),
-    alt: cellText(altCell),
+    bgPicture,
+    alt: pictureAlt(bgPicture),
     title: cellText(titleCell),
-    link: cellLink(linkCell),
-    ctaText: cellText(ctaCell) || 'Learn More',
+    link: anchor ? anchor.getAttribute('href') : '',
+    ctaText: (anchor && anchor.textContent.trim()) || 'Learn More',
     panelRef: createRef(),
     mediaRef: createRef(),
   };

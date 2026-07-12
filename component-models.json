@@ -544,7 +544,7 @@
       },
       {
         "component": "text",
-        "name": "ctaText",
+        "name": "linkText",
         "label": "CTA Text",
         "value": "Learn More",
         "valueType": "string"
@@ -635,7 +635,7 @@
       },
       {
         "component": "text",
-        "name": "actionText",
+        "name": "actionLabel",
         "label": "Action Text (optional)",
         "description": "如 View Full Video（story 卡片显示）",
         "valueType": "string"
@@ -692,7 +692,7 @@
       },
       {
         "component": "text",
-        "name": "ctaText",
+        "name": "linkText",
         "label": "CTA Text",
         "value": "Learn More",
         "valueType": "string"
@@ -799,21 +799,6 @@
         "name": "link",
         "label": "Link",
         "description": "车型详情页链接",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "ctaPrimaryText",
-        "label": "Primary CTA Text",
-        "value": "Learn More",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "ctaSecondaryText",
-        "label": "Secondary CTA Text",
-        "description": "Charging 卡片忽略此项",
-        "value": "Order Now",
         "valueType": "string"
       }
     ]

@@ -18,6 +18,14 @@ module.exports = {
     'import/extensions': ['error', { js: 'always' }], // require js file extensions in imports
     'linebreak-style': ['error', 'unix'], // enforce unix linebreaks
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
-    'xwalk/max-cells': ['error', { carousel: 6, slide: 8, 'product-card': 8 }], // models needing more fields
+    'xwalk/max-cells': ['error', {
+      carousel: 6,
+      slide: 8,
+      'product-card': 8,
+      'vehicle-tile': 8,
+      'banner-slide': 6,
+      'carousel-card': 6,
+      'home-carousel': 6,
+    }], // models needing more fields
   },
 };

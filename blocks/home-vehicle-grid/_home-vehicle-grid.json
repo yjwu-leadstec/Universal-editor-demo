@@ -122,21 +122,6 @@
           "label": "Link",
           "description": "车型详情页链接",
           "valueType": "string"
-        },
-        {
-          "component": "text",
-          "name": "ctaPrimaryText",
-          "label": "Primary CTA Text",
-          "value": "Learn More",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "name": "ctaSecondaryText",
-          "label": "Secondary CTA Text",
-          "description": "Charging 卡片忽略此项",
-          "value": "Order Now",
-          "valueType": "string"
         }
       ]
     }
