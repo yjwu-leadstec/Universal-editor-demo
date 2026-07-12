@@ -197,6 +197,11 @@
     min-height: 0;
   }
 
+  /* 可选：严格复刻首页移动端流（banner 承接 hero）时隐藏大卡 */
+  .home-vehicle-grid.hide-large-mobile .vehicle-tile.large {
+    display: none;
+  }
+
   .home-vehicle-grid .vehicle-tile {
     display: block;
     width: 100%;
