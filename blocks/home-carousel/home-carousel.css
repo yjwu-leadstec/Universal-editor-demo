@@ -1,0 +1,445 @@
+/* Home Carousel — 首页横滑 coverflow（story / tech），像素对齐 liauto.com */
+/* stylelint-disable no-descending-specificity */
+
+.home-carousel {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  min-height: 1216px;
+  padding: 192px 0 80px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.home-carousel.tech {
+  padding: 160px 0 80px;
+  margin-bottom: -25px;
+}
+
+/* ── 标题区 ── */
+.home-carousel .section-heading {
+  width: min(1480px, calc(100vw - 48px));
+  margin: 0 auto 50px;
+  text-align: center;
+}
+
+.home-carousel .section-heading h2 {
+  margin: 0;
+  font-size: 46px;
+  font-weight: 400;
+  line-height: 62px;
+  color: rgb(25 25 25);
+}
+
+.home-carousel .section-heading .section-eyebrow {
+  margin: 0 0 8px;
+  color: rgb(25 25 25);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.home-carousel.tech .section-heading {
+  width: 643px;
+}
+
+.home-carousel .title-mobile {
+  display: none;
+}
+
+/* ── 进入视口淡入上移 ── */
+.home-carousel .section-heading,
+.home-carousel .home-horizontal {
+  opacity: 0;
+  transform: translateY(90px);
+  transition: opacity 800ms linear 300ms, transform 800ms cubic-bezier(0.26, 0.67, 0.48, 0.91) 300ms;
+}
+
+.home-carousel.in-view .section-heading,
+.home-carousel.in-view .home-horizontal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── coverflow 轨道 ── */
+.home-carousel .home-horizontal {
+  --home-card-w: 77.0833vw;
+  --home-card-h: 43.3333vw;
+  --home-card-step: calc(var(--home-card-w) + 16px);
+
+  position: relative;
+  width: 100%;
+  height: var(--home-card-h);
+  overflow: visible;
+}
+
+.home-carousel .home-horizontal-card {
+  position: absolute;
+  top: 0;
+  left: 50vw;
+  width: var(--home-card-w);
+  height: var(--home-card-h);
+  overflow: hidden;
+  border-radius: 2px;
+  color: #fff;
+  background: #111;
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+  transform: translateX(calc(-50% + var(--home-card-step) * 2));
+  transition: opacity 620ms ease, transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.home-carousel .home-horizontal-card.is-prev,
+.home-carousel .home-horizontal-card.is-next {
+  z-index: 1;
+}
+
+.home-carousel .home-horizontal-card.is-active {
+  z-index: 2;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%);
+  transition: transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 120ms ease;
+}
+
+.home-carousel .home-horizontal-card.is-prev {
+  opacity: 0.6;
+  transform: translateX(calc(-50% - var(--home-card-step)));
+}
+
+.home-carousel .home-horizontal-card.is-next {
+  opacity: 0.6;
+  transform: translateX(calc(-50% + var(--home-card-step)));
+}
+
+.home-carousel .home-horizontal-card.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(calc(-50% + var(--home-card-step) * 2));
+}
+
+/* ── 媒体层 ── */
+.home-carousel .home-horizontal-media,
+.home-carousel .home-horizontal-media picture,
+.home-carousel .home-horizontal-media img,
+.home-carousel .home-horizontal-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-carousel .home-horizontal-media video {
+  opacity: 0;
+  transition: opacity 400ms cubic-bezier(0.26, 0.67, 0.48, 0.91);
+}
+
+.home-carousel .home-horizontal-media.is-playing video {
+  opacity: 1;
+}
+
+.home-carousel .home-horizontal-replay {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border: 1px solid rgb(255 255 255 / 65%);
+  border-radius: 999px;
+  background: rgb(0 0 0 / 35%);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  backdrop-filter: blur(4px);
+  transition: opacity 300ms ease, background 200ms ease;
+}
+
+.home-carousel .home-horizontal-media.is-ended .home-horizontal-replay {
+  opacity: 1;
+  visibility: visible;
+}
+
+.home-carousel .home-horizontal-replay:hover {
+  background: rgb(0 0 0 / 55%);
+}
+
+.home-carousel .home-horizontal-replay svg {
+  display: block;
+}
+
+/* ── 箭头 ── */
+.home-carousel .home-horizontal-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #f2f2f2;
+  color: #666;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.home-carousel .home-horizontal-arrow:hover {
+  background: #fff;
+  color: #333;
+}
+
+.home-carousel .home-horizontal-arrow svg {
+  display: block;
+}
+
+.home-carousel .home-horizontal-arrow-prev {
+  left: calc(50vw - var(--home-card-w) / 2 + 40px);
+}
+
+.home-carousel .home-horizontal-arrow-next {
+  right: calc(50vw - var(--home-card-w) / 2 + 40px);
+}
+
+/* ── 卡片文案 ── */
+.home-carousel .home-horizontal-copy {
+  position: absolute;
+  inset: 100px 80px auto;
+  z-index: 1;
+  text-align: center;
+}
+
+.home-carousel .home-horizontal-copy h3 {
+  display: inline-block;
+  max-width: 823px;
+  margin: 0 auto;
+  color: #fff;
+  font-size: 32px;
+  line-height: 44px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.home-carousel .home-horizontal-copy span {
+  display: block;
+  width: fit-content;
+  margin: 20px auto 0;
+  font-size: 13px;
+}
+
+/* ── tech variant 覆盖 ── */
+.home-carousel.tech .home-horizontal-copy {
+  top: 60px;
+}
+
+.home-carousel.tech .home-horizontal-copy h3 {
+  max-width: 620px;
+  font-size: 24px;
+  line-height: 33px;
+  white-space: normal;
+}
+
+/* ── 指示器 ── */
+.home-carousel .horizontal-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 62px;
+  z-index: 3;
+  display: flex;
+  width: 56px;
+  justify-content: center;
+  gap: 4px;
+  transform: translateX(-50%);
+}
+
+.home-carousel .horizontal-dots span {
+  width: 16px;
+  height: 2px;
+  background: rgb(255 255 255 / 20%);
+  cursor: pointer;
+}
+
+.home-carousel .horizontal-dots span.current {
+  background: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-carousel .section-heading,
+  .home-carousel .home-horizontal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .home-carousel .home-horizontal-card {
+    transition: opacity 200ms ease;
+  }
+}
+
+/* ── 移动端 ≤820px：单卡堆叠（媒体在上，文案在下白底） ── */
+@media (width <= 820px) {
+  .home-carousel {
+    min-height: 0;
+    padding: 80px 0 40px;
+  }
+
+  .home-carousel:not(.tech) {
+    padding-bottom: 107px;
+  }
+
+  .home-carousel .section-heading {
+    width: 100%;
+    margin-bottom: 36px;
+    padding: 0 24px;
+  }
+
+  .home-carousel .section-heading h2 {
+    font-size: 32px;
+    line-height: 1.18;
+  }
+
+  .home-carousel .title-desktop {
+    display: none;
+  }
+
+  .home-carousel .title-mobile {
+    display: inline;
+  }
+
+  .home-carousel.tech {
+    height: auto;
+    margin-bottom: 0;
+  }
+
+  .home-carousel.tech .section-heading {
+    width: 310px;
+    margin: 0 auto 28px;
+    padding: 0;
+  }
+
+  .home-carousel.tech .section-heading h2 {
+    width: 310px;
+    font-size: 30px;
+    line-height: 38px;
+  }
+
+  .home-carousel .home-horizontal {
+    width: 100%;
+    height: 369px;
+    overflow: visible;
+  }
+
+  .home-carousel .home-horizontal-card {
+    left: 20px;
+    width: 350px;
+    height: 369px;
+    color: #111;
+    background: #fff;
+    transform: translateX(716px);
+  }
+
+  .home-carousel .home-horizontal-card.is-active {
+    transform: translateX(0);
+  }
+
+  .home-carousel .home-horizontal-card.is-prev {
+    opacity: 0;
+    transform: translateX(-358px);
+  }
+
+  .home-carousel .home-horizontal-card.is-next {
+    opacity: 0.6;
+    transform: translateX(358px);
+  }
+
+  .home-carousel .home-horizontal-card.is-hidden {
+    opacity: 0;
+    transform: translateX(716px);
+  }
+
+  .home-carousel .home-horizontal-media {
+    position: relative;
+    height: 197px;
+  }
+
+  .home-carousel .home-horizontal-copy {
+    position: relative;
+    inset: auto;
+    height: 172px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    background: #fff;
+    text-align: center;
+  }
+
+  .home-carousel .home-horizontal-copy h3 {
+    color: #111;
+    font-size: 18px;
+    line-height: 1.34;
+    white-space: normal;
+  }
+
+  .home-carousel .home-horizontal-copy span {
+    margin-top: 18px;
+    color: #111;
+    font-size: 12px;
+  }
+
+  .home-carousel.tech .home-horizontal {
+    width: 358px;
+    height: 343px;
+    margin: 0 auto;
+  }
+
+  .home-carousel.tech .home-horizontal-card {
+    left: 4px;
+    width: 350px;
+    height: 321px;
+  }
+
+  .home-carousel.tech .home-horizontal-copy {
+    height: 124px;
+    justify-content: flex-start;
+    padding: 24px 36px 0;
+  }
+
+  .home-carousel.tech .home-horizontal-copy h3 {
+    color: #191919;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .home-carousel .home-horizontal-arrow {
+    display: none;
+  }
+
+  .home-carousel .horizontal-dots {
+    bottom: -22px;
+    gap: 7px;
+  }
+
+  .home-carousel .horizontal-dots span {
+    background: #d2d2d2;
+  }
+
+  .home-carousel .horizontal-dots span.current {
+    background: #111;
+  }
+
+  .home-carousel.tech .horizontal-dots {
+    bottom: 10px;
+  }
+}

@@ -477,6 +477,348 @@
     ]
   },
   {
+    "id": "home-banner",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "页内锚点/自动化定位（可选）",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "banner-slide",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Background Image",
+        "description": "桌面 Banner 图（约 1920×817）",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Background Image",
+        "description": "移动端 Banner 图（可选，≤820px 使用）",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "name": "logo",
+        "label": "Vehicle Logo",
+        "description": "车型 Logo 字标；缺省时显示标题 + 副标题",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "description": "如 Li i6",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "subtitle",
+        "label": "Subtitle",
+        "description": "如 New-Form 5-Seat SUV",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link",
+        "description": "车型详情页链接",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "ctaText",
+        "label": "CTA Text",
+        "value": "Learn More",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "home-carousel",
+    "fields": [
+      {
+        "component": "text",
+        "name": "eyebrow",
+        "label": "Eyebrow",
+        "description": "小标题（tech 变体显示，如 Li Technology）",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading",
+        "description": "区块标题（桌面）",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "mobileHeading",
+        "label": "Mobile Heading",
+        "description": "移动端标题（可选，支持换行，用 \\n 分行）",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Variant",
+        "description": "story 品牌故事（含视频卡）/ tech 技术卡片（图片 + eyebrow）",
+        "value": "story",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Story",
+            "value": "story"
+          },
+          {
+            "name": "Tech",
+            "value": "tech"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "页内锚点/自动化定位（可选）",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "carousel-card",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Poster / Background Image",
+        "description": "卡片背景图；视频卡的封面兜底图",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "video",
+        "label": "Video (optional)",
+        "description": "story 视频卡的 mp4；填写后居中卡片自动播放",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Card Title",
+        "description": "卡片文案，用 \\n 分行",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "actionText",
+        "label": "Action Text (optional)",
+        "description": "如 View Full Video（story 卡片显示）",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link (optional)",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "home-product-list",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "页内锚点/自动化定位（可选）",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "product-panel",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Background Image",
+        "description": "方形面板背景图（约 732×732）",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "description": "如 We Create Mobile Homes",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "ctaText",
+        "label": "CTA Text",
+        "value": "Learn More",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "home-vehicle-grid",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "页内锚点/自动化定位（可选）",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "vehicle-tile",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Background Image",
+        "description": "桌面卡片背景图（大卡 960×540、小卡 480×540）",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Background Image",
+        "description": "移动端背景图（可选，≤820px 使用；缺省回退桌面图）",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "name": "logo",
+        "label": "Vehicle Logo",
+        "description": "车型 Logo 字标（透明 PNG）；缺省时显示车型名文本",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "name",
+        "label": "Vehicle Name",
+        "description": "如 Li i6、Li L9",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "subtitle",
+        "label": "Subtitle",
+        "description": "如 New-Form 5-Seat SUV",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "size",
+        "label": "Card Size",
+        "description": "large 卡片跨 2 列（用于首张大卡）",
+        "value": "small",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Small (1 column)",
+            "value": "small"
+          },
+          {
+            "name": "Large (2 columns)",
+            "value": "large"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "kind",
+        "label": "Tile Kind",
+        "description": "Charging 为充电促销卡（文案底部对齐，仅一个 CTA）",
+        "value": "vehicle",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Vehicle",
+            "value": "vehicle"
+          },
+          {
+            "name": "Charging Promo",
+            "value": "charging"
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link",
+        "description": "车型详情页链接",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "ctaPrimaryText",
+        "label": "Primary CTA Text",
+        "value": "Learn More",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "ctaSecondaryText",
+        "label": "Secondary CTA Text",
+        "description": "Charging 卡片忽略此项",
+        "value": "Order Now",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "product-showcase",
     "fields": [
       {

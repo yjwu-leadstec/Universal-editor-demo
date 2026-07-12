@@ -51,6 +51,30 @@
     ]
   },
   {
+    "id": "home-banner",
+    "components": [
+      "banner-slide"
+    ]
+  },
+  {
+    "id": "home-carousel",
+    "components": [
+      "carousel-card"
+    ]
+  },
+  {
+    "id": "home-product-list",
+    "components": [
+      "product-panel"
+    ]
+  },
+  {
+    "id": "home-vehicle-grid",
+    "components": [
+      "vehicle-tile"
+    ]
+  },
+  {
     "id": "product-showcase",
     "components": [
       "product-card"

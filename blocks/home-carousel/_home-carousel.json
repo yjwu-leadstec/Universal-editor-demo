@@ -1,0 +1,136 @@
+{
+  "definitions": [
+    {
+      "title": "Home Carousel",
+      "id": "home-carousel",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Home Carousel",
+              "model": "home-carousel",
+              "filter": "home-carousel"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Carousel Card",
+      "id": "carousel-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Carousel Card",
+              "model": "carousel-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "home-carousel",
+      "fields": [
+        {
+          "component": "text",
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "description": "小标题（tech 变体显示，如 Li Technology）",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "heading",
+          "label": "Heading",
+          "description": "区块标题（桌面）",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "mobileHeading",
+          "label": "Mobile Heading",
+          "description": "移动端标题（可选，支持换行，用 \\n 分行）",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "classes",
+          "label": "Variant",
+          "description": "story 品牌故事（含视频卡）/ tech 技术卡片（图片 + eyebrow）",
+          "value": "story",
+          "valueType": "string",
+          "options": [
+            { "name": "Story", "value": "story" },
+            { "name": "Tech", "value": "tech" }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "id",
+          "label": "ID",
+          "description": "页内锚点/自动化定位（可选）",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "carousel-card",
+      "fields": [
+        {
+          "component": "reference",
+          "name": "image",
+          "label": "Poster / Background Image",
+          "description": "卡片背景图；视频卡的封面兜底图",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "imageAlt",
+          "label": "Image Alt Text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "video",
+          "label": "Video (optional)",
+          "description": "story 视频卡的 mp4；填写后居中卡片自动播放",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Card Title",
+          "description": "卡片文案，用 \\n 分行",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "actionText",
+          "label": "Action Text (optional)",
+          "description": "如 View Full Video（story 卡片显示）",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "Link (optional)",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "home-carousel",
+      "components": [
+        "carousel-card"
+      ]
+    }
+  ]
+}
