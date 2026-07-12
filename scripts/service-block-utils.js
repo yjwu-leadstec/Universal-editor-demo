@@ -46,7 +46,11 @@ export function pictures(rows) {
 
 export function linkedPictures(source) {
   if (!source) return [];
-  return [...source.querySelectorAll('a')]
+  const anchors = [
+    ...(source.matches('a') ? [source] : []),
+    ...source.querySelectorAll('a'),
+  ];
+  return anchors
     .filter((anchor) => /\.(?:avif|gif|jpe?g|png|svg|webp)(?:[?#]|$)/i.test(anchor.getAttribute('href') || ''))
     .map((anchor) => {
       const picture = document.createElement('picture');
