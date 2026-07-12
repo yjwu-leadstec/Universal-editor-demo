@@ -22,8 +22,8 @@ import {
 
 function featureRows(rows) {
   return rows.filter((row) => {
-    if (isPropertyRow(row)) return false;
     if (row.dataset.serviceKind === 'feature' || hasModel(row, 'support-feature-item')) return true;
+    if (isPropertyRow(row)) return false;
     return directCells(row).filter((cell) => cell.textContent.trim()).length >= 2;
   });
 }

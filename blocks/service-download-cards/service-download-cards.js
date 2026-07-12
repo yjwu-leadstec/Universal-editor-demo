@@ -87,7 +87,9 @@ function setupDialog(dialog, opener) {
     event.preventDefault();
     closeDialog(dialog);
   });
-  dialog.addEventListener('close', () => opener.focus());
+  dialog.addEventListener('close', () => {
+    window.requestAnimationFrame(() => opener.focus());
+  });
 }
 
 function createDialog(card) {
