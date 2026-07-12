@@ -1,0 +1,133 @@
+{
+  "definitions": [
+    {
+      "title": "Service Feature Panel",
+      "id": "support-feature-panel",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Service Feature Panel",
+              "model": "support-feature-panel",
+              "filter": "support-feature-panel"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Service Feature",
+      "id": "support-feature-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Service Feature",
+              "model": "support-feature-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "support-feature-panel",
+      "fields": [
+        {
+          "component": "select",
+          "name": "classes",
+          "label": "Layout Variant",
+          "description": "Always Ready list, APP phone composition, or Remote Diagnosis collage",
+          "value": "list",
+          "valueType": "string",
+          "options": [
+            { "name": "Always Ready List", "value": "list" },
+            { "name": "APP Experience", "value": "app" },
+            { "name": "Remote Diagnosis", "value": "diagnosis" }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "copy_heading",
+          "label": "Section Heading",
+          "description": "Shown above APP and Diagnosis panels; optional for the list variant",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "copy_leadHeading",
+          "label": "Introduction Title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "copy_leadDescription",
+          "label": "Introduction Description",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "media_image",
+          "label": "Desktop Media",
+          "description": "Phone image or diagnosis collage; optional for list variant",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "media_imageAlt",
+          "label": "Desktop Media Alt Text",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "media_mobileImage",
+          "label": "Mobile Media (optional)",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "media_mobileImageAlt",
+          "label": "Mobile Media Alt Text",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "id",
+          "label": "ID",
+          "description": "Optional page anchor",
+          "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "support-feature-item",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Feature Title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "description",
+          "label": "Feature Description",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "support-feature-panel",
+      "components": [
+        "support-feature-item"
+      ]
+    }
+  ]
+}

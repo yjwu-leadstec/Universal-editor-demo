@@ -1,0 +1,156 @@
+main .support-hero {
+  --service-font-regular: licium-regular, "Segoe UI", arial, sans-serif;
+  --service-font-medium: licium-medium, "Segoe UI", arial, sans-serif;
+
+  position: relative;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  overflow: hidden;
+  color: rgb(0 0 0 / 90%);
+  font-family: var(--service-font-regular);
+  background: #fff;
+}
+
+main .support-hero .support-hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  margin-inline: auto;
+  padding: 80px 20px 48px;
+  text-align: center;
+}
+
+main .support-hero .support-hero-eyebrow {
+  margin: 0 0 8px;
+  font-family: var(--service-font-medium);
+  font-size: 14px;
+  line-height: 1.34;
+}
+
+main .support-hero h1 {
+  margin: 0;
+  font-family: var(--service-font-medium);
+  font-size: clamp(38px, 10vw, 52px);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+}
+
+main .support-hero .support-hero-description {
+  max-width: 760px;
+  margin-top: 24px;
+  color: rgb(0 0 0 / 60%);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+main .support-hero .support-hero-description p {
+  margin: 0;
+}
+
+main .support-hero .support-hero-media {
+  position: relative;
+  height: clamp(300px, 78vw, 500px);
+  overflow: hidden;
+  background: #f8f8f8;
+}
+
+main .support-hero .support-hero-picture,
+main .support-hero .support-hero-picture picture,
+main .support-hero .support-hero-picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+main .support-hero .support-hero-picture img {
+  object-fit: cover;
+  object-position: center;
+}
+
+main .support-hero .support-hero-picture-mobile {
+  display: none;
+}
+
+main .support-hero .support-hero-media.has-mobile-media .support-hero-picture-desktop {
+  display: none;
+}
+
+main .support-hero .support-hero-media.has-mobile-media .support-hero-picture-mobile {
+  display: block;
+}
+
+main .support-hero .is-media-fallback::after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgb(0 0 0 / 35%);
+  font-family: var(--service-font-medium);
+  letter-spacing: 0.18em;
+  content: attr(data-fallback-label);
+}
+
+main .support-hero .service-aue-anchor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+main .support-hero .service-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+main .support-hero .service-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (width >= 600px) {
+  main .support-hero .support-hero-media.has-mobile-media .support-hero-picture-desktop {
+    display: block;
+  }
+
+  main .support-hero .support-hero-media.has-mobile-media .support-hero-picture-mobile {
+    display: none;
+  }
+}
+
+@media (width >= 900px) {
+  main .support-hero .support-hero-copy {
+    padding-top: 126px;
+    padding-bottom: 80px;
+  }
+
+  main .support-hero .support-hero-eyebrow {
+    margin-bottom: 6px;
+    font-size: 24px;
+  }
+
+  main .support-hero h1 {
+    font-size: 64px;
+    line-height: 1.3125;
+  }
+
+  main .support-hero .support-hero-description {
+    margin-top: 32px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  main .support-hero .support-hero-media {
+    height: 620px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main .support-hero .service-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

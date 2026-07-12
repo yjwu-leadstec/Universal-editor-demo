@@ -83,5 +83,25 @@
   {
     "id": "product-table",
     "components": []
+  },
+  {
+    "id": "support-contact-cards",
+    "components": [
+      "support-contact-card",
+      "support-contact-field"
+    ]
+  },
+  {
+    "id": "support-download-cards",
+    "components": [
+      "support-download-card",
+      "support-download-file"
+    ]
+  },
+  {
+    "id": "support-feature-panel",
+    "components": [
+      "support-feature-item"
+    ]
   }
 ]

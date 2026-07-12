@@ -379,6 +379,159 @@
               }
             }
           }
+        },
+        {
+          "title": "Service Bottom Bar",
+          "id": "support-bottom-bar",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Service Bottom Bar",
+                  "model": "support-bottom-bar"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Service Contact Cards",
+          "id": "support-contact-cards",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Service Contact Cards",
+                  "model": "support-contact-cards",
+                  "filter": "support-contact-cards"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Service Contact Card",
+          "id": "support-contact-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Service Contact Card",
+                  "model": "support-contact-card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Service Contact Field",
+          "id": "support-contact-field",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Service Contact Field",
+                  "model": "support-contact-field"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Service Download Cards",
+          "id": "support-download-cards",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Service Download Cards",
+                  "model": "support-download-cards",
+                  "filter": "support-download-cards"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Vehicle Download Card",
+          "id": "support-download-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Vehicle Download Card",
+                  "model": "support-download-card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Vehicle Manual File",
+          "id": "support-download-file",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Vehicle Manual File",
+                  "model": "support-download-file"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Service Feature Panel",
+          "id": "support-feature-panel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Service Feature Panel",
+                  "model": "support-feature-panel",
+                  "filter": "support-feature-panel"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Service Feature",
+          "id": "support-feature-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Service Feature",
+                  "model": "support-feature-item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Service Hero",
+          "id": "support-hero",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Service Hero",
+                  "model": "support-hero"
+                }
+              }
+            }
+          }
         }
       ]
     }

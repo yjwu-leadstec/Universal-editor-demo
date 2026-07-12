@@ -1,0 +1,81 @@
+{
+  "definitions": [
+    {
+      "title": "Service Hero",
+      "id": "support-hero",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Service Hero",
+              "model": "support-hero"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "support-hero",
+      "fields": [
+        {
+          "component": "text",
+          "name": "copy_eyebrow",
+          "label": "Eyebrow",
+          "description": "Small label above the main heading, for example Li Auto Service",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "copy_title",
+          "label": "Title",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "copy_description",
+          "label": "Description",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "media_image",
+          "label": "Desktop Image",
+          "description": "Full-width desktop Service image",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "media_imageAlt",
+          "label": "Desktop Image Alt Text",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "media_mobileImage",
+          "label": "Mobile Image (optional)",
+          "description": "Falls back to the desktop image when empty",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "media_mobileImageAlt",
+          "label": "Mobile Image Alt Text",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "id",
+          "label": "ID",
+          "description": "Optional page anchor",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

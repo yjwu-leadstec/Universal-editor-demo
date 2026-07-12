@@ -943,5 +943,469 @@
         "value": "/dummy-data/rt5760_series.json"
       }
     ]
+  },
+  {
+    "id": "support-bottom-bar",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "media_image",
+        "label": "Desktop Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "media_imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "media_mobileImage",
+        "label": "Mobile Image (optional)",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "media_mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "copy_title",
+        "label": "Title (optional)",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "copy_description",
+        "label": "Description (optional)",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "cta_link",
+        "label": "CTA Link (optional)",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "cta_linkText",
+        "label": "CTA Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "cta_linkType",
+        "label": "CTA Type",
+        "value": "primary",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Text Theme",
+        "value": "dark-copy",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Dark Copy",
+            "value": "dark-copy"
+          },
+          {
+            "name": "Light Copy",
+            "value": "light-copy"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "support-contact-cards",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Overview Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "Overview Link Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "linkType",
+        "label": "Overview Link Type",
+        "value": "text",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Text Link",
+            "value": "text"
+          },
+          {
+            "name": "Primary Button",
+            "value": "primary"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "support-contact-card",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardKey",
+        "label": "Card Key",
+        "description": "Stable key used by Contact Field items",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Card Title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "support-contact-field",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardKey",
+        "label": "Card Key",
+        "description": "Must match a Service Contact Card key",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Field Label",
+        "description": "Address, Telephone, Opening hours, Email, etc.",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "value",
+        "label": "Field Value",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Field Link (optional)",
+        "description": "Use for an explicit address or external link; email and telephone values are auto-linked",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "support-download-cards",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Section Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "subtitle",
+        "label": "Section Subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Background",
+        "value": "light",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "White",
+            "value": "light"
+          },
+          {
+            "name": "Light Gray",
+            "value": "gray"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "support-download-card",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardKey",
+        "label": "Vehicle Key",
+        "description": "Stable key used by file items, for example l7",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "vehicleName",
+        "label": "Vehicle Name",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Vehicle Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Vehicle Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "logo",
+        "label": "Vehicle Logo (optional)",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "logoAlt",
+        "label": "Vehicle Logo Alt Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "support-download-file",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardKey",
+        "label": "Vehicle Key",
+        "description": "Must match a Vehicle Download Card key",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "fileName",
+        "label": "File Name",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "fileSize",
+        "label": "File Size",
+        "description": "For example 32 MB",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "fileLink",
+        "label": "Download File",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "support-feature-panel",
+    "fields": [
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Layout Variant",
+        "description": "Always Ready list, APP phone composition, or Remote Diagnosis collage",
+        "value": "list",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Always Ready List",
+            "value": "list"
+          },
+          {
+            "name": "APP Experience",
+            "value": "app"
+          },
+          {
+            "name": "Remote Diagnosis",
+            "value": "diagnosis"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "copy_heading",
+        "label": "Section Heading",
+        "description": "Shown above APP and Diagnosis panels; optional for the list variant",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "copy_leadHeading",
+        "label": "Introduction Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "copy_leadDescription",
+        "label": "Introduction Description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "media_image",
+        "label": "Desktop Media",
+        "description": "Phone image or diagnosis collage; optional for list variant",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "media_imageAlt",
+        "label": "Desktop Media Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "media_mobileImage",
+        "label": "Mobile Media (optional)",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "media_mobileImageAlt",
+        "label": "Mobile Media Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "support-feature-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Feature Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Feature Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "support-hero",
+    "fields": [
+      {
+        "component": "text",
+        "name": "copy_eyebrow",
+        "label": "Eyebrow",
+        "description": "Small label above the main heading, for example Li Auto Service",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "copy_title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "copy_description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "media_image",
+        "label": "Desktop Image",
+        "description": "Full-width desktop Service image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "media_imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "media_mobileImage",
+        "label": "Mobile Image (optional)",
+        "description": "Falls back to the desktop image when empty",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "media_mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      }
+    ]
   }
 ]

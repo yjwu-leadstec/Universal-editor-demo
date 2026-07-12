@@ -1,0 +1,99 @@
+{
+  "definitions": [
+    {
+      "title": "Service Bottom Bar",
+      "id": "support-bottom-bar",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Service Bottom Bar",
+              "model": "support-bottom-bar"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "support-bottom-bar",
+      "fields": [
+        {
+          "component": "reference",
+          "name": "media_image",
+          "label": "Desktop Image",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "media_imageAlt",
+          "label": "Desktop Image Alt Text",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "media_mobileImage",
+          "label": "Mobile Image (optional)",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "media_mobileImageAlt",
+          "label": "Mobile Image Alt Text",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "copy_title",
+          "label": "Title (optional)",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "copy_description",
+          "label": "Description (optional)",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "cta_link",
+          "label": "CTA Link (optional)",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "cta_linkText",
+          "label": "CTA Text",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "cta_linkType",
+          "label": "CTA Type",
+          "value": "primary",
+          "valueType": "string",
+          "options": [
+            { "name": "Primary", "value": "primary" },
+            { "name": "Secondary", "value": "secondary" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "classes",
+          "label": "Text Theme",
+          "value": "dark-copy",
+          "valueType": "string",
+          "options": [
+            { "name": "Dark Copy", "value": "dark-copy" },
+            { "name": "Light Copy", "value": "light-copy" }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
