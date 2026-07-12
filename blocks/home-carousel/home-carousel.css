@@ -411,6 +411,7 @@
   }
 
   .home-carousel.tech .home-horizontal-copy {
+    top: 0;
     height: 124px;
     justify-content: flex-start;
     padding: 24px 36px 0;
