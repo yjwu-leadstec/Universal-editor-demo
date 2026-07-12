@@ -74,8 +74,10 @@ export default function decorate(block) {
   const introSource = propSource(rows, 'copy_leadDescription')
     || semanticSourceAfter(contentRows, 'p', introHeadingSource)
     || semanticSource(contentRows, 'p');
-  const picture = propPicture(rows, 'media_image') || availablePictures[0] || null;
-  const mobilePicture = propPicture(rows, 'media_mobileImage') || availablePictures[1] || null;
+  const picture = propPicture(rows, 'media_image', 'media_imageAlt') || availablePictures[0] || null;
+  const mobilePicture = propPicture(rows, 'media_mobileImage', 'media_mobileImageAlt')
+    || availablePictures[1]
+    || null;
   const imageAltText = propText(rows, 'media_imageAlt') || imageAlt(picture);
   const mobileImageAltText = propText(rows, 'media_mobileImageAlt')
     || imageAlt(mobilePicture)

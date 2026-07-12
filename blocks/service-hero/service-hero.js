@@ -23,8 +23,10 @@ export default function decorate(block) {
   const titleSource = propSource(rows, 'copy_title') || semanticSource(rows, 'h1, h2');
   const descriptionSource = propSource(rows, 'copy_description')
     || semanticSourceAfter(rows, 'p', titleSource);
-  const image = propPicture(rows, 'media_image') || availablePictures[0] || null;
-  const mobileImage = propPicture(rows, 'media_mobileImage') || availablePictures[1] || null;
+  const image = propPicture(rows, 'media_image', 'media_imageAlt') || availablePictures[0] || null;
+  const mobileImage = propPicture(rows, 'media_mobileImage', 'media_mobileImageAlt')
+    || availablePictures[1]
+    || null;
   const eyebrow = propText(rows, 'copy_eyebrow')
     || semanticSourceBefore(rows, 'p', titleSource)?.textContent.trim()
     || '';

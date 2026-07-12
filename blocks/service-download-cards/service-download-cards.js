@@ -8,6 +8,7 @@ import {
   instrument,
   instrumentProp,
   isPropertyRow,
+  linkedPictures,
   plainCellTexts,
   propSource,
   propText,
@@ -30,13 +31,14 @@ function rowKind(row) {
 function parseCard(row, index) {
   const texts = plainCellTexts(row);
   const pictures = [...row.querySelectorAll('picture')];
+  const linkPictures = linkedPictures(row);
   const key = row.dataset.cardKey || texts[0] || `vehicle-${index + 1}`;
   return {
     key,
     name: texts[1] || key,
     row,
-    image: pictures[0] || null,
-    logo: pictures[1] || null,
+    image: pictures[0] || linkPictures[0] || null,
+    logo: pictures[1] || linkPictures[1] || null,
     files: [],
   };
 }

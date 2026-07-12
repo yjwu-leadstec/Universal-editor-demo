@@ -44,12 +44,28 @@ export function pictures(rows) {
   return rows.flatMap((row) => [...row.querySelectorAll('picture')]);
 }
 
+export function linkedPictures(source) {
+  if (!source) return [];
+  return [...source.querySelectorAll('a')]
+    .filter((anchor) => /\.(?:avif|gif|jpe?g|png|svg|webp)(?:[?#]|$)/i.test(anchor.getAttribute('href') || ''))
+    .map((anchor) => {
+      const picture = document.createElement('picture');
+      const image = document.createElement('img');
+      image.src = anchor.href;
+      image.alt = anchor.textContent.trim();
+      picture.append(image);
+      return picture;
+    });
+}
+
 export function imageAlt(picture) {
   return picture?.querySelector('img')?.getAttribute('alt') || '';
 }
 
-export function propPicture(rows, name) {
-  return propSource(rows, name)?.querySelector('picture') || null;
+export function propPicture(rows, name, linkProp = '') {
+  const picture = propSource(rows, name)?.querySelector('picture');
+  if (picture) return picture;
+  return linkProp ? linkedPictures(propSource(rows, linkProp))[0] || null : null;
 }
 
 export function propAnchor(rows, name) {
