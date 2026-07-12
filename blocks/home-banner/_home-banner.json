@@ -52,7 +52,7 @@
           "component": "reference",
           "name": "image",
           "label": "Background Image",
-          "description": "桌面 Banner 图（约 1920×817）",
+          "description": "Banner 图（约 1920×817）",
           "valueType": "string",
           "multi": false
         },
@@ -61,14 +61,6 @@
           "name": "imageAlt",
           "label": "Image Alt Text",
           "valueType": "string"
-        },
-        {
-          "component": "reference",
-          "name": "mobileImage",
-          "label": "Mobile Background Image",
-          "description": "移动端 Banner 图（可选，≤820px 使用）",
-          "valueType": "string",
-          "multi": false
         },
         {
           "component": "reference",

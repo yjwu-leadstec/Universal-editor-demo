@@ -9,30 +9,27 @@
  * - 进入视口时区块淡入上移；prefers-reduced-motion 降级。
  *
  * 块级字段行（无图行）：eyebrow, heading, mobileHeading
- * 卡片 row cell 顺序（与 _home-carousel.json 的 carousel-card 一致）：
- *   image, imageAlt, video, title, actionText, link
+ * 稳健取值（按类型查询）：pictures[0]=海报图；video=含 .mp4 的 anchor，link=另一个 anchor；
+ *   text cells 依模型顺序 = title / actionLabel；标题行（无图行）text cells = eyebrow / heading / mobileHeading。
  */
 import {
   html, render, nothing, createRef, ref,
 } from '../../scripts/lit.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function cellText(cell) {
-  return cell ? cell.textContent.trim() : '';
-}
-
-function cellPicture(cell) {
-  return cell ? cell.querySelector('picture') : null;
-}
-
-function cellLink(cell) {
-  const a = cell ? cell.querySelector('a') : null;
-  return a ? a.getAttribute('href') : '';
+function textCells(row) {
+  return [...row.children]
+    .filter((cell) => !cell.querySelector('picture, img, a'))
+    .map((cell) => cell.textContent.trim());
 }
 
 function pictureAlt(picture) {
   const img = picture ? picture.querySelector('img') : null;
   return img ? (img.getAttribute('alt') || '') : '';
+}
+
+function isVideoHref(href) {
+  return /\.(mp4|webm|mov)(\?|$)/i.test(href || '');
 }
 
 function multiline(value) {
@@ -41,17 +38,22 @@ function multiline(value) {
 }
 
 function extractCard(row, index) {
-  const [imageCell, videoCell, titleCell, actionCell, linkCell] = [...row.children];
-  const posterPicture = cellPicture(imageCell);
+  const pics = [...row.querySelectorAll('picture')];
+  const anchors = [...row.querySelectorAll('a')];
+  const videoAnchor = anchors.find((a) => isVideoHref(a.getAttribute('href')));
+  const linkAnchor = anchors.find((a) => a !== videoAnchor);
+  const [title = '', action = ''] = textCells(row);
+  const posterPicture = pics[0] || null;
+
   return {
     index,
     row,
     posterPicture,
     alt: pictureAlt(posterPicture),
-    videoSrc: cellLink(videoCell),
-    title: cellText(titleCell),
-    action: cellText(actionCell),
-    link: cellLink(linkCell),
+    videoSrc: videoAnchor ? videoAnchor.getAttribute('href') : '',
+    title,
+    action,
+    link: linkAnchor ? linkAnchor.getAttribute('href') : '',
     cardRef: createRef(),
     mediaRef: createRef(),
   };
@@ -237,10 +239,7 @@ export default function decorate(block) {
   let heading = '';
   let mobileHeading = '';
   if (headingRow) {
-    const [eyebrowCell, headingCell, mobileHeadingCell] = [...headingRow.children];
-    eyebrow = cellText(eyebrowCell);
-    heading = cellText(headingCell);
-    mobileHeading = cellText(mobileHeadingCell);
+    [eyebrow = '', heading = '', mobileHeading = ''] = textCells(headingRow);
   }
 
   const headingMarkup = mobileHeading

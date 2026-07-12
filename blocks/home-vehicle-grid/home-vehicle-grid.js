@@ -6,8 +6,8 @@
  * - hover：图片放大 10% + 黑色遮罩渐显 + 副标题上移 + Learn More/Order Now 显现。
  * - 移动端：竖向堆叠，文案左下对齐。
  *
- * EDS 折叠 cell 布局（image+imageAlt 折叠为 1 个 cell，alt 落在 img 属性上）：
- *   [image(+alt), mobileImage, logo, name, subtitle, size, kind, link]
+ * 稳健取值（product-showcase 式按类型查询，兼容可选字段缺省 + EDS 字段折叠）：
+ *   pictures[0]=背景图（alt 在 img 上）, pictures[1]=logo；text cells 依模型顺序 = 车名/副标题/尺寸/kind；anchor=link。
  * CTA 文案（Learn More / Order Now）为品牌固定文案，随参考站硬编码。
  */
 import {
@@ -15,12 +15,10 @@ import {
 } from '../../scripts/lit.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function cellText(cell) {
-  return cell ? cell.textContent.trim() : '';
-}
-
-function cellPicture(cell) {
-  return cell ? cell.querySelector('picture') : null;
+function textCells(row) {
+  return [...row.children]
+    .filter((cell) => !cell.querySelector('picture, img, a'))
+    .map((cell) => cell.textContent.trim());
 }
 
 function pictureAlt(picture) {
@@ -28,32 +26,23 @@ function pictureAlt(picture) {
   return img ? (img.getAttribute('alt') || '') : '';
 }
 
-function cellLink(cell) {
-  const a = cell ? cell.querySelector('a') : null;
-  return a ? a.getAttribute('href') : '';
-}
-
 function extractTile(row, index) {
-  const [
-    imageCell, mobileImageCell, logoCell, nameCell, subtitleCell, sizeCell, kindCell, linkCell,
-  ] = [...row.children];
-
-  const size = cellText(sizeCell).toLowerCase() === 'large' ? 'large' : 'small';
-  const kind = cellText(kindCell).toLowerCase() === 'charging' ? 'charging' : 'vehicle';
-  const bgPicture = cellPicture(imageCell);
+  const pics = [...row.querySelectorAll('picture')];
+  const anchor = row.querySelector('a');
+  const [vehicleName = '', subtitle = '', sizeRaw = '', kindRaw = ''] = textCells(row);
+  const bgPicture = pics[0] || null;
 
   return {
     index,
     row,
-    size,
-    kind,
+    size: sizeRaw.toLowerCase() === 'large' ? 'large' : 'small',
+    kind: kindRaw.toLowerCase() === 'charging' ? 'charging' : 'vehicle',
     bgPicture,
-    mobilePicture: cellPicture(mobileImageCell),
-    logoPicture: cellPicture(logoCell),
+    logoPicture: pics[1] || null,
     alt: pictureAlt(bgPicture),
-    name: cellText(nameCell),
-    subtitle: cellText(subtitleCell),
-    link: cellLink(linkCell),
+    name: vehicleName,
+    subtitle,
+    link: anchor ? anchor.getAttribute('href') : '',
     tileRef: createRef(),
     mediaRef: createRef(),
     logoRef: createRef(),
@@ -108,15 +97,6 @@ export default function decorate(block) {
 
     if (tile.mediaRef.value && tile.bgPicture) {
       const picture = tile.bgPicture.cloneNode(true);
-      if (tile.mobilePicture) {
-        const mobileImg = tile.mobilePicture.querySelector('img');
-        if (mobileImg) {
-          const source = document.createElement('source');
-          source.setAttribute('media', '(max-width: 820px)');
-          source.setAttribute('srcset', mobileImg.getAttribute('src'));
-          picture.prepend(source);
-        }
-      }
       const img = picture.querySelector('img');
       if (img) {
         if (tile.alt) img.setAttribute('alt', tile.alt);

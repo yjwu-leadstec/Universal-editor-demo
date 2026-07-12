@@ -495,7 +495,7 @@
         "component": "reference",
         "name": "image",
         "label": "Background Image",
-        "description": "桌面 Banner 图（约 1920×817）",
+        "description": "Banner 图（约 1920×817）",
         "valueType": "string",
         "multi": false
       },
@@ -504,14 +504,6 @@
         "name": "imageAlt",
         "label": "Image Alt Text",
         "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "mobileImage",
-        "label": "Mobile Background Image",
-        "description": "移动端 Banner 图（可选，≤820px 使用）",
-        "valueType": "string",
-        "multi": false
       },
       {
         "component": "reference",
@@ -718,7 +710,7 @@
         "component": "reference",
         "name": "image",
         "label": "Background Image",
-        "description": "桌面卡片背景图（大卡 960×540、小卡 480×540）",
+        "description": "卡片背景图（大卡 960×540、小卡 480×540）",
         "valueType": "string",
         "multi": false
       },
@@ -730,14 +722,6 @@
       },
       {
         "component": "reference",
-        "name": "mobileImage",
-        "label": "Mobile Background Image",
-        "description": "移动端背景图（可选，≤820px 使用；缺省回退桌面图）",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "reference",
         "name": "logo",
         "label": "Vehicle Logo",
         "description": "车型 Logo 字标（透明 PNG）；缺省时显示车型名文本",
@@ -746,7 +730,7 @@
       },
       {
         "component": "text",
-        "name": "name",
+        "name": "vehicleName",
         "label": "Vehicle Name",
         "description": "如 Li i6、Li L9",
         "valueType": "string"

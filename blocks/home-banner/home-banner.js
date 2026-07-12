@@ -7,24 +7,18 @@
  * - hover 暂停自动轮播；激活 slide 图片 hover 放大 5%。
  * - 有 logo 时显示 logo 字标，否则显示标题 + 副标题。
  *
- * 每个 slide row 的 cell 顺序（与 _home-banner.json 的 banner-slide 模型一致）：
- *   image, imageAlt, mobileImage, logo, title, subtitle, link, ctaText
+ * 稳健取值（按类型查询）：pictures[0]=背景图, pictures[1]=logo；anchor=link（含 CTA 文案）；
+ * text cells 依模型顺序 = title / subtitle。
  */
 import {
   html, render, nothing, createRef, ref,
 } from '../../scripts/lit.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function cellText(cell) {
-  return cell ? cell.textContent.trim() : '';
-}
-
-function cellPicture(cell) {
-  return cell ? cell.querySelector('picture') : null;
-}
-
-function cellAnchor(cell) {
-  return cell ? cell.querySelector('a') : null;
+function textCells(row) {
+  return [...row.children]
+    .filter((cell) => !cell.querySelector('picture, img, a'))
+    .map((cell) => cell.textContent.trim());
 }
 
 function pictureAlt(picture) {
@@ -33,13 +27,11 @@ function pictureAlt(picture) {
 }
 
 function extractSlide(row, index) {
-  const [
-    imageCell, mobileImageCell, logoCell, titleCell, subtitleCell, linkCell,
-  ] = [...row.children];
-
-  const bgPicture = cellPicture(imageCell);
+  const pics = [...row.querySelectorAll('picture')];
+  const anchor = row.querySelector('a');
+  const [title = '', subtitle = ''] = textCells(row);
+  const bgPicture = pics[0] || null;
   const img = bgPicture ? bgPicture.querySelector('img') : null;
-  const anchor = cellAnchor(linkCell);
 
   return {
     index,
@@ -47,10 +39,9 @@ function extractSlide(row, index) {
     bgPicture,
     bgSrc: img ? img.getAttribute('src') : '',
     alt: pictureAlt(bgPicture),
-    mobilePicture: cellPicture(mobileImageCell),
-    logoPicture: cellPicture(logoCell),
-    title: cellText(titleCell),
-    subtitle: cellText(subtitleCell),
+    logoPicture: pics[1] || null,
+    title,
+    subtitle,
     link: anchor ? anchor.getAttribute('href') : '',
     ctaText: (anchor && anchor.textContent.trim()) || 'Learn More',
     mediaRef: createRef(),
@@ -180,15 +171,6 @@ export default function decorate(block) {
 
     if (slide.mediaRef.value && slide.bgPicture) {
       const picture = slide.bgPicture.cloneNode(true);
-      if (slide.mobilePicture) {
-        const mobileImg = slide.mobilePicture.querySelector('img');
-        if (mobileImg) {
-          const source = document.createElement('source');
-          source.setAttribute('media', '(max-width: 820px)');
-          source.setAttribute('srcset', mobileImg.getAttribute('src'));
-          picture.prepend(source);
-        }
-      }
       const img = picture.querySelector('img');
       if (img) {
         if (slide.alt) img.setAttribute('alt', slide.alt);

@@ -14,12 +14,10 @@ import {
 } from '../../scripts/lit.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function cellText(cell) {
-  return cell ? cell.textContent.trim() : '';
-}
-
-function cellPicture(cell) {
-  return cell ? cell.querySelector('picture') : null;
+function textCells(row) {
+  return [...row.children]
+    .filter((cell) => !cell.querySelector('picture, img, a'))
+    .map((cell) => cell.textContent.trim());
 }
 
 function pictureAlt(picture) {
@@ -28,15 +26,17 @@ function pictureAlt(picture) {
 }
 
 function extractPanel(row, index) {
-  const [imageCell, titleCell, linkCell] = [...row.children];
-  const bgPicture = cellPicture(imageCell);
-  const anchor = linkCell ? linkCell.querySelector('a') : null;
+  const pics = [...row.querySelectorAll('picture')];
+  const anchor = row.querySelector('a');
+  const [title = ''] = textCells(row);
+  const bgPicture = pics[0] || null;
+
   return {
     index,
     row,
     bgPicture,
     alt: pictureAlt(bgPicture),
-    title: cellText(titleCell),
+    title,
     link: anchor ? anchor.getAttribute('href') : '',
     ctaText: (anchor && anchor.textContent.trim()) || 'Learn More',
     panelRef: createRef(),
