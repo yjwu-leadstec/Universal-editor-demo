@@ -90,7 +90,7 @@ function setupDialog(dialog, opener) {
     closeDialog(dialog);
   });
   dialog.addEventListener('close', () => {
-    window.requestAnimationFrame(() => opener.focus());
+    window.setTimeout(() => opener.focus(), 0);
   });
 }
 
