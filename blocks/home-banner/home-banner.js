@@ -137,9 +137,8 @@ function setupCarousel(carousel, slideCount) {
 }
 
 export default function decorate(block) {
-  const rows = [...block.children].filter(
-    (row) => row.textContent.trim() || row.querySelector('picture, img'),
-  );
+  // 有图行才是 slide（排除块级 id 等字段行）
+  const rows = [...block.children].filter((row) => row.querySelector('picture, img'));
   if (!rows.length) return;
 
   const slides = rows.map((row, index) => extractSlide(row, index));

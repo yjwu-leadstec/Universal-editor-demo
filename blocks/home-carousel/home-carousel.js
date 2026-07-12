@@ -225,22 +225,19 @@ function setupReveal(block) {
 
 export default function decorate(block) {
   const isTech = block.classList.contains('tech');
-  const rows = [...block.children].filter(
-    (row) => row.textContent.trim() || row.querySelector('picture, img'),
-  );
-  if (!rows.length) return;
+  const allRows = [...block.children];
 
-  // 无图行 = 块级标题配置；有图行 = 卡片
-  const headingRow = rows.find((row) => !row.querySelector('picture, img'));
-  const cardRows = rows.filter((row) => row !== headingRow);
+  // 有图行 = 卡片；无图行 = 块级字段（EDS 每个块级字段渲染成独立单元格行，
+  // 依模型顺序：eyebrow / heading / mobileHeading / id，空值仍占位）。
+  const cardRows = allRows.filter((row) => row.querySelector('picture, img'));
+  const fieldRows = allRows.filter((row) => !row.querySelector('picture, img'));
+  if (!cardRows.length) return;
+
   const cards = cardRows.map((row, index) => extractCard(row, index));
-
-  let eyebrow = '';
-  let heading = '';
-  let mobileHeading = '';
-  if (headingRow) {
-    [eyebrow = '', heading = '', mobileHeading = ''] = textCells(headingRow);
-  }
+  const fieldText = (i) => (fieldRows[i] ? fieldRows[i].textContent.trim() : '');
+  const eyebrow = fieldText(0);
+  const heading = fieldText(1);
+  const mobileHeading = fieldText(2);
 
   const headingMarkup = mobileHeading
     ? html`<span class="title-desktop">${heading}</span><span class="title-mobile">${multiline(mobileHeading)}</span>`

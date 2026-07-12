@@ -71,9 +71,8 @@ function tileMarkup(tile) {
 }
 
 export default function decorate(block) {
-  const rows = [...block.children].filter(
-    (row) => row.textContent.trim() || row.querySelector('picture, img'),
-  );
+  // 有图行才是车型卡（排除块级 id 等字段行）
+  const rows = [...block.children].filter((row) => row.querySelector('picture, img'));
   if (!rows.length) return;
 
   const tiles = rows.map((row, index) => extractTile(row, index));
