@@ -1,21 +1,130 @@
 /**
- * Header Block — Li Auto style navigation
+ * Global header and navigation.
  *
- * Features:
- * - Fixed transparent header (50px)
- * - Desktop: centered nav with hover dropdown panels
- * - Mobile (<900px): hamburger → full-screen overlay menu with accordion
- * - Keyboard navigation (Tab, Escape, Enter)
- * - Universal Editor support via moveInstrumentation
+ * The content is authored in a nav fragment with three sections:
+ * brand, primary navigation, and tools/language.
  */
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-const DESKTOP_MQ = window.matchMedia('(min-width: 900px)');
+const DESKTOP_MQ = window.matchMedia('(min-width: 720px)');
+const INSTRUMENTATION_PREFIXES = ['data-aue-', 'data-richtext-'];
+
+function captureInstrumentation(element) {
+  if (!element) return [];
+  return [...element.attributes]
+    .filter(({ name }) => INSTRUMENTATION_PREFIXES.some((prefix) => name.startsWith(prefix)))
+    .map(({ name, value }) => ({ name, value }));
+}
+
+function applyInstrumentation(attributes, element) {
+  attributes.forEach(({ name, value }) => element.setAttribute(name, value));
+}
+
+function directContent(element, selector) {
+  return [...(element?.children || [])].find((child) => child.matches(selector));
+}
+
+function directLabel(element) {
+  const source = directContent(element, 'a, p, strong, span, em') || element;
+  return source?.textContent?.trim() || '';
+}
+
+function mediaNodes(element) {
+  const nodes = [];
+  element.querySelectorAll('img').forEach((img) => {
+    const media = img.closest('picture') || img;
+    if (!nodes.includes(media)) nodes.push(media);
+  });
+  return nodes;
+}
+
+function directTextBetween(element, start, end) {
+  if (!start) return '';
+  let collecting = false;
+  const values = [];
+
+  element.childNodes.forEach((node) => {
+    if (node === start) {
+      collecting = true;
+      return;
+    }
+    if (node === end) {
+      collecting = false;
+      return;
+    }
+    if (collecting && node.nodeType === Node.TEXT_NODE) {
+      const value = node.textContent.trim();
+      if (value) values.push(value);
+    }
+  });
+
+  return values.join(' ');
+}
+
+function extractDropdownEntry(element) {
+  const links = [...element.querySelectorAll('a')];
+  if (!links.length) {
+    return {
+      type: 'group',
+      label: directLabel(element),
+      element,
+      instrumentation: captureInstrumentation(element),
+    };
+  }
+
+  const link = links.find((anchor) => anchor.querySelector('strong, em, span')
+    || anchor.textContent.trim()) || links[links.length - 1];
+  const titleElement = directContent(link, 'strong');
+  const ctaElement = directContent(link, 'em');
+  const title = titleElement?.textContent?.trim()
+    || [...link.childNodes]
+      .filter((node) => node.nodeType === Node.TEXT_NODE)
+      .map((node) => node.textContent.trim())
+      .filter(Boolean)
+      .join(' ')
+    || link.textContent.trim();
+
+  return {
+    type: 'card',
+    title,
+    subtitle: directContent(link, 'span')?.textContent?.trim()
+      || directTextBetween(link, titleElement, ctaElement),
+    cta: ctaElement?.textContent?.trim() || '',
+    href: link.href || links[0].href,
+    media: mediaNodes(element),
+    element,
+    instrumentation: captureInstrumentation(element),
+  };
+}
+
+function groupDropdownEntries(entries) {
+  const groups = [];
+  let current = {
+    label: '', cards: [], element: null, instrumentation: [],
+  };
+
+  entries.forEach((entry) => {
+    if (entry.type === 'group') {
+      if (current.cards.length || current.label) groups.push(current);
+      current = {
+        label: entry.label,
+        cards: [],
+        element: entry.element,
+        instrumentation: entry.instrumentation,
+      };
+    } else {
+      current.cards.push(entry);
+    }
+  });
+
+  if (current.cards.length || current.label) groups.push(current);
+  return groups.filter((group) => group.cards.length);
+}
 
 /**
- * Extract nav data from fragment DOM
+ * Extract navigation data from the authored fragment.
  * @param {HTMLElement} fragment
  * @returns {Object}
  */
@@ -24,48 +133,33 @@ function extractNavData(fragment) {
   const brandSection = sections[0];
   const navSection = sections[1];
   const toolsSection = sections[2];
-
-  // Brand: logo image and link
   const brandLink = brandSection?.querySelector('a');
   const brandImg = brandSection?.querySelector('img');
 
-  // Nav items: top-level list items with optional nested content
-  const navItems = [];
-  if (navSection) {
-    const topList = navSection.querySelector('ul');
-    if (topList) {
-      [...topList.children].forEach((li, index) => {
-        const label = li.firstChild?.textContent?.trim() || '';
-        const subList = li.querySelector('ul');
-        const hasDropdown = !!subList;
-        // Collect dropdown content (sub-list items with links, images, etc.)
-        const dropdownItems = [];
-        if (subList) {
-          [...subList.children].forEach((subLi) => {
-            const link = subLi.querySelector('a');
-            const img = subLi.querySelector('img');
-            const text = subLi.textContent.trim();
-            dropdownItems.push({
-              element: subLi,
-              text,
-              link: link?.href || '',
-              linkText: link?.textContent?.trim() || '',
-              img: img?.src || '',
-              imgAlt: img?.alt || '',
-            });
-          });
-        }
-        navItems.push({
-          index,
-          label,
-          element: li,
-          hasDropdown,
-          dropdownItems,
-        });
-      });
-    }
-  }
+  const topList = navSection?.querySelector('ul');
+  const navItems = topList ? [...topList.children].map((element, index) => {
+    const labelSource = directContent(element, 'a, p, strong, span');
+    const labelLink = labelSource?.matches('a')
+      ? labelSource
+      : labelSource?.querySelector(':scope > a');
+    const subList = directContent(element, 'ul');
+    const entries = subList
+      ? [...subList.children].map((child) => extractDropdownEntry(child))
+      : [];
 
+    return {
+      index,
+      label: labelLink?.textContent?.trim()
+        || labelSource?.textContent?.trim()
+        || directLabel(element),
+      href: labelLink?.href || '',
+      groups: groupDropdownEntries(entries),
+      element,
+      instrumentation: captureInstrumentation(element),
+    };
+  }) : [];
+
+  const toolsLink = toolsSection?.querySelector('a');
   return {
     brandSection,
     brandLink: brandLink?.href || '/',
@@ -73,35 +167,199 @@ function extractNavData(fragment) {
     brandImgAlt: brandImg?.alt || 'Li Auto',
     navItems,
     toolsSection,
+    toolsInstrumentation: captureInstrumentation(toolsSection),
+    toolsLink: toolsLink?.href || '',
+    toolsLabel: toolsLink?.textContent?.trim() || 'Language',
   };
 }
 
+function isCurrentPage(href) {
+  if (!href) return false;
+  try {
+    const target = new URL(href, window.location.href);
+    const normalize = (path) => path.replace(/\/$/, '') || '/';
+    return target.origin === window.location.origin
+      && normalize(target.pathname) === normalize(window.location.pathname);
+  } catch (error) {
+    return false;
+  }
+}
+
+function buildPanelCard(card) {
+  const link = document.createElement('a');
+  link.className = 'panel-card';
+  link.href = card.href || '#';
+  if (card.media.length > 1) link.classList.add('has-layered-media');
+  else if (card.media.length) link.classList.add('has-single-media');
+  else link.classList.add('without-media');
+
+  if (card.media.length) {
+    const media = document.createElement('span');
+    media.className = 'panel-card-media';
+    media.setAttribute('aria-hidden', 'true');
+    card.media.forEach((node, index) => {
+      node.classList.add(card.media.length > 1 && index === 0 ? 'panel-card-background' : 'panel-card-foreground');
+      media.append(node);
+    });
+    link.append(media);
+  }
+
+  const title = document.createElement('span');
+  title.className = 'panel-card-title';
+  title.textContent = card.title;
+  link.append(title);
+
+  if (card.subtitle) {
+    const subtitle = document.createElement('span');
+    subtitle.className = 'panel-card-subtitle';
+    subtitle.textContent = card.subtitle;
+    link.append(subtitle);
+  }
+
+  if (card.cta) {
+    const action = document.createElement('span');
+    action.className = 'panel-card-action';
+    action.textContent = card.cta;
+    link.append(action);
+  }
+
+  moveInstrumentation(card.element, link);
+  return link;
+}
+
+function buildPanelItem(item) {
+  const panelItem = document.createElement('div');
+  panelItem.className = 'header-panel-item';
+  panelItem.dataset.panelId = item.index;
+  panelItem.setAttribute('aria-hidden', 'true');
+
+  const groups = document.createElement('div');
+  groups.className = 'header-panel-groups';
+  item.groups.forEach((group) => {
+    const groupElement = document.createElement('section');
+    groupElement.className = 'header-panel-group';
+    if (group.label) {
+      const label = document.createElement('h2');
+      label.className = 'header-panel-label';
+      label.textContent = group.label;
+      if (group.element) moveInstrumentation(group.element, label);
+      groupElement.append(label);
+    } else {
+      groupElement.classList.add('without-label');
+    }
+
+    const cards = document.createElement('div');
+    cards.className = 'panel-cards';
+    group.cards.forEach((card) => cards.append(buildPanelCard(card)));
+    groupElement.append(cards);
+    groups.append(groupElement);
+  });
+
+  const hasLayeredCards = item.groups
+    .some((group) => group.cards.some((card) => card.media.length > 1));
+  panelItem.classList.add(hasLayeredCards ? 'vehicle-panel' : 'image-panel');
+  panelItem.append(groups);
+  return panelItem;
+}
+
+function buildMobileSubmenu(item) {
+  const submenu = document.createElement('div');
+  submenu.className = 'header-mobile-submenu';
+
+  item.groups.forEach((group) => {
+    const groupElement = document.createElement('div');
+    groupElement.className = 'mobile-submenu-group';
+    if (group.label) {
+      const label = document.createElement('p');
+      label.className = 'mobile-submenu-group-label';
+      label.textContent = group.label;
+      applyInstrumentation(group.instrumentation, label);
+      groupElement.append(label);
+    }
+
+    group.cards.forEach((card) => {
+      const link = document.createElement('a');
+      link.className = 'mobile-submenu-link';
+      link.href = card.href || '#';
+
+      const title = document.createElement('span');
+      title.className = 'mobile-submenu-title';
+      title.textContent = card.title;
+      link.append(title);
+
+      if (card.subtitle) {
+        const subtitle = document.createElement('span');
+        subtitle.className = 'mobile-submenu-subtitle';
+        subtitle.textContent = card.subtitle;
+        link.append(subtitle);
+      }
+
+      applyInstrumentation(card.instrumentation, link);
+      groupElement.append(link);
+    });
+    submenu.append(groupElement);
+  });
+
+  return submenu;
+}
+
+function buildMobileItem(item) {
+  const mobileItem = document.createElement('div');
+  mobileItem.className = 'header-mobile-item';
+  applyInstrumentation(item.instrumentation, mobileItem);
+
+  if (!item.groups.length) {
+    const link = document.createElement('a');
+    link.className = 'mobile-item-label';
+    link.href = item.href || '#';
+    link.textContent = item.label;
+    if (isCurrentPage(item.href)) link.setAttribute('aria-current', 'page');
+    mobileItem.append(link);
+    return mobileItem;
+  }
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'mobile-item-label';
+  button.dataset.mobileTitle = item.label;
+  button.setAttribute('aria-expanded', 'false');
+  const label = document.createElement('span');
+  label.textContent = item.label;
+  const chevron = document.createElement('span');
+  chevron.className = 'mobile-item-chevron';
+  chevron.setAttribute('aria-hidden', 'true');
+  button.append(label, chevron);
+  mobileItem.append(button, buildMobileSubmenu(item));
+  return mobileItem;
+}
+
 /**
- * Decorate header block
+ * Decorate the global header block.
  * @param {HTMLElement} block
  */
 export default async function decorate(block) {
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
-
   if (!fragment) return;
 
   const data = extractNavData(fragment);
-
   block.textContent = '';
 
-  // Build nav DOM
   const nav = document.createElement('nav');
   nav.id = 'nav';
   nav.className = 'header-nav';
+  nav.setAttribute('aria-label', 'Primary');
   nav.setAttribute('aria-expanded', 'false');
 
-  // -- Inner bar (logo + nav items + tools) --
+  const theme = getMetadata('header-theme').toLowerCase();
+  if (theme.split(',').map((value) => value.trim()).includes('transparent')) {
+    nav.classList.add('is-transparent');
+  }
+
   const inner = document.createElement('div');
   inner.className = 'header-nav-inner';
 
-  // Brand
   const brand = document.createElement('div');
   brand.className = 'header-brand';
   const logoLink = document.createElement('a');
@@ -112,234 +370,239 @@ export default async function decorate(block) {
     const logoImg = document.createElement('img');
     logoImg.src = data.brandImg;
     logoImg.alt = data.brandImgAlt;
-    logoImg.loading = 'lazy';
-    logoLink.appendChild(logoImg);
+    logoImg.loading = 'eager';
+    logoLink.append(logoImg);
+  } else {
+    logoLink.textContent = data.brandImgAlt;
   }
-  brand.appendChild(logoLink);
+  brand.append(logoLink);
   if (data.brandSection) moveInstrumentation(data.brandSection, brand);
 
-  // Nav list (desktop)
+  const mobileBack = document.createElement('button');
+  mobileBack.type = 'button';
+  mobileBack.className = 'header-mobile-back';
+  mobileBack.setAttribute('aria-label', 'Back to main navigation');
+  const mobileBackIcon = document.createElement('span');
+  mobileBackIcon.setAttribute('aria-hidden', 'true');
+  mobileBack.append(mobileBackIcon);
+
+  const mobileTitle = document.createElement('span');
+  mobileTitle.className = 'header-mobile-title';
+  mobileTitle.setAttribute('aria-live', 'polite');
+
   const navList = document.createElement('div');
   navList.className = 'header-sections';
   const navListInner = document.createElement('div');
   navListInner.className = 'header-navlist';
-  navListInner.setAttribute('role', 'menubar');
 
   data.navItems.forEach((item) => {
-    const navItem = document.createElement('span');
+    const navItem = document.createElement('a');
     navItem.className = 'header-navlist-item';
-    navItem.setAttribute('role', 'menuitem');
-    navItem.setAttribute('data-nav-id', item.index);
+    navItem.dataset.navId = item.index;
+    navItem.href = item.href || '#';
     navItem.textContent = item.label;
-    if (item.hasDropdown) {
+    if (item.groups.length) {
       navItem.setAttribute('aria-expanded', 'false');
-      navItem.setAttribute('tabindex', '0');
       navItem.setAttribute('aria-haspopup', 'true');
     }
+    if (isCurrentPage(item.href)) navItem.setAttribute('aria-current', 'page');
     moveInstrumentation(item.element, navItem);
-    navListInner.appendChild(navItem);
+    navListInner.append(navItem);
   });
-  navList.appendChild(navListInner);
+  navList.append(navListInner);
 
-  // Tools
   const tools = document.createElement('div');
   tools.className = 'header-tools';
-  if (data.toolsSection) {
-    while (data.toolsSection.firstChild) {
-      tools.appendChild(data.toolsSection.firstChild);
-    }
-    moveInstrumentation(data.toolsSection, tools);
+  if (data.toolsLink) {
+    const language = document.createElement('a');
+    language.className = 'header-language';
+    language.href = data.toolsLink;
+    language.setAttribute('aria-label', data.toolsLabel);
+    language.title = data.toolsLabel;
+    const globe = document.createElement('span');
+    globe.className = 'header-globe';
+    globe.setAttribute('aria-hidden', 'true');
+    language.append(globe);
+    tools.append(language);
+  } else if (data.toolsSection) {
+    while (data.toolsSection.firstChild) tools.append(data.toolsSection.firstChild);
   }
+  if (data.toolsSection) moveInstrumentation(data.toolsSection, tools);
 
-  // Hamburger (mobile)
   const hamburger = document.createElement('button');
+  hamburger.type = 'button';
   hamburger.className = 'header-hamburger';
   hamburger.setAttribute('aria-label', 'Open navigation');
-  hamburger.setAttribute('aria-controls', 'nav');
+  hamburger.setAttribute('aria-controls', 'header-mobile-menu');
+  hamburger.setAttribute('aria-expanded', 'false');
   for (let i = 0; i < 3; i += 1) {
     const line = document.createElement('span');
     line.className = 'hamburger-line';
-    hamburger.appendChild(line);
+    hamburger.append(line);
   }
 
-  inner.append(brand, navList, tools, hamburger);
-  nav.appendChild(inner);
+  inner.append(brand, mobileBack, mobileTitle, navList, tools, hamburger);
+  nav.append(inner);
 
-  // -- Dropdown panel (desktop) --
   const panel = document.createElement('div');
   panel.className = 'header-panel';
   panel.setAttribute('aria-hidden', 'true');
+  data.navItems
+    .filter((item) => item.groups.length)
+    .forEach((item) => panel.append(buildPanelItem(item)));
+  nav.append(panel);
 
-  data.navItems.forEach((item) => {
-    if (!item.hasDropdown) return;
-    const panelItem = document.createElement('div');
-    panelItem.className = 'header-panel-item';
-    panelItem.setAttribute('data-panel-id', item.index);
-    panelItem.setAttribute('aria-hidden', 'true');
-
-    const panelCards = document.createElement('div');
-    panelCards.className = 'panel-cards';
-
-    item.dropdownItems.forEach((drop) => {
-      const card = document.createElement('a');
-      card.className = 'panel-card';
-      card.href = drop.link || '#';
-
-      if (drop.img) {
-        const cardImg = document.createElement('img');
-        cardImg.src = drop.img;
-        cardImg.alt = drop.imgAlt || drop.text;
-        cardImg.loading = 'lazy';
-        card.appendChild(cardImg);
-      }
-
-      const cardBody = document.createElement('div');
-      cardBody.className = 'panel-card-body';
-      const cardName = document.createElement('span');
-      cardName.className = 'panel-card-name';
-      cardName.textContent = drop.linkText || drop.text;
-      cardBody.appendChild(cardName);
-      card.appendChild(cardBody);
-
-      moveInstrumentation(drop.element, card);
-      panelCards.appendChild(card);
-    });
-
-    panelItem.appendChild(panelCards);
-    panel.appendChild(panelItem);
-  });
-  nav.appendChild(panel);
-
-  // -- Mobile menu --
   const mobileMenu = document.createElement('div');
+  mobileMenu.id = 'header-mobile-menu';
   mobileMenu.className = 'header-mobile-menu';
+  data.navItems.forEach((item) => mobileMenu.append(buildMobileItem(item)));
+  if (data.toolsLink) {
+    const language = document.createElement('a');
+    language.className = 'header-mobile-language';
+    language.href = data.toolsLink;
+    language.textContent = data.toolsLabel;
+    applyInstrumentation(data.toolsInstrumentation, language);
+    const chevron = document.createElement('span');
+    chevron.className = 'mobile-item-chevron';
+    chevron.setAttribute('aria-hidden', 'true');
+    language.append(chevron);
+    mobileMenu.append(language);
+  }
+  nav.append(mobileMenu);
 
-  data.navItems.forEach((item) => {
-    const mobileItem = document.createElement('div');
-    mobileItem.className = 'header-mobile-item';
-
-    const mobileLabel = document.createElement('button');
-    mobileLabel.className = 'mobile-item-label';
-    mobileLabel.textContent = item.label;
-
-    if (item.hasDropdown) {
-      mobileLabel.setAttribute('aria-expanded', 'false');
-      const chevron = document.createElement('span');
-      chevron.className = 'mobile-item-chevron';
-      mobileLabel.appendChild(chevron);
-
-      const submenu = document.createElement('div');
-      submenu.className = 'header-mobile-submenu';
-
-      item.dropdownItems.forEach((drop) => {
-        const subLink = document.createElement('a');
-        subLink.className = 'mobile-submenu-link';
-        subLink.href = drop.link || '#';
-        subLink.textContent = drop.linkText || drop.text;
-        submenu.appendChild(subLink);
-      });
-
-      mobileItem.appendChild(mobileLabel);
-      mobileItem.appendChild(submenu);
-    } else {
-      mobileItem.appendChild(mobileLabel);
-    }
-
-    moveInstrumentation(item.element, mobileItem);
-    mobileMenu.appendChild(mobileItem);
-  });
-  nav.appendChild(mobileMenu);
-
-  // -- Interactions --
-  let activeNavId = null;
+  let closeTimer;
 
   function closePanel() {
-    activeNavId = null;
+    window.clearTimeout(closeTimer);
     panel.setAttribute('aria-hidden', 'true');
-    panel.querySelectorAll('.header-panel-item').forEach((p) => { p.setAttribute('aria-hidden', 'true'); });
-    navListInner.querySelectorAll('[aria-expanded]').forEach((el) => el.setAttribute('aria-expanded', 'false'));
+    nav.classList.remove('is-panel-open');
+    panel.querySelectorAll('.header-panel-item').forEach((item) => item.setAttribute('aria-hidden', 'true'));
+    navListInner.querySelectorAll('[aria-expanded]').forEach((item) => item.setAttribute('aria-expanded', 'false'));
   }
 
   function openPanel(navId) {
-    closePanel();
-    activeNavId = navId;
+    window.clearTimeout(closeTimer);
     const target = panel.querySelector(`[data-panel-id="${navId}"]`);
-    if (target) {
-      target.setAttribute('aria-hidden', 'false');
-      panel.setAttribute('aria-hidden', 'false');
-      const trigger = navListInner.querySelector(`[data-nav-id="${navId}"]`);
-      if (trigger) trigger.setAttribute('aria-expanded', 'true');
-    }
+    if (!target) return;
+    closePanel();
+    target.setAttribute('aria-hidden', 'false');
+    panel.setAttribute('aria-hidden', 'false');
+    nav.classList.add('is-panel-open');
+    navListInner.querySelector(`[data-nav-id="${navId}"]`)?.setAttribute('aria-expanded', 'true');
   }
 
-  // Desktop hover interactions
+  function schedulePanelClose() {
+    window.clearTimeout(closeTimer);
+    closeTimer = window.setTimeout(closePanel, 120);
+  }
+
   navListInner.querySelectorAll('.header-navlist-item[aria-haspopup]').forEach((item) => {
-    item.addEventListener('mouseenter', () => {
+    const open = () => {
       if (DESKTOP_MQ.matches) openPanel(item.dataset.navId);
+    };
+    item.addEventListener('pointerenter', open);
+    item.addEventListener('focus', open);
+    item.addEventListener('click', (event) => {
+      if (!DESKTOP_MQ.matches) return;
+      event.preventDefault();
+      openPanel(item.dataset.navId);
     });
-    item.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        if (activeNavId === item.dataset.navId) closePanel();
-        else openPanel(item.dataset.navId);
-      }
-    });
+  });
+  navListInner.querySelectorAll('.header-navlist-item:not([aria-haspopup])').forEach((item) => {
+    item.addEventListener('pointerenter', closePanel);
+  });
+  nav.addEventListener('pointerenter', () => window.clearTimeout(closeTimer));
+  nav.addEventListener('pointerleave', schedulePanelClose);
+  nav.addEventListener('focusout', (event) => {
+    if (DESKTOP_MQ.matches && !nav.contains(event.relatedTarget)) schedulePanelClose();
+  });
+  document.addEventListener('click', (event) => {
+    if (DESKTOP_MQ.matches && !nav.contains(event.target)) closePanel();
   });
 
-  nav.querySelector('.header-nav-inner').addEventListener('mouseleave', () => {
-    if (DESKTOP_MQ.matches) closePanel();
-  });
-
-  panel.addEventListener('mouseleave', () => {
-    if (DESKTOP_MQ.matches) closePanel();
-  });
-
-  // Mobile hamburger toggle
-  function toggleMobileMenu(forceClose) {
+  function toggleMobileMenu(forceClose, restoreFocus = false) {
     const isOpen = nav.getAttribute('aria-expanded') === 'true';
     const shouldClose = forceClose === true || isOpen;
     nav.setAttribute('aria-expanded', shouldClose ? 'false' : 'true');
+    hamburger.setAttribute('aria-expanded', shouldClose ? 'false' : 'true');
     hamburger.setAttribute('aria-label', shouldClose ? 'Open navigation' : 'Close navigation');
     document.body.classList.toggle('nav-open', !shouldClose);
+    if (!shouldClose) closePanel();
+    if (shouldClose) {
+      mobileMenu.querySelectorAll('.mobile-item-label[aria-expanded="true"]')
+        .forEach((button) => button.setAttribute('aria-expanded', 'false'));
+      delete nav.dataset.mobileView;
+      mobileTitle.textContent = '';
+    }
+    if (shouldClose && restoreFocus) hamburger.focus();
+  }
+
+  function showMobileRoot(restoreFocus = false) {
+    const expanded = mobileMenu.querySelector('.mobile-item-label[aria-expanded="true"]');
+    mobileMenu.querySelectorAll('.mobile-item-label[aria-expanded="true"]')
+      .forEach((button) => button.setAttribute('aria-expanded', 'false'));
+    delete nav.dataset.mobileView;
+    mobileTitle.textContent = '';
+    if (restoreFocus && expanded) expanded.focus();
   }
 
   hamburger.addEventListener('click', () => toggleMobileMenu());
-
-  // Mobile accordion
-  mobileMenu.querySelectorAll('.mobile-item-label[aria-expanded]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      // Close all other accordions
+  mobileBack.addEventListener('click', () => showMobileRoot(true));
+  mobileMenu.querySelectorAll('.mobile-item-label[aria-expanded]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
       mobileMenu.querySelectorAll('.mobile-item-label[aria-expanded="true"]').forEach((other) => {
-        if (other !== btn) other.setAttribute('aria-expanded', 'false');
+        if (other !== button) other.setAttribute('aria-expanded', 'false');
       });
-      btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      if (expanded) {
+        delete nav.dataset.mobileView;
+        mobileTitle.textContent = '';
+      } else {
+        nav.dataset.mobileView = 'detail';
+        mobileTitle.textContent = button.dataset.mobileTitle;
+      }
     });
   });
+  mobileMenu.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => toggleMobileMenu(true));
+  });
 
-  // Escape key
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      if (DESKTOP_MQ.matches) {
-        closePanel();
-      } else if (nav.getAttribute('aria-expanded') === 'true') {
-        toggleMobileMenu(true);
-        hamburger.focus();
-      }
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      if (DESKTOP_MQ.matches) closePanel();
+      else if (nav.dataset.mobileView === 'detail') showMobileRoot(true);
+      else if (nav.getAttribute('aria-expanded') === 'true') toggleMobileMenu(true, true);
+      return;
+    }
+
+    if (event.key !== 'Tab' || DESKTOP_MQ.matches || nav.getAttribute('aria-expanded') !== 'true') return;
+    const focusable = [hamburger, ...mobileMenu.querySelectorAll('a, button:not([disabled])')]
+      .filter((element) => element.getClientRects().length);
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
     }
   });
 
-  // Resize: close mobile menu when switching to desktop
   DESKTOP_MQ.addEventListener('change', () => {
-    if (DESKTOP_MQ.matches) {
-      toggleMobileMenu(true);
-    }
+    toggleMobileMenu(true);
     closePanel();
   });
 
-  // Wrap and append
+  if (nav.classList.contains('is-transparent')) {
+    const updateScrolledState = () => nav.classList.toggle('is-scrolled', window.scrollY > 10);
+    window.addEventListener('scroll', updateScrolledState, { passive: true });
+    updateScrolledState();
+  }
+
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
-  navWrapper.appendChild(nav);
-  block.appendChild(navWrapper);
+  navWrapper.append(nav);
+  block.append(navWrapper);
 }

@@ -1,276 +1,261 @@
-/* Footer Block — Li Auto style */
+/* Global Li Auto footer */
 
-/* ==========================================
-   Base: Pure black footer
-   ========================================== */
-
-footer {
-  background-color: #000;
-  height: auto;
-}
-
+footer,
 footer .footer {
-  background-color: #000;
+  height: auto;
+  background: #141414;
 }
 
 footer .footer .footer-inner {
   position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 48px 24px 32px;
+  box-sizing: border-box;
+  max-width: 1480px;
+  margin-inline: auto;
+  padding: 24px 24px 16px;
+  color: #fff;
+  font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* ==========================================
-   Back-to-top Button
-   ========================================== */
-
-.footer-back-to-top {
+footer .footer-back-to-top {
   position: fixed;
-  bottom: 40px;
-  right: 24px;
+  right: 16px;
   z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: 0;
   border-radius: 50%;
-  border: 1px solid rgb(255 255 255 / 30%);
-  background: rgb(0 0 0 / 60%);
-  color: #fff;
-  cursor: pointer;
+  background: rgb(247 247 247 / 92%);
+  color: #111;
+  box-shadow: 0 1px 6px rgb(0 0 0 / 8%);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.2s ease;
-  padding: 0;
-  margin: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms;
 }
 
-.footer-back-to-top.visible {
+footer .footer-back-to-top.visible {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition-delay: 0s;
 }
 
-.footer-back-to-top:hover {
-  background: rgb(255 255 255 / 15%);
+footer .footer-back-to-top:hover,
+footer .footer-back-to-top:focus {
+  background: #fff;
+  color: #111;
 }
 
-.footer-back-to-top:focus-visible {
+footer .footer-back-to-top:focus-visible {
   outline: 2px solid #fff;
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
-.footer-back-to-top svg {
+footer .footer-back-to-top svg {
   width: 16px;
   height: 16px;
 }
 
-/* ==========================================
-   Desktop Nav Grid (hidden on mobile)
-   ========================================== */
-
-.footer-nav {
+footer .footer-nav {
   display: none;
 }
 
-.footer-nav-column h3.footer-nav-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 20px;
-  line-height: 1.4;
-  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.footer-nav-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.footer-nav-list li {
-  margin-bottom: 12px;
-}
-
-/* ==========================================
-   Mobile Accordion Nav
-   ========================================== */
-
-.footer-nav-mobile {
+footer .footer-nav-mobile {
   display: block;
 }
 
-.footer-accordion-item {
-  border-bottom: 1px solid rgb(255 255 255 / 12%);
+footer .footer-accordion-item {
+  border-bottom: 1px solid rgb(255 255 255 / 16%);
 }
 
-.footer-accordion-header {
+footer .footer-accordion-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 16px 0;
-  font-size: 15px;
-  font-weight: 500;
-  color: #fff;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  min-height: 48px;
   margin: 0;
+  padding: 13px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: start;
 }
 
-.footer-accordion-header:focus-visible {
+footer .footer-accordion-header:hover,
+footer .footer-accordion-header:focus {
+  background: transparent;
+  color: #fff;
+}
+
+footer .footer-accordion-header:focus-visible {
   outline: 2px solid #fff;
   outline-offset: -2px;
-  border-radius: 2px;
 }
 
-/* Chevron */
-.footer-accordion-chevron {
+footer .footer-accordion-chevron {
   width: 8px;
   height: 8px;
-  border-right: 2px solid rgb(255 255 255 / 50%);
-  border-bottom: 2px solid rgb(255 255 255 / 50%);
+  border-right: 1px solid #888;
+  border-bottom: 1px solid #888;
   transform: rotate(45deg);
-  transition: transform 0.3s ease;
-  flex-shrink: 0;
+  transition: transform 220ms ease;
 }
 
-.footer-accordion-header[aria-expanded="true"] .footer-accordion-chevron {
-  transform: rotate(-135deg);
+footer .footer-accordion-header[aria-expanded="true"] .footer-accordion-chevron {
+  transform: rotate(225deg) translate(-2px, -2px);
 }
 
-/* Accordion content */
-.footer-accordion-content {
+footer .footer-accordion-content {
   display: none;
-  padding: 0 0 12px;
+  padding-block-end: 18px;
 }
 
-.footer-accordion-header[aria-expanded="true"] + .footer-accordion-content {
+footer .footer-accordion-header[aria-expanded="true"] + .footer-accordion-content {
   display: block;
 }
 
-.footer-accordion-content ul {
-  list-style: none;
+footer .footer-accordion-content ul,
+footer .footer-nav-list {
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
-.footer-accordion-content li {
-  margin-bottom: 10px;
+footer .footer-accordion-content li,
+footer .footer-nav-list li {
+  margin: 0;
 }
 
-footer .footer .footer-accordion-content a,
-footer .footer .footer-nav-list a {
-  font-size: 13px;
-  color: rgb(255 255 255 / 65%);
+footer .footer-accordion-content li + li,
+footer .footer-nav-list li + li {
+  margin-top: 8px;
+}
+
+footer .footer-accordion-content a,
+footer .footer-nav-list a {
+  display: block;
+  color: #ccc;
+  font-size: 12px;
+  line-height: 20px;
   text-decoration: none;
-  transition: color 0.2s ease;
-  line-height: 1.5;
 }
 
-footer .footer .footer-accordion-content a:hover,
-footer .footer .footer-nav-list a:hover {
+footer .footer-accordion-content a:hover,
+footer .footer-nav-list a:hover {
   color: #fff;
   text-decoration: none;
 }
 
-footer .footer .footer-accordion-content a:focus-visible,
-footer .footer .footer-nav-list a:focus-visible {
+footer .footer-accordion-content a:focus-visible,
+footer .footer-nav-list a:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
-/* ==========================================
-   Bottom Bar
-   ========================================== */
-
-.footer-bottom {
+footer .footer-bottom {
+  display: grid;
+  gap: 10px;
   margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid rgb(255 255 255 / 12%);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-footer .footer .footer-bottom-link,
-footer .footer .footer-bottom-text {
+  color: rgb(255 255 255 / 55%);
   font-size: 12px;
-  color: rgb(255 255 255 / 45%);
-  text-decoration: none;
-  line-height: 1.6;
+  line-height: 20px;
 }
 
-footer .footer .footer-bottom-link:hover {
-  color: rgb(255 255 255 / 70%);
+footer .footer-bottom-link,
+footer .footer-bottom-text {
+  color: inherit;
   text-decoration: none;
 }
 
-footer .footer .footer-bottom-link:focus-visible {
+footer .footer-bottom-link:hover {
+  color: rgb(255 255 255 / 80%);
+  text-decoration: none;
+}
+
+footer .footer-bottom-link:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
-/* ==========================================
-   Desktop (900px+)
-   ========================================== */
+@media (width >= 720px) {
+  footer .footer {
+    min-height: 440px;
+  }
 
-@media (width >= 900px) {
   footer .footer .footer-inner {
-    padding: 56px 32px 40px;
+    min-height: 440px;
+    padding: 64px 40px 13px;
   }
 
-  .footer-nav {
+  footer .footer-nav {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(5, minmax(140px, 160px));
+    align-items: start;
+    justify-content: start;
+    gap: clamp(35px, 5vw, 72px);
   }
 
-  .footer-nav-mobile {
+  footer .footer-nav-mobile {
     display: none;
   }
 
-  .footer-back-to-top {
-    bottom: 48px;
-    right: 32px;
+  footer .footer-nav-title {
+    margin: 0 0 12px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
   }
 
-  .footer-bottom {
-    flex-flow: row wrap;
-    gap: 16px;
+  footer .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    margin-top: 48px;
+    gap: 0 32px;
+    margin-top: 94px;
+  }
+
+  footer .footer-bottom-text {
+    flex-basis: 100%;
+    margin-top: 10px;
+  }
+
+  footer .footer-back-to-top {
+    right: 40px;
   }
 }
 
-/* ==========================================
-   Large Desktop (1200px+)
-   ========================================== */
-
-@media (width >= 1200px) {
-  .footer-nav {
-    gap: 32px;
+@media (width >= 1441px) {
+  footer .footer,
+  footer .footer .footer-inner {
+    min-height: 639px;
   }
 
-  .footer-back-to-top {
-    right: 48px;
+  footer .footer .footer-inner {
+    padding-top: 80px;
+  }
+
+  footer .footer-bottom {
+    margin-top: 94px;
   }
 }
-
-/* ==========================================
-   Accessibility: Reduced Motion
-   ========================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .footer-back-to-top,
-  .footer-accordion-chevron,
-  .footer-nav-list a,
-  .footer-accordion-content a {
+  footer .footer-back-to-top,
+  footer .footer-accordion-chevron {
     transition: none;
   }
 }

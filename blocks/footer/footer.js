@@ -1,12 +1,5 @@
 /**
- * Footer Block — Li Auto style
- *
- * Features:
- * - Pure black background with white text
- * - Desktop: 5-column nav grid
- * - Mobile (<900px): accordion-style collapsible sections
- * - Back-to-top button with scroll threshold
- * - Universal Editor support via moveInstrumentation
+ * Global footer loaded from an authored footer fragment.
  */
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
@@ -16,106 +9,125 @@ import {
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 const SCROLL_THRESHOLD = 300;
-/**
- * Extract footer data from fragment DOM.
- * Expects:
- *   Section 0 — nav columns (each default-content-wrapper has h3 + ul)
- *   Section 1 — bottom bar (policy links, copyright, ICP)
- * @param {HTMLElement} fragment
- * @returns {{ columns: Array, bottomItems: Array }}
- */
-function extractFooterData(fragment) {
-  const sections = [...fragment.querySelectorAll(':scope .section')];
+const HEADING_SELECTOR = 'h2, h3, h4, h5, h6';
+const INSTRUMENTATION_PREFIXES = ['data-aue-', 'data-richtext-'];
 
-  // Nav columns from the first section
-  const columns = [];
-  const navSection = sections[0];
-  if (navSection) {
-    const wrappers = [...navSection.querySelectorAll('.default-content-wrapper')];
-    wrappers.forEach((wrapper) => {
-      const heading = wrapper.querySelector('h2, h3, h4, h5, h6');
-      const list = wrapper.querySelector('ul');
-      if (heading && list) {
-        const links = [...list.querySelectorAll('li')].map((li) => {
-          const a = li.querySelector('a');
-          return {
-            text: a ? a.textContent.trim() : li.textContent.trim(),
-            href: a ? a.href : '#',
-            element: li,
-          };
-        });
-        columns.push({
-          title: heading.textContent.trim(),
-          links,
-          wrapperElement: wrapper,
-        });
+function captureInstrumentation(element) {
+  if (!element) return [];
+  return [...element.attributes]
+    .filter(({ name }) => INSTRUMENTATION_PREFIXES.some((prefix) => name.startsWith(prefix)))
+    .map(({ name, value }) => ({ name, value }));
+}
+
+function applyInstrumentation(attributes, element) {
+  attributes.forEach(({ name, value }) => element.setAttribute(name, value));
+}
+
+function nextList(heading) {
+  let sibling = heading.nextElementSibling;
+  while (sibling) {
+    if (sibling.matches(HEADING_SELECTOR)) return null;
+    if (sibling.matches('ul')) return sibling;
+    const nestedList = sibling.querySelector(':scope > ul');
+    if (nestedList) return nestedList;
+    sibling = sibling.nextElementSibling;
+  }
+  return null;
+}
+
+function extractColumns(navSection) {
+  if (!navSection) return [];
+  return [...navSection.querySelectorAll(HEADING_SELECTOR)].flatMap((heading) => {
+    const list = nextList(heading);
+    if (!list) return [];
+    const links = [...list.querySelectorAll(':scope > li')].map((item) => {
+      const anchor = item.querySelector('a');
+      return {
+        text: anchor?.textContent?.trim() || item.textContent.trim(),
+        href: anchor?.href || '#',
+      };
+    }).filter((link) => link.text);
+    if (!links.length) return [];
+
+    const source = heading.closest('[data-aue-resource]') || heading;
+    return [{
+      title: heading.textContent.trim(),
+      links,
+      source,
+      instrumentation: captureInstrumentation(source),
+    }];
+  });
+}
+
+function extractBottomItems(bottomSection) {
+  if (!bottomSection) return [];
+  const paragraphs = [...bottomSection.querySelectorAll('p')];
+  if (paragraphs.length) {
+    return paragraphs.flatMap((paragraph) => {
+      const anchors = [...paragraph.querySelectorAll('a')];
+      if (anchors.length) {
+        return anchors.map((anchor) => ({
+          type: 'link',
+          text: anchor.textContent.trim(),
+          href: anchor.href,
+        }));
       }
+      const text = paragraph.textContent.trim();
+      return text ? [{ type: 'text', text }] : [];
     });
   }
 
-  // Bottom bar from the second section
-  const bottomItems = [];
-  const bottomSection = sections[1];
-  if (bottomSection) {
-    const wrappers = [...bottomSection.querySelectorAll('.default-content-wrapper')];
-    wrappers.forEach((wrapper) => {
-      const anchors = [...wrapper.querySelectorAll('a')];
-      const texts = [];
-      // Collect text nodes and links
-      wrapper.querySelectorAll('p').forEach((p) => {
-        const a = p.querySelector('a');
-        if (a) {
-          texts.push({
-            type: 'link', text: a.textContent.trim(), href: a.href, element: p,
-          });
-        } else if (p.textContent.trim()) {
-          texts.push({ type: 'text', text: p.textContent.trim(), element: p });
-        }
-      });
-      if (texts.length) {
-        bottomItems.push(...texts);
-      } else if (anchors.length) {
-        anchors.forEach((a) => {
-          bottomItems.push({
-            type: 'link', text: a.textContent.trim(), href: a.href, element: a,
-          });
-        });
-      }
-    });
-  }
-
-  return {
-    columns, bottomItems, navSection, bottomSection,
-  };
+  return [...bottomSection.querySelectorAll('a')].map((anchor) => ({
+    type: 'link',
+    text: anchor.textContent.trim(),
+    href: anchor.href,
+  }));
 }
 
 /**
- * Back-to-top button template
+ * Extract footer columns and legal information from semantic fragment content.
+ * @param {HTMLElement} fragment
+ * @returns {Object}
  */
-function backToTopTemplate(btnRef) {
+function extractFooterData(fragment) {
+  const sections = [...fragment.querySelectorAll(':scope > .section')];
+  const resolvedSections = sections.length ? sections : [...fragment.children];
+  const navSection = resolvedSections[0];
+  const bottomSection = resolvedSections[1] || navSection;
+  return {
+    columns: extractColumns(navSection),
+    bottomItems: extractBottomItems(bottomSection),
+    bottomSection,
+    bottomInstrumentation: captureInstrumentation(bottomSection),
+  };
+}
+
+function backToTopTemplate(buttonRef) {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   return html`
     <button
       class="footer-back-to-top"
+      type="button"
       aria-label="Back to top"
-      ${ref(btnRef)}
-      @click=${() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      ${ref(buttonRef)}
+      @click=${() => window.scrollTo({
+    top: 0,
+    behavior: reducedMotion.matches ? 'auto' : 'smooth',
+  })}
     >
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M8 3L2 9l1.4 1.4L8 5.8l4.6 4.6L14 9z" fill="currentColor"/>
+        <path d="M8 3L2 9l1.4 1.4L8 5.8l4.6 4.6L14 9z" fill="currentColor"></path>
       </svg>
     </button>
   `;
 }
 
-/**
- * Desktop nav column template
- */
-function navColumnTemplate(column, colRef) {
+function navColumnTemplate(column, columnRef) {
   return html`
-    <div class="footer-nav-column" ${ref(colRef)}>
+    <div class="footer-nav-column" ${ref(columnRef)}>
       <h3 class="footer-nav-title">${column.title}</h3>
       <ul class="footer-nav-list">
-        ${repeat(column.links, (link, i) => i, (link) => html`
+        ${repeat(column.links, (link, index) => index, (link) => html`
           <li><a href="${link.href}">${link.text}</a></li>
         `)}
       </ul>
@@ -123,25 +135,22 @@ function navColumnTemplate(column, colRef) {
   `;
 }
 
-/**
- * Mobile accordion item template
- */
-function accordionItemTemplate(column, colRef) {
+function accordionItemTemplate(column, columnRef) {
   return html`
-    <div class="footer-accordion-item" ${ref(colRef)}>
+    <div class="footer-accordion-item" ${ref(columnRef)}>
       <button
         class="footer-accordion-header"
+        type="button"
         aria-expanded="false"
-        @click=${(e) => {
-    const btn = e.currentTarget;
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    // Close all other accordions
-    btn.closest('.footer-nav-mobile')
+        @click=${(event) => {
+    const button = event.currentTarget;
+    const expanded = button.getAttribute('aria-expanded') === 'true';
+    button.closest('.footer-nav-mobile')
       .querySelectorAll('.footer-accordion-header[aria-expanded="true"]')
       .forEach((other) => {
-        if (other !== btn) other.setAttribute('aria-expanded', 'false');
+        if (other !== button) other.setAttribute('aria-expanded', 'false');
       });
-    btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+    button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   }}
       >
         <span>${column.title}</span>
@@ -149,7 +158,7 @@ function accordionItemTemplate(column, colRef) {
       </button>
       <div class="footer-accordion-content">
         <ul>
-          ${repeat(column.links, (link, i) => i, (link) => html`
+          ${repeat(column.links, (link, index) => index, (link) => html`
             <li><a href="${link.href}">${link.text}</a></li>
           `)}
         </ul>
@@ -158,13 +167,10 @@ function accordionItemTemplate(column, colRef) {
   `;
 }
 
-/**
- * Bottom bar template
- */
-function bottomBarTemplate(bottomItems, bottomRef) {
+function bottomBarTemplate(items, bottomRef) {
   return html`
     <div class="footer-bottom" ${ref(bottomRef)}>
-      ${repeat(bottomItems, (item, i) => i, (item) => (item.type === 'link'
+      ${repeat(items, (item, index) => index, (item) => (item.type === 'link'
     ? html`<a class="footer-bottom-link" href="${item.href}">${item.text}</a>`
     : html`<span class="footer-bottom-text">${item.text}</span>`
   ))}
@@ -172,82 +178,75 @@ function bottomBarTemplate(bottomItems, bottomRef) {
   `;
 }
 
-/**
- * Main footer template
- */
 function footerTemplate(data, refs) {
   return html`
     <div class="footer-inner">
       ${backToTopTemplate(refs.backToTop)}
       <div class="footer-nav">
-        ${repeat(data.columns, (col, i) => i, (col, i) => navColumnTemplate(col, refs.columns[i]))}
+        ${repeat(
+    data.columns,
+    (column, index) => index,
+    (column, index) => navColumnTemplate(column, refs.columns[index]),
+  )}
       </div>
       <div class="footer-nav-mobile">
-        ${repeat(data.columns, (col, i) => i, (col, i) => accordionItemTemplate(col, refs.mobileColumns[i]))}
+        ${repeat(
+    data.columns,
+    (column, index) => index,
+    (column, index) => accordionItemTemplate(column, refs.mobileColumns[index]),
+  )}
       </div>
-      ${data.bottomItems.length
-    ? bottomBarTemplate(data.bottomItems, refs.bottom)
-    : nothing}
+      ${data.bottomItems.length ? bottomBarTemplate(data.bottomItems, refs.bottom) : nothing}
     </div>
   `;
 }
 
-/**
- * Set up back-to-top button visibility on scroll
- */
-function initBackToTop(btnRef) {
-  const btn = btnRef.value;
-  if (!btn) return;
+function initBackToTop(buttonRef) {
+  const button = buttonRef.value;
+  if (!button) return;
+  const footer = button.closest('footer');
 
-  function onScroll() {
-    btn.classList.toggle('visible', window.scrollY > SCROLL_THRESHOLD);
+  function update() {
+    button.classList.toggle('visible', window.scrollY > SCROLL_THRESHOLD);
+    const baseBottom = window.innerWidth >= 720 ? 48 : 24;
+    const footerTop = footer?.getBoundingClientRect().top ?? Number.POSITIVE_INFINITY;
+    const clampedBottom = Math.max(baseBottom, window.innerHeight - footerTop + 12);
+    button.style.bottom = `${clampedBottom}px`;
   }
 
-  window.addEventListener('scroll', onScroll, {
-    passive: true,
-  });
-  onScroll();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
 }
 
-/**
- * Apply Universal Editor instrumentation to rendered elements
- */
-function applyInstrumentation(data, refs) {
-  // Nav columns
-  data.columns.forEach((col, i) => {
-    const desktopEl = refs.columns[i]?.value;
-    const mobileEl = refs.mobileColumns[i]?.value;
-    if (desktopEl && col.wrapperElement) {
-      moveInstrumentation(col.wrapperElement, desktopEl);
+function applyEditorInstrumentation(data, refs) {
+  data.columns.forEach((column, index) => {
+    const desktop = refs.columns[index]?.value;
+    const mobile = refs.mobileColumns[index]?.value;
+    if (desktop && column.source) {
+      moveInstrumentation(column.source, desktop);
+      applyInstrumentation(column.instrumentation, desktop);
     }
-    if (mobileEl && col.wrapperElement) {
-      // Clone instrumentation attrs for mobile duplicate
-      [...col.wrapperElement.attributes]
-        .filter((attr) => attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-'))
-        .forEach((attr) => mobileEl.setAttribute(attr.name, attr.value));
-    }
+    if (mobile) applyInstrumentation(column.instrumentation, mobile);
   });
 
-  // Bottom bar
   if (refs.bottom.value && data.bottomSection) {
     moveInstrumentation(data.bottomSection, refs.bottom.value);
+    applyInstrumentation(data.bottomInstrumentation, refs.bottom.value);
   }
 }
 
 /**
- * Loads and decorates the footer
- * @param {HTMLElement} block The footer block element
+ * Load and decorate the global footer.
+ * @param {HTMLElement} block
  */
 export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
   const fragment = await loadFragment(footerPath);
-
   if (!fragment) return;
 
   const data = extractFooterData(fragment);
-
-  // Create refs for instrumentation
   const refs = {
     backToTop: createRef(),
     columns: data.columns.map(() => createRef()),
@@ -257,8 +256,6 @@ export default async function decorate(block) {
 
   block.textContent = '';
   render(footerTemplate(data, refs), block);
-
-  // Post-render setup
-  applyInstrumentation(data, refs);
+  applyEditorInstrumentation(data, refs);
   initBackToTop(refs.backToTop);
 }
