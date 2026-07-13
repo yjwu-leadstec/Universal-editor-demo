@@ -16,7 +16,9 @@ import {
 export default function decorate(block) {
   initProductBlock(block);
   const items = modelItems(block, 'color-switcher-item');
-  const names = items.map((item) => propText(item, 'name'));
+  const names = items.map((item, index) => propText(item, 'name')
+    || item.querySelector('picture img')?.alt.replace(/\s+Li L6$/i, '')
+    || `Color ${index + 1}`);
   const shell = document.createElement('div');
   shell.className = 'color-switcher-shell';
   const header = createSectionHeader(block);

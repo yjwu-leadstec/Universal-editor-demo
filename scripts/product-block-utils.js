@@ -2,7 +2,137 @@ import { moveInstrumentation } from './scripts.js';
 
 const PRODUCT_STYLES = '/styles/product-blocks.css';
 
+// Universal Editor keeps field metadata on author, while published semantic HTML
+// only contains positional rows/cells. Keep the runtime independent of author-only
+// data-aue attributes by restoring those field/model markers before decoration.
+const PRODUCT_MODEL_FIELDS = {
+  'product-hero': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['subtitle', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['logo', 'reference'], ['logoAlt', 'text'], ['showArrow', 'boolean'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean']],
+  'product-hero-cta': [['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
+  'product-sticky-nav': [['id', 'text'], ['carName', 'text']],
+  'product-sticky-nav-item': [['link', 'aem-content'], ['linkText', 'text']],
+  'highlight-carousel': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showProgress', 'boolean']],
+  'highlight-slide': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['eyebrow', 'text'], ['title', 'text'], ['description', 'richtext'], ['note', 'text'], ['metricValue', 'text'], ['metricUnit', 'text'], ['metricLabel', 'text'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
+  'chapter-intro': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['note', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['fullVideo', 'reference'], ['playLabel', 'text'], ['loop', 'boolean'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean']],
+  'feature-media-section': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['variant', 'select'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean'], ['enableMotion', 'boolean'], ['openLabel', 'text'], ['closeLabel', 'text'], ['accentColor', 'text']],
+  'feature-media-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['eyebrow', 'text'], ['title', 'text'], ['description', 'richtext'], ['note', 'text'], ['primaryValue', 'text'], ['primaryUnit', 'text'], ['primaryLabel', 'text'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
+  'feature-stat-item': [['value', 'text'], ['unit', 'text'], ['label', 'text'], ['description', 'richtext']],
+  'color-switcher': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext']],
+  'color-switcher-item': [['name', 'text'], ['swatch', 'reference'], ['swatchAlt', 'text'], ['colorValue', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text']],
+  'spec-table': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['variant', 'select']],
+  'spec-group': [['groupKey', 'text'], ['title', 'text'], ['description', 'richtext'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['note', 'text']],
+  'spec-row': [['label', 'text'], ['value', 'text'], ['description', 'richtext'], ['icon', 'reference'], ['iconAlt', 'text']],
+  'product-notes': [['id', 'text'], ['title', 'text']],
+  'product-note-item': [['text', 'richtext']],
+  'text-columns': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext']],
+  'text-column-item': [['title', 'text'], ['text', 'richtext']],
+  'picture-group': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean'], ['enableMotion', 'boolean']],
+  'picture-group-item': [['groupKey', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext']],
+  'picture-media-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['title', 'text'], ['description', 'richtext'], ['note', 'text']],
+  'icon-overlay-showcase': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext']],
+  'overlay-panel': [['panelKey', 'text'], ['title', 'text'], ['description', 'richtext'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['mask', 'reference'], ['mobileMask', 'reference'], ['maskAlt', 'text']],
+  'overlay-hotspot': [['label', 'text'], ['description', 'richtext'], ['icon', 'reference'], ['iconAlt', 'text'], ['x', 'number'], ['y', 'number'], ['mobileX', 'number'], ['mobileY', 'number']],
+  'feature-grid': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['note', 'text']],
+  'feature-grid-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['title', 'text'], ['description', 'richtext'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
+  'product-param-cta': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['secondaryLink', 'aem-content'], ['secondaryLinkText', 'text'], ['secondaryLinkType', 'select']],
+  'product-ending': [['id', 'text'], ['title', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['showVideoControl', 'boolean'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['secondaryLink', 'aem-content'], ['secondaryLinkText', 'text'], ['secondaryLinkType', 'select']],
+  'product-guide': [['id', 'text'], ['title', 'text']],
+  'product-guide-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['title', 'text'], ['description', 'richtext'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
+  'product-download': [['id', 'text'], ['title', 'text'], ['description', 'richtext'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['iosLink', 'aem-content'], ['iosLinkText', 'text'], ['iosLinkType', 'select'], ['androidLink', 'aem-content'], ['androidLinkText', 'text'], ['androidLinkType', 'select']],
+};
+
+const PRODUCT_COLLECTION_MODELS = {
+  'product-hero': 'product-hero-cta',
+  'product-sticky-nav': 'product-sticky-nav-item',
+  'highlight-carousel': 'highlight-slide',
+  'feature-media-section': (row) => (row.children.length <= 4 ? 'feature-stat-item' : 'feature-media-item'),
+  'color-switcher': 'color-switcher-item',
+  'spec-table': 'spec-group',
+  'spec-group': 'spec-row',
+  'product-notes': 'product-note-item',
+  'text-columns': 'text-column-item',
+  'picture-group': 'picture-group-item',
+  'picture-group-item': 'picture-media-item',
+  'icon-overlay-showcase': 'overlay-panel',
+  'overlay-panel': 'overlay-hotspot',
+  'feature-grid': 'feature-grid-item',
+  'product-guide': 'product-guide-item',
+};
+
+function collectionModelFor(model, row) {
+  const resolver = PRODUCT_COLLECTION_MODELS[model];
+  return typeof resolver === 'function' ? resolver(row) : resolver;
+}
+
+function restoreAltField(root, name, fieldSources) {
+  if (!name.endsWith('Alt')) return false;
+  const mediaSource = fieldSources.get(name.slice(0, -3));
+  const source = document.createElement('span');
+  source.dataset.aueProp = name;
+  source.textContent = mediaSource?.querySelector('img')?.alt || '';
+  root.append(source);
+  fieldSources.set(name, source);
+  return true;
+}
+
+function restoreLinkField(root, name, fieldSources) {
+  let suffix = '';
+  if (name.endsWith('LinkText') || name === 'linkText') suffix = 'Text';
+  if (name.endsWith('LinkType') || name === 'linkType') suffix = 'Type';
+  if (!suffix) return false;
+  const linkSource = fieldSources.get(name.slice(0, -suffix.length));
+  const source = document.createElement('span');
+  source.dataset.aueProp = name;
+  if (suffix === 'Text') source.textContent = linkSource?.querySelector('a')?.textContent.trim() || '';
+  root.append(source);
+  fieldSources.set(name, source);
+  return true;
+}
+
+function matchesPublishedField(source, component) {
+  if (!['reference', 'aem-content'].includes(component)) return true;
+  if (source.querySelector('picture, img')) return true;
+  const href = source.querySelector('a')?.getAttribute('href') || '';
+  if (component === 'aem-content') return Boolean(href) || !source.textContent.trim();
+  if (href && !/^#[\da-f]{3,8}$/i.test(href)) return true;
+  return !source.textContent.trim();
+}
+
+function restorePublishedModel(root, model) {
+  const fields = PRODUCT_MODEL_FIELDS[model];
+  if (!fields) return;
+  const sources = [...root.children];
+  const fieldSources = new Map();
+  let sourceIndex = 0;
+
+  fields.forEach(([name, component]) => {
+    const restoredCompanion = restoreAltField(root, name, fieldSources)
+      || restoreLinkField(root, name, fieldSources);
+    if (restoredCompanion) return;
+    const source = sources[sourceIndex];
+    if (!source) return;
+    if (PRODUCT_COLLECTION_MODELS[model] && source.children.length > 1) return;
+    if (!matchesPublishedField(source, component)) return;
+    source.dataset.aueProp = name;
+    fieldSources.set(name, source);
+    sourceIndex += 1;
+  });
+
+  sources.slice(sourceIndex).forEach((source) => {
+    const childModel = collectionModelFor(model, source);
+    if (!childModel) return;
+    source.dataset.aueModel = childModel;
+    restorePublishedModel(source, childModel);
+  });
+}
+
+function restorePublishedMarkup(block) {
+  if (block.querySelector('[data-aue-prop], [data-aue-model]')) return;
+  const model = block.dataset.blockName || block.classList[0];
+  restorePublishedModel(block, model);
+}
+
 export function initProductBlock(block) {
+  restorePublishedMarkup(block);
   block.dataset.productBlock = block.classList[0] || 'product';
   if (!document.querySelector(`link[href="${PRODUCT_STYLES}"]`)) {
     const link = document.createElement('link');
@@ -170,8 +300,18 @@ export function createProductLink(root, prefix = '', className = 'product-link')
   const href = source?.getAttribute('href') || propUrl(root, field);
   const text = propText(root, textField) || source?.textContent.trim() || '';
   if (!href || !text) return null;
+  const model = root.dataset.aueModel || root.dataset.blockName || root.classList[0];
+  const defaultTypes = {
+    'product-hero-cta': root.previousElementSibling?.dataset.aueModel === model ? 'secondary' : 'primary',
+    'feature-media-item': 'text',
+    'feature-grid-item': 'text',
+    'product-guide-item': 'primary',
+    'product-ending': prefix ? 'secondary' : 'primary',
+    'product-param-cta': prefix ? 'text' : 'primary',
+    'product-download': prefix === 'android' ? 'secondary' : 'primary',
+  };
   const link = document.createElement('a');
-  link.className = `${className} ${className}-${propText(root, typeField) || 'text'}`;
+  link.className = `${className} ${className}-${propText(root, typeField) || defaultTypes[model] || 'text'}`;
   link.href = href;
   link.textContent = text;
   instrumentProp(root, field, link);
