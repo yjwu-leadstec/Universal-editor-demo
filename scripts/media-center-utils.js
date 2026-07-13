@@ -235,7 +235,10 @@ export function createVideoDetail(detail) {
   const video = document.createElement('video');
   video.className = 'media-video-element';
   video.src = detail.video || '';
-  video.poster = detail.poster || '';
+  video.poster = detail.poster
+    || detail.picture?.querySelector('img')?.currentSrc
+    || detail.picture?.querySelector('img')?.src
+    || '';
   video.preload = 'metadata';
   video.playsInline = true;
   video.controls = true;
