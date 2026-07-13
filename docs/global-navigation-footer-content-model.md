@@ -8,7 +8,7 @@
 | --- | --- |
 | Brand | A linked Li Auto logo image. The image alt text supplies the accessible brand label. |
 | Primary navigation | One top-level unordered list. Each top-level item contains a link. Items with a dropdown also contain a nested list. An emphasized list item starts an optional group; linked list items are cards. Card links may contain one or two images, a strong title, subtitle text, and optional emphasized CTA text. |
-| Tools | A language link. The header presents this as the globe control while retaining the authored label and URL. |
+| Tools | A language link. The header presents this as the globe control while retaining the authored label and using the URL for the Global English option. |
 
 ### How It Works
 
@@ -23,6 +23,7 @@ EDS may normalize a single authored card into several sibling paragraphs whose a
 - Strong text is the card title, normal text is the subtitle, and emphasized text inside the link is the optional CTA label.
 - Top-level items without nested lists are ordinary links.
 - The fragment can be selected per page with `nav` metadata; fallback is `/nav`.
+- Until the fragment exposes a repeatable locale collection, the other official market/language destinations are supplied by the Header fallback catalog and shared by the desktop dialog and mobile Language panel.
 
 ## Content Model: Footer Fragment
 

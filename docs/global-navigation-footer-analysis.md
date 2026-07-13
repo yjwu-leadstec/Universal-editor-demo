@@ -14,11 +14,11 @@
 - Fixed 50 px navigation bar with the official 48 × 20 px Li Auto mark at the left (40 px desktop inset).
 - Desktop primary links: Vehicles, Official Center, Service, Media Center, and About Us.
 - Primary navigation uses `licium-regular`, 14 px text, and an underline for hover, focus, current, and expanded states.
-- The desktop language entry is a two-letter locale code plus the supplied down-chevron vector. The globe icon is not part of the Figma design.
+- The desktop language entry is a globe-only control. It opens the Global English locale dialog with the title `Select a region and language`, a dimmed backdrop, and the supported region/language links.
 - The Figma guide defines two explicit base states:
   - Glass state: a vertical black-to-transparent gradient (source stop 60% at 89.4%, 60% fill opacity) with approximately 20 px background blur (`17.5` in `guide.pen`), white logo/text/icons, and no divider or shadow.
   - White state: solid `#fff`, black logo, 90% black primary text, 60% black secondary text/icons, and no divider or shadow.
-- The home page starts in the glass state and transitions to the white state after scrolling 10 px. Other pages default to white; `header-theme=transparent` and `header-theme=white` remain explicit author overrides.
+- The home page starts in the glass state and transitions to the white state after scrolling 10 px. In the glass state the 50 px header is removed from document flow so the first hero begins at `y=0` behind the fixed navigation. Other pages default to white; `header-theme=transparent` and `header-theme=white` remain explicit author overrides.
 - Opening a desktop panel or the mobile drawer always switches the bar to the white state so content remains legible.
 
 ### Desktop panels
@@ -37,6 +37,7 @@
 - Opening a nested item switches the drawer into a detail view with a back control, centered section title, close control, group labels, and two-column title/subtitle rows, as shown by the `M-Guide-Vehicles` artboard.
 - Opening the drawer locks page scrolling. Escape, the close control, and navigation links close it.
 - Focus remains within the drawer while it is open and returns to the menu button on close.
+- The Language row expands an inline locale list on the light-gray panel defined by the guide.
 
 ### Footer
 
@@ -49,7 +50,7 @@
 ## Content and Authoring Impact
 
 - `/nav` and `/footer` remain independent AEM pages loaded through page metadata, with `/nav` and `/footer` as fallbacks.
-- All visible labels, links, imagery, group names, and legal copy come from those pages; block JavaScript contains no Li Auto content data.
+- Navigation labels, links, imagery, group names, and footer/legal copy come from those pages. The authored Tools link supplies the current Global English destination; the locale selector currently provides the official market/language catalog as a code fallback because `/nav` has no repeatable locale collection yet.
 - The parser accepts EDS-normalized rich text where one authored card becomes several sibling paragraphs and repeated links with the same URL.
 - Existing simple nested-list nav content remains supported as a graceful fallback.
 - Future localized pages can select localized fragments through `nav` and `footer` metadata without changing code.
@@ -58,12 +59,14 @@
 
 ### Functional Requirements
 
-- [ ] The header renders the authored 48 × 20 px Li Auto logo, five primary links, and locale-code-plus-chevron language entry.
+- [ ] The header renders the authored 48 × 20 px Li Auto logo, five primary links, and globe-only language control.
 - [ ] The home page initially renders the Figma glass state and becomes the pure-white state after scrolling; an ordinary page renders pure white from first paint.
+- [ ] The glass-state header overlays the first hero without reserving a 50 px gap in document flow.
 - [ ] The glass state uses the supplied gradient/blur and white foreground; the white state has no residual blur, divider, or shadow.
+- [ ] The desktop globe opens a keyboard-accessible locale dialog with Global, China, Kazakhstan, and Uzbekistan language links; backdrop click, close button, and Escape dismiss it and return focus.
 - [ ] Desktop dropdowns open on hover/focus/click, close when leaving or pressing Escape, and expose correct ARIA state.
 - [ ] Navigation items without dropdowns remain real links on desktop and mobile.
-- [ ] The mobile menu opens/closes, locks scroll, opens nested content in a dedicated detail view, supports Back/Escape, and traps keyboard focus.
+- [ ] The mobile menu opens/closes, locks scroll, opens nested content in a dedicated detail view, expands the Language locale list, supports Back/Escape, and traps keyboard focus.
 - [ ] The footer renders all five authored columns, legal links, copyright, and a working back-to-top control.
 - [ ] Header and footer keep Universal Editor instrumentation when authored content is decorated.
 

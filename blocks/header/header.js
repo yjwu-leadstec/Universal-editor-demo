@@ -10,6 +10,31 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 const DESKTOP_MQ = window.matchMedia('(min-width: 720px)');
 const INSTRUMENTATION_PREFIXES = ['data-aue-', 'data-richtext-'];
+const LOCALE_DIALOG_TITLE = 'Select a region and language';
+const LOCALE_MARKETS = [
+  {
+    name: 'Global',
+    languages: [{ label: 'English', href: '' }],
+  },
+  {
+    name: 'China',
+    languages: [{ label: '简体中文', href: 'https://www.lixiang.com/' }],
+  },
+  {
+    name: 'Қазақстан',
+    languages: [
+      { label: 'Қазақ тілі', href: 'https://www.liauto.com/kk_kz' },
+      { label: 'русский язык', href: 'https://www.liauto.com/ru_kz' },
+    ],
+  },
+  {
+    name: 'Oʻzbekiston',
+    languages: [
+      { label: "O'zbek tili", href: 'https://www.liauto.com/uz_uz' },
+      { label: 'русский язык', href: 'https://www.liauto.com/ru_uz' },
+    ],
+  },
+];
 
 function captureInstrumentation(element) {
   if (!element) return [];
@@ -185,19 +210,6 @@ function isCurrentPage(href) {
   }
 }
 
-function getLocaleCode(href) {
-  let linkLocale = '';
-  try {
-    const segments = new URL(href, window.location.href).pathname.split('/').filter(Boolean);
-    const candidate = segments[segments.length - 1] || '';
-    if (/^[a-z]{2,3}$/i.test(candidate)) linkLocale = candidate;
-  } catch (error) {
-    // Use the document locale fallback below.
-  }
-  const locale = document.documentElement.lang || linkLocale || 'en';
-  return locale.split('-')[0].slice(0, 2).toUpperCase();
-}
-
 function buildPanelCard(card) {
   const link = document.createElement('a');
   link.className = 'panel-card';
@@ -346,6 +358,63 @@ function buildMobileItem(item) {
   return mobileItem;
 }
 
+function buildLocaleList(globalHref, modifier = '') {
+  const list = document.createElement('div');
+  list.className = `header-locale-list${modifier ? ` ${modifier}` : ''}`;
+  list.setAttribute('role', 'list');
+
+  LOCALE_MARKETS.forEach((market, marketIndex) => {
+    const row = document.createElement('div');
+    row.className = 'header-locale-row';
+    row.setAttribute('role', 'listitem');
+
+    const marketName = document.createElement('span');
+    marketName.className = 'header-locale-market';
+    marketName.textContent = market.name;
+
+    const languages = document.createElement('div');
+    languages.className = 'header-locale-languages';
+    market.languages.forEach((language) => {
+      const link = document.createElement('a');
+      link.className = 'header-locale-link';
+      link.href = marketIndex === 0 ? globalHref : language.href;
+      link.textContent = language.label;
+      languages.append(link);
+    });
+
+    row.append(marketName, languages);
+    list.append(row);
+  });
+
+  return list;
+}
+
+function buildLocaleDialog(globalHref) {
+  const dialog = document.createElement('dialog');
+  dialog.id = 'header-locale-dialog';
+  dialog.className = 'header-locale-dialog';
+  dialog.setAttribute('aria-labelledby', 'header-locale-title');
+
+  const dialogHeader = document.createElement('div');
+  dialogHeader.className = 'header-locale-dialog-header';
+
+  const title = document.createElement('h2');
+  title.id = 'header-locale-title';
+  title.textContent = LOCALE_DIALOG_TITLE;
+
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.className = 'header-locale-close';
+  close.setAttribute('aria-label', 'Close language selector');
+  const closeIcon = document.createElement('span');
+  closeIcon.setAttribute('aria-hidden', 'true');
+  close.append(closeIcon);
+
+  dialogHeader.append(title, close);
+  dialog.append(dialogHeader, buildLocaleList(globalHref));
+  return { dialog, close };
+}
+
 /**
  * Decorate the global header block.
  * @param {HTMLElement} block
@@ -373,6 +442,7 @@ export default async function decorate(block) {
   if (isTransparent) {
     nav.classList.add('is-transparent');
   }
+  block.closest('header')?.classList.toggle('header-overlay', isTransparent);
 
   const inner = document.createElement('div');
   inner.className = 'header-nav-inner';
@@ -430,20 +500,27 @@ export default async function decorate(block) {
 
   const tools = document.createElement('div');
   tools.className = 'header-tools';
+  let languageTrigger;
+  let localeDialog;
+  let localeDialogClose;
   if (data.toolsLink) {
-    const language = document.createElement('a');
-    language.className = 'header-language';
-    language.href = data.toolsLink;
-    language.setAttribute('aria-label', data.toolsLabel);
-    language.title = data.toolsLabel;
-    const localeCode = document.createElement('span');
-    localeCode.className = 'header-language-code';
-    localeCode.textContent = getLocaleCode(data.toolsLink);
-    const chevron = document.createElement('span');
-    chevron.className = 'header-chevron';
-    chevron.setAttribute('aria-hidden', 'true');
-    language.append(localeCode, chevron);
-    tools.append(language);
+    languageTrigger = document.createElement('button');
+    languageTrigger.type = 'button';
+    languageTrigger.className = 'header-language';
+    languageTrigger.setAttribute('aria-label', LOCALE_DIALOG_TITLE);
+    languageTrigger.setAttribute('aria-haspopup', 'dialog');
+    languageTrigger.setAttribute('aria-controls', 'header-locale-dialog');
+    languageTrigger.setAttribute('aria-expanded', 'false');
+    languageTrigger.title = data.toolsLabel;
+    const globe = document.createElement('span');
+    globe.className = 'header-globe';
+    globe.setAttribute('aria-hidden', 'true');
+    languageTrigger.append(globe);
+    tools.append(languageTrigger);
+
+    const locale = buildLocaleDialog(data.toolsLink);
+    localeDialog = locale.dialog;
+    localeDialogClose = locale.close;
   } else if (data.toolsSection) {
     while (data.toolsSection.firstChild) tools.append(data.toolsSection.firstChild);
   }
@@ -470,22 +547,30 @@ export default async function decorate(block) {
     .filter((item) => item.groups.length)
     .forEach((item) => panel.append(buildPanelItem(item)));
   nav.append(panel);
+  if (localeDialog) nav.append(localeDialog);
 
   const mobileMenu = document.createElement('div');
   mobileMenu.id = 'header-mobile-menu';
   mobileMenu.className = 'header-mobile-menu';
   data.navItems.forEach((item) => mobileMenu.append(buildMobileItem(item)));
+  let mobileLanguage;
   if (data.toolsLink) {
-    const language = document.createElement('a');
-    language.className = 'header-mobile-language';
-    language.href = data.toolsLink;
-    language.textContent = data.toolsLabel;
-    applyInstrumentation(data.toolsInstrumentation, language);
+    mobileLanguage = document.createElement('button');
+    mobileLanguage.type = 'button';
+    mobileLanguage.className = 'header-mobile-language';
+    mobileLanguage.setAttribute('aria-controls', 'header-mobile-locales');
+    mobileLanguage.setAttribute('aria-expanded', 'false');
+    const label = document.createElement('span');
+    label.textContent = data.toolsLabel;
     const chevron = document.createElement('span');
     chevron.className = 'mobile-item-chevron';
     chevron.setAttribute('aria-hidden', 'true');
-    language.append(chevron);
-    mobileMenu.append(language);
+    mobileLanguage.append(label, chevron);
+    applyInstrumentation(data.toolsInstrumentation, mobileLanguage);
+
+    const mobileLocales = buildLocaleList(data.toolsLink, 'header-mobile-locales');
+    mobileLocales.id = 'header-mobile-locales';
+    mobileMenu.append(mobileLanguage, mobileLocales);
   }
   nav.append(mobileMenu);
 
@@ -514,6 +599,33 @@ export default async function decorate(block) {
     window.clearTimeout(closeTimer);
     closeTimer = window.setTimeout(closePanel, 120);
   }
+
+  function syncLocaleDialogState(isOpen) {
+    nav.classList.toggle('is-locale-open', isOpen);
+    languageTrigger?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.body.classList.toggle('locale-dialog-open', isOpen);
+  }
+
+  function closeLocaleDialog(restoreFocus = true) {
+    if (!localeDialog?.open) return;
+    localeDialog.close();
+    if (restoreFocus) languageTrigger?.focus();
+  }
+
+  function openLocaleDialog() {
+    if (!localeDialog || localeDialog.open) return;
+    closePanel();
+    localeDialog.showModal();
+    syncLocaleDialogState(true);
+    localeDialogClose?.focus();
+  }
+
+  languageTrigger?.addEventListener('click', openLocaleDialog);
+  localeDialogClose?.addEventListener('click', () => closeLocaleDialog());
+  localeDialog?.addEventListener('click', (event) => {
+    if (event.target === localeDialog) closeLocaleDialog();
+  });
+  localeDialog?.addEventListener('close', () => syncLocaleDialogState(false));
 
   navListInner.querySelectorAll('.header-navlist-item[aria-haspopup]').forEach((item) => {
     const open = () => {
@@ -550,6 +662,7 @@ export default async function decorate(block) {
     if (shouldClose) {
       mobileMenu.querySelectorAll('.mobile-item-label[aria-expanded="true"]')
         .forEach((button) => button.setAttribute('aria-expanded', 'false'));
+      mobileLanguage?.setAttribute('aria-expanded', 'false');
       delete nav.dataset.mobileView;
       mobileTitle.textContent = '';
     }
@@ -560,6 +673,7 @@ export default async function decorate(block) {
     const expanded = mobileMenu.querySelector('.mobile-item-label[aria-expanded="true"]');
     mobileMenu.querySelectorAll('.mobile-item-label[aria-expanded="true"]')
       .forEach((button) => button.setAttribute('aria-expanded', 'false'));
+    mobileLanguage?.setAttribute('aria-expanded', 'false');
     delete nav.dataset.mobileView;
     mobileTitle.textContent = '';
     if (restoreFocus && expanded) expanded.focus();
@@ -582,6 +696,11 @@ export default async function decorate(block) {
         mobileTitle.textContent = button.dataset.mobileTitle;
       }
     });
+  });
+  mobileLanguage?.addEventListener('click', () => {
+    const isExpanded = mobileLanguage.getAttribute('aria-expanded') === 'true';
+    showMobileRoot();
+    mobileLanguage.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
   });
   mobileMenu.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => toggleMobileMenu(true));
@@ -612,6 +731,7 @@ export default async function decorate(block) {
   DESKTOP_MQ.addEventListener('change', () => {
     toggleMobileMenu(true);
     closePanel();
+    closeLocaleDialog(false);
   });
 
   if (nav.classList.contains('is-transparent')) {
