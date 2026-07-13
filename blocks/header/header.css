@@ -157,7 +157,7 @@ header .header-nav[data-mobile-view="detail"] .header-mobile-title {
 header .header-hamburger {
   display: flex;
   flex: 0 0 40px;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   width: 40px;
   height: 50px;
