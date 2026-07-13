@@ -180,9 +180,22 @@ function isCurrentPage(href) {
     const normalize = (path) => path.replace(/\/$/, '') || '/';
     return target.origin === window.location.origin
       && normalize(target.pathname) === normalize(window.location.pathname);
-  } catch (error) {
+  } catch {
     return false;
   }
+}
+
+function getLocaleCode(href) {
+  let linkLocale = '';
+  try {
+    const segments = new URL(href, window.location.href).pathname.split('/').filter(Boolean);
+    const candidate = segments[segments.length - 1] || '';
+    if (/^[a-z]{2,3}$/i.test(candidate)) linkLocale = candidate;
+  } catch (error) {
+    // Use the document locale fallback below.
+  }
+  const locale = document.documentElement.lang || linkLocale || 'en';
+  return locale.split('-')[0].slice(0, 2).toUpperCase();
 }
 
 function buildPanelCard(card) {
@@ -353,7 +366,11 @@ export default async function decorate(block) {
   nav.setAttribute('aria-expanded', 'false');
 
   const theme = getMetadata('header-theme').toLowerCase();
-  if (theme.split(',').map((value) => value.trim()).includes('transparent')) {
+  const themeValues = theme.split(',').map((value) => value.trim()).filter(Boolean);
+  const pagePath = window.location.pathname.replace(/\/+$/, '') || '/';
+  const isTransparent = themeValues.includes('transparent')
+    || (!themeValues.includes('white') && pagePath === '/');
+  if (isTransparent) {
     nav.classList.add('is-transparent');
   }
 
@@ -419,10 +436,13 @@ export default async function decorate(block) {
     language.href = data.toolsLink;
     language.setAttribute('aria-label', data.toolsLabel);
     language.title = data.toolsLabel;
-    const globe = document.createElement('span');
-    globe.className = 'header-globe';
-    globe.setAttribute('aria-hidden', 'true');
-    language.append(globe);
+    const localeCode = document.createElement('span');
+    localeCode.className = 'header-language-code';
+    localeCode.textContent = getLocaleCode(data.toolsLink);
+    const chevron = document.createElement('span');
+    chevron.className = 'header-chevron';
+    chevron.setAttribute('aria-hidden', 'true');
+    language.append(localeCode, chevron);
     tools.append(language);
   } else if (data.toolsSection) {
     while (data.toolsSection.firstChild) tools.append(data.toolsSection.firstChild);
@@ -435,11 +455,10 @@ export default async function decorate(block) {
   hamburger.setAttribute('aria-label', 'Open navigation');
   hamburger.setAttribute('aria-controls', 'header-mobile-menu');
   hamburger.setAttribute('aria-expanded', 'false');
-  for (let i = 0; i < 3; i += 1) {
-    const line = document.createElement('span');
-    line.className = 'hamburger-line';
-    hamburger.append(line);
-  }
+  const menuIcon = document.createElement('span');
+  menuIcon.className = 'header-menu-icon';
+  menuIcon.setAttribute('aria-hidden', 'true');
+  hamburger.append(menuIcon);
 
   inner.append(brand, mobileBack, mobileTitle, navList, tools, hamburger);
   nav.append(inner);

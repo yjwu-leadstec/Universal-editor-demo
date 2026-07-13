@@ -20,7 +20,7 @@ header .header[data-block-status="loaded"] {
 header .header-nav {
   width: 100%;
   height: 50px;
-  color: rgb(25 25 25 / 90%);
+  color: rgb(0 0 0 / 90%);
   font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -33,11 +33,10 @@ header .header-nav-inner {
   width: 100%;
   height: 50px;
   padding-inline: 20px;
-  background: rgb(255 255 255 / 98%);
-  border-bottom: 1px solid rgb(0 0 0 / 5%);
-  transition: background-color 300ms cubic-bezier(0.5, 0, 0, 0.75),
-    border-color 300ms cubic-bezier(0.5, 0, 0, 0.75),
-    box-shadow 220ms ease;
+  background: #fff;
+  backdrop-filter: blur(0);
+  transition: background 300ms cubic-bezier(0.5, 0, 0, 0.75),
+    backdrop-filter 300ms cubic-bezier(0.5, 0, 0, 0.75);
 }
 
 header .header-nav.is-transparent:not(.is-scrolled, .is-panel-open, [aria-expanded="true"]) {
@@ -46,12 +45,12 @@ header .header-nav.is-transparent:not(.is-scrolled, .is-panel-open, [aria-expand
 
 header .header-nav.is-scrolled .header-nav-inner {
   background: #fff;
-  box-shadow: 0 1px 14px rgb(0 0 0 / 8%);
+  backdrop-filter: blur(0);
 }
 
 header .header-nav.is-transparent:not(.is-scrolled, .is-panel-open, [aria-expanded="true"]) .header-nav-inner {
-  background: transparent;
-  border-bottom-color: transparent;
+  background: linear-gradient(to top, rgb(0 0 0 / 0%) 0%, rgb(0 0 0 / 36%) 89.424%);
+  backdrop-filter: blur(17.5px);
 }
 
 header .header-brand {
@@ -78,7 +77,7 @@ header .header-logo:hover {
 }
 
 header .header-logo img {
-  width: 47px;
+  width: 48px;
   height: 20px;
   object-fit: contain;
   filter: brightness(0);
@@ -131,11 +130,11 @@ header .header-nav[data-mobile-view="detail"] .header-mobile-back:focus-visible 
 }
 
 header .header-mobile-back span {
-  width: 10px;
-  height: 10px;
-  border-left: 1px solid currentcolor;
-  border-bottom: 1px solid currentcolor;
-  transform: rotate(45deg);
+  width: 20px;
+  height: 20px;
+  background: currentcolor;
+  mask: url("/icons/chevron-down.svg") center / 8px 5px no-repeat;
+  transform: rotate(90deg);
 }
 
 header .header-nav[data-mobile-view="detail"] .header-mobile-title {
@@ -154,10 +153,8 @@ header .header-nav[data-mobile-view="detail"] .header-mobile-title {
 header .header-hamburger {
   display: flex;
   flex: 0 0 40px;
-  flex-direction: column;
   align-items: flex-end;
   justify-content: center;
-  gap: 4px;
   width: 40px;
   height: 50px;
   margin: 0 0 0 auto;
@@ -178,24 +175,18 @@ header .header-hamburger:focus-visible {
   outline-offset: -8px;
 }
 
-header .hamburger-line {
+header .header-menu-icon {
   display: block;
-  width: 20px;
-  height: 2px;
+  width: 24px;
+  height: 24px;
   background: currentcolor;
-  transition: transform 220ms ease, opacity 160ms ease;
+  mask: url("/icons/menu.svg") center / 24px 24px no-repeat;
+  transition: background-color 220ms ease;
 }
 
-header .header-nav[aria-expanded="true"] .hamburger-line:nth-child(1) {
-  transform: translateY(6px) rotate(45deg);
-}
-
-header .header-nav[aria-expanded="true"] .hamburger-line:nth-child(2) {
-  opacity: 0;
-}
-
-header .header-nav[aria-expanded="true"] .hamburger-line:nth-child(3) {
-  transform: translateY(-6px) rotate(-45deg);
+header .header-nav[aria-expanded="true"] .header-menu-icon {
+  background: #999;
+  mask-image: url("/icons/close.svg");
 }
 
 body.nav-open {
@@ -306,17 +297,16 @@ header .mobile-submenu-link:focus-visible {
 }
 
 header .mobile-item-chevron {
-  width: 8px;
-  height: 8px;
-  flex: 0 0 8px;
-  border-right: 1px solid #9a9da1;
-  border-bottom: 1px solid #9a9da1;
-  transform: rotate(45deg);
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  background: #999;
+  mask: url("/icons/chevron-down.svg") center / 8px 5px no-repeat;
   transition: transform 220ms ease;
 }
 
 header .mobile-item-label[aria-expanded="true"] .mobile-item-chevron {
-  transform: rotate(225deg) translate(-2px, -2px);
+  transform: rotate(180deg);
 }
 
 header .header-mobile-submenu {
@@ -410,7 +400,7 @@ header .header-mobile-language::before {
     display: flex;
     align-items: center;
     height: 100%;
-    margin-inline-start: clamp(55px, 5.2vw, 120px);
+    margin-inline-start: 29px;
   }
 
   header .header-navlist {
@@ -469,47 +459,33 @@ header .header-mobile-language::before {
   }
 
   header .header-language {
-    display: grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 30px;
     color: currentcolor;
+    font-size: 14px;
+    line-height: 20px;
+    opacity: 0.6;
+    text-decoration: none;
   }
 
   header .header-language:hover {
     color: currentcolor;
+    text-decoration: none;
   }
 
   header .header-language:focus-visible {
     outline: 2px solid currentcolor;
     outline-offset: 2px;
-    border-radius: 50%;
+    border-radius: 2px;
   }
 
-  header .header-globe {
-    position: relative;
+  header .header-chevron {
     width: 16px;
     height: 16px;
-    border: 1px solid currentcolor;
-    border-radius: 50%;
-  }
-
-  header .header-globe::before,
-  header .header-globe::after {
-    content: "";
-    position: absolute;
-  }
-
-  header .header-globe::before {
-    inset: 2px 5px;
-    border-inline: 1px solid currentcolor;
-    border-radius: 50%;
-  }
-
-  header .header-globe::after {
-    top: 7px;
-    inset-inline: 2px;
-    border-top: 1px solid currentcolor;
+    background: currentcolor;
+    mask: url("/icons/chevron-down.svg") center / 8px 5px no-repeat;
   }
 
   header .header-hamburger,
@@ -698,7 +674,7 @@ header .header-mobile-language::before {
   }
 
   header .header-sections {
-    margin-inline-start: 28px;
+    margin-inline-start: 20px;
   }
 
   header .header-navlist-item {
@@ -725,7 +701,7 @@ header .header-mobile-language::before {
 
 @media (prefers-reduced-motion: reduce) {
   header .header-nav-inner,
-  header .hamburger-line,
+  header .header-menu-icon,
   header .header-mobile-item,
   header .header-mobile-language,
   header .mobile-item-chevron,

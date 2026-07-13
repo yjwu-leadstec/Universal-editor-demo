@@ -4,18 +4,22 @@
 
 - Type: global header/navigation and footer fragments
 - Purpose: replace the legacy Leadstec navigation and empty footer in `leadstec-dev` with the Li Auto Global English design
-- Design references: `lixiang2/docs/pencil/guide.pen` (read through Pencil MCP), `lixiang2/docs/screenshots/components/**/global-{header,footer}.png`, and the `vehicles-open`/`scrolled` header states
+- Design references: Figma `2026 Global Website` node `9:974`, `lixiang2/docs/pencil/guide.pen` (read through Pencil MCP), `lixiang2/docs/screenshots/components/**/global-{header,footer}.png`, and the `vehicles-open`/`scrolled` header states
 - Viewports: 390 px mobile, 1024 px medium, 1440/1920 px desktop
 
 ## Visual Requirements
 
 ### Header and primary navigation
 
-- Fixed 50 px navigation bar with the Li Auto mark at the left.
+- Fixed 50 px navigation bar with the official 48 × 20 px Li Auto mark at the left (40 px desktop inset).
 - Desktop primary links: Vehicles, Official Center, Service, Media Center, and About Us.
 - Primary navigation uses `licium-regular`, 14 px text, and an underline for hover, focus, current, and expanded states.
-- The right side contains the language entry shown as a globe icon in the Global English design.
-- Content pages use a white header. Pages with an edge-to-edge hero may opt into a transparent initial state and switch to white after scrolling.
+- The desktop language entry is a two-letter locale code plus the supplied down-chevron vector. The globe icon is not part of the Figma design.
+- The Figma guide defines two explicit base states:
+  - Glass state: a vertical black-to-transparent gradient (source stop 60% at 89.4%, 60% fill opacity) with approximately 20 px background blur (`17.5` in `guide.pen`), white logo/text/icons, and no divider or shadow.
+  - White state: solid `#fff`, black logo, 90% black primary text, 60% black secondary text/icons, and no divider or shadow.
+- The home page starts in the glass state and transitions to the white state after scrolling 10 px. Other pages default to white; `header-theme=transparent` and `header-theme=white` remain explicit author overrides.
+- Opening a desktop panel or the mobile drawer always switches the bar to the white state so content remains legible.
 
 ### Desktop panels
 
@@ -29,6 +33,7 @@
 
 - Below 720 px the desktop navigation becomes a full-screen drawer.
 - The drawer has a 50 px top bar, 24 px inline spacing, and 48 px navigation rows.
+- Menu, close, back, and disclosure indicators use the vectors/dimensions from the guide instead of CSS-drawn approximations. The menu glyph is 24 px with three 18 × 2 px rounded bars; the close control is 24 px.
 - Opening a nested item switches the drawer into a detail view with a back control, centered section title, close control, group labels, and two-column title/subtitle rows, as shown by the `M-Guide-Vehicles` artboard.
 - Opening the drawer locks page scrolling. Escape, the close control, and navigation links close it.
 - Focus remains within the drawer while it is open and returns to the menu button on close.
@@ -53,7 +58,9 @@
 
 ### Functional Requirements
 
-- [ ] The header renders the authored Li Auto logo, five primary links, and language entry.
+- [ ] The header renders the authored 48 × 20 px Li Auto logo, five primary links, and locale-code-plus-chevron language entry.
+- [ ] The home page initially renders the Figma glass state and becomes the pure-white state after scrolling; an ordinary page renders pure white from first paint.
+- [ ] The glass state uses the supplied gradient/blur and white foreground; the white state has no residual blur, divider, or shadow.
 - [ ] Desktop dropdowns open on hover/focus/click, close when leaving or pressing Escape, and expose correct ARIA state.
 - [ ] Navigation items without dropdowns remain real links on desktop and mobile.
 - [ ] The mobile menu opens/closes, locks scroll, opens nested content in a dedicated detail view, supports Back/Escape, and traps keyboard focus.
@@ -66,6 +73,7 @@
 - [ ] Missing nav/footer fragments leave the page usable and do not throw console errors.
 - [ ] Long labels wrap or remain readable without horizontal overflow.
 - [ ] Legacy simple nav/footer fragment markup still renders.
+- [ ] Missing or invalid `header-theme` metadata falls back to glass on `/` and white elsewhere.
 
 ### Responsive Behavior
 
@@ -88,6 +96,6 @@
 
 ## Assumptions
 
-- The Global English header follows the current supplied screenshot and therefore exposes only the language entry on the right; Order Now and Sign In are not added.
+- The Global English header follows the authored `/nav` fragment and therefore exposes only the language entry on the right; the Chinese-guide Order Now and Sign In controls are not invented in code.
 - The complete mobile footer is used because it preserves all authored global links; the shorter mobile artboard is treated as a crop, not a reduced-content variant.
 - `guide.pen` does not define a complete Footer; the Footer baseline comes from the project screenshot manifest and homepage design requirements.
