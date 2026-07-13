@@ -56,7 +56,16 @@ export function propUrl(root, name) {
 export function propPicture(root, name) {
   const source = propSource(root, name);
   if (!source) return null;
-  return source.matches('picture') ? source : source.querySelector('picture');
+  const picture = source.matches('picture') ? source : source.querySelector('picture');
+  if (picture) return picture;
+
+  const url = propLink(root, name)?.getAttribute('href') || source.textContent.trim();
+  if (!url) return null;
+  const generatedPicture = document.createElement('picture');
+  const image = document.createElement('img');
+  image.src = url;
+  generatedPicture.append(image);
+  return generatedPicture;
 }
 
 export function modelItems(root, model) {
