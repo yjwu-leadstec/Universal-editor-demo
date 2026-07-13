@@ -1,3 +1,7 @@
+main:has([data-product-block]) {
+  overflow-x: clip;
+}
+
 main [data-product-block] {
   --product-bg: #fff;
   --product-card-bg: #f8f8f8;
