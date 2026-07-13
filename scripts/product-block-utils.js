@@ -381,6 +381,9 @@ export function appendPicture(container, picture, {
     image.addEventListener('error', recoverImage, { once: true });
     container.append(picture);
     if (image.complete && !image.naturalWidth) recoverImage();
+    window.setTimeout(() => {
+      if (image.isConnected && image.complete && !image.naturalWidth) recoverImage();
+    }, 1000);
     return image;
   }
   container.append(picture);
