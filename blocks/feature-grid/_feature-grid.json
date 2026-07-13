@@ -41,7 +41,7 @@
         { "component": "text", "name": "imageAlt", "label": "Desktop Image Alt Text", "valueType": "string" },
         { "component": "reference", "name": "mobileImage", "label": "Mobile Poster / Image", "valueType": "string", "multi": false },
         { "component": "text", "name": "mobileImageAlt", "label": "Mobile Image Alt Text", "valueType": "string" },
-        { "component": "reference", "name": "video", "label": "Video", "valueType": "string", "multi": false },
+        { "component": "aem-content", "name": "video", "label": "Video URL", "valueType": "string" },
         { "component": "text", "name": "title", "label": "Card Title", "valueType": "string" },
         { "component": "richtext", "name": "description", "label": "Card Description", "valueType": "string" },
         { "component": "aem-content", "name": "link", "label": "Link", "valueType": "string" },

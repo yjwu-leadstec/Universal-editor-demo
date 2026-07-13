@@ -57,8 +57,8 @@
         { "component": "text", "name": "imageAlt", "label": "Desktop Image Alt Text", "valueType": "string" },
         { "component": "reference", "name": "mobileImage", "label": "Mobile Poster / Image", "valueType": "string", "multi": false },
         { "component": "text", "name": "mobileImageAlt", "label": "Mobile Image Alt Text", "valueType": "string" },
-        { "component": "reference", "name": "video", "label": "Desktop Video", "valueType": "string", "multi": false },
-        { "component": "reference", "name": "mobileVideo", "label": "Mobile Video", "valueType": "string", "multi": false },
+        { "component": "aem-content", "name": "video", "label": "Desktop Video URL", "valueType": "string" },
+        { "component": "aem-content", "name": "mobileVideo", "label": "Mobile Video URL", "valueType": "string" },
         { "component": "text", "name": "title", "label": "Media Title", "valueType": "string" },
         { "component": "richtext", "name": "description", "label": "Media Description", "valueType": "string" },
         { "component": "text", "name": "note", "label": "Note", "valueType": "string" }

@@ -516,26 +516,23 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "video",
-        "label": "Desktop Preview Video",
-        "valueType": "string",
-        "multi": false
+        "label": "Desktop Preview Video URL",
+        "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "mobileVideo",
-        "label": "Mobile Preview Video",
-        "valueType": "string",
-        "multi": false
+        "label": "Mobile Preview Video URL",
+        "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "fullVideo",
-        "label": "Full Video",
+        "label": "Full Video URL",
         "description": "Opened in an accessible dialog",
-        "valueType": "string",
-        "multi": false
+        "valueType": "string"
       },
       {
         "component": "text",
@@ -913,11 +910,10 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "video",
-        "label": "Video",
-        "valueType": "string",
-        "multi": false
+        "label": "Video URL",
+        "valueType": "string"
       },
       {
         "component": "text",
@@ -1212,18 +1208,16 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "video",
-        "label": "Desktop Video",
-        "valueType": "string",
-        "multi": false
+        "label": "Desktop Video URL",
+        "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "mobileVideo",
-        "label": "Mobile Video",
-        "valueType": "string",
-        "multi": false
+        "label": "Mobile Video URL",
+        "valueType": "string"
       },
       {
         "component": "text",
@@ -1498,18 +1492,16 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "video",
-        "label": "Desktop Video",
-        "valueType": "string",
-        "multi": false
+        "label": "Desktop Video URL",
+        "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "mobileVideo",
-        "label": "Mobile Video",
-        "valueType": "string",
-        "multi": false
+        "label": "Mobile Video URL",
+        "valueType": "string"
       },
       {
         "component": "text",
@@ -2730,18 +2722,16 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "video",
-        "label": "Desktop Video",
-        "valueType": "string",
-        "multi": false
+        "label": "Desktop Video URL",
+        "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "mobileVideo",
-        "label": "Mobile Video",
-        "valueType": "string",
-        "multi": false
+        "label": "Mobile Video URL",
+        "valueType": "string"
       },
       {
         "component": "text",
@@ -2963,11 +2953,10 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "video",
-        "label": "Preview Video",
-        "valueType": "string",
-        "multi": false
+        "label": "Preview Video URL",
+        "valueType": "string"
       },
       {
         "component": "boolean",
@@ -3252,19 +3241,17 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "video",
-        "label": "Desktop Preview Video",
-        "valueType": "string",
-        "multi": false
+        "label": "Desktop Preview Video URL",
+        "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "aem-content",
         "name": "mobileVideo",
-        "label": "Mobile Preview Video",
+        "label": "Mobile Preview Video URL",
         "description": "Falls back to desktop video",
-        "valueType": "string",
-        "multi": false
+        "valueType": "string"
       },
       {
         "component": "reference",

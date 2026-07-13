@@ -16,7 +16,7 @@
         { "component": "text", "name": "imageAlt", "label": "Desktop Image Alt Text", "valueType": "string" },
         { "component": "reference", "name": "mobileImage", "label": "Mobile Poster / Background", "valueType": "string", "multi": false },
         { "component": "text", "name": "mobileImageAlt", "label": "Mobile Image Alt Text", "valueType": "string" },
-        { "component": "reference", "name": "video", "label": "Preview Video", "valueType": "string", "multi": false },
+        { "component": "aem-content", "name": "video", "label": "Preview Video URL", "valueType": "string" },
         { "component": "boolean", "name": "showVideoControl", "label": "Show Video Control", "valueType": "boolean", "value": true },
         { "component": "aem-content", "name": "link", "label": "Primary Link", "valueType": "string" },
         { "component": "text", "name": "linkText", "label": "Primary Link Text", "valueType": "string" },
