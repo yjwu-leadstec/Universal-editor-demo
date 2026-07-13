@@ -246,7 +246,7 @@
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Product Feature Grid",
+                  "name": "Feature Grid",
                   "model": "feature-grid",
                   "filter": "feature-grid",
                   "classes": [
@@ -1019,7 +1019,7 @@
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Product Parameter CTA",
+                  "name": "Product Param CTA",
                   "model": "product-param-cta",
                   "linkType": "primary",
                   "secondaryLinkType": "text",
@@ -1272,7 +1272,7 @@
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Specification Table",
+                  "name": "Spec Table",
                   "model": "spec-table",
                   "filter": "spec-table",
                   "variant": "tabbed",
