@@ -1,0 +1,79 @@
+main .feature-grid {
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+}
+
+main .feature-grid .feature-grid-shell {
+  width: min(100% - 40px, 1480px);
+  margin-inline: auto;
+}
+
+main .feature-grid .feature-grid-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+main .feature-grid .feature-grid-card {
+  overflow: hidden;
+  background: var(--product-card-bg);
+  border-radius: 4px;
+}
+
+main .feature-grid .feature-grid-card .product-media {
+  min-height: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: 0;
+}
+
+main .feature-grid .feature-grid-copy {
+  padding: 28px;
+}
+
+main .feature-grid .feature-grid-copy h3 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+main .feature-grid .feature-grid-description {
+  margin-block-start: 12px;
+  color: var(--product-muted);
+  line-height: 1.6;
+}
+
+main .feature-grid .feature-grid-description > :first-child,
+main .feature-grid .feature-grid-description > :last-child {
+  margin-block: 0;
+}
+
+main .feature-grid .product-link {
+  margin-block-start: 20px;
+}
+
+main .feature-grid .feature-grid-note {
+  margin: 24px 0 0;
+  color: var(--product-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (width <= 1024px) {
+  main .feature-grid .feature-grid-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width <= 719px) {
+  main .feature-grid .feature-grid-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  main .feature-grid .feature-grid-copy {
+    padding: 24px;
+  }
+}

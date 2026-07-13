@@ -1,0 +1,84 @@
+main .product-download {
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+  background: #000;
+}
+
+main .product-download .product-download-shell {
+  position: relative;
+  min-height: 620px;
+}
+
+main .product-download .product-media {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  border-radius: 0;
+}
+
+main .product-download .product-media::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(0 0 0 / 72%), rgb(0 0 0 / 16%) 70%);
+  content: '';
+}
+
+main .product-download .product-download-copy {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: max(20px, calc((100vw - 1480px) / 2));
+  width: min(520px, calc(100% - 40px));
+  transform: translateY(-50%);
+}
+
+main .product-download .product-download-copy.product-reveal {
+  transform: translateY(calc(-50% + 48px));
+}
+
+main .product-download .product-download-copy.product-reveal.is-visible {
+  transform: translateY(-50%);
+}
+
+main .product-download .product-section-header {
+  width: auto;
+  margin: 0;
+  text-align: left;
+}
+
+main .product-download .product-title,
+main .product-download .product-description {
+  margin-inline: 0;
+}
+
+main .product-download .product-download-actions {
+  display: flex;
+  margin-block-start: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+@media (width <= 719px) {
+  main .product-download .product-download-shell {
+    min-height: 132vw;
+  }
+
+  main .product-download .product-media::after {
+    background: linear-gradient(180deg, rgb(0 0 0 / 12%) 20%, rgb(0 0 0 / 78%) 100%);
+  }
+
+  main .product-download .product-download-copy,
+  main .product-download .product-download-copy.product-reveal,
+  main .product-download .product-download-copy.product-reveal.is-visible {
+    top: auto;
+    bottom: 36px;
+    left: 20px;
+    transform: none;
+  }
+
+  main .product-download .product-download-actions,
+  main .product-download .product-download-actions .product-link {
+    width: 100%;
+  }
+}

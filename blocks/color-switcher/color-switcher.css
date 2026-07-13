@@ -1,0 +1,101 @@
+main .color-switcher {
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+  overflow: hidden;
+}
+
+main .color-switcher .color-switcher-shell {
+  width: min(100% - 40px, 1480px);
+  margin-inline: auto;
+}
+
+main .color-switcher .color-switcher-stage {
+  position: relative;
+}
+
+main .color-switcher .color-switcher-panel {
+  margin: 0;
+}
+
+main .color-switcher .color-switcher-panel[hidden] {
+  display: none;
+}
+
+main .color-switcher .product-media {
+  aspect-ratio: 16 / 9;
+}
+
+main .color-switcher .color-switcher-panel figcaption {
+  margin-block-start: 20px;
+  color: var(--product-copy);
+  font-size: 22px;
+  text-align: center;
+}
+
+main .color-switcher .color-switcher-controls {
+  display: flex;
+  margin-block-start: 24px;
+  overflow-x: auto;
+  justify-content: flex-start;
+  gap: 18px;
+  scrollbar-width: none;
+}
+
+main .color-switcher .color-switcher-controls button {
+  display: grid;
+  min-width: 70px;
+  min-height: 70px;
+  padding: 4px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: var(--product-muted);
+  background: transparent;
+  border: 0;
+  gap: 6px;
+}
+
+main .color-switcher .color-switcher-swatch {
+  display: block;
+  width: 34px;
+  height: 34px;
+  overflow: hidden;
+  border: 1px solid rgb(0 0 0 / 16%);
+  border-radius: 50%;
+}
+
+main .color-switcher .color-switcher-swatch picture,
+main .color-switcher .color-switcher-swatch img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+main .color-switcher .color-switcher-controls button[aria-selected="true"] .color-switcher-swatch {
+  outline: 2px solid var(--product-accent);
+  outline-offset: 4px;
+}
+
+main .color-switcher .color-switcher-controls button[aria-selected="true"] {
+  color: var(--product-copy);
+}
+
+main .color-switcher .color-switcher-label {
+  font-size: 12px;
+}
+
+@media (width <= 719px) {
+  main .color-switcher .color-switcher-shell {
+    width: 100%;
+  }
+
+  main .color-switcher .color-switcher-stage {
+    margin-inline: 20px;
+  }
+
+  main .color-switcher .color-switcher-controls {
+    padding-inline: 20px;
+    justify-content: safe center;
+  }
+}

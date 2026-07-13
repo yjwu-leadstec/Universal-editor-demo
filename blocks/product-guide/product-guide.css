@@ -1,0 +1,133 @@
+main .product-guide {
+  left: 50%;
+  width: 100vw;
+  padding-block: 60px;
+  margin-inline-start: -50vw;
+}
+
+main .product-guide.desktop-visible:not(.mobile-visible) {
+  display: block;
+}
+
+main .product-guide.mobile-visible:not(.desktop-visible) {
+  display: none;
+}
+
+main .product-guide .product-guide-shell {
+  width: min(100% - 40px, 1480px);
+  margin-inline: auto;
+}
+
+main .product-guide .product-guide-shell > h2 {
+  margin: 0 0 32px;
+  font-family: var(--heading-font-family);
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 500;
+  text-align: center;
+}
+
+main .product-guide .product-guide-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+main .product-guide .product-guide-card {
+  position: relative;
+  min-height: 520px;
+  overflow: hidden;
+  color: #fff;
+  background: #111;
+  border-radius: 4px;
+}
+
+main .product-guide .product-media {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  border-radius: 0;
+}
+
+main .product-guide .product-media::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 24%, rgb(0 0 0 / 72%) 100%);
+  content: '';
+}
+
+main .product-guide .product-guide-copy {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 36px;
+}
+
+main .product-guide .product-guide-copy h3 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: 32px;
+  font-weight: 500;
+}
+
+main .product-guide .product-guide-description {
+  max-width: 480px;
+  margin-block-start: 12px;
+  color: rgb(255 255 255 / 76%);
+}
+
+main .product-guide .product-guide-description > :first-child,
+main .product-guide .product-guide-description > :last-child {
+  margin-block: 0;
+}
+
+main .product-guide .product-link {
+  margin-block-start: 24px;
+  color: #fff;
+}
+
+@media (width <= 719px) {
+  main .product-guide {
+    padding-block: 40px;
+  }
+
+  main .product-guide.desktop-visible:not(.mobile-visible) {
+    display: none;
+  }
+
+  main .product-guide.mobile-visible:not(.desktop-visible) {
+    display: block;
+  }
+
+  main .product-guide .product-guide-shell {
+    width: 100%;
+  }
+
+  main .product-guide .product-guide-shell > h2 {
+    padding-inline: 20px;
+  }
+
+  main .product-guide .product-guide-list {
+    display: flex;
+    padding-inline: 20px;
+    overflow-x: auto;
+    gap: 12px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  main .product-guide .product-guide-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  main .product-guide .product-guide-card {
+    min-width: min(84vw, 360px);
+    min-height: 500px;
+    scroll-snap-align: center;
+  }
+
+  main .product-guide .product-guide-copy {
+    padding: 28px;
+  }
+}

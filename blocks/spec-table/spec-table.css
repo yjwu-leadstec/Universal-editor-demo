@@ -1,0 +1,159 @@
+main .spec-table {
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+}
+
+main .spec-table .spec-table-shell {
+  width: min(100% - 40px, 1240px);
+  margin-inline: auto;
+}
+
+main .spec-table .spec-tabs {
+  display: flex;
+  margin-block-end: 32px;
+  overflow-x: auto;
+  border-bottom: 1px solid rgb(127 127 127 / 24%);
+}
+
+main .spec-table .spec-tabs button {
+  position: relative;
+  min-width: 150px;
+  min-height: 56px;
+  padding: 12px 20px;
+  flex: 1 0 auto;
+  color: var(--product-muted);
+  background: transparent;
+  border: 0;
+}
+
+main .spec-table .spec-tabs button::after {
+  position: absolute;
+  right: 50%;
+  bottom: -1px;
+  left: 50%;
+  height: 2px;
+  background: var(--product-accent);
+  content: '';
+  transition: right 200ms ease, left 200ms ease;
+}
+
+main .spec-table .spec-tabs button[aria-selected="true"] {
+  color: var(--product-copy);
+}
+
+main .spec-table .spec-tabs button[aria-selected="true"]::after {
+  right: max(16px, calc(50% - 49px));
+  left: max(16px, calc(50% - 49px));
+}
+
+main .spec-table .spec-group[hidden] {
+  display: none;
+}
+
+main .spec-table .spec-group {
+  overflow: hidden;
+  background: var(--product-card-bg);
+  border-radius: 4px;
+}
+
+main .spec-table.variant-sections .spec-panels {
+  display: grid;
+  gap: 24px;
+}
+
+main .spec-table .spec-group-title,
+main .spec-table .spec-group-description,
+main .spec-table .spec-group-note {
+  margin-inline: 28px;
+}
+
+main .spec-table .spec-group-title {
+  margin-block: 28px 12px;
+  font-family: var(--heading-font-family);
+  font-size: 28px;
+  font-weight: 500;
+}
+
+main .spec-table .spec-group-description,
+main .spec-table .spec-group-note {
+  color: var(--product-muted);
+}
+
+main .spec-table .spec-rows {
+  display: grid;
+  margin: 0;
+  padding: 12px 28px 28px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+}
+
+main .spec-table .spec-row {
+  display: grid;
+  padding: 20px;
+  background: var(--product-bg);
+  grid-template-columns: minmax(120px, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: 16px;
+}
+
+main .spec-table .spec-row dt {
+  color: var(--product-muted);
+}
+
+main .spec-table .spec-row dd {
+  margin: 0;
+  color: var(--product-copy);
+  font-weight: 500;
+}
+
+main .spec-table.variant-icon-grid .spec-rows {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+main .spec-table.variant-icon-grid .spec-row {
+  display: flex;
+  min-height: 180px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+main .spec-table.variant-icon-grid .spec-row .product-media {
+  width: 64px;
+  min-height: 64px;
+  aspect-ratio: 1;
+}
+
+@media (width <= 1024px) {
+  main .spec-table .spec-rows,
+  main .spec-table.variant-icon-grid .spec-rows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width <= 719px) {
+  main .spec-table .spec-table-shell {
+    width: 100%;
+  }
+
+  main .spec-table .product-section-header,
+  main .spec-table .spec-panels {
+    width: auto;
+    margin-inline: 20px;
+  }
+
+  main .spec-table .spec-tabs {
+    padding-inline: 20px;
+  }
+
+  main .spec-table .spec-rows,
+  main .spec-table.variant-icon-grid .spec-rows {
+    padding: 8px 16px 20px;
+    grid-template-columns: 1fr;
+  }
+
+  main .spec-table .spec-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

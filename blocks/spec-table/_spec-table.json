@@ -1,0 +1,66 @@
+{
+  "definitions": [
+    {
+      "title": "Specification Table",
+      "id": "spec-table",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Specification Table", "model": "spec-table", "filter": "spec-table", "variant": "tabbed", "classes": ["light", "space-small"] } } } }
+    },
+    {
+      "title": "Specification Group",
+      "id": "spec-group",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Specification Group", "model": "spec-group", "filter": "spec-group" } } } }
+    },
+    {
+      "title": "Specification Row",
+      "id": "spec-row",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Specification Row", "model": "spec-row" } } } }
+    }
+  ],
+  "models": [
+    {
+      "id": "spec-table",
+      "fields": [
+        { "component": "text", "name": "id", "label": "ID", "description": "Optional page anchor", "valueType": "string" },
+        { "component": "text", "name": "title", "label": "Desktop Title", "valueType": "string" },
+        { "component": "text", "name": "mobileTitle", "label": "Mobile Title Override", "valueType": "string" },
+        { "component": "richtext", "name": "description", "label": "Description", "valueType": "string" },
+        { "component": "select", "name": "variant", "label": "Layout", "valueType": "string", "value": "tabbed", "options": [{ "name": "Sections", "value": "sections" }, { "name": "Tabbed", "value": "tabbed" }, { "name": "Icon Grid", "value": "icon-grid" }] },
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "label": "Style",
+          "valueType": "string",
+          "maxSize": 2,
+          "options": [
+            { "name": "Theme", "children": [{ "name": "Light", "value": "light" }, { "name": "Dark", "value": "dark" }, { "name": "Gray", "value": "gray" }] },
+            { "name": "Spacing", "children": [{ "name": "Large", "value": "space-large" }, { "name": "Small", "value": "space-small" }, { "name": "None", "value": "space-none" }] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spec-group",
+      "fields": [
+        { "component": "text", "name": "groupKey", "label": "Group Key", "description": "Unique stable key", "valueType": "string" },
+        { "component": "text", "name": "title", "label": "Group / Tab Title", "valueType": "string", "required": true },
+        { "component": "richtext", "name": "description", "label": "Group Description", "valueType": "string" },
+        { "component": "reference", "name": "image", "label": "Desktop Background Image", "valueType": "string", "multi": false },
+        { "component": "text", "name": "imageAlt", "label": "Desktop Image Alt Text", "valueType": "string" },
+        { "component": "reference", "name": "mobileImage", "label": "Mobile Background Image", "valueType": "string", "multi": false },
+        { "component": "text", "name": "mobileImageAlt", "label": "Mobile Image Alt Text", "valueType": "string" },
+        { "component": "text", "name": "note", "label": "Note", "valueType": "string" }
+      ]
+    },
+    {
+      "id": "spec-row",
+      "fields": [
+        { "component": "text", "name": "label", "label": "Label", "valueType": "string", "required": true },
+        { "component": "text", "name": "value", "label": "Value", "valueType": "string", "required": true },
+        { "component": "richtext", "name": "description", "label": "Description", "valueType": "string" },
+        { "component": "reference", "name": "icon", "label": "Icon", "valueType": "string", "multi": false },
+        { "component": "text", "name": "iconAlt", "label": "Icon Alt Text", "valueType": "string" }
+      ]
+    }
+  ],
+  "filters": [{ "id": "spec-table", "components": ["spec-group"] }, { "id": "spec-group", "components": ["spec-row"] }]
+}

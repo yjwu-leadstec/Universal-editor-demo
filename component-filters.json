@@ -19,7 +19,23 @@
       "fragment",
       "avatar",
       "product-table",
-      "product-showcase"
+      "product-showcase",
+      "product-hero",
+      "product-sticky-nav",
+      "highlight-carousel",
+      "chapter-intro",
+      "feature-media-section",
+      "color-switcher",
+      "spec-table",
+      "product-notes",
+      "text-columns",
+      "picture-group",
+      "icon-overlay-showcase",
+      "feature-grid",
+      "product-param-cta",
+      "product-ending",
+      "product-guide",
+      "product-download"
     ]
   },
   {
@@ -32,6 +48,12 @@
     "id": "carousel",
     "components": [
       "slide"
+    ]
+  },
+  {
+    "id": "color-switcher",
+    "components": [
+      "color-switcher-item"
     ]
   },
   {
@@ -48,6 +70,25 @@
       "button",
       "title",
       "avatar"
+    ]
+  },
+  {
+    "id": "feature-grid",
+    "components": [
+      "feature-grid-item"
+    ]
+  },
+  {
+    "id": "feature-media-section",
+    "components": [
+      "feature-media-item",
+      "feature-stat-item"
+    ]
+  },
+  {
+    "id": "highlight-carousel",
+    "components": [
+      "highlight-slide"
     ]
   },
   {
@@ -72,6 +113,18 @@
     "id": "home-vehicle-grid",
     "components": [
       "vehicle-tile"
+    ]
+  },
+  {
+    "id": "icon-overlay-showcase",
+    "components": [
+      "overlay-panel"
+    ]
+  },
+  {
+    "id": "overlay-panel",
+    "components": [
+      "overlay-hotspot"
     ]
   },
   {
@@ -117,9 +170,45 @@
     ]
   },
   {
+    "id": "picture-group",
+    "components": [
+      "picture-group-item"
+    ]
+  },
+  {
+    "id": "picture-group-item",
+    "components": [
+      "picture-media-item"
+    ]
+  },
+  {
+    "id": "product-guide",
+    "components": [
+      "product-guide-item"
+    ]
+  },
+  {
+    "id": "product-hero",
+    "components": [
+      "product-hero-cta"
+    ]
+  },
+  {
+    "id": "product-notes",
+    "components": [
+      "product-note-item"
+    ]
+  },
+  {
     "id": "product-showcase",
     "components": [
       "product-card"
+    ]
+  },
+  {
+    "id": "product-sticky-nav",
+    "components": [
+      "product-sticky-nav-item"
     ]
   },
   {
@@ -144,6 +233,24 @@
     "id": "support-feature-panel",
     "components": [
       "support-feature-item"
+    ]
+  },
+  {
+    "id": "spec-table",
+    "components": [
+      "spec-group"
+    ]
+  },
+  {
+    "id": "spec-group",
+    "components": [
+      "spec-row"
+    ]
+  },
+  {
+    "id": "text-columns",
+    "components": [
+      "text-column-item"
     ]
   }
 ]
