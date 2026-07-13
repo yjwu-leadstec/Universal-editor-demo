@@ -824,6 +824,420 @@
     ]
   },
   {
+    "id": "media-article-detail",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "date",
+        "label": "Date",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Hero Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "media-card-grid",
+    "fields": [
+      {
+        "component": "text",
+        "name": "panelId",
+        "label": "Panel ID",
+        "description": "newsroom, photos, or videos",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Card Type",
+        "value": "newsroom",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Newsroom",
+            "value": "newsroom"
+          },
+          {
+            "name": "Photos",
+            "value": "photos"
+          },
+          {
+            "name": "Videos",
+            "value": "videos"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "media-card",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardKey",
+        "label": "Card Key",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "date",
+        "label": "Date",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Cover Image",
+        "valueType": "string",
+        "multi": false
+      }
+    ]
+  },
+  {
+    "id": "media-card-meta",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardKey",
+        "label": "Card Key",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "alt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "quantity",
+        "label": "Photo Count",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "duration",
+        "label": "Video Duration",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "media-card-action",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardKey",
+        "label": "Card Key",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "asset",
+        "label": "Video Asset",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "download",
+        "label": "Gallery Download",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "media-article-copy",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardKey",
+        "label": "Card Key",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Paragraph",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "media-article-image",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardKey",
+        "label": "Card Key",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "caption",
+        "label": "Caption",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "media-gallery-image",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardKey",
+        "label": "Card Key",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "media-featured-card",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "date",
+        "label": "Date",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Cover Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "media-featured-content",
+    "fields": [
+      {
+        "component": "text",
+        "name": "itemKey",
+        "label": "Item Key",
+        "description": "Stable deep-link key",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "alt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "summary",
+        "label": "Summary",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "body",
+        "label": "Article Body",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "media-gallery",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "date",
+        "label": "Date",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "download",
+        "label": "Download Package",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "media-tabs",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Page Title",
+        "value": "Newsroom",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "defaultTab",
+        "label": "Default Tab Key",
+        "value": "newsroom",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "value": "media-center",
+        "valueType": "string"
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Options",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Sticky on desktop",
+            "value": "sticky"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "media-tab",
+    "fields": [
+      {
+        "component": "text",
+        "name": "tabKey",
+        "label": "Tab Key",
+        "description": "Matches a Media Card Grid panel ID",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "media-video",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "date",
+        "label": "Date",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "duration",
+        "label": "Duration",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "poster",
+        "label": "Poster",
+        "valueType": "string",
+        "multi": false
+      }
+    ]
+  },
+  {
+    "id": "media-video-source",
+    "fields": [
+      {
+        "component": "text",
+        "name": "alt",
+        "label": "Poster Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "video",
+        "label": "Video Asset",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "product-showcase",
     "fields": [
       {

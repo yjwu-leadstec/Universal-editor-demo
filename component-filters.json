@@ -75,6 +75,48 @@
     ]
   },
   {
+    "id": "media-article-detail",
+    "components": [
+      "media-article-copy",
+      "media-article-image"
+    ]
+  },
+  {
+    "id": "media-card-grid",
+    "components": [
+      "media-card",
+      "media-card-meta",
+      "media-card-action",
+      "media-article-copy",
+      "media-article-image",
+      "media-gallery-image"
+    ]
+  },
+  {
+    "id": "media-featured-card",
+    "components": [
+      "media-featured-content"
+    ]
+  },
+  {
+    "id": "media-gallery",
+    "components": [
+      "media-gallery-image"
+    ]
+  },
+  {
+    "id": "media-tabs",
+    "components": [
+      "media-tab"
+    ]
+  },
+  {
+    "id": "media-video",
+    "components": [
+      "media-video-source"
+    ]
+  },
+  {
     "id": "product-showcase",
     "components": [
       "product-card"

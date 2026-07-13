@@ -1,0 +1,100 @@
+{
+  "definitions": [
+    {
+      "title": "Media Card Grid",
+      "id": "media-card-grid",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Media Card Grid", "model": "media-card-grid", "filter": "media-card-grid" } } } }
+    },
+    {
+      "title": "Media Card",
+      "id": "media-card",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Media Card", "model": "media-card" } } } }
+    },
+    {
+      "title": "Media Card Metadata",
+      "id": "media-card-meta",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Media Card Metadata", "model": "media-card-meta" } } } }
+    },
+    {
+      "title": "Media Card Asset",
+      "id": "media-card-action",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Media Card Asset", "model": "media-card-action" } } } }
+    },
+    {
+      "title": "Media Article Paragraph",
+      "id": "media-article-copy",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Media Article Paragraph", "model": "media-article-copy" } } } }
+    },
+    {
+      "title": "Media Article Image",
+      "id": "media-article-image",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Media Article Image", "model": "media-article-image" } } } }
+    },
+    {
+      "title": "Media Gallery Image",
+      "id": "media-gallery-image",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Media Gallery Image", "model": "media-gallery-image" } } } }
+    }
+  ],
+  "models": [
+    {
+      "id": "media-card-grid",
+      "fields": [
+        { "component": "text", "name": "panelId", "label": "Panel ID", "description": "newsroom, photos, or videos", "valueType": "string" },
+        { "component": "select", "name": "classes", "label": "Card Type", "value": "newsroom", "valueType": "string", "options": [{ "name": "Newsroom", "value": "newsroom" }, { "name": "Photos", "value": "photos" }, { "name": "Videos", "value": "videos" }] },
+        { "component": "text", "name": "id", "label": "ID", "valueType": "string" }
+      ]
+    },
+    {
+      "id": "media-card",
+      "fields": [
+        { "component": "text", "name": "cardKey", "label": "Card Key", "valueType": "string" },
+        { "component": "text", "name": "title", "label": "Title", "valueType": "string" },
+        { "component": "text", "name": "date", "label": "Date", "valueType": "string" },
+        { "component": "reference", "name": "image", "label": "Cover Image", "valueType": "string", "multi": false }
+      ]
+    },
+    {
+      "id": "media-card-meta",
+      "fields": [
+        { "component": "text", "name": "cardKey", "label": "Card Key", "valueType": "string" },
+        { "component": "text", "name": "alt", "label": "Image Alt Text", "valueType": "string" },
+        { "component": "text", "name": "quantity", "label": "Photo Count", "valueType": "string" },
+        { "component": "text", "name": "duration", "label": "Video Duration", "valueType": "string" }
+      ]
+    },
+    {
+      "id": "media-card-action",
+      "fields": [
+        { "component": "text", "name": "cardKey", "label": "Card Key", "valueType": "string" },
+        { "component": "aem-content", "name": "asset", "label": "Video Asset", "valueType": "string" },
+        { "component": "aem-content", "name": "download", "label": "Gallery Download", "valueType": "string" }
+      ]
+    },
+    {
+      "id": "media-article-copy",
+      "fields": [
+        { "component": "text", "name": "cardKey", "label": "Card Key", "valueType": "string" },
+        { "component": "richtext", "name": "text", "label": "Paragraph", "valueType": "string" }
+      ]
+    },
+    {
+      "id": "media-article-image",
+      "fields": [
+        { "component": "text", "name": "cardKey", "label": "Card Key", "valueType": "string" },
+        { "component": "reference", "name": "image", "label": "Image", "valueType": "string", "multi": false },
+        { "component": "text", "name": "imageAlt", "label": "Image Alt Text", "valueType": "string" },
+        { "component": "text", "name": "caption", "label": "Caption", "valueType": "string" }
+      ]
+    },
+    {
+      "id": "media-gallery-image",
+      "fields": [
+        { "component": "text", "name": "cardKey", "label": "Card Key", "valueType": "string" },
+        { "component": "reference", "name": "image", "label": "Image", "valueType": "string", "multi": false },
+        { "component": "text", "name": "imageAlt", "label": "Image Alt Text", "valueType": "string" }
+      ]
+    }
+  ],
+  "filters": [{ "id": "media-card-grid", "components": ["media-card", "media-card-meta", "media-card-action", "media-article-copy", "media-article-image", "media-gallery-image"] }]
+}
