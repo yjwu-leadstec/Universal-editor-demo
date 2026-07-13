@@ -1,20 +1,24 @@
 import {
   appendPropAnchors, createGalleryDetail, createReveal, directRows, hasModel,
-  imageAlt, instrumentProp, propLink, propText, rowPicture, rowTexts,
-  setupStandaloneGallery,
+  imageAlt, imageLinkCellIndex, instrumentProp, propLink, propText, rowLinks,
+  rowPicture, rowTexts, setupStandaloneGallery,
 } from '../../scripts/media-center-utils.js';
 
 export default function decorate(block) {
   const rows = directRows(block);
-  const images = rows.filter((row) => hasModel(row, 'media-gallery-image')).map((row) => {
+  const modelImageRows = rows.filter((row) => hasModel(row, 'media-gallery-image'));
+  const imageRows = modelImageRows.length ? modelImageRows : rows.filter((row, index) => (
+    index >= 4 && row.children.length === 3 && imageLinkCellIndex(row) === 1
+  ));
+  const images = imageRows.map((row) => {
     const [, alt] = rowTexts(row);
     const picture = rowPicture(row);
     return { picture, alt: alt || imageAlt(picture), row };
   }).filter((item) => item.picture);
   const detail = {
-    title: propText(rows, 'title'),
-    date: propText(rows, 'date'),
-    download: propLink(rows, 'download')?.href || '',
+    title: propText(rows, 'title') || rowTexts(rows[0] || block)[0] || '',
+    date: propText(rows, 'date') || rowTexts(rows[1] || block)[0] || '',
+    download: propLink(rows, 'download')?.href || rowLinks(rows[2] || block)[0]?.href || '',
     images,
   };
   const view = createGalleryDetail(detail);

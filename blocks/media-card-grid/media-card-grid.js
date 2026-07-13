@@ -1,11 +1,15 @@
 import {
   appendPicture, appendPropAnchors, createReveal, directRows, hasModel, imageAlt,
-  instrument, propText, registerMediaPanel, rowLinks, rowPicture, rowTexts,
-  setupMediaDialog,
+  imageLinkCellIndex, instrument, propText, registerMediaPanel, rowLinks,
+  rowPicture, rowTexts, setupMediaDialog,
 } from '../../scripts/media-center-utils.js';
 
 function parseCards(rows) {
-  const cards = rows.filter((row) => hasModel(row, 'media-card')).map((row, index) => {
+  const modelCardRows = rows.filter((row) => hasModel(row, 'media-card'));
+  const cardRows = modelCardRows.length
+    ? modelCardRows
+    : rows.filter((row) => row.children.length === 4 && imageLinkCellIndex(row) === 3);
+  const cards = cardRows.map((row, index) => {
     const texts = rowTexts(row);
     const picture = rowPicture(row);
     return {
@@ -26,7 +30,10 @@ function parseCards(rows) {
     };
   });
   const byKey = Object.fromEntries(cards.map((card) => [card.key, card]));
-  rows.filter((row) => hasModel(row, 'media-card-meta')).forEach((row) => {
+  const metaRows = rows.filter((row) => hasModel(row, 'media-card-meta'));
+  (metaRows.length ? metaRows : rows.filter((row, index) => (
+    index >= 2 && row.children.length === 4 && imageLinkCellIndex(row) < 0
+  ))).forEach((row) => {
     const [key, alt, quantity, duration] = rowTexts(row);
     if (byKey[key]) {
       Object.assign(byKey[key], {
@@ -34,7 +41,10 @@ function parseCards(rows) {
       });
     }
   });
-  rows.filter((row) => hasModel(row, 'media-card-action')).forEach((row) => {
+  const actionRows = rows.filter((row) => hasModel(row, 'media-card-action'));
+  (actionRows.length ? actionRows : rows.filter((row, index) => (
+    index >= 2 && row.children.length === 3 && row.querySelector('a') && imageLinkCellIndex(row) < 0
+  ))).forEach((row) => {
     const [key] = rowTexts(row);
     const links = rowLinks(row).map((link) => link.href);
     if (!byKey[key]) return;
@@ -42,12 +52,18 @@ function parseCards(rows) {
     byKey[key].download = links.find((href) => href !== byKey[key].video) || '';
     byKey[key].actionRow = row;
   });
-  rows.filter((row) => hasModel(row, 'media-article-copy')).forEach((row) => {
+  const copyRows = rows.filter((row) => hasModel(row, 'media-article-copy'));
+  (copyRows.length ? copyRows : rows.filter((row, index) => (
+    index >= 2 && row.children.length === 2 && !row.querySelector('a, picture, img')
+  ))).forEach((row) => {
     const [key] = rowTexts(row);
     const source = row.children[1] || row;
     if (byKey[key]) byKey[key].contents.push({ kind: 'copy', source, row });
   });
-  rows.filter((row) => hasModel(row, 'media-article-image')).forEach((row) => {
+  const articleImageRows = rows.filter((row) => hasModel(row, 'media-article-image'));
+  (articleImageRows.length ? articleImageRows : rows.filter((row) => (
+    row.children.length === 4 && imageLinkCellIndex(row) === 1
+  ))).forEach((row) => {
     const [key, alt, caption] = rowTexts(row);
     if (byKey[key]) {
       byKey[key].contents.push({
@@ -55,7 +71,10 @@ function parseCards(rows) {
       });
     }
   });
-  rows.filter((row) => hasModel(row, 'media-gallery-image')).forEach((row) => {
+  const galleryRows = rows.filter((row) => hasModel(row, 'media-gallery-image'));
+  (galleryRows.length ? galleryRows : rows.filter((row) => (
+    row.children.length === 3 && imageLinkCellIndex(row) === 1
+  ))).forEach((row) => {
     const [key, alt] = rowTexts(row);
     const picture = rowPicture(row);
     if (byKey[key] && picture) {
@@ -115,14 +134,14 @@ export default function decorate(block) {
   const rows = directRows(block);
   const type = ['photos', 'videos'].find((value) => block.classList.contains(value))
     || propText(rows, 'classes') || 'newsroom';
-  const panelId = propText(rows, 'panelId') || type;
+  const panelId = propText(rows, 'panelId') || rowTexts(rows[0] || block)[0] || type;
   const cards = parseCards(rows);
   const grid = document.createElement('div');
   grid.className = 'media-card-grid-inner';
   cards.forEach((card) => grid.append(createCard(card, type)));
   block.replaceChildren(grid);
   appendPropAnchors(block, rows, ['panelId', 'classes', 'id']);
-  const id = propText(rows, 'id');
+  const id = propText(rows, 'id') || rowTexts(rows[1] || block)[0];
   if (id) block.id = id;
   registerMediaPanel(block, panelId);
   createReveal(block, '.media-card');

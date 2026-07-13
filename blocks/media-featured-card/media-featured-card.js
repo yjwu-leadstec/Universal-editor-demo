@@ -1,17 +1,18 @@
 import {
   appendPicture, appendPropAnchors, createReveal, directRows, hasModel,
   instrumentProp, propPicture, propText, registerMediaPanel, rowTexts,
-  setupMediaDialog,
+  rowPicture, setupMediaDialog,
 } from '../../scripts/media-center-utils.js';
 
 export default function decorate(block) {
   const rows = directRows(block);
-  const picture = propPicture(rows, 'image') || block.querySelector('picture');
-  const contentRow = rows.find((row) => hasModel(row, 'media-featured-content'));
+  const picture = propPicture(rows, 'image') || rowPicture(rows[2] || block);
+  const contentRow = rows.find((row) => hasModel(row, 'media-featured-content'))
+    || rows.find((row, index) => index >= 4 && row.children.length >= 4);
   const [itemKey = '', contentAlt = '', summary = ''] = contentRow ? rowTexts(contentRow) : [];
   const body = contentRow?.children[3] || contentRow;
-  const titleText = propText(rows, 'title');
-  const dateText = propText(rows, 'date');
+  const titleText = propText(rows, 'title') || rowTexts(rows[0] || block)[0] || '';
+  const dateText = propText(rows, 'date') || rowTexts(rows[1] || block)[0] || '';
   const alt = contentAlt || picture?.querySelector('img')?.alt || titleText;
   const article = document.createElement('article');
   article.className = 'media-featured';
@@ -41,7 +42,7 @@ export default function decorate(block) {
   article.append(opener, copy);
   block.replaceChildren(article);
   appendPropAnchors(block, rows, ['id']);
-  const id = propText(rows, 'id');
+  const id = propText(rows, 'id') || rowTexts(rows[3] || block)[0];
   if (id) block.id = id;
   setupMediaDialog(opener, {
     type: 'newsroom',

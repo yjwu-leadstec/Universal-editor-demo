@@ -19,12 +19,17 @@ function activate(block, id, updateHash = true) {
 
 export default function decorate(block) {
   const rows = directRows(block);
-  const tabs = rows.filter((row) => hasModel(row, 'media-tab')).map((row, index) => {
+  const modelTabRows = rows.filter((row) => hasModel(row, 'media-tab'));
+  const tabRows = modelTabRows.length
+    ? modelTabRows
+    : rows.filter((row) => row.children.length >= 2);
+  const tabs = tabRows.map((row, index) => {
     const [key = `tab-${index + 1}`, label = key] = rowTexts(row);
     return { key, label, row };
   });
-  const titleText = propText(rows, 'title') || 'Newsroom';
-  const defaultTab = propText(rows, 'defaultTab') || tabs[0]?.key || 'newsroom';
+  const titleText = propText(rows, 'title') || rowTexts(rows[0] || block)[0] || 'Newsroom';
+  const defaultTab = propText(rows, 'defaultTab')
+    || rowTexts(rows[1] || block)[0] || tabs[0]?.key || 'newsroom';
   const hashTab = decodeURIComponent(window.location.hash.replace('#', '').split('/')[0]);
   const initial = tabs.some((tab) => tab.key === hashTab) ? hashTab : defaultTab;
   const shell = document.createElement('div');
@@ -57,7 +62,7 @@ export default function decorate(block) {
   shell.append(title, nav);
   block.replaceChildren(shell);
   appendPropAnchors(block, rows, ['defaultTab', 'id', 'classes']);
-  const id = propText(rows, 'id');
+  const id = propText(rows, 'id') || rowTexts(rows[2] || block)[0];
   if (id) block.id = id;
   activate(block, initial, false);
   const sticky = () => block.classList.toggle('is-stuck', block.getBoundingClientRect().top < -150);

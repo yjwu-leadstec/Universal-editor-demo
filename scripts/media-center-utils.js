@@ -10,7 +10,25 @@ export function propSource(rows, name) {
 }
 
 export const propText = (rows, name) => propSource(rows, name)?.textContent.trim() || '';
-export const propPicture = (rows, name) => propSource(rows, name)?.querySelector('picture') || null;
+export const isImageHref = (href = '') => /\.(?:avif|gif|jpe?g|png|svg|webp)(?:[?#]|$)/i.test(href);
+
+export function linkedPicture(source) {
+  if (!source) return null;
+  const anchor = [...source.querySelectorAll('a')]
+    .find((link) => isImageHref(link.getAttribute('href') || ''));
+  if (!anchor) return null;
+  const picture = document.createElement('picture');
+  const image = document.createElement('img');
+  image.src = anchor.href;
+  image.alt = anchor.textContent.trim();
+  picture.append(image);
+  return picture;
+}
+
+export const propPicture = (rows, name) => {
+  const source = propSource(rows, name);
+  return source?.querySelector('picture') || linkedPicture(source);
+};
 export const propLink = (rows, name) => propSource(rows, name)?.querySelector('a') || null;
 
 export function hasModel(row, model) {
@@ -25,7 +43,12 @@ export function rowTexts(row) {
 }
 
 export function rowPicture(row) {
-  return row.querySelector('picture');
+  return row.querySelector('picture') || linkedPicture(row);
+}
+
+export function imageLinkCellIndex(row) {
+  return [...row.children].findIndex((cell) => [...cell.querySelectorAll('a')]
+    .some((link) => isImageHref(link.getAttribute('href') || '')));
 }
 
 export function rowLinks(row) {
