@@ -2,6 +2,31 @@ import { moveInstrumentation } from './scripts.js';
 
 const PRODUCT_STYLES = '/styles/product-blocks.css';
 
+const PRODUCT_MEDIA_FALLBACKS = {
+  '014b26dc-f3d1-493f-9f54-5d9684388b2a.jpg': '349837577446335',
+  '0690f2ab-594a-429b-90e4-1f4a0d4fdd27.jpg': '27557296358328',
+  '0b147029-c4d2-441d-bcb0-421c3b26b4af.jpg': '340225316549842',
+  '1027d193-23d5-4693-a0c0-a4a59aac71e1.jpg': '337085221869804',
+  '13d2e858-8d2e-4a97-b7f5-dee27abe68c5.jpg': '370628346735808',
+  '2c188aba-f9d9-4f9f-93e5-5510b57382ab.jpg': '414469797261778',
+  '31ee0183-7ba2-48fc-b32b-df2fc3be915d.png': '56057713722576',
+  '34e2753a-b7d8-40e9-8441-68620603972a.jpg': '174209117982777',
+  '42fb7d24-ec13-4cd9-8042-6f306a04df57.jpg': '175363213625470',
+  '4db195e7-4d2e-499b-afbd-69f8c944fe80.jpg': '211867994102224',
+  '633873c3-6ef7-468d-8dbe-5d71dc0502cf.jpg': '56011149537353',
+  '82847046-bac9-444c-a727-53a2f6b3d0a1.jpg': '339334402720466',
+  '87b2b562-68a2-4ef8-98ba-2f3d5c66d27d.jpg': '349758519893895',
+  '992af39c-4294-4bd0-b73b-80490b37a4b3.jpg': '54655835654723',
+  'b3fc1d83-3370-49aa-8e7e-479c4fc2ccc7.jpg': '317718577278355',
+  'b9bca2bd-5e52-465b-b851-b12bc338172c.jpg': '337068206887603',
+  'becbc0be-eb0c-4206-9b47-8e9688f9bec9.jpg': '176393203283642',
+  'c8ce1ca7-85a9-4d45-9337-4b8cd62cacbf.jpg': '174418124685401',
+  'ce7e583a-d18f-45e5-8ae5-f292603e83c0.jpg': '560123200242081',
+  'e153a05a-c02c-4af7-b9ef-3cd99f6e4b4f.jpg': '233826047426507',
+  'e4860d6c-d146-4734-a521-4f1814471c88.jpg': '254524691664282',
+  'fcc7662c-a80f-4409-ad74-d203d5e9f0b6.jpg': '643248190614667',
+};
+
 // Universal Editor keeps field metadata on author, while published semantic HTML
 // only contains positional rows/cells. Keep the runtime independent of author-only
 // data-aue attributes by restoring those field/model markers before decoration.
@@ -333,10 +358,24 @@ export function appendPicture(container, picture, {
     image.alt = alt || image.alt || '';
     image.loading = loading;
     image.decoding = 'async';
-    image.addEventListener('error', () => {
+    const removeBrokenPicture = () => {
       picture.remove();
       container.classList.add('is-media-fallback');
       container.dataset.fallbackLabel = fallbackLabel;
+    };
+    image.addEventListener('error', () => {
+      const filename = (image.currentSrc || image.src).split('/').pop()?.split('?')[0];
+      const fallbackPath = PRODUCT_MEDIA_FALLBACKS[filename];
+      const fallbackUrl = fallbackPath
+        ? `https://lilibrary-public.liauto.com/lilibrary/${fallbackPath}/${filename}`
+        : '';
+      if (!fallbackUrl || image.src === fallbackUrl) {
+        removeBrokenPicture();
+        return;
+      }
+      picture.querySelectorAll('source').forEach((source) => source.remove());
+      image.addEventListener('error', removeBrokenPicture, { once: true });
+      image.src = fallbackUrl;
     }, { once: true });
   }
   container.append(picture);
