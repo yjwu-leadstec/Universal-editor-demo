@@ -363,7 +363,7 @@ export function appendPicture(container, picture, {
       container.classList.add('is-media-fallback');
       container.dataset.fallbackLabel = fallbackLabel;
     };
-    image.addEventListener('error', () => {
+    const recoverImage = () => {
       const filename = (image.currentSrc || image.src).split('/').pop()?.split('?')[0];
       const fallbackPath = PRODUCT_MEDIA_FALLBACKS[filename];
       const fallbackUrl = fallbackPath
@@ -373,10 +373,15 @@ export function appendPicture(container, picture, {
         removeBrokenPicture();
         return;
       }
+      image.removeEventListener('error', recoverImage);
       picture.querySelectorAll('source').forEach((source) => source.remove());
       image.addEventListener('error', removeBrokenPicture, { once: true });
       image.src = fallbackUrl;
-    }, { once: true });
+    };
+    image.addEventListener('error', recoverImage, { once: true });
+    container.append(picture);
+    if (image.complete && !image.naturalWidth) recoverImage();
+    return image;
   }
   container.append(picture);
   return image;
