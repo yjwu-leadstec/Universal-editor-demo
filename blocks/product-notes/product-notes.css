@@ -1,0 +1,36 @@
+main .product-notes {
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+  padding-block: 48px;
+  background: #000;
+  color: rgb(255 255 255 / 66%);
+}
+
+main .product-notes .product-notes-shell {
+  width: min(100% - 40px, 1240px);
+  margin-inline: auto;
+}
+
+main .product-notes h2 {
+  color: #fff;
+  font-size: 24px;
+}
+
+main .product-notes ol {
+  display: grid;
+  margin: 0;
+  padding-inline-start: 24px;
+  gap: 10px;
+}
+
+main .product-notes li,
+main .product-notes .product-note-text p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+main .product-notes a:any-link {
+  color: #fff;
+}

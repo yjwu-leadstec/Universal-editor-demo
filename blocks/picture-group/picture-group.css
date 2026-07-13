@@ -1,0 +1,141 @@
+main .picture-group {
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+  overflow: hidden;
+}
+
+main .picture-group .picture-group-shell {
+  width: min(100% - 40px, 1480px);
+  margin-inline: auto;
+}
+
+main .picture-group .picture-group-tabs {
+  display: flex;
+  margin-block-end: 30px;
+  overflow-x: auto;
+  justify-content: center;
+  gap: 32px;
+}
+
+main .picture-group .picture-group-tabs button {
+  position: relative;
+  min-height: 48px;
+  padding: 8px 4px;
+  color: var(--product-muted);
+  background: transparent;
+  border: 0;
+  white-space: nowrap;
+}
+
+main .picture-group .picture-group-tabs button::after {
+  position: absolute;
+  right: 50%;
+  bottom: 2px;
+  left: 50%;
+  height: 2px;
+  background: var(--product-accent);
+  content: '';
+  transition: right 200ms ease, left 200ms ease;
+}
+
+main .picture-group .picture-group-tabs button[aria-selected="true"] {
+  color: var(--product-copy);
+}
+
+main .picture-group .picture-group-tabs button[aria-selected="true"]::after {
+  right: 0;
+  left: 0;
+}
+
+main .picture-group .picture-group-panel[hidden] {
+  display: none;
+}
+
+main .picture-group .picture-group-description {
+  max-width: 780px;
+  margin: 0 auto 32px;
+  color: var(--product-muted);
+  text-align: center;
+}
+
+main .picture-group .picture-group-grid {
+  display: grid;
+  grid-auto-rows: minmax(240px, 26vw);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 12px;
+}
+
+main .picture-group .picture-group-media {
+  position: relative;
+  grid-column: span 5;
+  margin: 0;
+  overflow: hidden;
+  background: var(--product-card-bg);
+  border-radius: 4px;
+}
+
+main .picture-group .picture-group-media:nth-child(3n + 1) {
+  grid-column: span 7;
+}
+
+main .picture-group .picture-group-media:nth-child(4n) {
+  grid-column: span 12;
+}
+
+main .picture-group .product-media {
+  width: 100%;
+  height: 100%;
+}
+
+main .picture-group .product-picture img {
+  height: 140%;
+  transform: translateY(-14%);
+}
+
+main .picture-group .picture-group-media figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 56px 24px 20px;
+  color: #fff;
+  background: linear-gradient(transparent, rgb(0 0 0 / 65%));
+}
+
+main .picture-group .picture-group-media h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 22px;
+}
+
+main .picture-group .picture-media-description p {
+  margin: 6px 0 0;
+  color: rgb(255 255 255 / 75%);
+}
+
+@media (width <= 719px) {
+  main .picture-group .picture-group-shell {
+    width: 100%;
+  }
+
+  main .picture-group .picture-group-tabs,
+  main .picture-group .picture-group-panels {
+    padding-inline: 20px;
+  }
+
+  main .picture-group .picture-group-tabs {
+    justify-content: flex-start;
+  }
+
+  main .picture-group .picture-group-grid {
+    grid-auto-rows: minmax(280px, 96vw);
+    grid-template-columns: 1fr;
+  }
+
+  main .picture-group .picture-group-media,
+  main .picture-group .picture-group-media:nth-child(3n + 1),
+  main .picture-group .picture-group-media:nth-child(4n) {
+    grid-column: auto;
+  }
+}

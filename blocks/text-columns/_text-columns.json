@@ -1,0 +1,44 @@
+{
+  "definitions": [
+    {
+      "title": "Text Columns",
+      "id": "text-columns",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Text Columns", "model": "text-columns", "filter": "text-columns", "classes": ["light", "space-small"] } } } }
+    },
+    {
+      "title": "Text Column",
+      "id": "text-column-item",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Text Column", "model": "text-column-item" } } } }
+    }
+  ],
+  "models": [
+    {
+      "id": "text-columns",
+      "fields": [
+        { "component": "text", "name": "id", "label": "ID", "description": "Optional page anchor", "valueType": "string" },
+        { "component": "text", "name": "title", "label": "Desktop Title", "valueType": "string" },
+        { "component": "text", "name": "mobileTitle", "label": "Mobile Title Override", "valueType": "string" },
+        { "component": "richtext", "name": "description", "label": "Description", "valueType": "string" },
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "label": "Style",
+          "valueType": "string",
+          "maxSize": 2,
+          "options": [
+            { "name": "Theme", "children": [{ "name": "Light", "value": "light" }, { "name": "Dark", "value": "dark" }, { "name": "Gray", "value": "gray" }] },
+            { "name": "Spacing", "children": [{ "name": "Large", "value": "space-large" }, { "name": "Small", "value": "space-small" }, { "name": "None", "value": "space-none" }] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "text-column-item",
+      "fields": [
+        { "component": "text", "name": "title", "label": "Column Title", "valueType": "string" },
+        { "component": "richtext", "name": "text", "label": "Column Text", "valueType": "string", "required": true }
+      ]
+    }
+  ],
+  "filters": [{ "id": "text-columns", "components": ["text-column-item"] }]
+}

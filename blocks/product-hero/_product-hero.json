@@ -1,0 +1,89 @@
+{
+  "definitions": [
+    {
+      "title": "Product Hero",
+      "id": "product-hero",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Product Hero",
+              "model": "product-hero",
+              "filter": "product-hero",
+              "showArrow": true,
+              "showVideoControl": true,
+              "showProgress": true,
+              "classes": ["light-copy", "center-copy"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Product Hero CTA",
+      "id": "product-hero-cta",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Product Hero CTA",
+              "model": "product-hero-cta",
+              "linkType": "primary"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "product-hero",
+      "fields": [
+        { "component": "text", "name": "id", "label": "ID", "description": "Optional page anchor", "valueType": "string" },
+        { "component": "text", "name": "title", "label": "Title", "valueType": "string" },
+        { "component": "text", "name": "mobileTitle", "label": "Mobile Title Override", "description": "Optional; use line breaks to control wrapping", "valueType": "string" },
+        { "component": "text", "name": "subtitle", "label": "Subtitle", "valueType": "string" },
+        { "component": "reference", "name": "image", "label": "Desktop Poster / Background", "valueType": "string", "multi": false },
+        { "component": "text", "name": "imageAlt", "label": "Desktop Image Alt Text", "valueType": "string" },
+        { "component": "reference", "name": "mobileImage", "label": "Mobile Poster / Background", "description": "Falls back to desktop media", "valueType": "string", "multi": false },
+        { "component": "text", "name": "mobileImageAlt", "label": "Mobile Image Alt Text", "valueType": "string" },
+        { "component": "reference", "name": "video", "label": "Desktop Preview Video", "valueType": "string", "multi": false },
+        { "component": "reference", "name": "mobileVideo", "label": "Mobile Preview Video", "description": "Falls back to desktop video", "valueType": "string", "multi": false },
+        { "component": "reference", "name": "logo", "label": "Vehicle Logo", "valueType": "string", "multi": false },
+        { "component": "text", "name": "logoAlt", "label": "Vehicle Logo Alt Text", "valueType": "string" },
+        { "component": "boolean", "name": "showArrow", "label": "Show Scroll Cue", "valueType": "boolean", "value": true },
+        { "component": "boolean", "name": "showVideoControl", "label": "Show Video Control", "valueType": "boolean", "value": true },
+        { "component": "boolean", "name": "showProgress", "label": "Show Video Progress", "valueType": "boolean", "value": true },
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "label": "Style",
+          "valueType": "string",
+          "maxSize": 2,
+          "options": [
+            { "name": "Copy", "children": [{ "name": "Light", "value": "light-copy" }, { "name": "Dark", "value": "dark-copy" }] },
+            { "name": "Alignment", "children": [{ "name": "Top", "value": "top-copy" }, { "name": "Center", "value": "center-copy" }, { "name": "Bottom", "value": "bottom-copy" }] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-hero-cta",
+      "fields": [
+        { "component": "aem-content", "name": "link", "label": "Link", "valueType": "string" },
+        { "component": "text", "name": "linkText", "label": "Text", "valueType": "string" },
+        {
+          "component": "select",
+          "name": "linkType",
+          "label": "Type",
+          "valueType": "string",
+          "value": "primary",
+          "options": [{ "name": "Primary", "value": "primary" }, { "name": "Secondary", "value": "secondary" }, { "name": "Text", "value": "text" }]
+        }
+      ]
+    }
+  ],
+  "filters": [{ "id": "product-hero", "components": ["product-hero-cta"] }]
+}

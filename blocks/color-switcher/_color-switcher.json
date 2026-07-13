@@ -1,0 +1,51 @@
+{
+  "definitions": [
+    {
+      "title": "Color Switcher",
+      "id": "color-switcher",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Color Switcher", "model": "color-switcher", "filter": "color-switcher", "classes": ["light", "space-small", "dark-copy"] } } } }
+    },
+    {
+      "title": "Vehicle Color",
+      "id": "color-switcher-item",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Vehicle Color", "model": "color-switcher-item" } } } }
+    }
+  ],
+  "models": [
+    {
+      "id": "color-switcher",
+      "fields": [
+        { "component": "text", "name": "id", "label": "ID", "description": "Optional page anchor", "valueType": "string" },
+        { "component": "text", "name": "title", "label": "Desktop Title", "valueType": "string" },
+        { "component": "text", "name": "mobileTitle", "label": "Mobile Title Override", "valueType": "string" },
+        { "component": "richtext", "name": "description", "label": "Description", "valueType": "string" },
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "label": "Style",
+          "valueType": "string",
+          "maxSize": 3,
+          "options": [
+            { "name": "Theme", "children": [{ "name": "Light", "value": "light" }, { "name": "Dark", "value": "dark" }, { "name": "Gray", "value": "gray" }] },
+            { "name": "Copy", "children": [{ "name": "Light", "value": "light-copy" }, { "name": "Dark", "value": "dark-copy" }] },
+            { "name": "Spacing", "children": [{ "name": "Large", "value": "space-large" }, { "name": "Small", "value": "space-small" }, { "name": "None", "value": "space-none" }] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "color-switcher-item",
+      "fields": [
+        { "component": "text", "name": "name", "label": "Color Name", "valueType": "string", "required": true },
+        { "component": "reference", "name": "swatch", "label": "Swatch / Material", "valueType": "string", "multi": false },
+        { "component": "text", "name": "swatchAlt", "label": "Swatch Alt Text", "valueType": "string" },
+        { "component": "text", "name": "colorValue", "label": "CSS Color", "description": "Optional hex fallback, for example #ffffff", "valueType": "string", "validation": { "regExp": "^$|^#[0-9a-fA-F]{6}$", "customErrorMsg": "Enter a six-digit hex color or leave empty" } },
+        { "component": "reference", "name": "image", "label": "Desktop Vehicle Image", "valueType": "string", "multi": false },
+        { "component": "text", "name": "imageAlt", "label": "Desktop Image Alt Text", "valueType": "string" },
+        { "component": "reference", "name": "mobileImage", "label": "Mobile Vehicle Image", "valueType": "string", "multi": false },
+        { "component": "text", "name": "mobileImageAlt", "label": "Mobile Image Alt Text", "valueType": "string" }
+      ]
+    }
+  ],
+  "filters": [{ "id": "color-switcher", "components": ["color-switcher-item"] }]
+}

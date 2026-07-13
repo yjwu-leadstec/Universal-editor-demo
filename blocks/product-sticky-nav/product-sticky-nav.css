@@ -1,0 +1,96 @@
+main .product-sticky-nav {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+  background: rgb(255 255 255 / 94%);
+  border-bottom: 1px solid rgb(0 0 0 / 10%);
+  backdrop-filter: blur(18px);
+}
+
+main .product-sticky-nav .product-sticky-shell {
+  display: flex;
+  width: min(100% - 40px, 1480px);
+  min-height: 58px;
+  margin-inline: auto;
+  align-items: center;
+  gap: 36px;
+}
+
+main .product-sticky-nav .product-sticky-name {
+  flex: 0 0 auto;
+  color: #191919;
+  font-family: var(--heading-font-family);
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+main .product-sticky-nav .product-sticky-links {
+  display: flex;
+  min-width: 0;
+  margin-inline-start: auto;
+  overflow-x: auto;
+  gap: 28px;
+  scrollbar-width: none;
+}
+
+main .product-sticky-nav .product-sticky-links::-webkit-scrollbar {
+  display: none;
+}
+
+main .product-sticky-nav .product-nav-link {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 19px 0 17px;
+  color: rgb(25 25 25 / 62%);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+main .product-sticky-nav .product-nav-link::after {
+  position: absolute;
+  right: 50%;
+  bottom: 8px;
+  left: 50%;
+  height: 2px;
+  background: #dbad76;
+  content: '';
+  transition: right 200ms ease, left 200ms ease;
+}
+
+main .product-sticky-nav .product-nav-link:hover,
+main .product-sticky-nav .product-nav-link[aria-current="true"] {
+  color: #191919;
+}
+
+main .product-sticky-nav .product-nav-link[aria-current="true"]::after {
+  right: 0;
+  left: 0;
+}
+
+@media (width <= 719px) {
+  main .product-sticky-nav .product-sticky-shell {
+    width: 100%;
+    min-height: 52px;
+    padding-inline-start: 20px;
+    box-sizing: border-box;
+    gap: 20px;
+  }
+
+  main .product-sticky-nav .product-sticky-name {
+    font-size: 17px;
+  }
+
+  main .product-sticky-nav .product-sticky-links {
+    padding-inline-end: 20px;
+    gap: 22px;
+  }
+
+  main .product-sticky-nav .product-nav-link {
+    padding-block: 16px 14px;
+    font-size: 14px;
+  }
+}

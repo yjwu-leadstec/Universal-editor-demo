@@ -21,6 +21,33 @@
           "name": "keywords",
           "multi": true,
           "label": "Keywords"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "ogTitle",
+          "label": "Open Graph Title",
+          "description": "Optional social-title override; falls back to the page title"
+        },
+        {
+          "component": "textarea",
+          "valueType": "string",
+          "name": "ogDescription",
+          "label": "Open Graph Description",
+          "description": "Optional social-description override; falls back to the page description"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "ogImage",
+          "label": "Open Graph Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "ogImageAlt",
+          "label": "Open Graph Image Alt Text"
         }
       ]
     }

@@ -67,7 +67,23 @@
         "fragment",
         "avatar",
         "product-table",
-        "product-showcase"
+        "product-showcase",
+        "product-hero",
+        "product-sticky-nav",
+        "highlight-carousel",
+        "chapter-intro",
+        "feature-media-section",
+        "color-switcher",
+        "spec-table",
+        "product-notes",
+        "text-columns",
+        "picture-group",
+        "icon-overlay-showcase",
+        "feature-grid",
+        "product-param-cta",
+        "product-ending",
+        "product-guide",
+        "product-download"
       ]
     }
   ]

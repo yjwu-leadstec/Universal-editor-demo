@@ -1,0 +1,182 @@
+main .highlight-carousel {
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+  overflow: hidden;
+}
+
+main .highlight-carousel .highlight-shell {
+  position: relative;
+  width: 100%;
+}
+
+main .highlight-carousel .highlight-viewport {
+  position: relative;
+  min-height: min(60vw, 680px);
+  overflow: hidden;
+}
+
+main .highlight-carousel .highlight-track {
+  position: relative;
+  width: min(47vw, 900px);
+  height: min(28vw, 540px);
+  margin-inline: auto;
+}
+
+main .highlight-carousel .highlight-slide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  overflow: hidden;
+  background: var(--product-card-bg);
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateX(0) scale(0.76);
+  transition: opacity 550ms ease, transform 550ms ease;
+  pointer-events: none;
+}
+
+main .highlight-carousel .highlight-slide.is-active {
+  z-index: 2;
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+}
+
+main .highlight-carousel .highlight-slide.is-previous {
+  opacity: 0.58;
+  transform: translateX(-82%) scale(0.82);
+}
+
+main .highlight-carousel .highlight-slide.is-next {
+  opacity: 0.58;
+  transform: translateX(82%) scale(0.82);
+}
+
+main .highlight-carousel .product-media {
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  border-radius: 4px 4px 0 0;
+}
+
+main .highlight-carousel .highlight-slide-copy {
+  display: grid;
+  min-height: 150px;
+  padding: 24px 28px 28px;
+  align-content: start;
+  color: var(--product-copy);
+  gap: 8px;
+}
+
+main .highlight-carousel .highlight-slide-copy h3 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+main .highlight-carousel .highlight-eyebrow,
+main .highlight-carousel .highlight-note,
+main .highlight-carousel .highlight-description p {
+  margin: 0;
+  color: var(--product-muted);
+  font-size: 14px;
+}
+
+main .highlight-carousel .highlight-metric {
+  display: flex;
+  margin: 8px 0 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+
+main .highlight-carousel .highlight-metric dd {
+  margin: 0;
+  color: var(--product-accent);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+main .highlight-carousel .highlight-metric dt {
+  color: var(--product-muted);
+  font-size: 13px;
+}
+
+main .highlight-carousel .highlight-controls {
+  display: flex;
+  margin-block-start: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+main .highlight-carousel .highlight-controls button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--product-copy);
+  background: transparent;
+  border: 1px solid currentcolor;
+  border-radius: 50%;
+}
+
+main .highlight-carousel .highlight-status {
+  min-width: 64px;
+  color: var(--product-muted);
+  text-align: center;
+}
+
+@media (width <= 1024px) and (width >= 720px) {
+  main .highlight-carousel .highlight-track {
+    width: 66vw;
+    height: 45vw;
+  }
+}
+
+@media (width <= 719px) {
+  main .highlight-carousel .highlight-viewport {
+    min-height: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  main .highlight-carousel .highlight-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  main .highlight-carousel .highlight-track {
+    display: flex;
+    width: max-content;
+    height: auto;
+    margin: 0;
+    padding-inline: 20px;
+    gap: 12px;
+  }
+
+  main .highlight-carousel .highlight-slide,
+  main .highlight-carousel .highlight-slide.is-active,
+  main .highlight-carousel .highlight-slide.is-previous,
+  main .highlight-carousel .highlight-slide.is-next {
+    position: relative;
+    inset: auto;
+    width: min(84vw, 420px);
+    flex: 0 0 auto;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    scroll-snap-align: center;
+  }
+
+  main .highlight-carousel .highlight-slide-copy {
+    min-height: 170px;
+    padding: 20px;
+  }
+
+  main .highlight-carousel .highlight-controls button {
+    display: none;
+  }
+}
