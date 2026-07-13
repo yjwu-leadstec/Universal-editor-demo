@@ -1,7 +1,9 @@
 main .chapter-intro {
   left: 50%;
   width: 100vw;
-  min-height: max(720px, 100svh);
+
+  /* Cap viewport height because Universal Editor auto-sizes its canvas iframe. */
+  min-height: min(1080px, max(720px, 100svh));
   margin-inline-start: -50vw;
   overflow: hidden;
 }
