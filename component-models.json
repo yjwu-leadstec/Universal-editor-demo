@@ -1506,8 +1506,8 @@
       {
         "component": "text",
         "name": "cardKey",
-        "label": "Card Key",
-        "description": "Stable key used by Contact Field items",
+        "label": "Grouping Key (optional)",
+        "description": "Leave blank when this card is followed by its fields; otherwise use a stable key shared with those fields",
         "valueType": "string"
       },
       {
@@ -1524,8 +1524,8 @@
       {
         "component": "text",
         "name": "cardKey",
-        "label": "Card Key",
-        "description": "Must match a Service Contact Card key",
+        "label": "Grouping Key (optional)",
+        "description": "Leave blank to attach this field to the preceding card, or match a specific card's grouping key",
         "valueType": "string"
       },
       {
