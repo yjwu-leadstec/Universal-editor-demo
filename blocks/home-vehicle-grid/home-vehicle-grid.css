@@ -36,6 +36,10 @@
   z-index: 0;
 }
 
+.home-vehicle-grid .vehicle-media-mobile {
+  display: none;
+}
+
 .home-vehicle-grid .vehicle-media picture,
 .home-vehicle-grid .vehicle-media img {
   width: 100%;
@@ -213,6 +217,28 @@
     min-height: 585px;
   }
 
+  .home-vehicle-grid .vehicle-tile.has-mobile-media > .vehicle-media:not(.vehicle-media-mobile) {
+    display: none;
+  }
+
+  .home-vehicle-grid .vehicle-media-mobile {
+    display: block;
+  }
+
+  .home-vehicle-grid.light-cards .vehicle-tile.has-mobile-media .tile-shade {
+    background: linear-gradient(180deg, rgb(0 0 0 / 0%) 40%, rgb(0 0 0 / 55%));
+    opacity: 1;
+  }
+
+  .home-vehicle-grid.light-cards .vehicle-tile.has-mobile-media .vehicle-logo img {
+    filter: none;
+    opacity: 1;
+  }
+
+  .home-vehicle-grid.light-cards .vehicle-tile.has-mobile-media .vehicle-subtitle {
+    color: #fff;
+  }
+
   .home-vehicle-grid .charging {
     display: none;
   }
@@ -251,4 +277,30 @@
   .home-vehicle-grid .vehicle-actions {
     display: none;
   }
+}
+
+/* 最新首页车型卡使用浅色成图：默认深色字标，hover 遮罩出现后恢复白色。 */
+.home-vehicle-grid.light-cards .vehicle-logo img {
+  filter: brightness(0);
+  opacity: 0.48;
+  transition: filter 500ms linear, opacity 500ms linear;
+}
+
+.home-vehicle-grid.light-cards .vehicle-copy strong,
+.home-vehicle-grid.light-cards .vehicle-subtitle {
+  color: rgb(0 0 0 / 58%);
+  transition: color 500ms linear, opacity 500ms linear, transform 500ms cubic-bezier(0.26, 0.67, 0.48, 0.91);
+}
+
+.home-vehicle-grid.light-cards .vehicle-tile:hover .vehicle-logo img,
+.home-vehicle-grid.light-cards .vehicle-tile:focus-visible .vehicle-logo img {
+  filter: none;
+  opacity: 1;
+}
+
+.home-vehicle-grid.light-cards .vehicle-tile:hover .vehicle-copy strong,
+.home-vehicle-grid.light-cards .vehicle-tile:focus-visible .vehicle-copy strong,
+.home-vehicle-grid.light-cards .vehicle-tile:hover .vehicle-subtitle,
+.home-vehicle-grid.light-cards .vehicle-tile:focus-visible .vehicle-subtitle {
+  color: #fff;
 }

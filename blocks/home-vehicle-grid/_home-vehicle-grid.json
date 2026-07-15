@@ -48,6 +48,12 @@
               "children": [
                 { "name": "Hide large tile on mobile", "value": "hide-large-mobile" }
               ]
+            },
+            {
+              "name": "Artwork",
+              "children": [
+                { "name": "Light card artwork", "value": "light-cards" }
+              ]
             }
           ]
         },
@@ -75,6 +81,20 @@
           "component": "text",
           "name": "imageAlt",
           "label": "Image Alt Text",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "mobileImage",
+          "label": "Mobile Background Image",
+          "description": "移动端专用背景图（可选）；缺省时使用桌面背景图",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "mobileImageAlt",
+          "label": "Mobile Image Alt Text",
           "valueType": "string"
         },
         {

@@ -7,7 +7,9 @@
  * - 移动端：竖向堆叠，文案左下对齐。
  *
  * 稳健取值（product-showcase 式按类型查询，兼容可选字段缺省 + EDS 字段折叠）：
- *   pictures[0]=背景图（alt 在 img 上）, pictures[1]=logo；text cells 依模型顺序 = 车名/副标题/尺寸/kind；anchor=link。
+ *   pictures[0]=桌面背景图；可选 mobileImage 优先通过 instrumentation 识别，三图行回退为 pictures[1]；
+ *   logo 优先通过 instrumentation 识别，三图行回退为 pictures[2]，旧两图内容回退为 pictures[1]。
+ *   text cells 依模型顺序 = 车名/副标题/尺寸/kind；anchor=link。
  * CTA 文案（Learn More / Order Now）为品牌固定文案，随参考站硬编码。
  */
 import {
@@ -26,11 +28,20 @@ function pictureAlt(picture) {
   return img ? (img.getAttribute('alt') || '') : '';
 }
 
+function instrumentedPicture(row, property) {
+  return row.querySelector(`[data-aue-prop="${property}"] picture`);
+}
+
 function extractTile(row, index) {
   const pics = [...row.querySelectorAll('picture')];
   const anchor = row.querySelector('a');
   const [vehicleName = '', subtitle = '', sizeRaw = '', kindRaw = ''] = textCells(row);
-  const bgPicture = pics[0] || null;
+  const bgPicture = instrumentedPicture(row, 'image') || pics[0] || null;
+  const mobilePicture = instrumentedPicture(row, 'mobileImage')
+    || (pics.length >= 3 ? pics[1] : null);
+  const logoPicture = instrumentedPicture(row, 'logo')
+    || (pics.length >= 3 ? pics[2] : pics[1])
+    || null;
 
   return {
     index,
@@ -38,13 +49,16 @@ function extractTile(row, index) {
     size: sizeRaw.toLowerCase() === 'large' ? 'large' : 'small',
     kind: kindRaw.toLowerCase() === 'charging' ? 'charging' : 'vehicle',
     bgPicture,
-    logoPicture: pics[1] || null,
+    mobilePicture,
+    logoPicture,
     alt: pictureAlt(bgPicture),
+    mobileAlt: pictureAlt(mobilePicture) || pictureAlt(bgPicture),
     name: vehicleName,
     subtitle,
     link: anchor ? anchor.getAttribute('href') : '',
     tileRef: createRef(),
     mediaRef: createRef(),
+    mobileMediaRef: createRef(),
     logoRef: createRef(),
   };
 }
@@ -56,6 +70,9 @@ function tileMarkup(tile) {
 
   return html`
     <span class="vehicle-media" ${ref(tile.mediaRef)} aria-hidden="true"></span>
+    ${tile.mobilePicture
+    ? html`<span class="vehicle-media vehicle-media-mobile" ${ref(tile.mobileMediaRef)} aria-hidden="true"></span>`
+    : nothing}
     <span class="tile-shade" aria-hidden="true"></span>
     <span class="vehicle-copy">
       ${mark}
@@ -80,7 +97,7 @@ export default function decorate(block) {
   const template = html`
     <div class="vehicle-grid">
       ${tiles.map((tile) => {
-    const classes = `vehicle-tile ${tile.size === 'large' ? 'large' : ''} ${tile.kind === 'charging' ? 'charging' : ''}`.trim();
+    const classes = `vehicle-tile ${tile.size === 'large' ? 'large' : ''} ${tile.kind === 'charging' ? 'charging' : ''} ${tile.mobilePicture ? 'has-mobile-media' : ''}`.trim();
     return tile.link
       ? html`<a class="${classes}" href="${tile.link}" aria-label="${tile.name}" ${ref(tile.tileRef)}>${tileMarkup(tile)}</a>`
       : html`<div class="${classes}" ${ref(tile.tileRef)}>${tileMarkup(tile)}</div>`;
@@ -103,6 +120,17 @@ export default function decorate(block) {
         img.setAttribute('decoding', 'async');
       }
       tile.mediaRef.value.append(picture);
+    }
+
+    if (tile.mobileMediaRef.value && tile.mobilePicture) {
+      const picture = tile.mobilePicture.cloneNode(true);
+      const img = picture.querySelector('img');
+      if (img) {
+        if (tile.mobileAlt) img.setAttribute('alt', tile.mobileAlt);
+        img.setAttribute('loading', tile.index === 0 ? 'eager' : 'lazy');
+        img.setAttribute('decoding', 'async');
+      }
+      tile.mobileMediaRef.value.append(picture);
     }
 
     if (tile.logoRef.value && tile.logoPicture) {
