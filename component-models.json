@@ -1583,24 +1583,6 @@
     "id": "home-banner",
     "fields": [
       {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Options",
-        "description": "响应式显隐选项",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Responsive",
-            "children": [
-              {
-                "name": "Hide on mobile (≤820px)",
-                "value": "hide-mobile"
-              }
-            ]
-          }
-        ]
-      },
-      {
         "component": "text",
         "name": "id",
         "label": "ID",

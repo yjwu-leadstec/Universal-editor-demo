@@ -183,10 +183,6 @@
 
 /* ── 移动端 ≤820px ── */
 @media (width <= 820px) {
-  .home-banner.hide-mobile {
-    display: none;
-  }
-
   .home-banner .hero-carousel {
     width: 100vw;
     height: auto;

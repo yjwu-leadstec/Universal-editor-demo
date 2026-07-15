@@ -22,15 +22,15 @@ inside the page body.
 The authored block order is fixed to the latest design:
 
 1. `home-vehicle-grid`
-2. `home-banner` (`hide-mobile`)
+2. `home-banner`
 3. `home-carousel story`
 4. `home-product-list`
 5. `home-carousel tech`
 
 Desktop uses a two-row four-column vehicle composition, a three-slide full-width banner, a
 three-card story carousel, two product panels, and an eight-card technology carousel. At 820 px
-and below, vehicle tiles stack vertically, the desktop banner is hidden, carousels become a
-single-card mobile flow, and product panels stack.
+and below, vehicle tiles stack vertically, the banner uses its portrait-responsive composition,
+carousels become a single-card mobile flow, and product panels stack.
 
 ## Content requirements
 

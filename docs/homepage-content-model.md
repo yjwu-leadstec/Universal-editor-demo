@@ -15,7 +15,7 @@
 | Order | Block node | Model / variant | Repeated items |
 | ---: | --- | --- | ---: |
 | 1 | `home-vehicle-grid` | `home-vehicle-grid` | 7 `vehicle-tile` |
-| 2 | `home-banner` | `home-banner`, class `hide-mobile` | 3 `banner-slide` |
+| 2 | `home-banner` | `home-banner` | 3 `banner-slide` |
 | 3 | `home-carousel-story` | `home-carousel`, class `story` | 3 `carousel-card` |
 | 4 | `home-product-list` | `home-product-list` | 2 `product-panel` |
 | 5 | `home-carousel-tech` | `home-carousel`, class `tech` | 8 `carousel-card` |
@@ -23,15 +23,17 @@
 ## Vehicle tiles
 
 Each item uses `image`, `imageAlt`, optional `mobileImage`, optional `mobileImageAlt`, `logo`,
-`vehicleName`, `subtitle`, `size`, `kind`, and `link`. Li i6 is `large`; all remaining items are
-`small`; all are `vehicle` kind. Missing mobile media falls back to the desktop background.
+`vehicleName`, `subtitle`, `size`, `kind`, and `link`. The `size` field is authored independently
+per card and supports `large` (two desktop columns) or `small` (one desktop column). The current
+content sets Li i6 to `large` and all remaining items to `small`; all are `vehicle` kind. Missing
+mobile media falls back to the desktop background.
 The authored logo references reuse the existing transparent DAM wordmarks.
 
 ## Banner slides
 
 Each item uses `image`, `imageAlt`, `logo`, `title`, `subtitle`, `link`, and `linkText`. The block
-class `hide-mobile` implements the separate mobile composition in the design. The three slides
-reuse the Li MEGA wordmark but have independent image and alt text.
+remains visible on mobile and uses the responsive portrait layout defined by `home-banner.css`.
+The three slides reuse the Li MEGA wordmark but have independent image and alt text.
 
 ## Story and technology carousels
 
