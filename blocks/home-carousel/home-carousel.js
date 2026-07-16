@@ -114,6 +114,9 @@ function setupCoverflow(slider) {
       card.classList.toggle('is-next', offset === 1);
       card.classList.toggle('is-hidden', Math.abs(offset) > 1);
       card.setAttribute('aria-hidden', String(offset !== 0));
+      // 侧卡露出部分作为切换热区：prev/next 可点，隐藏卡不可点
+      card.style.pointerEvents = Math.abs(offset) <= 1 ? 'auto' : 'none';
+      card.style.cursor = Math.abs(offset) === 1 ? 'pointer' : '';
     });
     if (teleported) {
       slider.getBoundingClientRect();
@@ -136,6 +139,13 @@ function setupCoverflow(slider) {
 
   slider.querySelector('[data-horizontal-prev]')?.addEventListener('click', () => setActive(active - 1));
   slider.querySelector('[data-horizontal-next]')?.addEventListener('click', () => setActive(active + 1));
+  // 点击当前 active 两侧露出的 prev/next 卡片 → 切到该卡
+  cards.forEach((card, i) => {
+    card.addEventListener('click', () => {
+      const offset = offsetFrom(i, active);
+      if (offset === -1 || offset === 1) setActive(i);
+    });
+  });
   dots.forEach((dot, i) => {
     dot.addEventListener('click', () => setActive(i));
     dot.addEventListener('keydown', (e) => {
@@ -251,7 +261,7 @@ export default function decorate(block) {
     <div class="home-horizontal" data-home-horizontal>
       ${cards.map((card) => cardMarkup(card))}
       ${cards.length > 1 ? html`
-        <button class="home-horizontal-arrow home-horizontal-arrow-prev" type="button" data-horizontal-prev aria-label="Previous">${ARROW_PREV}</button>
+        ${cards.length > 2 ? html`<button class="home-horizontal-arrow home-horizontal-arrow-prev" type="button" data-horizontal-prev aria-label="Previous">${ARROW_PREV}</button>` : nothing}
         <button class="home-horizontal-arrow home-horizontal-arrow-next" type="button" data-horizontal-next aria-label="Next">${ARROW_NEXT}</button>
       ` : nothing}
       ${cards.length >= 3 ? html`

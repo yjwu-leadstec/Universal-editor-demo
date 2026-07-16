@@ -696,7 +696,7 @@ header .header-mobile-locales .header-locale-link:focus {
 
   header .header-panel-label {
     margin: 0 0 12px;
-    color: #9a9da1;
+    color: rgb(0 0 0 / 40%);
     font-family: inherit;
     font-size: 14px;
     font-weight: 400;
