@@ -437,8 +437,12 @@ export default async function decorate(block) {
   const theme = getMetadata('header-theme').toLowerCase();
   const themeValues = theme.split(',').map((value) => value.trim()).filter(Boolean);
   const pagePath = window.location.pathname.replace(/\/+$/, '') || '/';
+  // Homepage is authored at `.../en/homepage` and delivered as `/homepage`, not `/`.
+  // Detect both so the frosted-glass / overlay header applies regardless of the
+  // delivered slug. `header-theme` metadata still overrides (transparent | white).
+  const isHomePage = pagePath === '/' || pagePath.endsWith('/homepage');
   const isTransparent = themeValues.includes('transparent')
-    || (!themeValues.includes('white') && pagePath === '/');
+    || (!themeValues.includes('white') && isHomePage);
   if (isTransparent) {
     nav.classList.add('is-transparent');
   }
