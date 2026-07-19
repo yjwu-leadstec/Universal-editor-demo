@@ -85,4 +85,40 @@ The architecture is internally consistent without these answers, but implementat
 3. whether Arabic/RTL is first-wave;
 4. rollout/legal ownership.
 
-No Author mutation or implementation should begin before the proposal approval gate is accepted.
+The user approved implementation and deployment. The remaining inputs only gate additional locales,
+MSM rollout, locale-directory population, and legacy retirement.
+
+## Implementation and Deployment Evidence — 2026-07-20
+
+### Code delivery
+
+- Header/footer localized shell implementation committed as `f6f05d2`.
+- Locale-directory probing for legacy nav content corrected in `d4de7b0`.
+- Both commits were pushed to `align-nav-homepage` and fast-forwarded to `main`.
+- Main verification URL: `/language-master/en/homepage`.
+
+### Author content
+
+- Connected read/write to the `leadstec-dev` profile through AEM Content MCP.
+- Updated only `/content/demo-site/language-master/en/nav` and `footer`; `/site/nav` was not read as a source or modified.
+- Rebased 15 nav and 15 footer internal anchors from root-relative paths to `/language-master/en/*`.
+- MCP post-write verification passed for both text nodes.
+- Localized nav/footer Delivery endpoints remain 404 until an authenticated Quick Publish is completed; the code therefore uses the temporary root fragment fallback.
+
+### Automated and browser verification
+
+- `npm run test:shell`: 9/9 pass.
+- `npm run lint`: pass.
+- `npm run build:json`: pass.
+- `openspec validate refactor-localized-site-shell --strict`: pass.
+- Local, branch Preview, and main were tested at `/language-master/en/homepage`.
+- 390, 1024, 1440, and 1920 px: no horizontal overflow; `html[lang=en][dir=ltr]`; header and footer render.
+- Desktop mega panel open/Escape close and mobile drawer/detail/back/Escape focus restoration pass.
+- Mobile footer accordion state/ARIA pass.
+- With no authored header-settings/locale-directory, the language control remains a real `/global/en` anchor and no empty dialog is rendered.
+
+### Remaining release gate
+
+Authenticated AEM Quick Publish is still required for the existing language-master nav/footer pages.
+Until then, the two localized fragment requests return 404 and the migration fallback serves the root fragments.
+The homepage also has three pre-existing missing DAM video requests outside this shell change.
