@@ -40,6 +40,11 @@
   --nav-height: 64px;
 }
 
+html,
+body {
+  overflow-x: clip;
+}
+
 /* fallback fonts */
 @font-face {
   font-family: roboto-condensed-fallback;
