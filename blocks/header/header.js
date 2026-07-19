@@ -200,6 +200,7 @@ function extractNavData(fragment, localeRoot) {
     toolsLink: localizeSiteHref(toolsLink?.getAttribute('href'), localeRoot, window.location.origin),
     toolsLabel: toolsLink?.textContent?.trim() || 'Language',
     settings: extractHeaderSettings(toolsSection),
+    settingsAuthored: !!toolsSection?.querySelector('.header-settings[data-header-settings="true"]'),
   };
 }
 
@@ -483,7 +484,9 @@ export default async function decorate(block) {
     window.location.origin,
   );
   const directoryPath = explicitDirectory
-    || (localeContext ? `${localeContext.root}/locale-directory` : '');
+    || (data.settingsAuthored && localeContext
+      ? `${localeContext.root}/locale-directory`
+      : '');
   const directory = directoryPath ? await loadFragment(directoryPath) : null;
   const localeMarkets = extractLocaleMarkets(directory);
   block.textContent = '';
