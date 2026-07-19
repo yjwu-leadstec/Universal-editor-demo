@@ -48,6 +48,45 @@
           "valueType": "string",
           "name": "ogImageAlt",
           "label": "Open Graph Image Alt Text"
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "nav",
+          "label": "Navigation Override",
+          "description": "Optional same-site nav page; the current language root is used by default",
+          "validation": {
+            "rootPath": "/content/demo-site"
+          }
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "footer",
+          "label": "Footer Override",
+          "description": "Optional same-site footer page; the current language root is used by default",
+          "validation": {
+            "rootPath": "/content/demo-site"
+          }
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "language",
+          "label": "Language Override",
+          "description": "Optional BCP 47 language tag; normally inferred from the URL"
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "direction",
+          "label": "Text Direction Override",
+          "description": "Optional; normally inferred from the language",
+          "options": [
+            { "name": "Automatic", "value": "" },
+            { "name": "Left to right", "value": "ltr" },
+            { "name": "Right to left", "value": "rtl" }
+          ]
         }
       ]
     }

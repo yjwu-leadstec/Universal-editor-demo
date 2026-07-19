@@ -47,6 +47,54 @@
         "valueType": "string",
         "name": "ogImageAlt",
         "label": "Open Graph Image Alt Text"
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "nav",
+        "label": "Navigation Override",
+        "description": "Optional same-site nav page; the current language root is used by default",
+        "validation": {
+          "rootPath": "/content/demo-site"
+        }
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "footer",
+        "label": "Footer Override",
+        "description": "Optional same-site footer page; the current language root is used by default",
+        "validation": {
+          "rootPath": "/content/demo-site"
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "language",
+        "label": "Language Override",
+        "description": "Optional BCP 47 language tag; normally inferred from the URL"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "direction",
+        "label": "Text Direction Override",
+        "description": "Optional; normally inferred from the language",
+        "options": [
+          {
+            "name": "Automatic",
+            "value": ""
+          },
+          {
+            "name": "Left to right",
+            "value": "ltr"
+          },
+          {
+            "name": "Right to left",
+            "value": "rtl"
+          }
+        ]
       }
     ]
   },
@@ -1337,6 +1385,70 @@
     ]
   },
   {
+    "id": "header-settings",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "localeDirectory",
+        "label": "Locale Directory",
+        "description": "Localized locale-directory page; leave empty until it is published",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/demo-site"
+        }
+      },
+      {
+        "component": "text",
+        "name": "primaryNavigationLabel",
+        "label": "Primary Navigation Label",
+        "value": "Primary navigation",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "openNavigationLabel",
+        "label": "Open Navigation Label",
+        "value": "Open navigation",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "closeNavigationLabel",
+        "label": "Close Navigation Label",
+        "value": "Close navigation",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "backNavigationLabel",
+        "label": "Back Navigation Label",
+        "value": "Back to main navigation",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "localeDialogTitle",
+        "label": "Locale Dialog Title",
+        "value": "Select a region and language",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "localeTriggerLabel",
+        "label": "Locale Trigger Label",
+        "value": "Language",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "localeCloseLabel",
+        "label": "Locale Close Label",
+        "value": "Close language selector",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -2149,6 +2261,75 @@
           "numberMax": 100,
           "customErrorMsg": "Use a percentage from 0 to 100"
         }
+      }
+    ]
+  },
+  {
+    "id": "locale-directory",
+    "fields": []
+  },
+  {
+    "id": "locale-option",
+    "fields": [
+      {
+        "component": "text",
+        "name": "marketCode",
+        "label": "Market Code",
+        "description": "Stable lowercase key such as global, kz, uz, or bh",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "marketLabel",
+        "label": "Market Label",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "languageTag",
+        "label": "Language Tag",
+        "description": "BCP 47 language tag such as en, ru, kk, uz, or ar",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "languageLabel",
+        "label": "Language Label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Locale Destination",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/demo-site"
+        }
+      },
+      {
+        "component": "boolean",
+        "name": "enabled",
+        "label": "Enabled",
+        "description": "Enable only after the destination and its shell pass Preview validation",
+        "value": false,
+        "valueType": "boolean"
+      },
+      {
+        "component": "select",
+        "name": "textDirection",
+        "label": "Text Direction",
+        "value": "ltr",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Left to right",
+            "value": "ltr"
+          },
+          {
+            "name": "Right to left",
+            "value": "rtl"
+          }
+        ]
       }
     ]
   },

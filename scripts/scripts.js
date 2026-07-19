@@ -10,7 +10,9 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  getMetadata,
 } from './aem.js';
+import { getDocumentLocale } from './site-shell.mjs';
 
 /**
  * Moves all the attributes from a given elmenet to another given element.
@@ -90,7 +92,15 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  document.documentElement.lang = 'en';
+  const locale = getDocumentLocale({
+    pathname: window.location.pathname,
+    language: getMetadata('language'),
+    direction: getMetadata('direction'),
+  });
+  if (locale) {
+    document.documentElement.lang = locale.languageTag;
+    document.documentElement.dir = locale.direction;
+  }
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {

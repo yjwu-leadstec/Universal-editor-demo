@@ -2,13 +2,19 @@
  * Global footer loaded from an authored footer fragment.
  */
 import { getMetadata } from '../../scripts/aem.js';
-import { loadFragment } from '../fragment/fragment.js';
+import { loadFragmentCandidates } from '../fragment/fragment.js';
 import {
   html, render, nothing, repeat, ref, createRef,
 } from '../../scripts/lit.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import {
+  getFragmentCandidates,
+  localizeSiteHref,
+  resolveLocaleContext,
+} from '../../scripts/site-shell.mjs';
 
 const SCROLL_THRESHOLD = 300;
+const MIGRATION_ROOT_FALLBACK = true;
 const HEADING_SELECTOR = 'h2, h3, h4, h5, h6';
 const INSTRUMENTATION_PREFIXES = ['data-aue-', 'data-richtext-'];
 
@@ -35,7 +41,7 @@ function nextList(heading) {
   return null;
 }
 
-function extractColumns(navSection) {
+function extractColumns(navSection, localeRoot) {
   if (!navSection) return [];
   return [...navSection.querySelectorAll(HEADING_SELECTOR)].flatMap((heading) => {
     const list = nextList(heading);
@@ -44,7 +50,9 @@ function extractColumns(navSection) {
       const anchor = item.querySelector('a');
       return {
         text: anchor?.textContent?.trim() || item.textContent.trim(),
-        href: anchor?.href || '#',
+        href: anchor
+          ? localizeSiteHref(anchor.getAttribute('href'), localeRoot, window.location.origin)
+          : '',
       };
     }).filter((link) => link.text);
     if (!links.length) return [];
@@ -59,7 +67,7 @@ function extractColumns(navSection) {
   });
 }
 
-function extractBottomItems(bottomSection) {
+function extractBottomItems(bottomSection, localeRoot) {
   if (!bottomSection) return [];
   const paragraphs = [...bottomSection.querySelectorAll('p')];
   if (paragraphs.length) {
@@ -67,9 +75,13 @@ function extractBottomItems(bottomSection) {
       const anchors = [...paragraph.querySelectorAll('a')];
       if (anchors.length) {
         return anchors.map((anchor) => ({
-          type: 'link',
+          type: anchor.getAttribute('href') === '#top' ? 'back-to-top' : 'link',
           text: anchor.textContent.trim(),
-          href: anchor.href,
+          href: localizeSiteHref(
+            anchor.getAttribute('href'),
+            localeRoot,
+            window.location.origin,
+          ),
         }));
       }
       const text = paragraph.textContent.trim();
@@ -78,9 +90,9 @@ function extractBottomItems(bottomSection) {
   }
 
   return [...bottomSection.querySelectorAll('a')].map((anchor) => ({
-    type: 'link',
+    type: anchor.getAttribute('href') === '#top' ? 'back-to-top' : 'link',
     text: anchor.textContent.trim(),
-    href: anchor.href,
+    href: localizeSiteHref(anchor.getAttribute('href'), localeRoot, window.location.origin),
   }));
 }
 
@@ -89,26 +101,28 @@ function extractBottomItems(bottomSection) {
  * @param {HTMLElement} fragment
  * @returns {Object}
  */
-function extractFooterData(fragment) {
+function extractFooterData(fragment, localeRoot) {
   const sections = [...fragment.querySelectorAll(':scope > .section')];
   const resolvedSections = sections.length ? sections : [...fragment.children];
   const navSection = resolvedSections[0];
   const bottomSection = resolvedSections[1] || navSection;
+  const items = extractBottomItems(bottomSection, localeRoot);
   return {
-    columns: extractColumns(navSection),
-    bottomItems: extractBottomItems(bottomSection),
+    columns: extractColumns(navSection, localeRoot),
+    bottomItems: items.filter((item) => item.type !== 'back-to-top'),
+    backToTop: items.find((item) => item.type === 'back-to-top') || null,
     bottomSection,
     bottomInstrumentation: captureInstrumentation(bottomSection),
   };
 }
 
-function backToTopTemplate(buttonRef) {
+function backToTopTemplate(item, buttonRef) {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   return html`
     <button
       class="footer-back-to-top"
       type="button"
-      aria-label="Back to top"
+      aria-label="${item.text}"
       ${ref(buttonRef)}
       @click=${() => window.scrollTo({
     top: 0,
@@ -122,25 +136,35 @@ function backToTopTemplate(buttonRef) {
   `;
 }
 
+function footerLinkTemplate(link) {
+  return link.href
+    ? html`<a href="${link.href}">${link.text}</a>`
+    : html`<span>${link.text}</span>`;
+}
+
 function navColumnTemplate(column, columnRef) {
   return html`
     <div class="footer-nav-column" ${ref(columnRef)}>
       <h3 class="footer-nav-title">${column.title}</h3>
       <ul class="footer-nav-list">
         ${repeat(column.links, (link, index) => index, (link) => html`
-          <li><a href="${link.href}">${link.text}</a></li>
+          <li>${footerLinkTemplate(link)}</li>
         `)}
       </ul>
     </div>
   `;
 }
 
-function accordionItemTemplate(column, columnRef) {
+function accordionItemTemplate(column, columnRef, index) {
+  const buttonId = `footer-accordion-button-${index}`;
+  const panelId = `footer-accordion-panel-${index}`;
   return html`
     <div class="footer-accordion-item" ${ref(columnRef)}>
       <button
         class="footer-accordion-header"
         type="button"
+        id="${buttonId}"
+        aria-controls="${panelId}"
         aria-expanded="false"
         @click=${(event) => {
     const button = event.currentTarget;
@@ -156,10 +180,10 @@ function accordionItemTemplate(column, columnRef) {
         <span>${column.title}</span>
         <span class="footer-accordion-chevron" aria-hidden="true"></span>
       </button>
-      <div class="footer-accordion-content">
+      <div class="footer-accordion-content" id="${panelId}" aria-labelledby="${buttonId}">
         <ul>
-          ${repeat(column.links, (link, index) => index, (link) => html`
-            <li><a href="${link.href}">${link.text}</a></li>
+          ${repeat(column.links, (link, linkIndex) => linkIndex, (link) => html`
+            <li>${footerLinkTemplate(link)}</li>
           `)}
         </ul>
       </div>
@@ -170,9 +194,10 @@ function accordionItemTemplate(column, columnRef) {
 function bottomBarTemplate(items, bottomRef) {
   return html`
     <div class="footer-bottom" ${ref(bottomRef)}>
-      ${repeat(items, (item, index) => index, (item) => (item.type === 'link'
-    ? html`<a class="footer-bottom-link" href="${item.href}">${item.text}</a>`
-    : html`<span class="footer-bottom-text">${item.text}</span>`
+      ${repeat(items, (item, index) => index, (item) => (
+    item.type === 'link' && item.href
+      ? html`<a class="footer-bottom-link" href="${item.href}">${item.text}</a>`
+      : html`<span class="footer-bottom-text">${item.text}</span>`
   ))}
     </div>
   `;
@@ -181,7 +206,7 @@ function bottomBarTemplate(items, bottomRef) {
 function footerTemplate(data, refs) {
   return html`
     <div class="footer-inner">
-      ${backToTopTemplate(refs.backToTop)}
+      ${data.backToTop ? backToTopTemplate(data.backToTop, refs.backToTop) : nothing}
       <div class="footer-nav">
         ${repeat(
     data.columns,
@@ -193,7 +218,7 @@ function footerTemplate(data, refs) {
         ${repeat(
     data.columns,
     (column, index) => index,
-    (column, index) => accordionItemTemplate(column, refs.mobileColumns[index]),
+    (column, index) => accordionItemTemplate(column, refs.mobileColumns[index], index),
   )}
       </div>
       ${data.bottomItems.length ? bottomBarTemplate(data.bottomItems, refs.bottom) : nothing}
@@ -242,11 +267,21 @@ function applyEditorInstrumentation(data, refs) {
  */
 export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const fragment = await loadFragment(footerPath);
+  const localeContext = resolveLocaleContext(window.location.pathname);
+  const footerCandidates = getFragmentCandidates('footer', {
+    pathname: window.location.pathname,
+    origin: window.location.origin,
+    metadata: footerMeta,
+    migrationFallback: MIGRATION_ROOT_FALLBACK,
+  });
+  const { fragment } = await loadFragmentCandidates(footerCandidates);
   if (!fragment) return;
 
-  const data = extractFooterData(fragment);
+  const data = extractFooterData(fragment, localeContext?.root || '');
+  if (!data.columns.length && !data.bottomItems.length && !data.backToTop) {
+    block.replaceChildren(...fragment.childNodes);
+    return;
+  }
   const refs = {
     backToTop: createRef(),
     columns: data.columns.map(() => createRef()),

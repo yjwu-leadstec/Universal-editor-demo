@@ -1,0 +1,108 @@
+{
+  "definitions": [
+    {
+      "title": "Locale Directory",
+      "id": "locale-directory",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Locale Directory",
+              "model": "locale-directory",
+              "filter": "locale-directory"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Locale Option",
+      "id": "locale-option",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Locale Option",
+              "model": "locale-option"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "locale-directory",
+      "fields": []
+    },
+    {
+      "id": "locale-option",
+      "fields": [
+        {
+          "component": "text",
+          "name": "marketCode",
+          "label": "Market Code",
+          "description": "Stable lowercase key such as global, kz, uz, or bh",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "marketLabel",
+          "label": "Market Label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "languageTag",
+          "label": "Language Tag",
+          "description": "BCP 47 language tag such as en, ru, kk, uz, or ar",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "languageLabel",
+          "label": "Language Label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "Locale Destination",
+          "valueType": "string",
+          "validation": {
+            "rootPath": "/content/demo-site"
+          }
+        },
+        {
+          "component": "boolean",
+          "name": "enabled",
+          "label": "Enabled",
+          "description": "Enable only after the destination and its shell pass Preview validation",
+          "value": false,
+          "valueType": "boolean"
+        },
+        {
+          "component": "select",
+          "name": "textDirection",
+          "label": "Text Direction",
+          "value": "ltr",
+          "valueType": "string",
+          "options": [
+            { "name": "Left to right", "value": "ltr" },
+            { "name": "Right to left", "value": "rtl" }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "locale-directory",
+      "components": [
+        "locale-option"
+      ]
+    }
+  ]
+}

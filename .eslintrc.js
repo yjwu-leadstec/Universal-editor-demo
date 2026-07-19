@@ -15,7 +15,7 @@ module.exports = {
     requireConfigFile: false,
   },
   rules: {
-    'import/extensions': ['error', { js: 'always' }], // require js file extensions in imports
+    'import/extensions': ['error', { js: 'always', mjs: 'always' }], // require source file extensions in imports
     'linebreak-style': ['error', 'unix'], // enforce unix linebreaks
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
     'xwalk/max-cells': ['error', {
@@ -26,6 +26,7 @@ module.exports = {
       'banner-slide': 6,
       'carousel-card': 6,
       'home-carousel': 6,
+      'header-settings': 8,
       'chapter-intro': 16,
       'color-switcher': 5,
       'color-switcher-item': 7,
@@ -35,6 +36,7 @@ module.exports = {
       'feature-media-item': 12,
       'highlight-carousel': 8,
       'highlight-slide': 12,
+      'locale-option': 7,
       'icon-overlay-showcase': 5,
       'overlay-panel': 7,
       'overlay-hotspot': 7,

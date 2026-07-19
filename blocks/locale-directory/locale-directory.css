@@ -1,0 +1,22 @@
+.locale-directory .locale-directory-list {
+  display: grid;
+  gap: 12px;
+}
+
+.locale-directory .locale-directory-option {
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) 2fr;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.locale-directory .locale-directory-market {
+  font-weight: 600;
+}
+
+@media (width < 720px) {
+  .locale-directory .locale-directory-option {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}

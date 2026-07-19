@@ -5,36 +5,30 @@
  * brand, primary navigation, and tools/language.
  */
 import { getMetadata } from '../../scripts/aem.js';
-import { loadFragment } from '../fragment/fragment.js';
+import { loadFragment, loadFragmentCandidates } from '../fragment/fragment.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import {
+  getFragmentCandidates,
+  isCurrentLocaleDestination,
+  isLocalizedHomepage,
+  localizeSiteHref,
+  resolveLocaleContext,
+  safeFragmentOverride,
+} from '../../scripts/site-shell.mjs';
 
 const DESKTOP_MQ = window.matchMedia('(min-width: 720px)');
 const INSTRUMENTATION_PREFIXES = ['data-aue-', 'data-richtext-'];
-const LOCALE_DIALOG_TITLE = 'Select a region and language';
-const LOCALE_MARKETS = [
-  {
-    name: 'Global',
-    languages: [{ label: 'English', href: '' }],
-  },
-  {
-    name: 'China',
-    languages: [{ label: '简体中文', href: 'https://www.lixiang.com/' }],
-  },
-  {
-    name: 'Қазақстан',
-    languages: [
-      { label: 'Қазақ тілі', href: 'https://www.liauto.com/kk_kz' },
-      { label: 'русский язык', href: 'https://www.liauto.com/ru_kz' },
-    ],
-  },
-  {
-    name: 'Oʻzbekiston',
-    languages: [
-      { label: "O'zbek tili", href: 'https://www.liauto.com/uz_uz' },
-      { label: 'русский язык', href: 'https://www.liauto.com/ru_uz' },
-    ],
-  },
-];
+const MIGRATION_ROOT_FALLBACK = true;
+const FALLBACK_SETTINGS = {
+  primaryNavigationLabel: 'Primary navigation',
+  openNavigationLabel: 'Open navigation',
+  closeNavigationLabel: 'Close navigation',
+  backNavigationLabel: 'Back to main navigation',
+  localeDialogTitle: 'Select a region and language',
+  localeTriggerLabel: 'Language',
+  localeCloseLabel: 'Close language selector',
+  localeDirectory: '',
+};
 
 function captureInstrumentation(element) {
   if (!element) return [];
@@ -88,7 +82,7 @@ function directTextBetween(element, start, end) {
   return values.join(' ');
 }
 
-function extractDropdownEntry(element) {
+function extractDropdownEntry(element, localeRoot) {
   const links = [...element.querySelectorAll('a')];
   if (!links.length) {
     return {
@@ -117,7 +111,7 @@ function extractDropdownEntry(element) {
     subtitle: directContent(link, 'span')?.textContent?.trim()
       || directTextBetween(link, titleElement, ctaElement),
     cta: ctaElement?.textContent?.trim() || '',
-    href: link.href || links[0].href,
+    href: localizeSiteHref(link.getAttribute('href') || links[0].getAttribute('href'), localeRoot, window.location.origin),
     media: mediaNodes(element),
     element,
     instrumentation: captureInstrumentation(element),
@@ -153,7 +147,16 @@ function groupDropdownEntries(entries) {
  * @param {HTMLElement} fragment
  * @returns {Object}
  */
-function extractNavData(fragment) {
+function extractHeaderSettings(toolsSection) {
+  const block = toolsSection?.querySelector('.header-settings[data-header-settings="true"]');
+  if (!block) return { ...FALLBACK_SETTINGS };
+  return Object.keys(FALLBACK_SETTINGS).reduce((settings, field) => {
+    settings[field] = block.dataset[field] || FALLBACK_SETTINGS[field];
+    return settings;
+  }, {});
+}
+
+function extractNavData(fragment, localeRoot) {
   const sections = [...fragment.children];
   const brandSection = sections[0];
   const navSection = sections[1];
@@ -169,7 +172,7 @@ function extractNavData(fragment) {
       : labelSource?.querySelector(':scope > a');
     const subList = directContent(element, 'ul');
     const entries = subList
-      ? [...subList.children].map((child) => extractDropdownEntry(child))
+      ? [...subList.children].map((child) => extractDropdownEntry(child, localeRoot))
       : [];
 
     return {
@@ -177,24 +180,26 @@ function extractNavData(fragment) {
       label: labelLink?.textContent?.trim()
         || labelSource?.textContent?.trim()
         || directLabel(element),
-      href: labelLink?.href || '',
+      href: localizeSiteHref(labelLink?.getAttribute('href'), localeRoot, window.location.origin),
       groups: groupDropdownEntries(entries),
       element,
       instrumentation: captureInstrumentation(element),
     };
   }) : [];
 
-  const toolsLink = toolsSection?.querySelector('a');
+  const toolsLink = [...(toolsSection?.querySelectorAll('a') || [])]
+    .find((anchor) => !anchor.closest('.header-settings'));
   return {
     brandSection,
-    brandLink: brandLink?.href || '/',
+    brandLink: localizeSiteHref(brandLink?.getAttribute('href') || '/', localeRoot, window.location.origin),
     brandImg: brandImg?.src || '',
     brandImgAlt: brandImg?.alt || 'Li Auto',
     navItems,
     toolsSection,
     toolsInstrumentation: captureInstrumentation(toolsSection),
-    toolsLink: toolsLink?.href || '',
+    toolsLink: localizeSiteHref(toolsLink?.getAttribute('href'), localeRoot, window.location.origin),
     toolsLabel: toolsLink?.textContent?.trim() || 'Language',
+    settings: extractHeaderSettings(toolsSection),
   };
 }
 
@@ -211,9 +216,9 @@ function isCurrentPage(href) {
 }
 
 function buildPanelCard(card) {
-  const link = document.createElement('a');
+  const link = document.createElement(card.href ? 'a' : 'article');
   link.className = 'panel-card';
-  link.href = card.href || '#';
+  if (card.href) link.href = card.href;
   if (card.media.length > 1) link.classList.add('has-layered-media');
   else if (card.media.length) link.classList.add('has-single-media');
   else link.classList.add('without-media');
@@ -303,9 +308,10 @@ function buildMobileSubmenu(item) {
     }
 
     group.cards.forEach((card) => {
+      if (!card.href) return;
       const link = document.createElement('a');
       link.className = 'mobile-submenu-link';
-      link.href = card.href || '#';
+      link.href = card.href;
 
       const title = document.createElement('span');
       title.className = 'mobile-submenu-title';
@@ -334,9 +340,9 @@ function buildMobileItem(item) {
   applyInstrumentation(item.instrumentation, mobileItem);
 
   if (!item.groups.length) {
-    const link = document.createElement('a');
+    const link = document.createElement(item.href ? 'a' : 'span');
     link.className = 'mobile-item-label';
-    link.href = item.href || '#';
+    if (item.href) link.href = item.href;
     link.textContent = item.label;
     if (isCurrentPage(item.href)) link.setAttribute('aria-current', 'page');
     mobileItem.append(link);
@@ -358,12 +364,40 @@ function buildMobileItem(item) {
   return mobileItem;
 }
 
-function buildLocaleList(globalHref, modifier = '') {
+function extractLocaleMarkets(fragment) {
+  const markets = [];
+  const byCode = new Map();
+  const seenKeys = new Set();
+  fragment?.querySelectorAll('[data-locale-option="true"]').forEach((item) => {
+    const link = item.querySelector('a[href]');
+    const marketCode = item.dataset.marketCode || '';
+    const marketLabel = item.dataset.marketLabel || '';
+    const languageTag = item.dataset.languageTag || '';
+    const key = `${marketCode}:${languageTag.toLowerCase()}`;
+    if (!link || !marketCode || !marketLabel || !languageTag || seenKeys.has(key)) return;
+    seenKeys.add(key);
+    let market = byCode.get(marketCode);
+    if (!market) {
+      market = { code: marketCode, name: marketLabel, languages: [] };
+      byCode.set(marketCode, market);
+      markets.push(market);
+    }
+    market.languages.push({
+      label: link.textContent.trim(),
+      href: link.getAttribute('href'),
+      languageTag,
+      direction: item.dataset.textDirection || 'ltr',
+    });
+  });
+  return markets.filter((market) => market.languages.length);
+}
+
+function buildLocaleList(markets, modifier = '') {
   const list = document.createElement('div');
   list.className = `header-locale-list${modifier ? ` ${modifier}` : ''}`;
   list.setAttribute('role', 'list');
 
-  LOCALE_MARKETS.forEach((market, marketIndex) => {
+  markets.forEach((market) => {
     const row = document.createElement('div');
     row.className = 'header-locale-row';
     row.setAttribute('role', 'listitem');
@@ -377,8 +411,15 @@ function buildLocaleList(globalHref, modifier = '') {
     market.languages.forEach((language) => {
       const link = document.createElement('a');
       link.className = 'header-locale-link';
-      link.href = marketIndex === 0 ? globalHref : language.href;
+      link.href = language.href;
+      link.hreflang = language.languageTag;
+      link.dir = language.direction;
       link.textContent = language.label;
+      if (isCurrentLocaleDestination(
+        language.href,
+        window.location.pathname,
+        window.location.origin,
+      )) link.setAttribute('aria-current', 'true');
       languages.append(link);
     });
 
@@ -389,7 +430,7 @@ function buildLocaleList(globalHref, modifier = '') {
   return list;
 }
 
-function buildLocaleDialog(globalHref) {
+function buildLocaleDialog(markets, settings) {
   const dialog = document.createElement('dialog');
   dialog.id = 'header-locale-dialog';
   dialog.className = 'header-locale-dialog';
@@ -400,18 +441,18 @@ function buildLocaleDialog(globalHref) {
 
   const title = document.createElement('h2');
   title.id = 'header-locale-title';
-  title.textContent = LOCALE_DIALOG_TITLE;
+  title.textContent = settings.localeDialogTitle;
 
   const close = document.createElement('button');
   close.type = 'button';
   close.className = 'header-locale-close';
-  close.setAttribute('aria-label', 'Close language selector');
+  close.setAttribute('aria-label', settings.localeCloseLabel);
   const closeIcon = document.createElement('span');
   closeIcon.setAttribute('aria-hidden', 'true');
   close.append(closeIcon);
 
   dialogHeader.append(title, close);
-  dialog.append(dialogHeader, buildLocaleList(globalHref));
+  dialog.append(dialogHeader, buildLocaleList(markets));
   return { dialog, close };
 }
 
@@ -421,26 +462,41 @@ function buildLocaleDialog(globalHref) {
  */
 export default async function decorate(block) {
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
-  const fragment = await loadFragment(navPath);
+  const localeContext = resolveLocaleContext(window.location.pathname);
+  const navCandidates = getFragmentCandidates('nav', {
+    pathname: window.location.pathname,
+    origin: window.location.origin,
+    metadata: navMeta,
+    migrationFallback: MIGRATION_ROOT_FALLBACK,
+  });
+  const { fragment } = await loadFragmentCandidates(navCandidates);
   if (!fragment) return;
 
-  const data = extractNavData(fragment);
+  const data = extractNavData(fragment, localeContext?.root || '');
+  if (!data.brandSection || !data.navItems.length) {
+    block.replaceChildren(...fragment.childNodes);
+    return;
+  }
+
+  const explicitDirectory = safeFragmentOverride(
+    data.settings.localeDirectory,
+    window.location.origin,
+  );
+  const directoryPath = explicitDirectory
+    || (localeContext ? `${localeContext.root}/locale-directory` : '');
+  const directory = directoryPath ? await loadFragment(directoryPath) : null;
+  const localeMarkets = extractLocaleMarkets(directory);
   block.textContent = '';
 
   const nav = document.createElement('nav');
   nav.id = 'nav';
   nav.className = 'header-nav';
-  nav.setAttribute('aria-label', 'Primary');
+  nav.setAttribute('aria-label', data.settings.primaryNavigationLabel);
   nav.setAttribute('aria-expanded', 'false');
 
   const theme = getMetadata('header-theme').toLowerCase();
   const themeValues = theme.split(',').map((value) => value.trim()).filter(Boolean);
-  const pagePath = window.location.pathname.replace(/\/+$/, '') || '/';
-  // Homepage is authored at `.../en/homepage` and delivered as `/homepage`, not `/`.
-  // Detect both so the frosted-glass / overlay header applies regardless of the
-  // delivered slug. `header-theme` metadata still overrides (transparent | white).
-  const isHomePage = pagePath === '/' || pagePath.endsWith('/homepage');
+  const isHomePage = isLocalizedHomepage(window.location.pathname);
   const isTransparent = themeValues.includes('transparent')
     || (!themeValues.includes('white') && isHomePage);
   if (isTransparent) {
@@ -472,7 +528,7 @@ export default async function decorate(block) {
   const mobileBack = document.createElement('button');
   mobileBack.type = 'button';
   mobileBack.className = 'header-mobile-back';
-  mobileBack.setAttribute('aria-label', 'Back to main navigation');
+  mobileBack.setAttribute('aria-label', data.settings.backNavigationLabel);
   const mobileBackIcon = document.createElement('span');
   mobileBackIcon.setAttribute('aria-hidden', 'true');
   mobileBack.append(mobileBackIcon);
@@ -487,10 +543,11 @@ export default async function decorate(block) {
   navListInner.className = 'header-navlist';
 
   data.navItems.forEach((item) => {
-    const navItem = document.createElement('a');
+    const navItem = document.createElement(item.href ? 'a' : 'button');
     navItem.className = 'header-navlist-item';
     navItem.dataset.navId = item.index;
-    navItem.href = item.href || '#';
+    if (item.href) navItem.href = item.href;
+    else navItem.type = 'button';
     navItem.textContent = item.label;
     if (item.groups.length) {
       navItem.setAttribute('aria-expanded', 'false');
@@ -507,33 +564,46 @@ export default async function decorate(block) {
   let languageTrigger;
   let localeDialog;
   let localeDialogClose;
-  if (data.toolsLink) {
+  if (data.toolsLink && localeMarkets.length) {
     languageTrigger = document.createElement('button');
     languageTrigger.type = 'button';
     languageTrigger.className = 'header-language';
-    languageTrigger.setAttribute('aria-label', LOCALE_DIALOG_TITLE);
+    languageTrigger.setAttribute('aria-label', data.settings.localeTriggerLabel);
     languageTrigger.setAttribute('aria-haspopup', 'dialog');
     languageTrigger.setAttribute('aria-controls', 'header-locale-dialog');
     languageTrigger.setAttribute('aria-expanded', 'false');
-    languageTrigger.title = data.toolsLabel;
+    languageTrigger.title = data.settings.localeTriggerLabel || data.toolsLabel;
     const globe = document.createElement('span');
     globe.className = 'header-globe';
     globe.setAttribute('aria-hidden', 'true');
     languageTrigger.append(globe);
     tools.append(languageTrigger);
 
-    const locale = buildLocaleDialog(data.toolsLink);
+    const locale = buildLocaleDialog(localeMarkets, data.settings);
     localeDialog = locale.dialog;
     localeDialogClose = locale.close;
+  } else if (data.toolsLink) {
+    const languageLink = document.createElement('a');
+    languageLink.className = 'header-language';
+    languageLink.href = data.toolsLink;
+    languageLink.setAttribute('aria-label', data.settings.localeTriggerLabel || data.toolsLabel);
+    languageLink.title = data.settings.localeTriggerLabel || data.toolsLabel;
+    const globe = document.createElement('span');
+    globe.className = 'header-globe';
+    globe.setAttribute('aria-hidden', 'true');
+    languageLink.append(globe);
+    tools.append(languageLink);
   } else if (data.toolsSection) {
-    while (data.toolsSection.firstChild) tools.append(data.toolsSection.firstChild);
+    [...data.toolsSection.children]
+      .filter((child) => !child.querySelector('.header-settings'))
+      .forEach((child) => tools.append(child));
   }
   if (data.toolsSection) moveInstrumentation(data.toolsSection, tools);
 
   const hamburger = document.createElement('button');
   hamburger.type = 'button';
   hamburger.className = 'header-hamburger';
-  hamburger.setAttribute('aria-label', 'Open navigation');
+  hamburger.setAttribute('aria-label', data.settings.openNavigationLabel);
   hamburger.setAttribute('aria-controls', 'header-mobile-menu');
   hamburger.setAttribute('aria-expanded', 'false');
   const menuIcon = document.createElement('span');
@@ -558,23 +628,30 @@ export default async function decorate(block) {
   mobileMenu.className = 'header-mobile-menu';
   data.navItems.forEach((item) => mobileMenu.append(buildMobileItem(item)));
   let mobileLanguage;
-  if (data.toolsLink) {
+  if (data.toolsLink && localeMarkets.length) {
     mobileLanguage = document.createElement('button');
     mobileLanguage.type = 'button';
     mobileLanguage.className = 'header-mobile-language';
     mobileLanguage.setAttribute('aria-controls', 'header-mobile-locales');
     mobileLanguage.setAttribute('aria-expanded', 'false');
     const label = document.createElement('span');
-    label.textContent = data.toolsLabel;
+    label.textContent = data.settings.localeTriggerLabel || data.toolsLabel;
     const chevron = document.createElement('span');
     chevron.className = 'mobile-item-chevron';
     chevron.setAttribute('aria-hidden', 'true');
     mobileLanguage.append(label, chevron);
     applyInstrumentation(data.toolsInstrumentation, mobileLanguage);
 
-    const mobileLocales = buildLocaleList(data.toolsLink, 'header-mobile-locales');
+    const mobileLocales = buildLocaleList(localeMarkets, 'header-mobile-locales');
     mobileLocales.id = 'header-mobile-locales';
     mobileMenu.append(mobileLanguage, mobileLocales);
+  } else if (data.toolsLink) {
+    const mobileLanguageLink = document.createElement('a');
+    mobileLanguageLink.className = 'header-mobile-language';
+    mobileLanguageLink.href = data.toolsLink;
+    mobileLanguageLink.textContent = data.settings.localeTriggerLabel || data.toolsLabel;
+    applyInstrumentation(data.toolsInstrumentation, mobileLanguageLink);
+    mobileMenu.append(mobileLanguageLink);
   }
   nav.append(mobileMenu);
 
@@ -660,7 +737,10 @@ export default async function decorate(block) {
     const shouldClose = forceClose === true || isOpen;
     nav.setAttribute('aria-expanded', shouldClose ? 'false' : 'true');
     hamburger.setAttribute('aria-expanded', shouldClose ? 'false' : 'true');
-    hamburger.setAttribute('aria-label', shouldClose ? 'Open navigation' : 'Close navigation');
+    hamburger.setAttribute(
+      'aria-label',
+      shouldClose ? data.settings.openNavigationLabel : data.settings.closeNavigationLabel,
+    );
     document.body.classList.toggle('nav-open', !shouldClose);
     if (!shouldClose) closePanel();
     if (shouldClose) {

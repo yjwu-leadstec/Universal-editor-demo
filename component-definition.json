@@ -349,6 +349,21 @@
           }
         },
         {
+          "title": "Header Settings",
+          "id": "header-settings",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Header Settings",
+                  "model": "header-settings"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Hero",
           "id": "hero",
           "plugins": {
@@ -573,6 +588,37 @@
                   "model": "overlay-hotspot",
                   "x": 50,
                   "y": 50
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Locale Directory",
+          "id": "locale-directory",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Locale Directory",
+                  "model": "locale-directory",
+                  "filter": "locale-directory"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Locale Option",
+          "id": "locale-option",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Locale Option",
+                  "model": "locale-option"
                 }
               }
             }

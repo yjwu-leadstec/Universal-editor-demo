@@ -480,6 +480,13 @@ header .header-mobile-locales .header-locale-link:focus {
     outline: none;
   }
 
+  header button.header-navlist-item {
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
   header .header-navlist-item::after {
     content: "";
     position: absolute;
@@ -527,6 +534,7 @@ header .header-mobile-locales .header-locale-link:focus {
     color: currentcolor;
     opacity: 0.6;
     cursor: pointer;
+    text-decoration: none;
   }
 
   header .header-language:hover,
