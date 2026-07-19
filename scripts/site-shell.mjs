@@ -47,20 +47,28 @@ export function resolveLocaleContext(pathname) {
   const segments = path.split('/').filter(Boolean);
   if (segments.length < 2) return null;
 
-  if (segments[0] === 'language-master') {
-    const languageTag = canonicalLanguageTag(segments[1]);
+  let localeIndex = 0;
+  if (segments[0] === 'content') {
+    localeIndex = segments.findIndex((segment, index) => index >= 2
+      && (segment === 'language-master' || MARKET_CODE_PATTERN.test(segment.toLowerCase()))
+      && canonicalLanguageTag(segments[index + 1]));
+    if (localeIndex < 0) return null;
+  }
+
+  if (segments[localeIndex] === 'language-master') {
+    const languageTag = canonicalLanguageTag(segments[localeIndex + 1]);
     return languageTag ? {
-      root: `/language-master/${segments[1].toLowerCase()}`,
+      root: `/${segments.slice(0, localeIndex + 1).join('/')}/${segments[localeIndex + 1].toLowerCase()}`,
       marketCode: 'language-master',
       languageTag,
     } : null;
   }
 
-  const marketCode = segments[0].toLowerCase();
-  const languageTag = canonicalLanguageTag(segments[1]);
+  const marketCode = segments[localeIndex].toLowerCase();
+  const languageTag = canonicalLanguageTag(segments[localeIndex + 1]);
   if (!MARKET_CODE_PATTERN.test(marketCode) || !languageTag) return null;
   return {
-    root: `/${marketCode}/${segments[1].toLowerCase()}`,
+    root: `/${segments.slice(0, localeIndex).concat(marketCode, segments[localeIndex + 1].toLowerCase()).join('/')}`,
     marketCode,
     languageTag,
   };

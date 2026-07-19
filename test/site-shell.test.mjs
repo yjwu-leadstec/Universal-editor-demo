@@ -24,8 +24,16 @@ test('resolves blueprint and public locale roots', () => {
   assert.deepEqual(resolveLocaleContext('/language-master/en/homepage'), {
     root: '/language-master/en', marketCode: 'language-master', languageTag: 'en',
   });
+  assert.deepEqual(resolveLocaleContext('/content/demo-site/language-master/en/homepage.html'), {
+    root: '/content/demo-site/language-master/en',
+    marketCode: 'language-master',
+    languageTag: 'en',
+  });
   assert.deepEqual(resolveLocaleContext('/kz/ru/service'), {
     root: '/kz/ru', marketCode: 'kz', languageTag: 'ru',
+  });
+  assert.deepEqual(resolveLocaleContext('/content/demo-site/kz/ru/service.html'), {
+    root: '/content/demo-site/kz/ru', marketCode: 'kz', languageTag: 'ru',
   });
   assert.equal(resolveLocaleContext('/service/guide'), null);
   assert.equal(resolveLocaleContext('/about/us'), null);
@@ -56,6 +64,11 @@ test('orders metadata, localized, and migration fragment candidates', () => {
     origin: ORIGIN,
     migrationFallback: false,
   }), ['/global/en/footer']);
+  assert.deepEqual(getFragmentCandidates('nav', {
+    pathname: '/content/demo-site/language-master/en/homepage.html',
+    origin: ORIGIN,
+    migrationFallback: false,
+  }), ['/content/demo-site/language-master/en/nav']);
 });
 
 test('rebases only same-origin page links into the active locale root', () => {
@@ -84,6 +97,7 @@ test('derives document language and direction', () => {
 test('recognizes both localized homepage forms', () => {
   assert.equal(isLocalizedHomepage('/language-master/en'), true);
   assert.equal(isLocalizedHomepage('/language-master/en/homepage'), true);
+  assert.equal(isLocalizedHomepage('/content/demo-site/language-master/en/homepage.html'), true);
   assert.equal(isLocalizedHomepage('/global/en/service'), false);
 });
 

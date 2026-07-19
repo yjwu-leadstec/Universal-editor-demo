@@ -18,7 +18,7 @@ import {
 
 const DESKTOP_MQ = window.matchMedia('(min-width: 720px)');
 const INSTRUMENTATION_PREFIXES = ['data-aue-', 'data-richtext-'];
-const MIGRATION_ROOT_FALLBACK = true;
+const MIGRATION_ROOT_FALLBACK = false;
 const FALLBACK_SETTINGS = {
   primaryNavigationLabel: 'Primary navigation',
   openNavigationLabel: 'Open navigation',

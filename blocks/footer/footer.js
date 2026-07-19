@@ -14,7 +14,7 @@ import {
 } from '../../scripts/site-shell.mjs';
 
 const SCROLL_THRESHOLD = 300;
-const MIGRATION_ROOT_FALLBACK = true;
+const MIGRATION_ROOT_FALLBACK = false;
 const HEADING_SELECTOR = 'h2, h3, h4, h5, h6';
 const INSTRUMENTATION_PREFIXES = ['data-aue-', 'data-richtext-'];
 

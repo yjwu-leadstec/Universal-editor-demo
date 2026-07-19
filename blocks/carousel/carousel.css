@@ -665,3 +665,12 @@
     transition: none;
   }
 }
+
+/* Universal Editor auto-sizes its canvas iframe; cap viewport units to avoid a resize loop. */
+.adobe-ue-edit .section.hero .carousel {
+  height: clamp(720px, 100vh, 1080px);
+}
+
+.adobe-ue-edit .section.hero .carousel .carousel-slide {
+  min-height: clamp(720px, 100vh, 1080px);
+}
