@@ -94,7 +94,8 @@ MSM rollout, locale-directory population, and legacy retirement.
 
 - Header/footer localized shell implementation committed as `f6f05d2`.
 - Locale-directory probing for legacy nav content corrected in `d4de7b0`.
-- Both commits were pushed to `align-nav-homepage` and fast-forwarded to `main`.
+- Implementation commits and deployment evidence commit `7423ea3` were pushed to
+  `align-nav-homepage` and fast-forwarded to `main`.
 - Main verification URL: `/language-master/en/homepage`.
 
 ### Author content
@@ -103,7 +104,11 @@ MSM rollout, locale-directory population, and legacy retirement.
 - Updated only `/content/demo-site/language-master/en/nav` and `footer`; `/site/nav` was not read as a source or modified.
 - Rebased 15 nav and 15 footer internal anchors from root-relative paths to `/language-master/en/*`.
 - MCP post-write verification passed for both text nodes.
-- Localized nav/footer Delivery endpoints remain 404 until an authenticated Quick Publish is completed; the code therefore uses the temporary root fragment fallback.
+- Published exactly the localized nav/footer pages through AEM Manage Publication,
+  first to Preview and then to Publish/Live.
+- AEM Preview returned the explicit success state `Your previews have been created`
+  with links for both pages; Live returned the scheduled-publication success toast.
+- EDS localized nav/footer endpoints return HTTP 200 on both `aem.page` and `aem.live`.
 
 ### Automated and browser verification
 
@@ -116,9 +121,18 @@ MSM rollout, locale-directory population, and legacy retirement.
 - Desktop mega panel open/Escape close and mobile drawer/detail/back/Escape focus restoration pass.
 - Mobile footer accordion state/ARIA pass.
 - With no authored header-settings/locale-directory, the language control remains a real `/global/en` anchor and no empty dialog is rendered.
+- Post-publication Preview network checks load only
+  `/language-master/en/nav.plain.html` and `footer.plain.html` with HTTP 200; the
+  root `/nav` and `/footer` migration fallback is not requested.
+- Post-publication Live smoke tests pass at 390 and 1440 px with the same localized
+  links, five footer columns, `lang=en`, `dir=ltr`, and no horizontal overflow.
 
-### Remaining release gate
+### Released scope and deferred work
 
-Authenticated AEM Quick Publish is still required for the existing language-master nav/footer pages.
-Until then, the two localized fragment requests return 404 and the migration fallback serves the root fragments.
-The homepage also has three pre-existing missing DAM video requests outside this shell change.
+The requested first-wave shell scope is released and verified on
+`/language-master/en/homepage`. Locale-directory population, additional countries,
+MSM rollout, and migration-fallback retirement remain intentionally deferred.
+
+The homepage still reports three pre-existing missing DAM video requests
+(`video-01-home.mp4`, `video-02-face.mp4`, and `video-03-growth.mp4`) outside this
+header/footer change. No header/footer fragment 404 or shell JavaScript error remains.
