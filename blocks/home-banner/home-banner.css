@@ -71,7 +71,7 @@
 
 .home-banner .hero-slide-copy {
   position: absolute;
-  inset: 70px 0 auto;
+  inset: 3.6458vw 0 auto;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -82,7 +82,7 @@
 .home-banner .hero-banner-logo {
   display: block;
   width: 100%;
-  height: 70px;
+  height: 3.6458vw;
 }
 
 .home-banner .hero-banner-logo picture,
@@ -106,18 +106,19 @@
 
 .home-banner .hero-slide-copy .button-link {
   display: inline-flex;
+  box-sizing: border-box;
   align-items: center;
   justify-content: center;
-  margin-top: 64px;
-  width: 125px;
-  min-height: 38px;
-  height: 38px;
+  margin-top: 3.3333vw;
+  width: clamp(94px, 6.493vw, 124.67px);
+  min-height: clamp(29px, 1.9792vw, 38px);
+  height: clamp(29px, 1.9792vw, 38px);
   border: 1px solid rgb(255 255 255 / 90%);
   border-radius: 999px;
   color: #fff;
   background: transparent;
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 0.7292vw;
+  line-height: 1.1458vw;
   text-decoration: none;
   transition: background 160ms ease, color 160ms ease, transform 160ms ease;
 }
@@ -130,7 +131,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 54px;
+  bottom: 2.8125vw;
   z-index: 2;
   display: flex;
   justify-content: center;
@@ -181,8 +182,37 @@
   }
 }
 
-/* ── 移动端 ≤820px ── */
-@media (width <= 820px) {
+/* ── 中屏 ≤1024px：16:9，文案与控件按中屏设计比例缩放 ── */
+@media (width <= 1024px) {
+  .home-banner .hero-carousel {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .home-banner .hero-slide-copy {
+    inset: 5.2083vw 0 auto;
+  }
+
+  .home-banner .hero-banner-logo {
+    height: 5.2083vw;
+  }
+
+  .home-banner .hero-slide-copy .button-link {
+    margin-top: 4.7607vw;
+    width: 9.3216vw;
+    min-height: 2.8732vw;
+    height: 2.8732vw;
+    font-size: 1.0417vw;
+    line-height: 1.6369vw;
+  }
+
+  .home-banner .carousel-controls {
+    bottom: 4.0179vw;
+  }
+}
+
+/* ── 小屏 ≤720px ── */
+@media (width <= 720px) {
   .home-banner .hero-carousel {
     width: 100vw;
     height: auto;
