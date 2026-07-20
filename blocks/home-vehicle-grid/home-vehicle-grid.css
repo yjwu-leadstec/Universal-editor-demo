@@ -14,9 +14,11 @@
   background: #191515;
 }
 
-/* Universal Editor auto-sizes its canvas iframe; cap viewport units to avoid a resize loop. */
-.adobe-ue-edit .home-vehicle-grid .vehicle-grid {
-  height: clamp(720px, 100vh, 1080px);
+/* Universal Editor auto-sizes its canvas iframe; cap desktop viewport units to avoid a resize loop. */
+@media (width > 820px) {
+  .adobe-ue-edit .home-vehicle-grid .vehicle-grid {
+    height: clamp(720px, 100vh, 1080px);
+  }
 }
 
 .home-vehicle-grid .vehicle-tile {
@@ -207,7 +209,9 @@
   .home-vehicle-grid .vehicle-tile {
     display: block;
     width: 100%;
-    min-height: 26vh;
+
+    /* Cap viewport height by the mobile media ratio for auto-sized editor iframes. */
+    min-height: min(26vh, 56.2667vw);
     margin-bottom: 4px;
   }
 
