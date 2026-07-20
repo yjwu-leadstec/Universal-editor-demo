@@ -45,6 +45,10 @@
   pointer-events: auto;
 }
 
+.home-banner .mobile-hero-slide {
+  display: none;
+}
+
 .home-banner .hero-slide-media {
   position: absolute;
   inset: 0;
@@ -213,6 +217,15 @@
 
 /* ── 小屏 ≤720px ── */
 @media (width <= 720px) {
+  .section.home-banner-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section.home-banner-container > .home-banner-wrapper {
+    order: -1;
+  }
+
   .home-banner .hero-carousel {
     width: 100vw;
     height: auto;
@@ -221,7 +234,7 @@
   }
 
   .home-banner .hero-slide-copy {
-    inset: auto 24px 10px;
+    inset: auto 24px 40px;
     align-items: flex-start;
     justify-content: flex-end;
     text-align: left;
@@ -246,5 +259,19 @@
 
   .home-banner .carousel-controls {
     display: none;
+  }
+}
+
+@media (width < 720px) {
+  .home-banner .hero-carousel.has-mobile-hero .carousel-track {
+    display: none;
+  }
+
+  .home-banner .hero-carousel.has-mobile-hero .mobile-hero-slide {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 }

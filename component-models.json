@@ -1695,6 +1695,28 @@
     "id": "home-banner",
     "fields": [
       {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Feature Image",
+        "description": "小屏独立主视觉（建议 720×1080，比例 2:3）",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileLogo",
+        "label": "Mobile Feature Logo",
+        "description": "小屏主视觉车型字标；缺省时显示移动端标题和副标题",
+        "valueType": "string",
+        "multi": false
+      },
+      {
         "component": "text",
         "name": "id",
         "label": "ID",

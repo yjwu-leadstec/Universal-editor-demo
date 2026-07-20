@@ -4,6 +4,7 @@
  * 首页主视觉 Banner 轮播，像素对齐 liauto.com：
  * - 全宽，桌面高度 42.55vw，移动端 aspect-ratio 2/3。
  * - 无限循环（首尾各加一张克隆），5s 自动轮播，底部指示器切换。
+ * - <720px 可使用 block 级 mobileImage/mobileLogo 渲染独立静态主视觉。
  * - hover 暂停自动轮播；激活 slide 图片 hover 放大 5%。
  * - 有 logo 时显示 logo 字标，否则显示标题 + 副标题。
  *
@@ -24,6 +25,36 @@ function textCells(row) {
 function pictureAlt(picture) {
   const img = picture ? picture.querySelector('img') : null;
   return img ? (img.getAttribute('alt') || '') : '';
+}
+
+function propertyElement(block, property) {
+  return block.querySelector(`[data-aue-prop="${property}"]`);
+}
+
+function propertyPicture(block, property) {
+  const element = propertyElement(block, property);
+  if (!element) return null;
+  if (element.matches('picture')) return element;
+  if (element.matches('img')) return element.closest('picture');
+  return element.querySelector('picture');
+}
+
+function propertyText(block, property) {
+  return propertyElement(block, property)?.textContent.trim() || '';
+}
+
+function extractMobileHero(block) {
+  const imagePicture = propertyPicture(block, 'mobileImage');
+  if (!imagePicture) return null;
+
+  return {
+    imagePicture,
+    imageAlt: propertyText(block, 'mobileImageAlt') || pictureAlt(imagePicture),
+    logoPicture: propertyPicture(block, 'mobileLogo'),
+    title: propertyText(block, 'mobileImageAlt') || pictureAlt(imagePicture),
+    mediaRef: createRef(),
+    logoRef: createRef(),
+  };
 }
 
 function extractSlide(row, index) {
@@ -66,6 +97,19 @@ function slideMarkup(slide, { clone = false, active = false } = {}) {
     ? html`<span class="hero-banner-logo" ${clone ? nothing : ref(slide.logoRef)}></span>`
     : html`<h2>${slide.title}</h2><p>${slide.subtitle}</p>`}
         <a class="button-link primary" href="${slide.link || '#'}">${slide.ctaText}</a>
+      </div>
+    </article>
+  `;
+}
+
+function mobileHeroMarkup(hero) {
+  return html`
+    <article class="mobile-hero-slide" aria-label="${hero.title || hero.imageAlt}">
+      <span class="hero-slide-media" ${ref(hero.mediaRef)}></span>
+      <div class="hero-slide-copy">
+        ${hero.logoPicture
+    ? html`<span class="hero-banner-logo" ${ref(hero.logoRef)}></span>`
+    : html`<h2>${hero.title}</h2>`}
       </div>
     </article>
   `;
@@ -137,8 +181,15 @@ function setupCarousel(carousel, slideCount) {
 }
 
 export default function decorate(block) {
-  // 有图行才是 slide（排除块级 id 等字段行）
-  const rows = [...block.children].filter((row) => row.querySelector('picture, img'));
+  const mobileHero = extractMobileHero(block);
+  const mobilePictures = new Set([
+    mobileHero?.imagePicture,
+    mobileHero?.logoPicture,
+  ].filter(Boolean));
+
+  // 有图且不属于 block 级移动主视觉字段的行才是桌面 slide。
+  const rows = [...block.children].filter((row) => row.querySelector('picture, img')
+    && ![...mobilePictures].some((picture) => row.contains(picture)));
   if (!rows.length) return;
 
   const slides = rows.map((row, index) => extractSlide(row, index));
@@ -148,7 +199,7 @@ export default function decorate(block) {
     : slides;
 
   const template = html`
-    <div class="hero-carousel" data-carousel>
+    <div class="hero-carousel ${mobileHero ? 'has-mobile-hero' : ''}" data-carousel>
       <div class="carousel-track" style="--active-slide: ${hasLoop ? 1 : 0}">
         ${visual.map((slide) => slideMarkup(slide, {
     clone: !!slide.clone,
@@ -158,6 +209,7 @@ export default function decorate(block) {
       <div class="carousel-controls">
         ${hasLoop ? html`<div class="dots" data-dots></div>` : nothing}
       </div>
+      ${mobileHero ? mobileHeroMarkup(mobileHero) : nothing}
     </div>
   `;
 
@@ -186,6 +238,25 @@ export default function decorate(block) {
       slide.logoRef.value.append(logo);
     }
   });
+
+  if (mobileHero?.mediaRef.value) {
+    const picture = mobileHero.imagePicture.cloneNode(true);
+    const img = picture.querySelector('img');
+    if (img) {
+      if (mobileHero.imageAlt) img.setAttribute('alt', mobileHero.imageAlt);
+      img.setAttribute('loading', 'eager');
+      img.setAttribute('fetchpriority', 'high');
+      img.setAttribute('decoding', 'async');
+    }
+    mobileHero.mediaRef.value.append(picture);
+  }
+
+  if (mobileHero?.logoRef.value && mobileHero.logoPicture) {
+    const logo = mobileHero.logoPicture.cloneNode(true);
+    const img = logo.querySelector('img');
+    if (img && mobileHero.title) img.setAttribute('alt', mobileHero.title);
+    mobileHero.logoRef.value.append(logo);
+  }
 
   setupCarousel(block.querySelector('[data-carousel]'), slides.length);
 }
