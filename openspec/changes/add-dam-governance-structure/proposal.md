@@ -11,6 +11,7 @@ The current Homepage references assets scattered below `/content/dam/li-demo` us
 - Migrate only the 41 unique assets consumed by the current Homepage model from `lixiang2/eds-reference/assets/data/site-data.js`.
 - Store language-neutral vehicle, brand, and technology media under `shared` instead of duplicating binaries by market.
 - Update `/content/demo-site/language-master/en/homepage` component properties to the new DAM paths.
+- Add the `/content/dam/li-auto/` to `/assets/` EDS path mapping and use an asset reference field for Homepage videos.
 - Preserve `/content/dam/li-demo` unchanged as the rollback source during validation.
 - Keep Dynamic Media, per-user ACLs, automated translation, and non-Homepage page migrations out of scope.
 
@@ -18,7 +19,7 @@ The current Homepage references assets scattered below `/content/dam/li-demo` us
 
 - Affected capability: DAM governance and Homepage asset resolution.
 - Affected AEM content: `/content/dam/li-auto` and `/content/demo-site/language-master/en/homepage`.
-- Affected code: none expected; existing reference and `aem-content` component fields remain unchanged.
+- Affected code/configuration: `paths.json`, the generated Universal Editor models, and the `home-carousel` video field definition.
 - Source of truth: `lixiang2/eds-reference/assets/data/site-data.js` `home.blocks`.
 
 ## Approval

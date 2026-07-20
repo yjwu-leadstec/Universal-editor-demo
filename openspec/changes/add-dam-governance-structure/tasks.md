@@ -26,6 +26,6 @@
 
 ## 5. Delivery validation
 
-- [ ] 5.1 Verify AEM Author and `.plain.html` asset/page delivery.
-- [ ] 5.2 Verify Homepage at 1920px and 390px with Banner visible and no `.block-error`.
-- [ ] 5.3 Record final asset counts, property verification, rollback evidence, and remaining risks.
+- [x] 5.1 Verify AEM Author and EDS asset/page delivery.
+- [x] 5.2 Verify Homepage at 1920px and 390px with Banner visible and no `.block-error`.
+- [x] 5.3 Record final asset counts, property verification, rollback evidence, and remaining risks.

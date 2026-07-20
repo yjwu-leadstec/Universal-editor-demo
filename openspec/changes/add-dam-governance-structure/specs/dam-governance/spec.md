@@ -45,10 +45,20 @@ The system SHALL update Homepage asset references only after all target assets e
 
 ### Requirement: Dynamic Media exclusion
 
-The implementation MUST use standard AEM DAM references and MUST NOT depend on Dynamic Media URLs, Smart Crop, Scene7, or Dynamic Media profiles.
+The implementation MUST use standard AEM DAM references and MUST NOT store or require author-configured Dynamic Media URLs, Smart Crop, Scene7 URLs, or Dynamic Media profiles.
 
 #### Scenario: Page asset is delivered
 
 - **WHEN** EDS renders an uploaded Homepage image or video
 - **THEN** the authored property contains a `/content/dam/li-auto/...` reference
 - **AND** it does not contain a Dynamic Media delivery URL
+
+### Requirement: EDS asset publication
+
+The system SHALL map `/content/dam/li-auto/` into the public EDS asset namespace and include that DAM root in the site's publication scope.
+
+#### Scenario: Homepage video is published
+
+- **WHEN** a referenced MP4 is published with the Homepage
+- **THEN** the semantic HTML links to the mapped `/assets/` path
+- **AND** the path resolves to a same-origin HTTP 200 `video/mp4` response

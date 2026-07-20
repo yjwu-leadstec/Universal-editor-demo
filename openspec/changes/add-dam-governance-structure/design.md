@@ -11,9 +11,10 @@ The active Homepage contains 43 asset-valued component properties resolving to 4
   - Use the active `eds-reference` media as the migration source.
   - Avoid duplicate binaries for language-neutral media.
   - Preserve current Universal Editor component contracts.
+  - Publish DAM binaries through the standard EDS path mapping and Media Bus flow.
   - Provide a reversible Homepage migration.
 - Non-Goals:
-  - Configure Dynamic Media, Scene7 URLs, Smart Crop, or DM profiles.
+  - Configure Dynamic Media, authored Scene7 URLs, Smart Crop, or DM profiles.
   - Invent final IMS/AEM user groups or per-user ACLs.
   - Migrate product pages, legal documents, nav, or footer assets.
   - Upload unused `eds-reference` media.
@@ -60,13 +61,20 @@ Folders represent stable ownership, default metadata, and future ACL inheritance
 - Uploaded assets receive at least `dc:title`, `dc:description`, `dc:language=und`, `dc:source`, and `xmpRights:UsageTerms` where supported.
 - The physical path supplies the initial governance scope. A project namespace and folder Metadata Profiles remain a later code/configuration package once field ownership is approved.
 
+### EDS delivery mapping
+
+- `/content/dam/li-auto/` maps to the public `/assets/` namespace and is present in `paths.json` `includes`.
+- Images referenced by pages continue through normal EDS image optimization.
+- MP4 references use human-readable `/assets/.../*.mp4` URLs, which EDS redirects to immutable same-origin `media_*.mp4` binaries.
+- The authored component value remains `/content/dam/li-auto/...`; no Dynamic Media URL is stored in page content.
+
 ## Data Flow
 
 ```text
 eds-reference URL
   -> validate status, MIME type, and source uniqueness
   -> upload one binary to /content/dam/li-auto/shared/...
-  -> verify dam:Asset and processing status
+  -> run standard AEM Assets Full Process and verify dam:assetState=processed
   -> update exact Homepage component property
   -> publish/preview
   -> verify asset responses and rendered Homepage
@@ -84,6 +92,7 @@ eds-reference URL
 
 ## Risks / Trade-offs
 
-- Standard AEM processing of large MP4 files may be asynchronous; page references must not switch until asset nodes exist and are readable.
+- Standard AEM processing of large MP4 files is asynchronous; future batches must wait for `dam:assetState=processed` before final Author validation.
+- Future assets exceeding EDS limits require an `edge-delivery-services-<subtype>` rendition or source downscaling; this batch passed direct delivery without a custom profile.
 - The current Banner model has no mobile image field. The migration preserves the model and does not upload unused banner-only mobile variants.
 - Final group names, Metadata Profiles, approval workflows, retention policy, and rights ownership are still TBD and do not block the path-based first migration.

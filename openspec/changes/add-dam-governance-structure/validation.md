@@ -10,7 +10,7 @@ Environment: `leadstec-dev` (`author-p80707-e1685574.adobeaemcloud.com`)
 - The target structure contains 72 `sling:Folder` descendants.
 - Global and Central Asia are parallel roots beneath `/content/dam/li-auto`.
 - UAE, SA, NL, KW, KZ, and UZ language leaves match the approved architecture document.
-- Dynamic Media configuration and URLs were not introduced.
+- No Dynamic Media configuration, profile, or authored Dynamic Media URL was introduced. The existing sandbox asset-processing pipeline remains unchanged.
 
 ## Source validation
 
@@ -24,6 +24,7 @@ Environment: `leadstec-dev` (`author-p80707-e1685574.adobeaemcloud.com`)
 - Query below `/content/dam/li-auto` returned exactly 41 `dam:Asset` nodes.
 - All 41 assets have `dc:title`, `dc:description`, `dc:language=und`, and `dc:source` metadata.
 - All 41 assets have a `jcr:content/renditions/original` node.
+- A recursive Full Process was run on `/content/dam/li-auto/shared` after upload; all 41 assets reached `dam:assetState=processed` and none remained `processing` or `failed`.
 - Representative video original reports `jcr:mimeType=video/mp4` and `:jcr:data=9058723` bytes.
 
 ## Homepage reference validation
@@ -45,12 +46,20 @@ Environment: `leadstec-dev` (`author-p80707-e1685574.adobeaemcloud.com`)
 
 ## Delivery status
 
-- Public Preview currently returns HTTP 200 but still contains the previously published `/content/dam/li-demo` video references.
-- The new assets and page changes therefore still require Author UI publication.
-- The Browser session currently opens the AEM login page. Publication and final 1920px/390px rendering validation remain pending until the user signs in.
+- `paths.json` maps `/content/dam/li-auto/` to `/assets/` and explicitly includes the DAM root for direct EDS asset publication.
+- The `home-carousel` video field is an AEM Assets `reference`; all three existing carousel item `modelFields` values were aligned to `video@reference`.
+- AEM Assets Quick Publish queued the story media, and AEM Sites Quick Publish confirmed that Homepage and its references were published.
+- Preview Homepage HTML returns HTTP 200 and serializes the three videos as `/assets/shared/brand/homepage/stories/*.mp4` links.
+- Each human-readable MP4 URL returns HTTP 301 to a same-origin `media_*.mp4`; all three final responses are HTTP 200 with `content-type: video/mp4` and exact source byte lengths (9,058,723; 7,313,485; 26,584,208).
+- Public Preview at 1920x1080: Banner visible (`display:block`, 816.95px high), Header/Footer present, no horizontal overflow, no `.block-error`, three videos `readyState=4`, and no console errors.
+- Public Preview at 390x844: Banner visible (`display:block`, 585px high), Header/Footer present, no horizontal overflow, no `.block-error`, three videos `readyState=4`, and no console errors.
+- AEM Author at 390x844: Banner visible, six sampled Banner images have non-zero natural dimensions, three videos are ready without errors, Header/Footer are present, no horizontal overflow, and no `.block-error`.
 
 ## Repository validation
 
 - `openspec validate add-dam-governance-structure --strict`: passed.
+- `npm run build:json`: passed.
+- `npm run lint`: passed.
 - `git diff --check`: passed.
-- No production JavaScript, CSS, Universal Editor model, or `lixiang2` source file was modified.
+- `lixiang2` source files were not modified.
+- Commit `4778f95` was pushed to `origin/main` with the DAM path mapping and aligned video reference model.
