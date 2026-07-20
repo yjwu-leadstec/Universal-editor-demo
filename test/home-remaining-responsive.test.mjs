@@ -15,6 +15,15 @@ test('desktop carousels derive their height from the official responsive card ge
   assert.match(carouselCss, /--home-card-step:\s*var\(--home-card-w\)/);
   assert.match(carouselCss, /padding:\s*clamp\(120px, 8\.3333vw, 160px\)/);
   assert.match(carouselCss, /font-family:\s*licium-regular/);
+  assert.match(carouselCss, /width:\s*clamp\(36px, 2\.5vw, 48px\)/);
+  assert.match(carouselCss, /width:\s*clamp\(18px, 1\.25vw, 24px\)/);
+});
+
+test('story and product CTAs retain the official directional affordances', () => {
+  assert.match(carouselCss, /\.home-carousel\.story \.home-horizontal-copy span::after/);
+  assert.match(carouselCss, /clip-path:\s*polygon\(12% 0, 100% 50%, 12% 100%\)/);
+  assert.match(productCss, /\.home-product-list \.button-link::after/);
+  assert.match(productCss, /transform:\s*rotate\(45deg\)/);
 });
 
 test('1024px carousels use the official scaled medium-screen rhythm', () => {
@@ -25,6 +34,7 @@ test('1024px carousels use the official scaled medium-screen rhythm', () => {
   );
   assert.match(carouselCss, /font-size:\s*3\.4226vw/);
   assert.match(carouselCss, /line-height:\s*4\.6131vw/);
+  assert.match(carouselCss, /width:\s*3\.5714vw/);
 });
 
 test('mobile story and tech carousels keep their independent official spacing', () => {
@@ -52,4 +62,6 @@ test('product tiles scale gap, copy inset, and typography across desktop and med
   assert.match(productCss, /@media \(width >= 1560px\)/);
   assert.match(productCss, /@media \(width <= 1100px\) and \(width > 820px\)/);
   assert.match(productCss, /font-family:\s*licium-regular/);
+  assert.match(productCss, /width:\s*clamp\(82px, 5\.397vw, 103\.62px\)/);
+  assert.match(productCss, /font-size:\s*clamp\(12px, 0\.8333vw, 16px\)/);
 });
