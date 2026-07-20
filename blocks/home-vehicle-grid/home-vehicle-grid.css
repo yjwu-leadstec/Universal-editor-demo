@@ -15,7 +15,7 @@
 }
 
 /* Universal Editor auto-sizes its canvas iframe; cap desktop viewport units to avoid a resize loop. */
-@media (width > 820px) {
+@media (width > 1024px) {
   .adobe-ue-edit .home-vehicle-grid .vehicle-grid {
     height: clamp(720px, 100vh, 1080px);
   }
@@ -82,7 +82,7 @@
 /* ── 文案层 ── */
 .home-vehicle-grid .vehicle-copy {
   position: absolute;
-  inset: 90px 40px 24px;
+  inset: 4.6875vw 2.0833vw 24px;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -104,7 +104,7 @@
 .home-vehicle-grid .vehicle-logo {
   display: block;
   width: 100%;
-  height: 38px;
+  height: 2.6042vw;
 }
 
 .home-vehicle-grid .vehicle-logo picture,
@@ -116,7 +116,7 @@
 }
 
 .home-vehicle-grid .vehicle-subtitle {
-  margin-top: auto;
+  margin-top: 4px;
   color: #fff;
   font-size: 14px;
   line-height: 22px;
@@ -193,15 +193,61 @@
   }
 }
 
-/* ── 移动端 ≤820px：竖向堆叠 ── */
-@media (width <= 820px) {
+/* ── 中屏 ≤1024px：首张通栏，其余两列，全部保持 16:9 ── */
+@media (width <= 1024px) {
   .home-vehicle-grid .vehicle-grid {
-    display: block;
+    display: flex;
     height: auto;
     min-height: 0;
+    flex-wrap: wrap;
   }
 
-  /* 可选：严格复刻首页移动端流（banner 承接 hero）时隐藏大卡 */
+  .home-vehicle-grid .vehicle-tile {
+    width: 50%;
+    aspect-ratio: 16 / 9;
+    flex: 0 0 auto;
+  }
+
+  .home-vehicle-grid .vehicle-tile.large {
+    order: -1;
+    width: 100%;
+  }
+
+  .home-vehicle-grid .vehicle-copy {
+    inset: 4.9609vw 2.9766vw auto;
+  }
+
+  .home-vehicle-grid .vehicle-tile.large .vehicle-copy {
+    inset-block-start: 7.9365vw;
+  }
+
+  .home-vehicle-grid .vehicle-logo {
+    height: 3.7201vw;
+  }
+
+  .home-vehicle-grid .vehicle-actions {
+    display: none;
+  }
+
+  .home-vehicle-grid .vehicle-tile:hover .vehicle-media img,
+  .home-vehicle-grid .vehicle-tile:focus-visible .vehicle-media img {
+    transform: none;
+  }
+
+  .home-vehicle-grid .vehicle-tile:hover .tile-shade,
+  .home-vehicle-grid .vehicle-tile:focus-visible .tile-shade {
+    opacity: 0;
+  }
+}
+
+/* ── 小屏 ≤720px：车型卡单列堆叠 ── */
+@media (width <= 720px) {
+  .home-vehicle-grid .vehicle-grid {
+    display: block;
+    overflow: hidden;
+  }
+
+  /* 官网移动端由普通车型卡承接首屏，隐藏 featured 大卡。 */
   .home-vehicle-grid.hide-large-mobile .vehicle-tile.large {
     display: none;
   }
@@ -209,14 +255,7 @@
   .home-vehicle-grid .vehicle-tile {
     display: block;
     width: 100%;
-
-    /* Cap viewport height by the mobile media ratio for auto-sized editor iframes. */
-    min-height: min(26vh, 56.2667vw);
     margin-bottom: 4px;
-  }
-
-  .home-vehicle-grid .vehicle-tile.large {
-    min-height: 585px;
   }
 
   .home-vehicle-grid .vehicle-tile.has-mobile-media > .vehicle-media:not(.vehicle-media-mobile) {
@@ -250,12 +289,7 @@
     justify-content: flex-end;
     text-align: left;
     inset: 16px auto 16px 24px;
-    width: 210px;
-  }
-
-  .home-vehicle-grid .vehicle-tile.large .vehicle-copy {
-    inset: 40px auto 40px 24px;
-    width: 205px;
+    width: 60%;
   }
 
   .home-vehicle-grid .vehicle-copy strong {
@@ -263,21 +297,12 @@
   }
 
   .home-vehicle-grid .vehicle-logo {
-    width: 210px;
+    width: 100%;
     height: 36px;
-  }
-
-  .home-vehicle-grid .vehicle-tile.large .vehicle-logo {
-    width: 205px;
-    height: 68px;
   }
 
   .home-vehicle-grid .vehicle-logo img {
     object-position: left bottom;
-  }
-
-  .home-vehicle-grid .vehicle-actions {
-    display: none;
   }
 }
 

@@ -2,8 +2,10 @@
  * Home Vehicle Grid Block
  *
  * 首页车型网格 + 可选充电促销区。像素对齐 liauto.com 首屏：
- * - 4 列 × 2 行网格，large 卡片跨 2 列（首张大卡），其余小卡。
- * - hover：图片放大 10% + 黑色遮罩渐显 + 副标题上移 + Learn More/Order Now 显现。
+ * - >1024px 为 4 列 × 2 行；721–1024px 为首张通栏 + 两列；≤720px 单列。
+ * - large 卡片始终排在视觉首位，移动端可通过 hide-large-mobile 隐藏。
+ * - 桌面 hover：图片放大 3% + 黑色遮罩渐显 + Learn More/Order Now 显现。
+ * - 官方 Logo 素材已包含车型副标题；仅无 Logo 的文本回退卡另行渲染 subtitle。
  * - 移动端：竖向堆叠，文案左下对齐。
  *
  * 稳健取值（product-showcase 式按类型查询，兼容可选字段缺省 + EDS 字段折叠）：
@@ -76,7 +78,9 @@ function tileMarkup(tile) {
     <span class="tile-shade" aria-hidden="true"></span>
     <span class="vehicle-copy">
       ${mark}
-      ${tile.subtitle ? html`<small class="vehicle-subtitle">${tile.subtitle}</small>` : nothing}
+      ${!tile.logoPicture && tile.subtitle
+    ? html`<small class="vehicle-subtitle">${tile.subtitle}</small>`
+    : nothing}
       ${tile.kind === 'charging'
     ? html`<span class="vehicle-actions"><span class="button-link ghost">Learn More</span></span>`
     : html`<span class="vehicle-actions">
