@@ -96,10 +96,10 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
+          "component": "reference",
           "name": "video",
           "label": "Video (optional)",
-          "description": "story 视频卡的 mp4；填写后居中卡片自动播放",
+          "description": "story 视频卡的 AEM Assets MP4；填写后居中卡片自动播放",
           "valueType": "string"
         },
         {
