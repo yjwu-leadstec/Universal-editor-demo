@@ -134,13 +134,16 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 
 ## AEM Author 内容路径
 
-当前 EDS 项目的页面内容统一维护在以下 AEM Author 路径：
+当前 EDS 项目的页面内容统一维护在 `/content/demo-site`，采用扁平独立站点根：
 
-- Sites 控制台：[打开当前 EDS 内容目录](https://author-p80707-e1685574.adobeaemcloud.com/ui#/aem/sites.html/content/demo-site/language-master/en)
-- JCR 内容根路径：`/content/demo-site/language-master/en`
+- Sites 控制台：[打开当前 EDS 内容目录](https://author-p80707-e1685574.adobeaemcloud.com/ui#/aem/sites.html/content/demo-site)
+- 内容母版：`/content/demo-site/language-master/en`
+- Global 管理站点：`/content/demo-site/global`
+- Central Asia 管理站点：`/content/demo-site/central-asia`
+- 对外站点：`/content/demo-site/en`、`ae`、`sa`、`nl`、`kw`、`kz`、`uz`
 - 环境：`author-p80707-e1685574.adobeaemcloud.com`
 
-新增或更新英文页面内容时，默认使用该内容根路径，不得自行切换到其他站点、语言根或 AEM 环境。该路径属于可变的项目配置；只有用户明确提供更新后的路径时才修改本记录，并从新路径继续后续内容同步。
+管理关系不得编码成 JCR 父子层级：`global`、`central-asia` 和所有对外市场站点处于同一层。Global English 直接使用 `/en`；其他正式语言根为 `ae/{en,ar}`、`sa/ar`、`nl/nl`、`kw/en`、`kz/{kk,ru}`、`uz/{uz,ru}`。每个语言根下维护自己的 `homepage`、`nav`、`footer` 和业务页面；共享国家/语言目录维护在 `/en/locale-directory`。开发和回归测试仍默认使用 `/language-master/en/homepage`，不得自行增加 Germany、Bahrain 或其他未批准市场。
 
 ## Homepage Banner 强制规则
 
@@ -148,3 +151,11 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 - 不得通过移动端媒体查询、内容变体、block class 或 JavaScript 条件隐藏整个 `home-banner`。响应式实现只能调整图片裁切、尺寸、文案、按钮和轮播控件。
 - 如果 Figma、旧设计说明或参考复刻与本规则冲突，以本规则和 AEM Author 当前业务要求为准；不得据此实现“移动端隐藏 Banner”。
 - 修改 Homepage、`home-banner`、全局响应式样式或内容模型后，必须至少在桌面端 `1920px` 和移动端 `390px` 验证 Banner 可见、图片成功加载、区块高度大于 `0`，且不存在 `.block-error`。
+
+## Header 响应式强制规则
+
+- 全站布局仍是三档：`1441px+` 大屏、`720-1440px` 中屏、`719px-` 小屏；Header 另有组件级 `1000px` 行为断点，不得把它解释为第四套全站布局。
+- `>=1000px` 使用桌面导航；首页顶部透明态使用渐变和 `20px` 背景模糊。
+- `<1000px` 使用汉堡导航；首页顶部必须完全透明，不得保留渐变或 `backdrop-filter`。
+- 首页透明 Header 在所有尺寸下都覆盖首个组件；滚动、打开导航/面板/语言弹窗时切换为白底、无模糊和深色前景。
+- 修改 Header 时必须同时校验 CSS 媒体查询与 JavaScript `matchMedia` ，并至少验证 `999px` / `1000px` 边界、`390px` 小屏和 `1024px` 中屏。

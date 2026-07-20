@@ -84,7 +84,7 @@
 
 | 路径类型 | 示例 | 作用 | 谁维护 |
 | --- | --- | --- | --- |
-| AEM Sites 内容路径 | `/content/demo-site/language-master/en/homepage` | 页面、Header、Footer、组件和语言内容 | 页面作者 |
+| AEM Sites 内容路径 | `/content/demo-site/ae/ar/homepage` | 页面、Header、Footer、组件和语言内容 | 页面作者 |
 | AEM DAM 资产路径 | `/content/dam/li-auto/shared/...` | 图片、视频、PDF 等二进制及元数据 | 资产作者 |
 | EDS 公共交付路径 | `/assets/shared/...` 或 `media_<hash>` | Preview/Live 对终端浏览器提供资产 | EDS 自动生成 |
 
@@ -92,9 +92,24 @@
 
 ### 3.2 页面内容结构和 DAM 结构互不替代
 
-- Homepage：`/content/demo-site/language-master/en/homepage`
-- Header：`/content/demo-site/language-master/en/nav`
-- Footer：`/content/demo-site/language-master/en/footer`
+```text
+/content/demo-site
+├── language-master/en
+├── global
+├── central-asia
+├── en
+├── ae/{en,ar}
+├── sa/ar
+├── nl/nl
+├── kw/en
+├── kz/{kk,ru}
+└── uz/{uz,ru}
+```
+
+- 每个语言根下维护 `homepage`、`nav`、`footer` 和业务页面；例如 UAE Arabic Header 为 `/content/demo-site/ae/ar/nav`。
+- `language-master`、`global`、`central-asia` 和所有对外市场站点都是 `/content/demo-site` 的直接子节点。
+- `global` 与 `central-asia` 是相互独立的管理站点；它们对市场的管理关系通过运营、权限和复制流程表达，不形成 JCR 父子路径。
+- Global 对外英文站使用 `/content/demo-site/en`；共享地区/语言目录为 `/content/demo-site/en/locale-directory`。
 - 以上是 AEM Sites 内容节点，不属于 DAM。
 - `/site/nav` 属于旧实现，不作为当前正式 Header 内容来源。
 - Header、Footer 如果引用 Logo、图标或其他媒体，媒体仍按本文的 `shared` 或市场专属规则放入 DAM。
@@ -492,6 +507,8 @@ Homepage `home-banner` 在桌面、平板和移动端都必须显示。以下情
 7. 创建对应 AEM Sites 市场/语言页面；
 8. 配置 Header 的国家/语言切换关系；
 9. 发布并验证路由、hreflang、Canonical、资产和响应式页面。
+
+AEM Sites 使用扁平独立站点根：Global English 为 `/content/demo-site/en`，其他市场为 `/content/demo-site/<market>/<language>`。`global` 和 `central-asia` 仅作为同层独立管理站点，不得把 AE/SA/NL/KW 或 KZ/UZ 创建在它们下面，也不得增加 Germany、Bahrain 等未批准站点。
 
 因为当前 EDS mapping 已包含整个 `/content/dam/li-auto/`，在该根目录内新增市场文件夹通常不需要再增加独立 DAM mapping；但仍需验证站点配置、页面路径和实际发布范围。
 

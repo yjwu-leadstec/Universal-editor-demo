@@ -355,7 +355,6 @@ function buildMobileItem(item) {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'mobile-item-label';
-  button.dataset.mobileTitle = item.label;
   button.setAttribute('aria-expanded', 'false');
   const label = document.createElement('span');
   label.textContent = item.label;
@@ -530,18 +529,6 @@ export default async function decorate(block) {
   brand.append(logoLink);
   if (data.brandSection) moveInstrumentation(data.brandSection, brand);
 
-  const mobileBack = document.createElement('button');
-  mobileBack.type = 'button';
-  mobileBack.className = 'header-mobile-back';
-  mobileBack.setAttribute('aria-label', data.settings.backNavigationLabel);
-  const mobileBackIcon = document.createElement('span');
-  mobileBackIcon.setAttribute('aria-hidden', 'true');
-  mobileBack.append(mobileBackIcon);
-
-  const mobileTitle = document.createElement('span');
-  mobileTitle.className = 'header-mobile-title';
-  mobileTitle.setAttribute('aria-live', 'polite');
-
   const navList = document.createElement('div');
   navList.className = 'header-sections';
   const navListInner = document.createElement('div');
@@ -616,7 +603,7 @@ export default async function decorate(block) {
   menuIcon.setAttribute('aria-hidden', 'true');
   hamburger.append(menuIcon);
 
-  inner.append(brand, mobileBack, mobileTitle, navList, tools, hamburger);
+  inner.append(brand, navList, tools, hamburger);
   nav.append(inner);
 
   const backdrop = document.createElement('div');
@@ -745,6 +732,16 @@ export default async function decorate(block) {
     if (DESKTOP_MQ.matches && !nav.contains(event.target)) closePanel();
   });
 
+  function collapseMobileAccordions(restoreFocus = false) {
+    const expanded = mobileMenu.querySelector(
+      '.mobile-item-label[aria-expanded="true"], .header-mobile-language[aria-expanded="true"]',
+    );
+    mobileMenu.querySelectorAll('.mobile-item-label[aria-expanded="true"]')
+      .forEach((button) => button.setAttribute('aria-expanded', 'false'));
+    mobileLanguage?.setAttribute('aria-expanded', 'false');
+    if (restoreFocus && expanded) expanded.focus();
+  }
+
   function toggleMobileMenu(forceClose, restoreFocus = false) {
     const isOpen = nav.getAttribute('aria-expanded') === 'true';
     const shouldClose = forceClose === true || isOpen;
@@ -755,29 +752,13 @@ export default async function decorate(block) {
       shouldClose ? data.settings.openNavigationLabel : data.settings.closeNavigationLabel,
     );
     document.body.classList.toggle('nav-open', !shouldClose);
+    document.documentElement.classList.toggle('nav-open', !shouldClose);
     if (!shouldClose) closePanel();
-    if (shouldClose) {
-      mobileMenu.querySelectorAll('.mobile-item-label[aria-expanded="true"]')
-        .forEach((button) => button.setAttribute('aria-expanded', 'false'));
-      mobileLanguage?.setAttribute('aria-expanded', 'false');
-      delete nav.dataset.mobileView;
-      mobileTitle.textContent = '';
-    }
+    if (shouldClose) collapseMobileAccordions();
     if (shouldClose && restoreFocus) hamburger.focus();
   }
 
-  function showMobileRoot(restoreFocus = false) {
-    const expanded = mobileMenu.querySelector('.mobile-item-label[aria-expanded="true"]');
-    mobileMenu.querySelectorAll('.mobile-item-label[aria-expanded="true"]')
-      .forEach((button) => button.setAttribute('aria-expanded', 'false'));
-    mobileLanguage?.setAttribute('aria-expanded', 'false');
-    delete nav.dataset.mobileView;
-    mobileTitle.textContent = '';
-    if (restoreFocus && expanded) expanded.focus();
-  }
-
   hamburger.addEventListener('click', () => toggleMobileMenu());
-  mobileBack.addEventListener('click', () => showMobileRoot(true));
   mobileMenu.querySelectorAll('.mobile-item-label[aria-expanded]').forEach((button) => {
     button.addEventListener('click', () => {
       const expanded = button.getAttribute('aria-expanded') === 'true';
@@ -785,18 +766,11 @@ export default async function decorate(block) {
         if (other !== button) other.setAttribute('aria-expanded', 'false');
       });
       button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-      if (expanded) {
-        delete nav.dataset.mobileView;
-        mobileTitle.textContent = '';
-      } else {
-        nav.dataset.mobileView = 'detail';
-        mobileTitle.textContent = button.dataset.mobileTitle;
-      }
     });
   });
   mobileLanguage?.addEventListener('click', () => {
     const isExpanded = mobileLanguage.getAttribute('aria-expanded') === 'true';
-    showMobileRoot();
+    collapseMobileAccordions();
     mobileLanguage.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
   });
   mobileMenu.querySelectorAll('a').forEach((link) => {
@@ -806,7 +780,7 @@ export default async function decorate(block) {
   window.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       if (DESKTOP_MQ.matches) closePanel();
-      else if (nav.dataset.mobileView === 'detail') showMobileRoot(true);
+      else if (mobileMenu.querySelector('[aria-expanded="true"]')) collapseMobileAccordions(true);
       else if (nav.getAttribute('aria-expanded') === 'true') toggleMobileMenu(true, true);
       return;
     }

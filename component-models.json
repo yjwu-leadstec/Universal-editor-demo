@@ -2275,7 +2275,7 @@
         "component": "text",
         "name": "marketCode",
         "label": "Market Code",
-        "description": "Stable lowercase key such as global, kz, uz, or bh",
+        "description": "Stable lowercase key such as global, ae, sa, nl, kw, kz, or uz",
         "valueType": "string"
       },
       {

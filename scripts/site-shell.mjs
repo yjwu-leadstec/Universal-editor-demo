@@ -38,40 +38,51 @@ export function canonicalLanguageTag(value) {
 }
 
 /**
- * Resolve the language root encoded in a delivery URL.
+ * Resolve language-master, Global English, or market/language roots in a delivery URL.
  * @param {string} pathname
  * @returns {{ root: string, marketCode: string, languageTag: string } | null}
  */
 export function resolveLocaleContext(pathname) {
   const path = normalizePath(pathname);
   const segments = path.split('/').filter(Boolean);
-  if (segments.length < 2) return null;
+  if (!segments.length) return null;
 
-  let localeIndex = 0;
-  if (segments[0] === 'content') {
-    localeIndex = segments.findIndex((segment, index) => index >= 2
-      && (segment === 'language-master' || MARKET_CODE_PATTERN.test(segment.toLowerCase()))
-      && canonicalLanguageTag(segments[index + 1]));
-    if (localeIndex < 0) return null;
-  }
+  const localeIndex = segments[0] === 'content' ? 2 : 0;
+  const segment = segments[localeIndex]?.toLowerCase();
+  if (!segment) return null;
 
-  if (segments[localeIndex] === 'language-master') {
+  if (segment === 'language-master') {
     const languageTag = canonicalLanguageTag(segments[localeIndex + 1]);
-    return languageTag ? {
-      root: `/${segments.slice(0, localeIndex + 1).join('/')}/${segments[localeIndex + 1].toLowerCase()}`,
-      marketCode: 'language-master',
-      languageTag,
-    } : null;
+    if (languageTag) {
+      return {
+        root: `/${segments.slice(0, localeIndex).concat(segment, segments[localeIndex + 1].toLowerCase()).join('/')}`,
+        marketCode: 'language-master',
+        languageTag,
+      };
+    }
   }
 
-  const marketCode = segments[localeIndex].toLowerCase();
+  if (segment === 'en') {
+    return {
+      root: `/${segments.slice(0, localeIndex).concat(segment).join('/')}`,
+      marketCode: 'global',
+      languageTag: 'en',
+    };
+  }
+
   const languageTag = canonicalLanguageTag(segments[localeIndex + 1]);
-  if (!MARKET_CODE_PATTERN.test(marketCode) || !languageTag) return null;
-  return {
-    root: `/${segments.slice(0, localeIndex).concat(marketCode, segments[localeIndex + 1].toLowerCase()).join('/')}`,
-    marketCode,
-    languageTag,
-  };
+  if (MARKET_CODE_PATTERN.test(segment) && languageTag) {
+    return {
+      root: `/${segments.slice(0, localeIndex).concat(
+        segment,
+        segments[localeIndex + 1].toLowerCase(),
+      ).join('/')}`,
+      marketCode: segment,
+      languageTag,
+    };
+  }
+
+  return null;
 }
 
 /**

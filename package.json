@@ -8,6 +8,8 @@
     "lint:css": "stylelint \"blocks/**/*.css\" \"styles/*.css\"",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:fix": "npm run lint:js -- --fix && npm run lint:css -- --fix",
+    "test": "node --test test/*.test.mjs",
+    "test:header": "node --test test/header-responsive.test.mjs",
     "test:shell": "node --test test/site-shell.test.mjs",
     "build:json": "npm-run-all -p build:json:models build:json:definitions build:json:filters",
     "build:json:models": "merge-json-cli -i \"models/_component-models.json\" -o \"component-models.json\"",
