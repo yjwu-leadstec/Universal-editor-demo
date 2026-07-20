@@ -191,14 +191,32 @@ function accordionItemTemplate(column, columnRef, index) {
   `;
 }
 
+function bottomItemTemplate(item) {
+  return item.type === 'link' && item.href
+    ? html`<a class="footer-bottom-link" href="${item.href}">${item.text}</a>`
+    : html`<span class="footer-bottom-text">${item.text}</span>`;
+}
+
 function bottomBarTemplate(items, bottomRef) {
+  const legalStart = items.findIndex((item) => item.type === 'text');
+  const policyItems = legalStart >= 0 ? items.slice(0, legalStart) : items;
+  const legalItems = legalStart >= 0 ? items.slice(legalStart) : [];
   return html`
     <div class="footer-bottom" ${ref(bottomRef)}>
-      ${repeat(items, (item, index) => index, (item) => (
-    item.type === 'link' && item.href
-      ? html`<a class="footer-bottom-link" href="${item.href}">${item.text}</a>`
-      : html`<span class="footer-bottom-text">${item.text}</span>`
-  ))}
+      <div class="footer-bottom-policies">
+        ${repeat(
+    policyItems,
+    (item, index) => index,
+    (item) => bottomItemTemplate(item),
+  )}
+      </div>
+      <div class="footer-bottom-legal">
+        ${repeat(
+    legalItems,
+    (item, index) => index,
+    (item) => bottomItemTemplate(item),
+  )}
+      </div>
     </div>
   `;
 }
