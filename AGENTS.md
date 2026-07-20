@@ -132,6 +132,14 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 - Preview: `https://main--{repo}--{owner}.aem.page/`
 - Live: `https://main--{repo}--{owner}.aem.live/`
 
+## DAM 与 Dynamic Media 强制边界
+
+- 本项目使用 AEM DAM 作为资产库，但**不把 Dynamic Media、Scene7、Smart Crop 或 `/adobe/dynamicmedia/` URL 作为运行依赖**。不得把手工 DM URL、`dm-aid` URL 或 Scene7 URL 写入页面字段、模型默认值或代码。
+- 页面资产属性必须保存 `/content/dam/li-auto/...` 标准 DAM 引用；旧 `/content/dam/li-demo/...` 仅属迁移期遗留，不得用于新增或正式内容。`paths.json` 负责将 `/content/dam/li-auto/` 映射到 EDS `/assets/` 并包含该内容根。
+- `/content/dam/li-auto` 必须绑定站点 EDS Cloud Configuration：`cq:conf=/conf/demo-site`。发布前应验证 DAM 资产、引用页面及此配置均进入 EDS Preview。
+- `leadstec-dev` 是共享 Sandbox，可能因环境级 Dynamic Media 配置而在 Author HTML 中把普通 `reference` 字段临时渲染为 `/adobe/dynamicmedia/...`。这只是该环境的输出行为，不能据此改变项目架构；**不得把“Reprocess Assets 到 DM”当作项目修复或验收条件**。
+- 无 DM 验收以 JCR 中的 `/content/dam/li-auto/...` 引用、`paths.json` 映射、EDS Preview `/assets/...` 可访问和页面图片成功加载为准。若 Sandbox 的全局 DM 设置妨碍 Author 预览，应由 AEM 管理员调整共享环境配置，不得在 block 中硬编码 UUID 到 DAM 路径的映射。
+
 ## AEM Author 内容路径
 
 当前 EDS 项目的页面内容统一维护在 `/content/demo-site`，采用扁平独立站点根：
