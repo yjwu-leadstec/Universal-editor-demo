@@ -42,7 +42,8 @@ function extractCard(row, index) {
   const anchors = [...row.querySelectorAll('a')];
   const videoAnchor = anchors.find((a) => isVideoHref(a.getAttribute('href')));
   const linkAnchor = anchors.find((a) => a !== videoAnchor);
-  const [title = '', action = ''] = textCells(row);
+  // UE 会为可选字段保留空单元格；忽略空值，避免 tech 的标题被误当成 action。
+  const [title = '', action = ''] = textCells(row).filter(Boolean);
   const posterPicture = pics[0] || null;
 
   return {

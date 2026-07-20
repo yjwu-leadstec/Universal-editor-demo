@@ -4,37 +4,42 @@
 .home-carousel {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  min-height: 1216px;
-  padding: 160px 0 80px;
+  min-height: 0;
+  padding: clamp(120px, 8.3333vw, 160px) 0 clamp(60px, 4.1667vw, 80px);
   overflow: hidden;
   box-sizing: border-box;
+  font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.home-carousel h2,
+.home-carousel h3 {
+  font-family: inherit;
 }
 
 .home-carousel.tech {
-  padding: 160px 0 80px;
   margin-bottom: -25px;
 }
 
 /* ── 标题区 ── */
 .home-carousel .section-heading {
   width: min(1480px, calc(100vw - 48px));
-  margin: 0 auto 50px;
+  margin: 0 auto clamp(42px, 2.9167vw, 56px);
   text-align: center;
 }
 
 .home-carousel .section-heading h2 {
   margin: 0;
-  font-size: 46px;
+  font-size: clamp(34.5px, 2.3958vw, 46px);
   font-weight: 400;
-  line-height: 62px;
+  line-height: clamp(46.5px, 3.2292vw, 62px);
   color: rgb(25 25 25);
 }
 
 .home-carousel .section-heading .section-eyebrow {
-  margin: 0 0 8px;
+  margin: 0 0 clamp(6px, 0.4167vw, 8px);
   color: rgb(25 25 25);
-  font-size: 16px;
-  line-height: 24px;
+  font-size: clamp(12px, 0.8333vw, 16px);
+  line-height: clamp(18px, 1.25vw, 24px);
 }
 
 .home-carousel.tech .section-heading {
@@ -61,26 +66,29 @@
 
 /* ── coverflow 轨道 ── */
 .home-carousel .home-horizontal {
-  --home-card-w: 77.0833vw;
-  --home-card-h: 43.3333vw;
-  --home-card-step: calc(var(--home-card-w) + 16px);
+  --home-card-w: calc(77.0833vw + 16px);
+  --home-card-h: 43.3594vw;
+  --home-card-step: var(--home-card-w);
 
   position: relative;
-  width: 100%;
+  width: var(--home-card-w);
   height: var(--home-card-h);
+  margin: 0 auto;
   overflow: visible;
 }
 
 .home-carousel .home-horizontal-card {
   position: absolute;
   top: 0;
-  left: 50vw;
+  left: 50%;
   width: var(--home-card-w);
   height: var(--home-card-h);
+  padding: 0 8px;
   overflow: hidden;
+  box-sizing: border-box;
   border-radius: 2px;
   color: #fff;
-  background: #111;
+  background: transparent;
   opacity: 0;
   z-index: 0;
   pointer-events: none;
@@ -128,6 +136,15 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.home-carousel .home-horizontal-media {
+  left: 8px;
+  right: 8px;
+  width: auto;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #111;
 }
 
 .home-carousel .home-horizontal-media video {
@@ -204,28 +221,29 @@
 }
 
 .home-carousel .home-horizontal-arrow-prev {
-  left: calc(50vw - var(--home-card-w) / 2 + 40px);
+  left: 40px;
 }
 
 .home-carousel .home-horizontal-arrow-next {
-  right: calc(50vw - var(--home-card-w) / 2 + 40px);
+  right: 40px;
 }
 
 /* ── 卡片文案 ── */
 .home-carousel .home-horizontal-copy {
   position: absolute;
-  inset: 100px 80px auto;
+  inset: clamp(75px, 5.2083vw, 100px) 8px auto;
   z-index: 1;
   text-align: center;
 }
 
 .home-carousel .home-horizontal-copy h3 {
-  display: inline-block;
-  max-width: 823px;
+  display: block;
+  width: clamp(617.45px, 42.8784vw, 823.27px);
+  max-width: calc(100% - 32px);
   margin: 0 auto;
   color: #fff;
-  font-size: 32px;
-  line-height: 44px;
+  font-size: clamp(24px, 1.6667vw, 32px);
+  line-height: clamp(33px, 2.2917vw, 44px);
   font-weight: 400;
   white-space: nowrap;
 }
@@ -233,19 +251,21 @@
 .home-carousel .home-horizontal-copy span {
   display: block;
   width: fit-content;
-  margin: 20px auto 0;
-  font-size: 13px;
+  margin: clamp(15px, 1.0417vw, 20px) auto 0;
+  font-size: clamp(12px, 0.8333vw, 16px);
+  line-height: clamp(21px, 1.4583vw, 28px);
 }
 
 /* ── tech variant 覆盖 ── */
 .home-carousel.tech .home-horizontal-copy {
-  top: 60px;
+  top: clamp(60px, 4.1667vw, 80px);
 }
 
 .home-carousel.tech .home-horizontal-copy h3 {
+  width: auto;
   max-width: 620px;
-  font-size: 24px;
-  line-height: 33px;
+  font-size: clamp(24px, 1.6667vw, 32px);
+  line-height: clamp(33px, 2.2917vw, 44px);
   white-space: normal;
 }
 
@@ -253,13 +273,65 @@
 .home-carousel .horizontal-dots {
   position: absolute;
   left: 50%;
-  bottom: 62px;
+  bottom: clamp(45px, 3.125vw, 60px);
   z-index: 3;
   display: flex;
-  width: 56px;
+  width: auto;
   justify-content: center;
   gap: 4px;
   transform: translateX(-50%);
+}
+
+/* 1024px 中屏沿用官网的 84 列缩放基准。 */
+@media (width <= 1100px) and (width > 820px) {
+  .home-carousel {
+    padding: 11.9048vw 0 5.9524vw;
+  }
+
+  .home-carousel .section-heading {
+    margin-bottom: 4.1667vw;
+  }
+
+  .home-carousel .section-heading h2 {
+    font-size: 3.4226vw;
+    line-height: 4.6131vw;
+  }
+
+  .home-carousel .section-heading .section-eyebrow {
+    margin-bottom: 0.5952vw;
+    font-size: 1.1905vw;
+    line-height: 1.7857vw;
+  }
+
+  .home-carousel .home-horizontal-copy {
+    top: 7.4405vw;
+  }
+
+  .home-carousel .home-horizontal-copy h3 {
+    width: 60vw;
+    font-size: 2.381vw;
+    line-height: 3.2738vw;
+  }
+
+  .home-carousel .home-horizontal-copy span {
+    margin-top: 1.4881vw;
+    font-size: 1.1905vw;
+    line-height: 2.0833vw;
+  }
+
+  .home-carousel.tech .home-horizontal-copy {
+    top: 7.4405vw;
+  }
+
+  .home-carousel.tech .home-horizontal-copy h3 {
+    width: auto;
+    font-size: 2.381vw;
+    line-height: 3.2738vw;
+  }
+
+  .home-carousel .horizontal-dots {
+    bottom: 4.4643vw;
+  }
 }
 
 .home-carousel .horizontal-dots span {
@@ -289,23 +361,28 @@
 /* ── 移动端 ≤820px：单卡堆叠（媒体在上，文案在下白底） ── */
 @media (width <= 820px) {
   .home-carousel {
-    min-height: 0;
-    padding: 80px 0 40px;
+    padding: 80px 0;
   }
 
   .home-carousel:not(.tech) {
-    padding-bottom: 107px;
+    padding-bottom: 80px;
+  }
+
+  .home-carousel.tech {
+    height: auto;
+    margin-bottom: 0;
+    padding: 80px 0 40px;
   }
 
   .home-carousel .section-heading {
     width: 100%;
-    margin-bottom: 36px;
+    margin-bottom: 40px;
     padding: 0 24px;
   }
 
   .home-carousel .section-heading h2 {
-    font-size: 32px;
-    line-height: 1.18;
+    font-size: 30px;
+    line-height: 38px;
   }
 
   .home-carousel .title-desktop {
@@ -316,14 +393,9 @@
     display: inline;
   }
 
-  .home-carousel.tech {
-    height: auto;
-    margin-bottom: 0;
-  }
-
   .home-carousel.tech .section-heading {
     width: 310px;
-    margin: 0 auto 28px;
+    margin: 0 auto 40px;
     padding: 0;
   }
 
@@ -333,88 +405,112 @@
     line-height: 38px;
   }
 
+  .home-carousel.tech .section-heading .section-eyebrow {
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 21px;
+  }
+
   .home-carousel .home-horizontal {
-    width: 100%;
-    height: 369px;
+    --home-card-w: calc(100vw - 32px);
+    --home-card-h: calc((100vw - 40px) * 0.5625 + 172px);
+    --home-card-step: var(--home-card-w);
+
+    width: var(--home-card-w);
+    height: calc(var(--home-card-h) + 22px);
     overflow: visible;
   }
 
   .home-carousel .home-horizontal-card {
-    left: 20px;
-    width: 350px;
-    height: 369px;
+    left: 50%;
+    width: var(--home-card-w);
+    height: var(--home-card-h);
+    padding: 0 4px;
     color: #111;
     background: #fff;
-    transform: translateX(716px);
+    transform: translateX(calc(-50% + var(--home-card-step) * 2));
   }
 
   .home-carousel .home-horizontal-card.is-active {
-    transform: translateX(0);
+    transform: translateX(-50%);
   }
 
   .home-carousel .home-horizontal-card.is-prev {
     opacity: 0;
-    transform: translateX(-358px);
+    transform: translateX(calc(-50% - var(--home-card-step)));
   }
 
   .home-carousel .home-horizontal-card.is-next {
     opacity: 0.6;
-    transform: translateX(358px);
+    transform: translateX(calc(-50% + var(--home-card-step)));
   }
 
   .home-carousel .home-horizontal-card.is-hidden {
     opacity: 0;
-    transform: translateX(716px);
+    transform: translateX(calc(-50% + var(--home-card-step) * 2));
   }
 
   .home-carousel .home-horizontal-media {
     position: relative;
-    height: 197px;
+    left: auto;
+    right: auto;
+    width: 100%;
+    height: calc((100vw - 40px) * 0.5625);
   }
 
   .home-carousel .home-horizontal-copy {
     position: relative;
     inset: auto;
     height: 172px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 24px;
+    padding: 24px 20px 28px;
     background: #fff;
     text-align: center;
   }
 
   .home-carousel .home-horizontal-copy h3 {
     color: #111;
-    font-size: 18px;
-    line-height: 1.34;
+    width: 100%;
+    max-width: none;
+    font-size: 16px;
+    line-height: 24px;
     white-space: normal;
   }
 
   .home-carousel .home-horizontal-copy span {
-    margin-top: 18px;
+    margin-top: 28px;
     color: #111;
     font-size: 12px;
+    line-height: 20px;
   }
 
   .home-carousel.tech .home-horizontal {
-    width: 358px;
-    height: 343px;
+    --home-card-h: calc((100vw - 40px) * 0.6311 + 100px);
+
+    width: var(--home-card-w);
+    height: calc(var(--home-card-h) + 22px);
     margin: 0 auto;
   }
 
   .home-carousel.tech .home-horizontal-card {
-    left: 4px;
-    width: 350px;
-    height: 321px;
+    left: 50%;
+    width: var(--home-card-w);
+    height: var(--home-card-h);
+  }
+
+  .home-carousel.tech .home-horizontal-media {
+    height: calc((100vw - 40px) * 0.6311);
   }
 
   .home-carousel.tech .home-horizontal-copy {
     top: 0;
-    height: 124px;
+    height: 100px;
     justify-content: flex-start;
-    padding: 24px 36px 0;
+    padding: 24px 20px 28px;
   }
 
   .home-carousel.tech .home-horizontal-copy h3 {
@@ -428,8 +524,12 @@
   }
 
   .home-carousel .horizontal-dots {
-    bottom: -22px;
-    gap: 7px;
+    bottom: 0;
+    width: 100%;
+    height: 22px;
+    padding-top: 20px;
+    box-sizing: border-box;
+    gap: 4px;
   }
 
   .home-carousel .horizontal-dots span {
@@ -440,7 +540,4 @@
     background: #111;
   }
 
-  .home-carousel.tech .horizontal-dots {
-    bottom: 10px;
-  }
 }
