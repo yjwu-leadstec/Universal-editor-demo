@@ -43,6 +43,20 @@ function propertyText(block, property) {
   return propertyElement(block, property)?.textContent.trim() || '';
 }
 
+function propertyDamFolder(block, property) {
+  const value = propertyText(block, property);
+  if (value) return value;
+
+  // AEM renders text values that look like repository paths as anchors and may
+  // omit data-aue-prop. Only inspect block-level rows so slide links are ignored.
+  const pathLink = [...block.children]
+    .find((row) => !row.hasAttribute('data-aue-model')
+      && row.querySelector('a[href^="/content/dam/"]'))
+    ?.querySelector('a[href^="/content/dam/"]');
+
+  return pathLink?.getAttribute('href')?.replace(/\.html$/, '') || '';
+}
+
 function extractMobileHero(block) {
   const imagePicture = propertyPicture(block, 'mobileImage');
   if (!imagePicture) return null;
@@ -52,7 +66,7 @@ function extractMobileHero(block) {
     imageAlt: propertyText(block, 'mobileImageAlt') || pictureAlt(imagePicture),
     logoPicture: propertyPicture(block, 'mobileLogo'),
     title: propertyText(block, 'mobileImageAlt') || pictureAlt(imagePicture),
-    damFolder: propertyText(block, 'mobileDamFolder'),
+    damFolder: propertyDamFolder(block, 'mobileDamFolder'),
     mediaRef: createRef(),
     logoRef: createRef(),
   };

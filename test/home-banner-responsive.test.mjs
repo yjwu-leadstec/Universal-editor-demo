@@ -40,6 +40,10 @@ test('mobile asset failure uses the DAM original before restoring the carousel',
   );
   assert.match(
     bannerJs,
+    /querySelector\('a\[href\^="\/content\/dam\/"\]'\)/,
+  );
+  assert.match(
+    bannerJs,
     /classList\.remove\('has-mobile-hero'\)/,
   );
 });
