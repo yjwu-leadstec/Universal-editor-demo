@@ -33,6 +33,7 @@
 }
 
 .home-vehicle-grid .vehicle-tile.large {
+  order: -1;
   grid-column: span 2;
 }
 

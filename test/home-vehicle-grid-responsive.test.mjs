@@ -7,6 +7,13 @@ const [gridCss, gridJs] = await Promise.all([
   readFile(new URL('../blocks/home-vehicle-grid/home-vehicle-grid.js', import.meta.url), 'utf8'),
 ]);
 
+test('desktop vehicle grid places the featured card first across two columns', () => {
+  assert.match(
+    gridCss,
+    /\.home-vehicle-grid \.vehicle-tile\.large\s*\{[^}]*order:\s*-1;[^}]*grid-column:\s*span\s*2;/,
+  );
+});
+
 test('medium vehicle grid uses a full-width feature followed by two-column 16:9 cards', () => {
   assert.match(gridCss, /@media \(width <= 1024px\)/);
   assert.match(
