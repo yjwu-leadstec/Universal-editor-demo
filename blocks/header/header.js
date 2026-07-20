@@ -16,7 +16,9 @@ import {
   safeFragmentOverride,
 } from '../../scripts/site-shell.mjs';
 
-const DESKTOP_MQ = window.matchMedia('(min-width: 720px)');
+// Component-specific behavior breakpoint. Global page layouts still use the
+// project's 720 px / 1441 px responsive tiers.
+const DESKTOP_MQ = window.matchMedia('(min-width: 1000px)');
 const INSTRUMENTATION_PREFIXES = ['data-aue-', 'data-richtext-'];
 const MIGRATION_ROOT_FALLBACK = false;
 const FALLBACK_SETTINGS = {
@@ -617,6 +619,11 @@ export default async function decorate(block) {
   inner.append(brand, mobileBack, mobileTitle, navList, tools, hamburger);
   nav.append(inner);
 
+  const backdrop = document.createElement('div');
+  backdrop.className = 'header-backdrop';
+  backdrop.setAttribute('aria-hidden', 'true');
+  nav.append(backdrop);
+
   const panel = document.createElement('div');
   panel.className = 'header-panel';
   panel.setAttribute('aria-hidden', 'true');
@@ -683,6 +690,9 @@ export default async function decorate(block) {
     window.clearTimeout(closeTimer);
     closeTimer = window.setTimeout(closePanel, 120);
   }
+
+  backdrop.addEventListener('pointermove', schedulePanelClose);
+  backdrop.addEventListener('click', closePanel);
 
   function syncLocaleDialogState(isOpen) {
     nav.classList.toggle('is-locale-open', isOpen);
