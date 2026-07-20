@@ -52,9 +52,39 @@ function extractMobileHero(block) {
     imageAlt: propertyText(block, 'mobileImageAlt') || pictureAlt(imagePicture),
     logoPicture: propertyPicture(block, 'mobileLogo'),
     title: propertyText(block, 'mobileImageAlt') || pictureAlt(imagePicture),
+    damFolder: propertyText(block, 'mobileDamFolder'),
     mediaRef: createRef(),
     logoRef: createRef(),
   };
+}
+
+function damOriginalUrl(img, folder) {
+  if (!img || !folder?.startsWith('/content/dam/')) return '';
+
+  const source = img.getAttribute('src') || '';
+  const fileName = decodeURIComponent(source.split('?')[0].split('/').pop() || '');
+  if (!fileName || fileName === '.' || fileName === '..') return '';
+
+  return `${folder.replace(/\/+$/, '')}/${encodeURIComponent(fileName)}`;
+}
+
+function addDamOriginalFallback(img, folder, onFinalError) {
+  const fallbackUrl = damOriginalUrl(img, folder);
+  let fallbackApplied = false;
+
+  const handleError = () => {
+    if (!fallbackUrl || fallbackApplied) {
+      onFinalError?.();
+      return;
+    }
+
+    fallbackApplied = true;
+    img.closest('picture')?.querySelectorAll('source').forEach((source) => source.remove());
+    img.setAttribute('src', fallbackUrl);
+  };
+
+  img.addEventListener('error', handleError);
+  if (img.complete && !img.naturalWidth) handleError();
 }
 
 function extractSlide(row, index) {
@@ -250,11 +280,10 @@ export default function decorate(block) {
 
       // A newly uploaded AEM asset can be present in JCR before its delivery URL
       // is ready. Never leave the homepage hero blank in that state: fall back
-      // to the existing carousel until the dedicated mobile image can load.
+      // to its DAM original, then to the existing carousel if that also fails.
       const carousel = block.querySelector('[data-carousel]');
       const showCarouselFallback = () => carousel?.classList.remove('has-mobile-hero');
-      img.addEventListener('error', showCarouselFallback, { once: true });
-      if (img.complete && !img.naturalWidth) showCarouselFallback();
+      addDamOriginalFallback(img, mobileHero.damFolder, showCarouselFallback);
     }
     mobileHero.mediaRef.value.append(picture);
   }
@@ -262,7 +291,14 @@ export default function decorate(block) {
   if (mobileHero?.logoRef.value && mobileHero.logoPicture) {
     const logo = mobileHero.logoPicture.cloneNode(true);
     const img = logo.querySelector('img');
-    if (img && mobileHero.title) img.setAttribute('alt', mobileHero.title);
+    if (img) {
+      if (mobileHero.title) img.setAttribute('alt', mobileHero.title);
+      addDamOriginalFallback(
+        img,
+        mobileHero.damFolder,
+        () => img.closest('.hero-banner-logo')?.remove(),
+      );
+    }
     mobileHero.logoRef.value.append(logo);
   }
 

@@ -1718,9 +1718,9 @@
       },
       {
         "component": "text",
-        "name": "id",
-        "label": "ID",
-        "description": "页内锚点/自动化定位（可选）",
+        "name": "mobileDamFolder",
+        "label": "Mobile DAM Folder",
+        "description": "移动端主图与 Logo 所在 DAM 文件夹；优化地址不可用时自动读取同目录原图",
         "valueType": "string"
       }
     ]

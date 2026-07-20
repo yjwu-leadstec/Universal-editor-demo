@@ -25,14 +25,18 @@ test('mobile banner supports an independently authored static feature', () => {
   const fieldNames = homeBanner.fields.map(({ name }) => name);
   assert.deepEqual(
     fieldNames,
-    ['mobileImage', 'mobileImageAlt', 'mobileLogo', 'id'],
+    ['mobileImage', 'mobileImageAlt', 'mobileLogo', 'mobileDamFolder'],
   );
 });
 
-test('mobile asset failure restores the existing carousel instead of a blank hero', () => {
+test('mobile asset failure uses the DAM original before restoring the carousel', () => {
   assert.match(
     bannerJs,
-    /addEventListener\('error', showCarouselFallback, \{ once: true \}\)/,
+    /addDamOriginalFallback\(img, mobileHero\.damFolder, showCarouselFallback\)/,
+  );
+  assert.match(
+    bannerJs,
+    /folder\?\.startsWith\('\/content\/dam\/'\)/,
   );
   assert.match(
     bannerJs,
