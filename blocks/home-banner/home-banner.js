@@ -247,6 +247,14 @@ export default function decorate(block) {
       img.setAttribute('loading', 'eager');
       img.setAttribute('fetchpriority', 'high');
       img.setAttribute('decoding', 'async');
+
+      // A newly uploaded AEM asset can be present in JCR before its delivery URL
+      // is ready. Never leave the homepage hero blank in that state: fall back
+      // to the existing carousel until the dedicated mobile image can load.
+      const carousel = block.querySelector('[data-carousel]');
+      const showCarouselFallback = () => carousel?.classList.remove('has-mobile-hero');
+      img.addEventListener('error', showCarouselFallback, { once: true });
+      if (img.complete && !img.naturalWidth) showCarouselFallback();
     }
     mobileHero.mediaRef.value.append(picture);
   }

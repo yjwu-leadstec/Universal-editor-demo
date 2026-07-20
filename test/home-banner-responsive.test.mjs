@@ -29,6 +29,17 @@ test('mobile banner supports an independently authored static feature', () => {
   );
 });
 
+test('mobile asset failure restores the existing carousel instead of a blank hero', () => {
+  assert.match(
+    bannerJs,
+    /addEventListener\('error', showCarouselFallback, \{ once: true \}\)/,
+  );
+  assert.match(
+    bannerJs,
+    /classList\.remove\('has-mobile-hero'\)/,
+  );
+});
+
 test('mobile banner is ordered before the vehicle grid without changing authored order', () => {
   assert.match(
     bannerCss,
