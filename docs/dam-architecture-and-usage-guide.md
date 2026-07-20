@@ -177,6 +177,10 @@
 
 当前 `leadstec-dev` 已创建 72 个 `sling:Folder` 后代节点。
 
+![leadstec-dev 中的 li-auto DAM 根目录](./assets/dam-guide/01-dam-root.png)
+
+*图 3　AEM Assets 中已落地的 `/content/dam/li-auto` 根目录。五个顶层目录与治理设计一致。*
+
 ### 4.3 顶层目录职责
 
 | 目录 | 适用内容 | 禁止内容 |
@@ -187,6 +191,14 @@
 | `central-asia/markets` | KZ、UZ 的市场/语言专属资产 | Global、UAE、SA、NL、KW 专属资产 |
 | `intake` | 待校验、待补元数据、待审批的临时上传内容 | 页面长期引用的正式资产 |
 | `archive` | 已退役但仍需保留、追溯或回滚的资产 | 新资产和仍在使用的正式资产 |
+
+![shared 共享资产目录](./assets/dam-guide/02-shared-root.png)
+
+*图 4　`shared` 下的品牌、车型、技术、企业和文档资产边界。卡片缩略图来自已完成处理的实际资产。*
+
+![车型共享资产目录](./assets/dam-guide/03-shared-vehicles.png)
+
+*图 5　`shared/vehicles` 下已建立的车型目录，Homepage 车型资产按产品代码归档。*
 
 ### 4.4 市场与语言矩阵
 
@@ -199,6 +211,14 @@
 | Global | Kuwait | kw | English | en | `/global/markets/kw/en/media` |
 | Central Asia | Kazakhstan | kz | Kazakh / Russian | kk / ru | `/central-asia/markets/kz/kk/media` |
 | Central Asia | Uzbekistan | uz | Uzbek / Russian | uz / ru | `/central-asia/markets/uz/uz/media` |
+
+![Global 市场目录](./assets/dam-guide/04-global-markets.png)
+
+*图 6　Global 治理域当前包含 UAE、Saudi Arabia、Netherlands 和 Kuwait 市场目录。*
+
+![Central Asia 市场目录](./assets/dam-guide/05-central-asia-markets.png)
+
+*图 7　Central Asia 治理域中的 Kazakhstan 与 Uzbekistan 市场目录，与 Global 并列治理。*
 
 ### 4.5 资产应放在哪里
 
@@ -399,6 +419,10 @@ Homepage `home-banner` 在桌面、平板和移动端都必须显示。以下情
 3. 从 `/content/dam/li-auto` 选择正式资产。
 4. 补充 Alt Text；装饰性图片也应按项目无障碍规则处理。
 5. 保存后在 Author 画布中确认图片加载，而不是只检查字段值。
+
+![Homepage Universal Editor 桌面编辑界面](./assets/dam-guide/06-homepage-universal-editor.png)
+
+*图 8　`language-master/en/homepage` 的 Universal Editor 桌面画布。Homepage Banner 和已迁移图片在 Author 中可见。*
 
 不得把本地文件地址、旧 `/content/dam/li-demo` 路径、`media_<hash>` 或临时 DM URL 粘贴到字段中。
 
