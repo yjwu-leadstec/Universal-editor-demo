@@ -50,6 +50,8 @@ main [data-product-block].space-none {
 }
 
 main [data-product-block] .product-section-header {
+  height: auto;
+  box-sizing: border-box;
   width: min(100% - 40px, 1480px);
   margin-inline: auto;
   margin-block-end: 40px;
@@ -68,7 +70,7 @@ main [data-product-block] .product-title {
   margin: 0 auto;
   color: var(--product-copy);
   font-family: var(--heading-font-family);
-  font-size: clamp(32px, 6.4vw, 64px);
+  font-size: clamp(32px, 3vw, 46px);
   font-weight: 500;
   line-height: 1.12;
   white-space: pre-line;
@@ -284,6 +286,16 @@ body.product-dialog-open {
 }
 
 @media (width <= 719px) {
+  main > .section > div > [data-product-block] {
+    left: auto;
+    width: calc(100% + 48px);
+    margin-inline-start: -24px;
+  }
+
+  main [data-product-block] .product-title {
+    font-size: clamp(20px, 6.4vw, 28px);
+  }
+
   main [data-product-block] .product-title-desktop:has(+ .product-title-mobile) {
     display: none;
   }

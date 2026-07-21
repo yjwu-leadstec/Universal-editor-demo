@@ -25,6 +25,8 @@
       "highlight-carousel",
       "chapter-intro",
       "feature-media-section",
+      "image-switcher",
+      "big-small-gallery",
       "color-switcher",
       "spec-table",
       "product-notes",
@@ -36,6 +38,13 @@
       "product-ending",
       "product-guide",
       "product-download"
+    ]
+  },
+  {
+    "id": "big-small-gallery",
+    "components": [
+      "big-small-stat",
+      "big-small-item"
     ]
   },
   {
@@ -75,6 +84,13 @@
   {
     "id": "feature-grid",
     "components": [
+      "feature-grid-group",
+      "feature-grid-item"
+    ]
+  },
+  {
+    "id": "feature-grid-group",
+    "components": [
       "feature-grid-item"
     ]
   },
@@ -89,6 +105,12 @@
     "id": "highlight-carousel",
     "components": [
       "highlight-slide"
+    ]
+  },
+  {
+    "id": "highlight-slide",
+    "components": [
+      "highlight-stat"
     ]
   },
   {
@@ -125,6 +147,12 @@
     "id": "overlay-panel",
     "components": [
       "overlay-hotspot"
+    ]
+  },
+  {
+    "id": "image-switcher",
+    "components": [
+      "image-switcher-item"
     ]
   },
   {

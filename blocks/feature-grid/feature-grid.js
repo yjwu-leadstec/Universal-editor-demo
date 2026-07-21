@@ -45,6 +45,25 @@ function createCard(item) {
   return card;
 }
 
+function createGroup(group, items) {
+  const section = document.createElement('section');
+  section.className = 'feature-grid-group';
+  const title = group ? propText(group, 'title') : '';
+  if (title) {
+    const heading = document.createElement('h3');
+    heading.className = 'feature-grid-group-title';
+    heading.textContent = title;
+    instrumentProp(group, 'title', heading);
+    section.append(heading);
+  }
+  const grid = document.createElement('div');
+  grid.className = 'feature-grid-list';
+  items.forEach((item) => grid.append(createCard(item)));
+  section.append(grid);
+  if (group) moveItemInstrumentation(group, section);
+  return section;
+}
+
 export default function decorate(block) {
   initProductBlock(block);
   const shell = document.createElement('div');
@@ -52,10 +71,16 @@ export default function decorate(block) {
   const header = createSectionHeader(block);
   if (header.childElementCount) shell.append(header);
 
-  const grid = document.createElement('div');
-  grid.className = 'feature-grid-list';
-  modelItems(block, 'feature-grid-item').forEach((item) => grid.append(createCard(item)));
-  if (grid.childElementCount) shell.append(grid);
+  const groups = modelItems(block, 'feature-grid-group');
+  if (groups.length) {
+    groups.forEach((group) => {
+      const items = modelItems(group, 'feature-grid-item');
+      if (items.length) shell.append(createGroup(group, items));
+    });
+  } else {
+    const items = modelItems(block, 'feature-grid-item');
+    if (items.length) shell.append(createGroup(null, items));
+  }
 
   const note = propText(block, 'note');
   if (note) {
@@ -67,5 +92,5 @@ export default function decorate(block) {
   }
   addBlockAnchor(block, block, shell);
   block.replaceChildren(shell);
-  revealElements(block, '.product-section-header, .feature-grid-card, .feature-grid-note');
+  revealElements(block, '.product-section-header, .feature-grid-group-title, .feature-grid-card, .feature-grid-note');
 }

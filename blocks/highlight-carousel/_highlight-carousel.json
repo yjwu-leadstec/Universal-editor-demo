@@ -8,7 +8,12 @@
     {
       "title": "Highlight Slide",
       "id": "highlight-slide",
-      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Highlight Slide", "model": "highlight-slide" } } } }
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Highlight Slide", "model": "highlight-slide", "filter": "highlight-slide" } } } }
+    },
+    {
+      "title": "Highlight Statistic",
+      "id": "highlight-stat",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Highlight Statistic", "model": "highlight-stat" } } } }
     }
   ],
   "models": [
@@ -19,6 +24,7 @@
         { "component": "text", "name": "title", "label": "Title", "valueType": "string" },
         { "component": "text", "name": "mobileTitle", "label": "Mobile Title Override", "valueType": "string" },
         { "component": "richtext", "name": "description", "label": "Description", "valueType": "string" },
+        { "component": "text", "name": "accentColor", "label": "Indicator Color", "valueType": "string", "value": "#dbad76", "validation": { "regExp": "^#[0-9a-fA-F]{6}$", "customErrorMsg": "Enter a six-digit hex color such as #dbad76" } },
         { "component": "boolean", "name": "autoPlay", "label": "Desktop Autoplay", "description": "Mobile is always manual", "valueType": "boolean", "value": true },
         { "component": "number", "name": "interval", "label": "Autoplay Interval (seconds)", "valueType": "number", "value": 4, "validation": { "numberMin": 2, "numberMax": 12, "customErrorMsg": "Use an interval from 2 to 12 seconds" } },
         { "component": "boolean", "name": "showProgress", "label": "Show Progress", "valueType": "boolean", "value": true },
@@ -55,7 +61,16 @@
         { "component": "text", "name": "linkText", "label": "Link Text", "valueType": "string" },
         { "component": "select", "name": "linkType", "label": "Link Type", "valueType": "string", "options": [{ "name": "Text", "value": "text" }, { "name": "Primary", "value": "primary" }, { "name": "Secondary", "value": "secondary" }] }
       ]
+    },
+    {
+      "id": "highlight-stat",
+      "fields": [
+        { "component": "text", "name": "value", "label": "Value", "valueType": "string", "required": true },
+        { "component": "text", "name": "unit", "label": "Unit", "valueType": "string" },
+        { "component": "text", "name": "label", "label": "Label", "valueType": "string" },
+        { "component": "richtext", "name": "description", "label": "Description", "valueType": "string" }
+      ]
     }
   ],
-  "filters": [{ "id": "highlight-carousel", "components": ["highlight-slide"] }]
+  "filters": [{ "id": "highlight-carousel", "components": ["highlight-slide"] }, { "id": "highlight-slide", "components": ["highlight-stat"] }]
 }

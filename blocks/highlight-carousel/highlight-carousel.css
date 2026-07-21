@@ -12,27 +12,23 @@ main .highlight-carousel .highlight-shell {
 
 main .highlight-carousel .highlight-viewport {
   position: relative;
-  min-height: min(60vw, 680px);
+  min-height: min(56.4vw, 1082px);
   overflow: hidden;
 }
 
 main .highlight-carousel .highlight-track {
   position: relative;
-  width: min(47vw, 900px);
-  height: min(28vw, 540px);
+  width: min(62.5vw, 1200px);
+  height: min(48vw, 920px);
   margin-inline: auto;
 }
 
 main .highlight-carousel .highlight-slide {
   position: absolute;
   inset: 0;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  overflow: hidden;
-  background: var(--product-card-bg);
-  border-radius: 4px;
+  overflow: visible;
   opacity: 0;
-  transform: translateX(0) scale(0.76);
+  transform: translateX(0) scale(0.78);
   transition: opacity 550ms ease, transform 550ms ease;
   pointer-events: none;
 }
@@ -45,72 +41,129 @@ main .highlight-carousel .highlight-slide.is-active {
 }
 
 main .highlight-carousel .highlight-slide.is-previous {
-  opacity: 0.58;
-  transform: translateX(-82%) scale(0.82);
+  opacity: 0.52;
+  transform: translateX(-106%) scale(0.96);
 }
 
 main .highlight-carousel .highlight-slide.is-next {
-  opacity: 0.58;
-  transform: translateX(82%) scale(0.82);
+  opacity: 0.52;
+  transform: translateX(106%) scale(0.96);
 }
 
 main .highlight-carousel .product-media {
   min-height: 0;
-  aspect-ratio: 16 / 9;
-  border-radius: 4px 4px 0 0;
+  aspect-ratio: 1200 / 674;
+  border-radius: 4px;
 }
 
 main .highlight-carousel .highlight-slide-copy {
+  position: absolute;
+  z-index: 2;
+  right: 64px;
+  bottom: 110px;
+  left: 64px;
   display: grid;
-  min-height: 150px;
-  padding: 24px 28px 28px;
-  align-content: start;
-  color: var(--product-copy);
+  color: #fff;
   gap: 8px;
+}
+
+main .highlight-carousel .highlight-slide-copy::before {
+  position: absolute;
+  z-index: -1;
+  inset: -140px -64px -34px;
+  background: linear-gradient(transparent, rgb(0 0 0 / 65%));
+  content: '';
+  pointer-events: none;
 }
 
 main .highlight-carousel .highlight-slide-copy h3 {
-  margin: 0;
+  max-width: 760px;
+  margin: 0 auto 22px;
+  color: #fff;
   font-family: var(--heading-font-family);
-  font-size: clamp(20px, 2vw, 30px);
+  font-size: clamp(24px, 2.4vw, 46px);
   font-weight: 500;
   line-height: 1.2;
+  text-align: center;
 }
 
 main .highlight-carousel .highlight-eyebrow,
-main .highlight-carousel .highlight-note,
+main .highlight-carousel .highlight-description {
+  margin: 0;
+  color: rgb(255 255 255 / 72%);
+  font-size: 14px;
+  text-align: center;
+}
+
 main .highlight-carousel .highlight-description p {
   margin: 0;
-  color: var(--product-muted);
-  font-size: 14px;
 }
 
-main .highlight-carousel .highlight-metric {
+main .highlight-carousel .highlight-metrics {
   display: flex;
-  margin: 8px 0 0;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 8px;
+  width: 100%;
+  margin: 0;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0;
 }
 
-main .highlight-carousel .highlight-metric dd {
-  margin: 0;
-  color: var(--product-accent);
-  font-size: 24px;
+main .highlight-carousel .highlight-stat {
+  position: relative;
+  min-width: 150px;
+  max-width: 250px;
+  padding-inline: 24px;
+  flex: 1 1 0;
+}
+
+main .highlight-carousel .highlight-stat + .highlight-stat::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: rgb(255 255 255 / 35%);
+  content: '';
+}
+
+main .highlight-carousel .highlight-stat dt {
+  color: rgb(255 255 255 / 65%);
+  font-size: 12px;
+}
+
+main .highlight-carousel .highlight-stat dd {
+  margin: 4px 0 0;
+  color: #fff;
+  font-size: 18px;
   font-weight: 500;
 }
 
-main .highlight-carousel .highlight-metric dt {
+main .highlight-carousel .highlight-stat-description {
+  color: rgb(255 255 255 / 65%);
+  font-size: 12px;
+}
+
+main .highlight-carousel .highlight-stat-description p {
+  margin: 4px 0 0;
+}
+
+main .highlight-carousel .highlight-note {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 0;
+  margin: 0;
   color: var(--product-muted);
-  font-size: 13px;
+  font-size: 12px;
 }
 
 main .highlight-carousel .highlight-controls {
+  position: absolute;
+  z-index: 3;
+  right: max(24px, calc((100vw - 1480px) / 2));
+  bottom: 72px;
   display: flex;
-  margin-block-start: 28px;
   align-items: center;
-  justify-content: center;
-  gap: 20px;
+  gap: 8px;
 }
 
 main .highlight-carousel .highlight-controls button {
@@ -118,25 +171,30 @@ main .highlight-carousel .highlight-controls button {
   height: 44px;
   padding: 0;
   color: var(--product-copy);
-  background: transparent;
-  border: 1px solid currentcolor;
+  background: var(--product-card-bg);
+  border: 0;
   border-radius: 50%;
 }
 
 main .highlight-carousel .highlight-status {
-  min-width: 64px;
+  min-width: 44px;
   color: var(--product-muted);
+  font-size: 12px;
   text-align: center;
 }
 
 @media (width <= 1024px) and (width >= 720px) {
   main .highlight-carousel .highlight-track {
-    width: 66vw;
-    height: 45vw;
+    width: 72vw;
+    height: 62vw;
   }
 }
 
 @media (width <= 719px) {
+  main .highlight-carousel .product-section-header {
+    padding-inline: 20px;
+  }
+
   main .highlight-carousel .highlight-viewport {
     min-height: 0;
     overflow-x: auto;
@@ -163,17 +221,82 @@ main .highlight-carousel .highlight-status {
   main .highlight-carousel .highlight-slide.is-next {
     position: relative;
     inset: auto;
-    width: min(84vw, 420px);
+    width: min(89.4vw, 420px);
     flex: 0 0 auto;
+    overflow: hidden;
+    background: var(--product-card-bg);
+    border-radius: 4px;
     opacity: 1;
     transform: none;
     pointer-events: auto;
     scroll-snap-align: center;
   }
 
+  main .highlight-carousel .product-media {
+    aspect-ratio: 335 / 188;
+    border-radius: 4px 4px 0 0;
+  }
+
   main .highlight-carousel .highlight-slide-copy {
-    min-height: 170px;
+    position: static;
+    min-height: 310px;
     padding: 20px;
+    color: var(--product-copy);
+  }
+
+  main .highlight-carousel .highlight-slide-copy::before {
+    display: none;
+  }
+
+  main .highlight-carousel .highlight-slide-copy h3 {
+    margin: 0 0 12px;
+    color: var(--product-copy);
+    font-size: 20px;
+    text-align: left;
+  }
+
+  main .highlight-carousel .highlight-eyebrow,
+  main .highlight-carousel .highlight-description {
+    color: var(--product-muted);
+    text-align: left;
+  }
+
+  main .highlight-carousel .highlight-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: stretch;
+    gap: 0;
+  }
+
+  main .highlight-carousel .highlight-stat {
+    min-width: 0;
+    max-width: none;
+    padding: 10px;
+    background: color-mix(in srgb, var(--product-accent) 18%, transparent);
+  }
+
+  main .highlight-carousel .highlight-stat + .highlight-stat::before {
+    display: none;
+  }
+
+  main .highlight-carousel .highlight-stat dt,
+  main .highlight-carousel .highlight-stat-description {
+    color: var(--product-muted);
+  }
+
+  main .highlight-carousel .highlight-stat dd {
+    color: var(--product-copy);
+  }
+
+  main .highlight-carousel .highlight-note {
+    position: static;
+    margin-block-start: 16px;
+  }
+
+  main .highlight-carousel .highlight-controls {
+    position: static;
+    margin-block-start: 24px;
+    justify-content: center;
   }
 
   main .highlight-carousel .highlight-controls button {

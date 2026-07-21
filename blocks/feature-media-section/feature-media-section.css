@@ -10,6 +10,18 @@ main .feature-media-section .feature-media-shell {
   margin-inline: auto;
 }
 
+main .feature-media-section .product-section-header {
+  width: 100%;
+  max-width: 1152px;
+  margin-inline: 0;
+  text-align: left;
+}
+
+main .feature-media-section .product-title,
+main .feature-media-section .product-description {
+  margin-inline: 0;
+}
+
 main .feature-media-section .feature-media-content {
   position: relative;
 }
@@ -226,6 +238,11 @@ main .feature-media-section .feature-primary-metric small {
 @media (width <= 719px) {
   main .feature-media-section .feature-media-shell {
     width: 100%;
+  }
+
+  main .feature-media-section .product-section-header {
+    width: 100%;
+    padding-inline: 40px;
   }
 
   main .feature-media-section .feature-media-content,

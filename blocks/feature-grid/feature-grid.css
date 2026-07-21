@@ -2,6 +2,7 @@ main .feature-grid {
   left: 50%;
   width: 100vw;
   margin-inline-start: -50vw;
+  overflow: hidden;
 }
 
 main .feature-grid .feature-grid-shell {
@@ -9,40 +10,82 @@ main .feature-grid .feature-grid-shell {
   margin-inline: auto;
 }
 
+main .feature-grid .product-section-header {
+  width: 100%;
+  max-width: 1152px;
+  margin-inline: 0;
+  text-align: left;
+}
+
+main .feature-grid .product-title,
+main .feature-grid .product-description {
+  margin-inline: 0;
+}
+
+main .feature-grid .feature-grid-group + .feature-grid-group {
+  margin-block-start: 80px;
+}
+
+main .feature-grid .feature-grid-group-title {
+  margin: 0 0 32px;
+  color: var(--product-copy);
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 500;
+}
+
 main .feature-grid .feature-grid-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  gap: 6px;
 }
 
 main .feature-grid .feature-grid-card {
+  position: relative;
   overflow: hidden;
+  min-height: 260px;
   background: var(--product-card-bg);
   border-radius: 4px;
 }
 
 main .feature-grid .feature-grid-card .product-media {
+  position: absolute;
+  inset: 0;
   min-height: 0;
-  aspect-ratio: 4 / 3;
   border-radius: 0;
 }
 
 main .feature-grid .feature-grid-copy {
-  padding: 28px;
+  position: absolute;
+  z-index: 2;
+  right: 40px;
+  bottom: 28px;
+  left: 40px;
+  color: #fff;
+}
+
+main .feature-grid .feature-grid-copy::before {
+  position: absolute;
+  z-index: -1;
+  inset: -100px -40px -28px;
+  background: linear-gradient(transparent, rgb(0 0 0 / 66%));
+  content: '';
 }
 
 main .feature-grid .feature-grid-copy h3 {
   margin: 0;
+  color: #fff;
   font-family: var(--heading-font-family);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 1.25;
 }
 
 main .feature-grid .feature-grid-description {
-  margin-block-start: 12px;
-  color: var(--product-muted);
-  line-height: 1.6;
+  margin-block-start: 8px;
+  color: rgb(255 255 255 / 72%);
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 main .feature-grid .feature-grid-description > :first-child,
@@ -51,29 +94,80 @@ main .feature-grid .feature-grid-description > :last-child {
 }
 
 main .feature-grid .product-link {
-  margin-block-start: 20px;
+  margin-block-start: 16px;
+  color: #fff;
 }
 
 main .feature-grid .feature-grid-note {
   margin: 24px 0 0;
   color: var(--product-muted);
-  font-size: 13px;
-  text-align: center;
+  font-size: 12px;
 }
 
-@media (width <= 1024px) {
+@media (width <= 1024px) and (width >= 720px) {
   main .feature-grid .feature-grid-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (width <= 719px) {
+  main .feature-grid .feature-grid-shell,
+  main .feature-grid .product-section-header {
+    width: 100%;
+  }
+
+  main .feature-grid .product-section-header,
+  main .feature-grid .feature-grid-group-title,
+  main .feature-grid .feature-grid-note {
+    padding-inline: 40px;
+  }
+
+  main .feature-grid .feature-grid-group + .feature-grid-group {
+    margin-block-start: 72px;
+  }
+
+  main .feature-grid .feature-grid-group-title {
+    margin-block-end: 32px;
+    font-size: 16px;
+  }
+
   main .feature-grid .feature-grid-list {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    display: grid;
+    padding-inline: 20px;
+    overflow-x: auto;
+    grid-auto-columns: 281px;
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-template-rows: repeat(2, 158px);
+    gap: 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  main .feature-grid .feature-grid-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  main .feature-grid .feature-grid-card {
+    min-height: 0;
+    scroll-snap-align: start;
   }
 
   main .feature-grid .feature-grid-copy {
-    padding: 24px;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+  }
+
+  main .feature-grid .feature-grid-copy::before {
+    inset: -70px -12px -12px;
+  }
+
+  main .feature-grid .feature-grid-copy h3 {
+    font-size: 16px;
+  }
+
+  main .feature-grid .feature-grid-description {
+    font-size: 11px;
   }
 }
