@@ -328,15 +328,41 @@ export function addBlockAnchor(block, root = block, parent = block) {
   });
 }
 
+function fallbackLinkText(root, model, href, prefix = '') {
+  if (model === 'product-hero-cta') {
+    return href.includes('/test-drive') ? 'Schedule Test Drive' : 'Learn More';
+  }
+  if (model === 'product-sticky-nav-item' && href.startsWith('#')) {
+    return href.slice(1).split('-').map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join(' ');
+  }
+  if (model === 'product-ending') {
+    return prefix ? 'Back to Top' : 'Schedule Test Drive';
+  }
+  if (model === 'product-guide-item') {
+    const title = propText(root, 'title');
+    if (href.includes('/test-drive')) return 'Start Configuration';
+    if (title.includes('Support')) return 'Find Support';
+    if (href.includes('/official-center')) return 'Official Center';
+  }
+  if (href.startsWith('#')) {
+    return href.slice(1).split('-').map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join(' ');
+  }
+  if (href.includes('/test-drive')) return 'Schedule Test Drive';
+  return propText(root, 'title');
+}
+
 export function createProductLink(root, prefix = '', className = 'product-link') {
   const field = prefix ? `${prefix}Link` : 'link';
   const textField = prefix ? `${prefix}LinkText` : 'linkText';
   const typeField = prefix ? `${prefix}LinkType` : 'linkType';
   const source = propLink(root, field);
   const href = source?.getAttribute('href') || propUrl(root, field);
-  const text = propText(root, textField) || source?.textContent.trim() || '';
-  if (!href || !text) return null;
   const model = root.dataset.aueModel || root.dataset.blockName || root.classList[0];
+  const authoredText = propText(root, textField) || source?.textContent.trim() || '';
+  const text = authoredText && authoredText !== href
+    ? authoredText
+    : fallbackLinkText(root, model, href, prefix);
+  if (!href || !text) return null;
   const defaultTypes = {
     'product-hero-cta': root.previousElementSibling?.dataset.aueModel === model ? 'secondary' : 'primary',
     'feature-media-item': 'text',
