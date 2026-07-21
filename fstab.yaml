@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p80707-e1685574.adobeaemcloud.com/bin/franklin.delivery/yjwu-leadstec/Universal-editor-demo/main"
+    url: "https://author-p80707-e1685574.adobeaemcloud.com/bin/franklin.delivery/yjwu-leadstec/Universal-editor-demo/align-li-l6"
     type: "markup"
     suffix: ".html"
