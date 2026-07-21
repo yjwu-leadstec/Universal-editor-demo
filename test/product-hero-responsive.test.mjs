@@ -2,11 +2,18 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
-const [heroCss, heroModel, productUtils] = await Promise.all([
+const [heroCss, heroJs, heroModel, productUtils] = await Promise.all([
   readFile(new URL('../blocks/product-hero/product-hero.css', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/product-hero/product-hero.js', import.meta.url), 'utf8'),
   readFile(new URL('../blocks/product-hero/_product-hero.json', import.meta.url), 'utf8'),
   readFile(new URL('../scripts/product-block-utils.js', import.meta.url), 'utf8'),
 ]);
+
+test('hero scroll cue skips the removed L6 sticky navigation', () => {
+  assert.match(heroJs, /classList\.contains\('product-sticky-nav-wrapper'\)/);
+  assert.match(heroJs, /nextProductContent\(block\)\?\.scrollIntoView/);
+  assert.match(heroJs, /prefersReducedMotion\(\) \? 'auto' : 'smooth'/);
+});
 
 test('product hero authors four responsive poster compositions', () => {
   const { models } = JSON.parse(heroModel);

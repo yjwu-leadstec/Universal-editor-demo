@@ -28,10 +28,25 @@ test('highlight carousel exposes clickable progress dots and accessible arrow co
   assert.match(carouselCss, /width:\s*46px;\s*\n\s*height:\s*46px/);
 });
 
+test('highlight carousel hides non-participating slides and keeps authored media colors intact', () => {
+  assert.match(carouselCss, /\.highlight-slide\s*\{[\s\S]*visibility:\s*hidden/);
+  assert.match(carouselCss, /\.highlight-slide\.is-active\s*\{[\s\S]*visibility:\s*visible/);
+  assert.doesNotMatch(carouselCss, /linear-gradient\(180deg, rgb\(0 0 0 \/ 34%\)/);
+  assert.doesNotMatch(carouselJs, /\.product-section-header, \.highlight-slide/);
+});
+
+test('tablet carousel corrects wrapper padding and centers arrow glyphs', () => {
+  assert.match(carouselCss, /@media \(width >= 721px\) and \(width <= 899px\)[\s\S]*margin-inline-start:\s*-24px/);
+  assert.match(carouselCss, /@media \(width >= 900px\) and \(width <= 1024px\)[\s\S]*margin-inline-start:\s*-32px/);
+  assert.match(carouselCss, /top:\s*50%;\s*\n\s*left:\s*50%/);
+  assert.match(carouselCss, /translate\(-50%, -50%\) rotate\(45deg\)/);
+});
+
 test('mobile carousel disables autoplay and equalizes card copy height', () => {
   assert.match(carouselJs, /matchMedia\('\(width <= 720px\)'\)/);
   assert.match(carouselCss, /@media \(width <= 540px\)/);
   assert.match(carouselCss, /height:\s*calc\(\(100vw - 40px\) \* 0\.5625 \+ 440px\)/);
   assert.match(carouselCss, /min-height:\s*230px/);
   assert.match(carouselCss, /grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(carouselCss, /@media \(width <= 720px\)[\s\S]*visibility:\s*visible/);
 });

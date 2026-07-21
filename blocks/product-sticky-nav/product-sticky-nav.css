@@ -10,6 +10,10 @@ main .product-sticky-nav {
   backdrop-filter: blur(18px);
 }
 
+main #l6-navigation.product-sticky-nav {
+  display: none;
+}
+
 main .product-sticky-nav .product-sticky-shell {
   display: flex;
   width: min(100% - 40px, 1480px);

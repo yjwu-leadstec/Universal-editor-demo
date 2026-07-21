@@ -8,11 +8,20 @@ import {
   instrumentProp,
   modelItems,
   moveItemInstrumentation,
+  prefersReducedMotion,
   propBoolean,
   propPicture,
   propText,
   revealElements,
 } from '../../scripts/product-block-utils.js';
+
+function nextProductContent(block) {
+  let candidate = block.parentElement?.nextElementSibling;
+  while (candidate?.classList.contains('product-sticky-nav-wrapper')) {
+    candidate = candidate.nextElementSibling;
+  }
+  return candidate || block.closest('.section')?.nextElementSibling;
+}
 
 export default function decorate(block) {
   initProductBlock(block);
@@ -80,7 +89,10 @@ export default function decorate(block) {
     cue.type = 'button';
     cue.className = 'product-hero-scroll';
     cue.setAttribute('aria-label', 'Scroll to product highlights');
-    cue.addEventListener('click', () => block.closest('.section')?.nextElementSibling?.scrollIntoView({ behavior: 'smooth' }));
+    cue.addEventListener('click', () => nextProductContent(block)?.scrollIntoView({
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+      block: 'start',
+    }));
     instrumentProp(block, 'showArrow', cue);
     shell.append(cue);
   }

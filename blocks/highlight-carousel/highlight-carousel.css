@@ -32,6 +32,7 @@ main .highlight-carousel .highlight-slide {
   padding-inline: 20px;
   overflow: visible;
   opacity: 0;
+  visibility: hidden;
   transform: translateX(0);
   transition: opacity 550ms ease, transform 550ms ease;
   pointer-events: none;
@@ -40,17 +41,20 @@ main .highlight-carousel .highlight-slide {
 main .highlight-carousel .highlight-slide.is-active {
   z-index: 2;
   opacity: 1;
+  visibility: visible;
   transform: translateX(0);
   pointer-events: auto;
 }
 
 main .highlight-carousel .highlight-slide.is-previous {
   opacity: 1;
+  visibility: visible;
   transform: translateX(-100%);
 }
 
 main .highlight-carousel .highlight-slide.is-next {
   opacity: 1;
+  visibility: visible;
   transform: translateX(100%);
 }
 
@@ -60,15 +64,6 @@ main .highlight-carousel .product-media {
   min-height: 0;
   aspect-ratio: auto;
   border-radius: 4px;
-}
-
-main .highlight-carousel .product-media::after {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  background: linear-gradient(180deg, rgb(0 0 0 / 34%) 0%, transparent 30%, transparent 60%, rgb(0 0 0 / 55%) 100%);
-  content: '';
-  pointer-events: none;
 }
 
 main .highlight-carousel .highlight-slide-copy {
@@ -122,7 +117,7 @@ main .highlight-carousel .highlight-stat {
 }
 
 main .highlight-carousel .highlight-stat dt {
-  color: rgb(255 255 255 / 80%);
+  color: #fff;
   font-size: 12px;
   line-height: 20px;
 }
@@ -209,19 +204,18 @@ main .highlight-carousel .highlight-arrow {
 
 main .highlight-carousel .highlight-arrow::before {
   position: absolute;
-  top: 18px;
-  left: 19px;
+  top: 50%;
+  left: 50%;
   width: 8px;
   height: 8px;
   border-top: 1.5px solid currentcolor;
   border-right: 1.5px solid currentcolor;
   content: '';
-  transform: rotate(45deg);
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
 main .highlight-carousel .highlight-arrow-previous::before {
-  left: 20px;
-  transform: rotate(-135deg);
+  transform: translate(-50%, -50%) rotate(-135deg);
 }
 
 main .highlight-carousel .highlight-status {
@@ -326,6 +320,20 @@ main .highlight-carousel .highlight-status {
   }
 }
 
+@media (width >= 721px) and (width <= 899px) {
+  main .highlight-carousel[data-product-block] {
+    left: auto;
+    margin-inline-start: -24px;
+  }
+}
+
+@media (width >= 900px) and (width <= 1024px) {
+  main .highlight-carousel[data-product-block] {
+    left: auto;
+    margin-inline-start: -32px;
+  }
+}
+
 @media (width <= 720px) {
   main .highlight-carousel[data-product-block] {
     padding-block: 80px;
@@ -368,6 +376,7 @@ main .highlight-carousel .highlight-status {
     overflow: visible;
     background: transparent;
     opacity: 1;
+    visibility: visible;
     transform: none;
     pointer-events: auto;
     scroll-snap-align: start;

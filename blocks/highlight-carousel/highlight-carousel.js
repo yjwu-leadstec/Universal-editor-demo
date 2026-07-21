@@ -236,5 +236,5 @@ export default function decorate(block) {
   block.replaceChildren(shell);
   update(0);
   start();
-  revealElements(block, '.product-section-header, .highlight-slide');
+  revealElements(block, '.product-section-header');
 }
