@@ -124,10 +124,16 @@ The Pencil document contains eight reusable design families: hero, highlight car
 
 ### Product Hero
 
-- Full-viewport desktop/mobile background media uses cover positioning and a static poster fallback.
+- Full-viewport background media uses cover positioning and a static poster fallback.
+- The first L6 hero selects the official poster composition at the same component breakpoints:
+  desktop above `1024px`, medium at `821–1024px`, tablet at `721–820px`, and mobile at `720px` and below.
+- Optional medium, tablet, and mobile posters fall back to the next broader authored poster when omitted; the desktop poster remains required.
+- At `720–1440px` the hero fills the viewport below the `50px` global header. At `720px` and below it also preserves the official `200vw` minimum scene height.
+- The `top-copy` logo position and size follow the official breakpoint-specific proportions instead of reusing the `1920px` desktop values.
 - Logo, title, optional subtitle, and up to five CTAs overlay the media with light/dark copy variants.
 - The optional scroll cue scrolls to the next content section and disappears when disabled.
 - Both captured `product-first` instances render through the same authoring model.
+- Required visual checks cover `1920`, `1440`, `1024`, `820`, `720`, and `390px`, with no broken media, horizontal overflow, or console errors.
 
 ### Product Sticky Nav
 
@@ -237,4 +243,3 @@ Temporary local `.plain.html` content is allowed for development, but final vali
 - Browser validation proves all four viewports, all interactive flows, zero console errors, and zero horizontal overflow.
 - The two `leadstec-dev` pages contain the expected block/item JCR structure and render correctly in preview/Universal Editor.
 - The feature branch is committed and pushed; a PR contains both preview links; GitHub build and preview checks are green.
-

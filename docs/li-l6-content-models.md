@@ -46,13 +46,18 @@ Where relevant, `classes` is a grouped `multiselect` with finite values:
 | Block fields | Purpose |
 | --- | --- |
 | `id`, `title`, `mobileTitle`, `subtitle` | Overlay copy; mobile fields are optional overrides |
-| `image`, `imageAlt`, `mobileImage`, `mobileImageAlt` | Poster/background media |
+| `image`, `imageAlt` | Required desktop poster/background media above `1024px`; one semantic alt description is shared across responsive compositions |
+| `mobileImage`, `mobileImageAlt` | Optional poster at `720px` and below; falls back through the broader posters |
 | `video`, `mobileVideo` | Optional muted preview media |
 | `logo`, `logoAlt` | Optional vehicle wordmark |
 | `showArrow`, `showVideoControl`, `showProgress` | Runtime controls |
 | `classes` | light/dark copy and top/center/bottom alignment |
 
-Child `product-hero-cta` fields: standard link group. The filter permits only CTA items. The same model covers both captured `product-first` instances.
+Child `product-hero-responsive-media` fields: optional `mediumImage` for `821–1024px` and `tabletImage` for `721–820px`. One child item carries both responsive compositions without exceeding the Universal Editor parent block cell limit.
+
+Child `product-hero-cta` fields: standard link group. The filter permits responsive-poster and CTA items. The same model covers both captured `product-first` instances.
+
+The four poster fields remain one semantic scene and therefore share one alt description. Runtime decoration merges their generated sources into one native responsive `picture`, so the browser downloads only the active breakpoint asset while Universal Editor retains each authored reference field.
 
 ## Product Sticky Nav — collection
 
@@ -221,4 +226,3 @@ When override text is absent, page title/description remain the content fallback
 - Hotspot numbers use 0–100 validation; autoplay intervals use 2–12 validation.
 - `classes` multiselects use `valueType: string`, matching the Universal Editor schema.
 - `npm run build:json` must produce root files containing all block and item IDs before implementation is considered model-complete.
-

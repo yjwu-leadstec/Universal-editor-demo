@@ -22,8 +22,10 @@ const PRODUCT_MEDIA_FALLBACKS = {
   'becbc0be-eb0c-4206-9b47-8e9688f9bec9.jpg': '176393203283642',
   'c8ce1ca7-85a9-4d45-9337-4b8cd62cacbf.jpg': '174418124685401',
   'ce7e583a-d18f-45e5-8ae5-f292603e83c0.jpg': '560123200242081',
+  'd9f9cf93-667b-484c-af0a-4bb64007651e.jpg': '560138576536018',
   'e153a05a-c02c-4af7-b9ef-3cd99f6e4b4f.jpg': '233826047426507',
   'e4860d6c-d146-4734-a521-4f1814471c88.jpg': '254524691664282',
+  'fb4adca7-b8dc-42fc-888a-bd7ba4ec462d.jpg': '560149743526734',
   'fcc7662c-a80f-4409-ad74-d203d5e9f0b6.jpg': '643248190614667',
 };
 
@@ -33,6 +35,7 @@ const PRODUCT_MEDIA_FALLBACKS = {
 const PRODUCT_MODEL_FIELDS = {
   'product-hero': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['subtitle', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['logo', 'reference'], ['logoAlt', 'text'], ['showArrow', 'boolean'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean']],
   'product-hero-cta': [['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
+  'product-hero-responsive-media': [['mediumImage', 'reference'], ['tabletImage', 'reference']],
   'product-sticky-nav': [['id', 'text'], ['carName', 'text']],
   'product-sticky-nav-item': [['link', 'aem-content'], ['linkText', 'text']],
   'highlight-carousel': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['accentColor', 'text'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showProgress', 'boolean']],
@@ -73,7 +76,9 @@ const PRODUCT_MODEL_FIELDS = {
 };
 
 const PRODUCT_COLLECTION_MODELS = {
-  'product-hero': 'product-hero-cta',
+  'product-hero': (row) => (row.querySelector('picture, img')
+    ? 'product-hero-responsive-media'
+    : 'product-hero-cta'),
   'product-sticky-nav': 'product-sticky-nav-item',
   'highlight-carousel': 'highlight-slide',
   'highlight-slide': 'highlight-stat',
@@ -476,6 +481,36 @@ function setupVideoPlayback(media, video, button, autoplay) {
   observer.observe(media);
 }
 
+function appendResponsiveSources(targetPicture, sourcePicture, mediaRange) {
+  if (!targetPicture || !sourcePicture) return;
+  const sources = [...sourcePicture.querySelectorAll('source')].map((source) => {
+    const clone = source.cloneNode(true);
+    const authoredMedia = source.getAttribute('media');
+    clone.setAttribute('media', authoredMedia ? `${mediaRange} and ${authoredMedia}` : mediaRange);
+    return clone;
+  });
+  if (!sources.length) {
+    const sourceImage = sourcePicture.querySelector('img');
+    const srcset = sourceImage?.getAttribute('src');
+    if (srcset) {
+      const source = document.createElement('source');
+      source.media = mediaRange;
+      source.srcset = srcset;
+      sources.push(source);
+    }
+  }
+  targetPicture.prepend(...sources);
+}
+
+function preserveResponsiveFieldInstrumentation(root, field, media) {
+  if (!propSource(root, field)) return;
+  const marker = document.createElement('span');
+  marker.className = 'product-aue-anchor';
+  marker.setAttribute('aria-hidden', 'true');
+  instrumentProp(root, field, marker);
+  media.append(marker);
+}
+
 export function createMedia(root, {
   eager = false,
   autoplay = true,
@@ -487,9 +522,17 @@ export function createMedia(root, {
   const media = document.createElement('div');
   media.className = 'product-media';
   const image = propPicture(root, 'image') || root.querySelector('picture');
+  const mediumImage = propPicture(root, 'mediumImage');
+  const tabletImage = propPicture(root, 'tabletImage');
   const mobileImage = propPicture(root, 'mobileImage');
+  const hasResponsivePictures = Boolean(mediumImage || tabletImage);
   const desktopSlot = document.createElement('div');
-  desktopSlot.className = 'product-picture product-picture-desktop';
+  desktopSlot.className = `product-picture ${hasResponsivePictures ? 'product-picture-responsive' : 'product-picture-desktop'}`;
+  if (hasResponsivePictures && image) {
+    appendResponsiveSources(image, mediumImage || image, '(min-width: 821px) and (max-width: 1024px)');
+    appendResponsiveSources(image, tabletImage || mediumImage || image, '(min-width: 721px) and (max-width: 820px)');
+    appendResponsiveSources(image, mobileImage || tabletImage || mediumImage || image, '(max-width: 720px)');
+  }
   const desktopImg = appendPicture(desktopSlot, image, {
     alt: propText(root, 'imageAlt'),
     loading: eager ? 'eager' : 'lazy',
@@ -498,7 +541,12 @@ export function createMedia(root, {
   instrumentProp(root, 'image', desktopSlot);
   media.append(desktopSlot);
 
-  if (mobileImage) {
+  if (hasResponsivePictures) {
+    media.classList.add('has-responsive-picture');
+    preserveResponsiveFieldInstrumentation(root, 'mediumImage', media);
+    preserveResponsiveFieldInstrumentation(root, 'tabletImage', media);
+    preserveResponsiveFieldInstrumentation(root, 'mobileImage', media);
+  } else if (mobileImage) {
     const mobileSlot = document.createElement('div');
     mobileSlot.className = 'product-picture product-picture-mobile';
     appendPicture(mobileSlot, mobileImage, {

@@ -1156,6 +1156,21 @@
           }
         },
         {
+          "title": "Product Hero Responsive Posters",
+          "id": "product-hero-responsive-media",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Product Hero Responsive Posters",
+                  "model": "product-hero-responsive-media"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Product Notes",
           "id": "product-notes",
           "plugins": {

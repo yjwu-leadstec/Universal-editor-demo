@@ -224,7 +224,8 @@
   {
     "id": "product-hero",
     "components": [
-      "product-hero-cta"
+      "product-hero-cta",
+      "product-hero-responsive-media"
     ]
   },
   {

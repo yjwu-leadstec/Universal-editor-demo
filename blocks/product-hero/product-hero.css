@@ -134,17 +134,83 @@ main .product-hero .product-hero-scroll::before {
   0%, 100% { transform: translate(-50%, 0); }
 }
 
-@media (width <= 719px) {
+@media (width >= 1025px) and (width <= 1440px) {
   main .product-hero {
-    min-height: max(660px, calc(100svh - 50px));
+    min-height: calc(100svh - 50px);
   }
 
   main .product-hero.top-copy .product-hero-copy {
-    top: 18%;
+    top: 106.5px;
+  }
+
+  main .product-hero .product-hero-logo {
+    width: 191px;
+  }
+
+  main .product-hero .product-hero-scroll {
+    bottom: 16px;
+  }
+}
+
+@media (width >= 821px) and (width <= 1024px) {
+  main .product-hero {
+    min-height: calc(100svh - 50px);
+  }
+
+  main .product-hero.top-copy .product-hero-copy {
+    top: calc(7.8125vw + 1.5px);
+  }
+
+  main .product-hero .product-hero-logo {
+    width: 18.95vw;
+  }
+
+  main .product-hero .product-hero-scroll {
+    bottom: 16px;
+  }
+}
+
+@media (width >= 721px) and (width <= 820px) {
+  main .product-hero {
+    min-height: calc(100svh - 50px);
+  }
+
+  main .product-hero.top-copy .product-hero-copy {
+    top: calc(7.8125vw + 82px);
+  }
+
+  main .product-hero .product-hero-logo {
+    width: 18.95vw;
+  }
+
+  main .product-hero .product-hero-scroll {
+    bottom: 16px;
+  }
+}
+
+@media (width <= 720px) {
+  main .product-hero {
+    min-height: max(calc(100svh - 50px), 200vw);
+  }
+
+  main .product-hero.top-copy .product-hero-copy {
+    top: calc(32vw + 16px);
+  }
+
+  main .product-hero .product-hero-logo {
+    width: 186.7px;
   }
 
   main .product-hero .product-hero-scroll {
     bottom: 7px;
+  }
+
+  main .product-hero .product-picture-mobile {
+    display: block;
+  }
+
+  main .product-hero .has-mobile-picture .product-picture-desktop {
+    display: none;
   }
 
   main .product-hero .product-hero-title-desktop:has(+ .product-hero-title-mobile) {

@@ -3947,14 +3947,15 @@
       {
         "component": "text",
         "name": "imageAlt",
-        "label": "Desktop Image Alt Text",
+        "label": "Responsive Image Alt Text",
+        "description": "Shared by the desktop, medium, and tablet compositions of the same scene",
         "valueType": "string"
       },
       {
         "component": "reference",
         "name": "mobileImage",
-        "label": "Mobile Poster / Background",
-        "description": "Falls back to desktop media",
+        "label": "Mobile Poster / Background (≤720px)",
+        "description": "Optional; falls back through the broader poster fields",
         "valueType": "string",
         "multi": false
       },
@@ -4087,6 +4088,27 @@
             "value": "text"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "product-hero-responsive-media",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "mediumImage",
+        "label": "Medium Poster / Background (821–1024px)",
+        "description": "Optional; falls back to desktop media",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "name": "tabletImage",
+        "label": "Tablet Poster / Background (721–820px)",
+        "description": "Optional; falls back to medium, then desktop media",
+        "valueType": "string",
+        "multi": false
       }
     ]
   },
