@@ -155,10 +155,10 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 
 ## Homepage Banner 强制规则
 
-- Homepage 的 `home-banner` 是桌面端、平板端和移动端都必须显示的正式页面内容；移动端 Banner 消失、被隐藏、未渲染或高度为 `0` 均属于 **BUG / 回归**。
-- 不得通过移动端媒体查询、内容变体、block class 或 JavaScript 条件隐藏整个 `home-banner`。响应式实现只能调整图片裁切、尺寸、文案、按钮和轮播控件。
+- Homepage 的 `home-banner` 默认在桌面端、平板端和移动端显示；`showOnSmallScreens` 缺失或为 `true` 时，小屏 Banner 消失、未渲染或高度为 `0` 均属于 **BUG / 回归**。
+- 只有 Author 在 Home Banner dialog 中明确关闭 `Show on Small Screens` 时，才允许在 `<720px` 隐藏整个 `home-banner`；中屏和大屏必须继续显示。不得通过其他内容变体、任意 block class 或无关 JavaScript 条件隐藏 Banner。
 - 如果 Figma、旧设计说明或参考复刻与本规则冲突，以本规则和 AEM Author 当前业务要求为准；不得据此实现“移动端隐藏 Banner”。
-- 修改 Homepage、`home-banner`、全局响应式样式或内容模型后，必须至少在桌面端 `1920px` 和移动端 `390px` 验证 Banner 可见、图片成功加载、区块高度大于 `0`，且不存在 `.block-error`。
+- 修改 Homepage、`home-banner`、全局响应式样式或内容模型后，必须至少验证桌面端 `1920px` 始终可见；移动端 `390px` 在 `showOnSmallScreens=true` 时可见且高度大于 `0`、在 `false` 时隐藏，并确认不存在 `.block-error`。
 
 ## Header 响应式强制规则
 

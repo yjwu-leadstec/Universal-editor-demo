@@ -426,7 +426,8 @@
                 "template": {
                   "name": "Home Banner",
                   "model": "home-banner",
-                  "filter": "home-banner"
+                  "filter": "home-banner",
+                  "showOnSmallScreens": true
                 }
               }
             }

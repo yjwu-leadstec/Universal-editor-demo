@@ -263,6 +263,10 @@
 }
 
 @media (width < 720px) {
+  .home-banner.hide-on-small-screens {
+    display: none;
+  }
+
   .home-banner .hero-carousel.has-mobile-hero .carousel-track {
     display: none;
   }

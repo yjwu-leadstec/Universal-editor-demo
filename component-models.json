@@ -1695,6 +1695,14 @@
     "id": "home-banner",
     "fields": [
       {
+        "component": "boolean",
+        "name": "showOnSmallScreens",
+        "label": "Show on Small Screens",
+        "description": "关闭后在小屏（宽度小于 720px）隐藏整个 Banner；中屏和大屏仍显示",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
         "component": "reference",
         "name": "mobileImage",
         "label": "Mobile Feature Image",

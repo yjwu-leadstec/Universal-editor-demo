@@ -25,7 +25,33 @@ test('mobile banner supports an independently authored static feature', () => {
   const fieldNames = homeBanner.fields.map(({ name }) => name);
   assert.deepEqual(
     fieldNames,
-    ['mobileImage', 'mobileImageAlt', 'mobileLogo', 'mobileDamFolder'],
+    ['showOnSmallScreens', 'mobileImage', 'mobileImageAlt', 'mobileLogo', 'mobileDamFolder'],
+  );
+});
+
+test('authors can hide the banner on small screens without changing larger breakpoints', () => {
+  const model = JSON.parse(bannerModel);
+  const definition = model.definitions.find(({ id }) => id === 'home-banner');
+  const homeBanner = model.models.find(({ id }) => id === 'home-banner');
+  const field = homeBanner.fields.find(({ name }) => name === 'showOnSmallScreens');
+
+  assert.deepEqual(
+    field,
+    {
+      component: 'boolean',
+      name: 'showOnSmallScreens',
+      label: 'Show on Small Screens',
+      description: '关闭后在小屏（宽度小于 720px）隐藏整个 Banner；中屏和大屏仍显示',
+      valueType: 'boolean',
+      value: true,
+    },
+  );
+  assert.equal(definition.plugins.xwalk.page.template.showOnSmallScreens, true);
+  assert.match(bannerJs, /propertyBoolean\(block, 'showOnSmallScreens', true\)/);
+  assert.match(bannerJs, /'hide-on-small-screens'/);
+  assert.match(
+    bannerCss,
+    /@media \(width < 720px\)[\s\S]*?\.home-banner\.hide-on-small-screens\s*\{[^}]*display:\s*none;/,
   );
 });
 

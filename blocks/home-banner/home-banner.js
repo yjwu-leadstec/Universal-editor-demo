@@ -43,6 +43,12 @@ function propertyText(block, property) {
   return propertyElement(block, property)?.textContent.trim() || '';
 }
 
+function propertyBoolean(block, property, fallback = false) {
+  const value = propertyText(block, property).toLowerCase();
+  if (!value) return fallback;
+  return ['true', '1', 'yes', 'on'].includes(value);
+}
+
 function propertyDamFolder(block, property) {
   const value = propertyText(block, property);
   if (value) return value;
@@ -225,6 +231,12 @@ function setupCarousel(carousel, slideCount) {
 }
 
 export default function decorate(block) {
+  // Backward compatible: existing banners without this field remain visible.
+  block.classList.toggle(
+    'hide-on-small-screens',
+    !propertyBoolean(block, 'showOnSmallScreens', true),
+  );
+
   const mobileHero = extractMobileHero(block);
   const mobilePictures = new Set([
     mobileHero?.imagePicture,
