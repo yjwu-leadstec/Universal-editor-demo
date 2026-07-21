@@ -77,7 +77,9 @@ function createSlide(block, item, index) {
     instrumentProp(item, 'description', description);
     copy.append(description);
   }
-  const statItems = modelItems(item, 'highlight-stat');
+  const statItems = modelItems(item, 'highlight-stat').filter((stat) => (
+    ['value', 'unit', 'label', 'description'].some((name) => propText(stat, name))
+  ));
   let scalarStats = [];
   try {
     const parsedMetrics = JSON.parse(propText(item, 'metrics') || '[]');
