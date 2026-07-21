@@ -121,6 +121,60 @@ test('rebases only same-origin page links into the active locale root', () => {
   assert.equal(localizeSiteHref('javascript:alert(1)', '/language-master/en', ORIGIN), '');
 });
 
+test('projects every authored header destination into the Author namespace', () => {
+  const localeRoot = '/content/demo-site/language-master/en';
+  const slugs = [
+    'homepage',
+    'vehicles',
+    'li-i6',
+    'li-i8',
+    'li-mega',
+    'li-l6',
+    'li-l7',
+    'li-l8',
+    'li-l9',
+    'official-center',
+    'service',
+    'media-center',
+    'about-us',
+    'join-us',
+    'investor-relations',
+  ];
+
+  slugs.forEach((slug) => {
+    assert.equal(
+      localizeSiteHref(`/language-master/en/${slug}`, localeRoot, ORIGIN),
+      `${localeRoot}/${slug}.html`,
+    );
+  });
+});
+
+test('projects every locale selector destination between Author and EDS namespaces', () => {
+  const localeHomepages = [
+    '/en/homepage',
+    '/ae/en/homepage',
+    '/ae/ar/homepage',
+    '/sa/ar/homepage',
+    '/nl/nl/homepage',
+    '/kw/en/homepage',
+    '/kz/kk/homepage',
+    '/kz/ru/homepage',
+    '/uz/uz/homepage',
+    '/uz/ru/homepage',
+  ];
+
+  localeHomepages.forEach((homepage) => {
+    assert.equal(
+      localizeSiteHref(`/content/demo-site${homepage}`, '/content/demo-site/language-master/en', ORIGIN),
+      `/content/demo-site${homepage}.html`,
+    );
+    assert.equal(
+      localizeSiteHref(`/content/demo-site${homepage}`, '/language-master/en', ORIGIN),
+      homepage,
+    );
+  });
+});
+
 test('derives document language and direction', () => {
   assert.deepEqual(getDocumentLocale({ pathname: '/en/homepage' }), {
     languageTag: 'en', direction: 'ltr',
