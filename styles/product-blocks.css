@@ -153,21 +153,31 @@ main [data-product-block] .product-video-control {
   top: 16px;
   right: 16px;
   display: grid;
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
+  margin: 0;
   padding: 0;
   place-items: center;
   color: #fff;
-  background: rgb(0 0 0 / 42%);
-  border: 1px solid rgb(255 255 255 / 48%);
+  background: rgb(25 25 25 / 58%);
+  border: 1px solid rgb(255 255 255 / 44%);
   border-radius: 50%;
   cursor: pointer;
+  backdrop-filter: blur(4px);
 }
 
 main [data-product-block] .product-video-control.has-progress {
-  background: conic-gradient(#fff var(--video-progress), rgb(255 255 255 / 28%) 0), rgb(0 0 0 / 38%);
-  border: 4px solid transparent;
-  background-clip: padding-box, border-box;
+  border-color: transparent;
+}
+
+main [data-product-block] .product-video-control.has-progress::before {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(#fff var(--video-progress), rgb(255 255 255 / 30%) 0);
+  content: '';
+  pointer-events: none;
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
 }
 
 main [data-product-block] .product-video-control:focus-visible,
@@ -178,8 +188,40 @@ main [data-product-block] a:focus-visible {
 }
 
 main [data-product-block] .product-video-icon {
-  font-size: 14px;
-  line-height: 1;
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 18px;
+}
+
+main [data-product-block] .product-video-icon::before {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  width: 0;
+  height: 0;
+  border-block: 7px solid transparent;
+  border-left: 11px solid currentcolor;
+  content: '';
+}
+
+main [data-product-block] .product-video-control.is-playing .product-video-icon::before,
+main [data-product-block] .product-video-control.is-playing .product-video-icon::after {
+  position: absolute;
+  top: 2px;
+  width: 4px;
+  height: 14px;
+  background: currentcolor;
+  border: 0;
+  content: '';
+}
+
+main [data-product-block] .product-video-control.is-playing .product-video-icon::before {
+  left: 3px;
+}
+
+main [data-product-block] .product-video-control.is-playing .product-video-icon::after {
+  right: 3px;
 }
 
 main [data-product-block] .product-link {

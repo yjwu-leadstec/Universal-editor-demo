@@ -52,7 +52,7 @@ function createSlide(block, item, index) {
   slide.setAttribute('aria-roledescription', 'slide');
   slide.setAttribute('aria-label', `Slide ${index + 1}`);
   const { element: media } = createMedia(item, {
-    autoplay: false,
+    autoplay: true,
     showControls: propBoolean(block, 'showVideoControl', true),
     showProgress: propBoolean(block, 'showProgress', true),
   });
@@ -135,6 +135,7 @@ export default function decorate(block) {
   if (accentColor) block.style.setProperty('--highlight-indicator', accentColor);
   const headingColor = propText(block, 'headingColor');
   if (['white', 'black'].includes(headingColor)) block.classList.add(`highlight-heading-${headingColor}`);
+  const autoPlay = propBoolean(block, 'autoPlay', true);
   const items = modelItems(block, 'highlight-slide');
   const shell = document.createElement('div');
   shell.className = 'highlight-shell';
@@ -186,7 +187,7 @@ export default function decorate(block) {
   };
   const start = () => {
     stop();
-    if (!propBoolean(block, 'autoPlay', true) || slides.length < 2 || prefersReducedMotion() || window.matchMedia('(width <= 720px)').matches) return;
+    if (!autoPlay || slides.length < 2 || prefersReducedMotion() || window.matchMedia('(width <= 720px)').matches) return;
     timer = window.setInterval(() => update(active + 1), interval);
   };
   if (slides.length > 1) {

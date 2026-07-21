@@ -106,3 +106,17 @@ test('highlight dialog fields are wired to rendered colors, notes, indicators, a
   assert.match(carouselCss, /white-space:\s*pre-line/);
   assert.match(carouselCss, /var\(--highlight-indicator, #191919\)/);
 });
+
+test('highlight videos loop in place with accessible controls and a true progress ring', () => {
+  assert.match(carouselJs, /autoplay:\s*true/);
+  assert.match(carouselJs, /const autoPlay = propBoolean\(block, 'autoPlay', true\)/);
+  assert.match(carouselJs, /if \(!autoPlay \|\| slides\.length < 2/);
+  assert.match(productUtils, /video\.loop = loop/);
+  assert.match(productUtils, /button\.classList\.toggle\('is-playing', playing\)/);
+  assert.match(productUtils, /requestAnimationFrame\(animateProgress\)/);
+  assert.match(productUtils, /video\.dataset\.userPaused = 'true'/);
+  assert.doesNotMatch(productUtils, /icon\.textContent = playing/);
+  assert.match(productBlockCss, /\.product-video-control\s*\{[\s\S]*width:\s*56px;[\s\S]*height:\s*56px;[\s\S]*margin:\s*0/);
+  assert.match(productBlockCss, /\.product-video-control\.has-progress::before\s*\{[\s\S]*conic-gradient[\s\S]*mask:\s*radial-gradient/);
+  assert.doesNotMatch(productBlockCss, /\.product-video-control\.has-progress\s*\{[^}]*background:\s*conic-gradient/);
+});

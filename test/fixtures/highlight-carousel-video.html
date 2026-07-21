@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Highlight carousel video fixture</title>
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/blocks/highlight-carousel/highlight-carousel.css">
+  <style>
+    body { margin: 0; }
+    main { overflow: hidden; }
+  </style>
+</head>
+<body>
+  <header></header>
+  <main>
+    <div class="highlight-carousel" data-block-name="highlight-carousel" data-block-status="loaded">
+      <div data-aue-prop="title">Video highlight</div>
+      <div data-aue-prop="mobileTitle">Video<br>highlight</div>
+      <div data-aue-prop="description"></div>
+      <div data-aue-prop="accentColor">#191919</div>
+      <div data-aue-prop="autoPlay">false</div>
+      <div data-aue-prop="interval">4</div>
+      <div data-aue-prop="showProgress">true</div>
+      <div data-aue-prop="showVideoControl">true</div>
+      <div data-aue-prop="headingColor">black</div>
+      <div data-aue-model="highlight-slide">
+        <div data-aue-prop="image"><picture><img src="/scraped-images/liauto/homepage/brand-story/banner-01.jpg" alt="Water"></picture></div>
+        <div data-aue-prop="imageAlt">Water</div>
+        <div data-aue-prop="mobileImage"></div>
+        <div data-aue-prop="mobileImageAlt"></div>
+        <div data-aue-prop="video"><a href="/scraped-images/liauto/homepage/brand-story/video-01-home.mp4">Video</a></div>
+        <div data-aue-prop="mobileVideo"></div>
+        <div data-aue-prop="eyebrow"></div>
+        <div data-aue-prop="title">Looping video</div>
+        <div data-aue-prop="description"></div>
+        <div data-aue-prop="note"></div>
+        <div data-aue-prop="metrics">[]</div>
+        <div data-aue-prop="link"></div>
+        <div data-aue-prop="linkText"></div>
+        <div data-aue-prop="linkType"></div>
+        <div data-aue-prop="copyColor">white</div>
+        <div data-aue-prop="showNote">false</div>
+        <div data-aue-prop="indicatorLabel">Video</div>
+      </div>
+      <div data-aue-model="highlight-slide">
+        <div data-aue-prop="image"><picture><img src="/scraped-images/liauto/homepage/brand-story/banner-02.jpg" alt="Portrait"></picture></div>
+        <div data-aue-prop="imageAlt">Portrait</div>
+        <div data-aue-prop="mobileImage"></div>
+        <div data-aue-prop="mobileImageAlt"></div>
+        <div data-aue-prop="video"></div>
+        <div data-aue-prop="mobileVideo"></div>
+        <div data-aue-prop="eyebrow"></div>
+        <div data-aue-prop="title">Image slide</div>
+        <div data-aue-prop="description"></div>
+        <div data-aue-prop="note"></div>
+        <div data-aue-prop="metrics">[]</div>
+        <div data-aue-prop="link"></div>
+        <div data-aue-prop="linkText"></div>
+        <div data-aue-prop="linkType"></div>
+        <div data-aue-prop="copyColor">white</div>
+        <div data-aue-prop="showNote">false</div>
+        <div data-aue-prop="indicatorLabel">Image</div>
+      </div>
+    </div>
+  </main>
+  <footer></footer>
+  <script type="module">
+    import decorate from '/blocks/highlight-carousel/highlight-carousel.js';
+
+    decorate(document.querySelector('.highlight-carousel'));
+  </script>
+</body>
+</html>

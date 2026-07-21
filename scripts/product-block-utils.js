@@ -442,19 +442,41 @@ function safePlay(video) {
 }
 
 function setupVideoPlayback(media, video, button, autoplay) {
-  const icon = button?.querySelector('.product-video-icon');
+  let progressFrame = null;
+  const tracksProgress = button?.classList.contains('has-progress');
+  const stopProgress = () => {
+    if (progressFrame === null) return;
+    window.cancelAnimationFrame(progressFrame);
+    progressFrame = null;
+  };
+  const updateProgress = () => {
+    if (!tracksProgress || !Number.isFinite(video.duration) || video.duration <= 0) return;
+    const progress = Math.min(1, Math.max(0, video.currentTime / video.duration));
+    button.style.setProperty('--video-progress', `${progress * 360}deg`);
+  };
+  const animateProgress = () => {
+    updateProgress();
+    if (!video.paused && !video.ended) {
+      progressFrame = window.requestAnimationFrame(animateProgress);
+    } else {
+      progressFrame = null;
+    }
+  };
   const updateControl = () => {
     if (!button) return;
     const playing = !video.paused && !video.ended;
     button.setAttribute('aria-label', playing ? 'Pause video' : 'Play video');
-    if (icon) icon.textContent = playing ? 'Ⅱ' : '▶';
-  };
-  const updateProgress = () => {
-    if (!button || !Number.isFinite(video.duration) || video.duration <= 0) return;
-    button.style.setProperty('--video-progress', `${(video.currentTime / video.duration) * 360}deg`);
+    button.classList.toggle('is-playing', playing);
+    stopProgress();
+    if (playing && tracksProgress) animateProgress();
+    else updateProgress();
   };
   video.addEventListener('play', updateControl);
   video.addEventListener('pause', updateControl);
+  video.addEventListener('ended', updateControl);
+  video.addEventListener('loadedmetadata', updateProgress);
+  video.addEventListener('durationchange', updateProgress);
+  video.addEventListener('seeked', updateProgress);
   video.addEventListener('timeupdate', updateProgress);
   video.addEventListener('loadeddata', () => media.classList.add('is-video-ready'));
   video.addEventListener('error', () => media.classList.add('is-video-error'));
