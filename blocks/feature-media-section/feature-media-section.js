@@ -98,6 +98,14 @@ function createStats(items) {
 }
 
 function buildTabbed(block, items, container, variant) {
+  if (items.length === 1) {
+    container.append(createFeatureItem(items[0], {
+      autoplay: true,
+      showControls: propBoolean(block, 'showVideoControl', true),
+      showProgress: propBoolean(block, 'showProgress', true),
+    }));
+    return;
+  }
   const nav = document.createElement('div');
   nav.className = 'feature-media-tabs';
   nav.setAttribute('role', 'tablist');

@@ -103,6 +103,61 @@
           }
         },
         {
+          "title": "Big / Small Gallery",
+          "id": "big-small-gallery",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Big / Small Gallery",
+                  "model": "big-small-gallery",
+                  "filter": "big-small-gallery",
+                  "showVideoControl": true,
+                  "showProgress": true,
+                  "enableMotion": true,
+                  "classes": [
+                    "light",
+                    "dark-copy",
+                    "space-small"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Big / Small Statistic",
+          "id": "big-small-stat",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Big / Small Statistic",
+                  "model": "big-small-stat"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Big / Small Media Item",
+          "id": "big-small-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Big / Small Media Item",
+                  "model": "big-small-item",
+                  "linkType": "text"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Cards",
           "id": "cards",
           "plugins": {
@@ -253,6 +308,22 @@
                     "light",
                     "space-small"
                   ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Feature Group",
+          "id": "feature-grid-group",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Product Feature Group",
+                  "model": "feature-grid-group",
+                  "filter": "feature-grid-group"
                 }
               }
             }
@@ -410,7 +481,23 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Highlight Slide",
-                  "model": "highlight-slide"
+                  "model": "highlight-slide",
+                  "filter": "highlight-slide"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Highlight Statistic",
+          "id": "highlight-stat",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Highlight Statistic",
+                  "model": "highlight-stat"
                 }
               }
             }
@@ -589,6 +676,47 @@
                   "model": "overlay-hotspot",
                   "x": 50,
                   "y": 50
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Image Switcher",
+          "id": "image-switcher",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Image Switcher",
+                  "model": "image-switcher",
+                  "filter": "image-switcher",
+                  "autoPlay": true,
+                  "interval": 4,
+                  "showVideoControl": true,
+                  "showProgress": true,
+                  "accentColor": "#dbad76",
+                  "classes": [
+                    "light",
+                    "dark-copy",
+                    "space-small"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Image Switcher Item",
+          "id": "image-switcher-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Image Switcher Item",
+                  "model": "image-switcher-item"
                 }
               }
             }

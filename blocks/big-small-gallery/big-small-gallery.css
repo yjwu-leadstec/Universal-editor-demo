@@ -1,0 +1,193 @@
+main .big-small-gallery {
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+  overflow: hidden;
+}
+
+main .big-small-gallery .big-small-gallery-shell {
+  width: min(100% - 40px, 1480px);
+  margin-inline: auto;
+}
+
+main .big-small-gallery .product-section-header {
+  width: 100%;
+  max-width: 1152px;
+  margin-inline: 0;
+  text-align: left;
+}
+
+main .big-small-gallery .product-title,
+main .big-small-gallery .product-description {
+  margin-inline: 0;
+}
+
+main .big-small-gallery .big-small-video-link {
+  display: inline-flex;
+  margin-block-start: 20px;
+  align-items: center;
+  color: var(--product-copy);
+  text-decoration: none;
+  gap: 8px;
+}
+
+main .big-small-gallery .big-small-video-link::after {
+  content: '▶';
+  font-size: 12px;
+}
+
+main .big-small-gallery .big-small-stats {
+  display: flex;
+  margin-block-end: 48px;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+}
+
+main .big-small-gallery .big-small-stat {
+  min-width: 180px;
+  flex: 0 1 220px;
+}
+
+main .big-small-gallery .big-small-stat-eyebrow,
+main .big-small-gallery .big-small-stat-description,
+main .big-small-gallery .big-small-stat-value {
+  margin: 0;
+}
+
+main .big-small-gallery .big-small-stat-eyebrow {
+  color: var(--product-accent);
+  font-size: 12px;
+}
+
+main .big-small-gallery .big-small-stat-value {
+  display: flex;
+  margin-block-start: 6px;
+  align-items: baseline;
+  gap: 4px;
+}
+
+main .big-small-gallery .big-small-stat-value strong {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+main .big-small-gallery .big-small-stat-description {
+  margin-block-start: 4px;
+  color: var(--product-muted);
+  font-size: 13px;
+}
+
+main .big-small-gallery .big-small-stat-description p {
+  margin: 0;
+}
+
+main .big-small-gallery .big-small-list {
+  display: grid;
+  height: min(52vw, 832px);
+  grid-template-columns: 1.35fr 1fr;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+main .big-small-gallery .big-small-card {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+main .big-small-gallery .big-small-card:first-child {
+  grid-row: 1 / span 2;
+}
+
+main .big-small-gallery .product-media {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+}
+
+main .big-small-gallery .big-small-card-copy {
+  position: absolute;
+  z-index: 2;
+  right: 32px;
+  bottom: 30px;
+  left: 32px;
+  color: #fff;
+}
+
+main .big-small-gallery .big-small-card-copy::before {
+  position: absolute;
+  z-index: -1;
+  inset: -80px -32px -30px;
+  background: linear-gradient(transparent, rgb(0 0 0 / 68%));
+  content: '';
+}
+
+main .big-small-gallery .big-small-card-copy h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+main .big-small-gallery .big-small-card-description {
+  margin-block-start: 8px;
+  color: rgb(255 255 255 / 72%);
+  font-size: 13px;
+}
+
+main .big-small-gallery .big-small-card-description p {
+  margin: 0;
+}
+
+@media (width <= 719px) {
+  main .big-small-gallery .big-small-gallery-shell,
+  main .big-small-gallery .product-section-header {
+    width: 100%;
+  }
+
+  main .big-small-gallery .product-section-header,
+  main .big-small-gallery .big-small-stats,
+  main .big-small-gallery .big-small-list {
+    padding-inline: 20px;
+  }
+
+  main .big-small-gallery .product-title {
+    overflow-wrap: anywhere;
+  }
+
+  main .big-small-gallery .big-small-stats {
+    display: grid;
+    margin-block-end: 48px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 20px;
+  }
+
+  main .big-small-gallery .big-small-stat {
+    min-width: 0;
+  }
+
+  main .big-small-gallery .big-small-stat-value strong {
+    font-size: 20px;
+  }
+
+  main .big-small-gallery .big-small-list {
+    display: grid;
+    height: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    gap: 8px;
+  }
+
+  main .big-small-gallery .big-small-card,
+  main .big-small-gallery .big-small-card:first-child {
+    min-height: 335px;
+    grid-row: auto;
+  }
+
+  main .big-small-gallery .big-small-card-copy {
+    right: 20px;
+    bottom: 20px;
+    left: 20px;
+  }
+}

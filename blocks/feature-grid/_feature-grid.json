@@ -6,6 +6,11 @@
       "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Feature Grid", "model": "feature-grid", "filter": "feature-grid", "classes": ["light", "space-small"] } } } }
     },
     {
+      "title": "Product Feature Group",
+      "id": "feature-grid-group",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Product Feature Group", "model": "feature-grid-group", "filter": "feature-grid-group" } } } }
+    },
+    {
       "title": "Product Feature Card",
       "id": "feature-grid-item",
       "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Product Feature Card", "model": "feature-grid-item", "linkType": "text" } } } }
@@ -35,6 +40,13 @@
       ]
     },
     {
+      "id": "feature-grid-group",
+      "fields": [
+        { "component": "text", "name": "groupKey", "label": "Group Key", "description": "Unique stable key", "valueType": "string" },
+        { "component": "text", "name": "title", "label": "Group Title", "valueType": "string", "required": true }
+      ]
+    },
+    {
       "id": "feature-grid-item",
       "fields": [
         { "component": "reference", "name": "image", "label": "Desktop Poster / Image", "valueType": "string", "multi": false },
@@ -50,5 +62,5 @@
       ]
     }
   ],
-  "filters": [{ "id": "feature-grid", "components": ["feature-grid-item"] }]
+  "filters": [{ "id": "feature-grid", "components": ["feature-grid-group", "feature-grid-item"] }, { "id": "feature-grid-group", "components": ["feature-grid-item"] }]
 }

@@ -7,12 +7,35 @@ import {
   instrumentProp,
   modelItems,
   moveItemInstrumentation,
+  prefersReducedMotion,
   propBoolean,
   propSource,
   propText,
   revealElements,
   setupTabs,
 } from '../../scripts/product-block-utils.js';
+
+function setupParallax(block) {
+  if (prefersReducedMotion()) return;
+  const media = [...block.querySelectorAll('.picture-group-media')];
+  if (!media.length) return;
+  let frame = null;
+  const update = () => {
+    frame = null;
+    media.forEach((item) => {
+      const rect = item.getBoundingClientRect();
+      const range = window.innerHeight + rect.height;
+      const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / range));
+      item.style.setProperty('--picture-parallax', `${(progress - 0.5) * 12}%`);
+    });
+  };
+  const requestUpdate = () => {
+    if (!frame) frame = window.requestAnimationFrame(update);
+  };
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate);
+  update();
+}
 
 function createPanel(block, group) {
   const panel = document.createElement('section');
@@ -77,5 +100,7 @@ export default function decorate(block) {
   addBlockAnchor(block, block, shell);
   block.replaceChildren(shell);
   if (buttons.length > 1) setupTabs(block, buttons, panels);
-  revealElements(block, '.product-section-header, .picture-group-media', propBoolean(block, 'enableMotion', true));
+  const enableMotion = propBoolean(block, 'enableMotion', true);
+  revealElements(block, '.product-section-header, .picture-group-media', enableMotion);
+  if (enableMotion) setupParallax(block);
 }

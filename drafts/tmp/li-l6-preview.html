@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Li L6 Figma and current-site aligned EDS preview">
+  <title>Li L6 | Li Auto</title>
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/styles/product-blocks.css">
+</head>
+<body>
+  <header></header>
+  <main></main>
+  <footer></footer>
+  <script type="module">
+    const response = await fetch('./li-l6.plain.html');
+    document.querySelector('main').innerHTML = await response.text();
+    await import('/scripts/scripts.js');
+  </script>
+</body>
+</html>

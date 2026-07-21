@@ -16,7 +16,35 @@ import {
   revealElements,
 } from '../../scripts/product-block-utils.js';
 
-function createSlide(item, index) {
+function createStat(item) {
+  const stat = document.createElement('div');
+  stat.className = 'highlight-stat';
+  const label = propText(item, 'label');
+  const value = propText(item, 'value');
+  const unit = propText(item, 'unit');
+  if (label) {
+    const term = document.createElement('dt');
+    term.textContent = label;
+    instrumentProp(item, 'label', term);
+    stat.append(term);
+  }
+  if (value || unit) {
+    const detail = document.createElement('dd');
+    detail.textContent = [value, unit].filter(Boolean).join(' ');
+    instrumentProp(item, 'value', detail);
+    stat.append(detail);
+  }
+  const descriptionSource = propSource(item, 'description');
+  if (descriptionSource?.textContent.trim()) {
+    const description = createRichText(descriptionSource, 'highlight-stat-description');
+    instrumentProp(item, 'description', description);
+    stat.append(description);
+  }
+  moveItemInstrumentation(item, stat);
+  return stat;
+}
+
+function createSlide(block, item, index) {
   const slide = document.createElement('article');
   slide.className = 'highlight-slide';
   slide.setAttribute('aria-roledescription', 'slide');
@@ -24,7 +52,7 @@ function createSlide(item, index) {
   const { element: media } = createMedia(item, {
     autoplay: false,
     showControls: true,
-    showProgress: true,
+    showProgress: propBoolean(block, 'showProgress', true),
   });
   const copy = document.createElement('div');
   copy.className = 'highlight-slide-copy';
@@ -49,18 +77,25 @@ function createSlide(item, index) {
     instrumentProp(item, 'description', description);
     copy.append(description);
   }
-  const value = propText(item, 'metricValue');
-  const unit = propText(item, 'metricUnit');
-  const label = propText(item, 'metricLabel');
-  if (value || label) {
-    const metric = document.createElement('dl');
-    metric.className = 'highlight-metric';
-    const term = document.createElement('dt');
-    term.textContent = label;
-    const detail = document.createElement('dd');
-    detail.textContent = [value, unit].filter(Boolean).join(' ');
-    metric.append(detail, term);
-    copy.append(metric);
+  const statItems = modelItems(item, 'highlight-stat');
+  const scalarValue = propText(item, 'metricValue');
+  const scalarUnit = propText(item, 'metricUnit');
+  const scalarLabel = propText(item, 'metricLabel');
+  if (statItems.length || scalarValue || scalarLabel) {
+    const metrics = document.createElement('dl');
+    metrics.className = 'highlight-metrics';
+    statItems.forEach((stat) => metrics.append(createStat(stat)));
+    if (!statItems.length) {
+      const metric = document.createElement('div');
+      metric.className = 'highlight-stat';
+      const term = document.createElement('dt');
+      term.textContent = scalarLabel;
+      const detail = document.createElement('dd');
+      detail.textContent = [scalarValue, scalarUnit].filter(Boolean).join(' ');
+      metric.append(term, detail);
+      metrics.append(metric);
+    }
+    copy.append(metrics);
   }
   const note = propText(item, 'note');
   if (note) {
@@ -79,6 +114,8 @@ function createSlide(item, index) {
 
 export default function decorate(block) {
   initProductBlock(block);
+  const accentColor = propText(block, 'accentColor');
+  if (accentColor) block.style.setProperty('--product-accent', accentColor);
   const items = modelItems(block, 'highlight-slide');
   const shell = document.createElement('div');
   shell.className = 'highlight-shell';
@@ -88,7 +125,7 @@ export default function decorate(block) {
   viewport.setAttribute('aria-roledescription', 'carousel');
   const track = document.createElement('div');
   track.className = 'highlight-track';
-  const slides = items.map(createSlide);
+  const slides = items.map((item, index) => createSlide(block, item, index));
   track.append(...slides);
   viewport.append(track);
   shell.append(header, viewport);
