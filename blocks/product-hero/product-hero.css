@@ -170,6 +170,12 @@ main .product-hero .product-hero-scroll::before {
   }
 }
 
+@media (width >= 721px) and (width <= 999px) {
+  main .product-hero.top-copy {
+    margin-block-start: -14px;
+  }
+}
+
 @media (width >= 721px) and (width <= 820px) {
   main .product-hero {
     min-height: calc(100svh - 50px);

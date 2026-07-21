@@ -28,6 +28,8 @@ test('medium and tablet hero geometry matches the official viewport rhythm', () 
   assert.match(heroCss, /@media \(width >= 1025px\) and \(width <= 1440px\)/);
   assert.match(heroCss, /@media \(width >= 821px\) and \(width <= 1024px\)/);
   assert.match(heroCss, /@media \(width >= 721px\) and \(width <= 820px\)/);
+  assert.match(heroCss, /@media \(width >= 721px\) and \(width <= 999px\)/);
+  assert.match(heroCss, /margin-block-start:\s*-14px/);
   assert.match(heroCss, /min-height:\s*calc\(100svh - 50px\)/);
   assert.match(heroCss, /top:\s*calc\(7\.8125vw \+ 1\.5px\)/);
   assert.match(heroCss, /top:\s*calc\(7\.8125vw \+ 82px\)/);
