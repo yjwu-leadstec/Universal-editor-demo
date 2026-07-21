@@ -1913,21 +1913,10 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "name": "metricValue",
-        "label": "Metric Value",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "metricUnit",
-        "label": "Metric Unit",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "metricLabel",
-        "label": "Metric Label",
+        "component": "textarea",
+        "name": "metrics",
+        "label": "Published Metrics JSON",
+        "description": "Fallback for published markup when nested statistics are unavailable",
         "valueType": "string"
       },
       {

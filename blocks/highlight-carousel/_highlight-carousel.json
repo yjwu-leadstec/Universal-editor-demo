@@ -54,9 +54,7 @@
         { "component": "text", "name": "title", "label": "Card Title", "valueType": "string" },
         { "component": "richtext", "name": "description", "label": "Card Description", "valueType": "string" },
         { "component": "text", "name": "note", "label": "Note", "valueType": "string" },
-        { "component": "text", "name": "metricValue", "label": "Metric Value", "valueType": "string" },
-        { "component": "text", "name": "metricUnit", "label": "Metric Unit", "valueType": "string" },
-        { "component": "text", "name": "metricLabel", "label": "Metric Label", "valueType": "string" },
+        { "component": "textarea", "name": "metrics", "label": "Published Metrics JSON", "description": "Fallback for published markup when nested statistics are unavailable", "valueType": "string" },
         { "component": "aem-content", "name": "link", "label": "Link", "valueType": "string" },
         { "component": "text", "name": "linkText", "label": "Link Text", "valueType": "string" },
         { "component": "select", "name": "linkType", "label": "Link Type", "valueType": "string", "options": [{ "name": "Text", "value": "text" }, { "name": "Primary", "value": "primary" }, { "name": "Secondary", "value": "secondary" }] }

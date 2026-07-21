@@ -78,22 +78,32 @@ function createSlide(block, item, index) {
     copy.append(description);
   }
   const statItems = modelItems(item, 'highlight-stat');
-  const scalarValue = propText(item, 'metricValue');
-  const scalarUnit = propText(item, 'metricUnit');
-  const scalarLabel = propText(item, 'metricLabel');
-  if (statItems.length || scalarValue || scalarLabel) {
+  let scalarStats = [];
+  try {
+    const parsedMetrics = JSON.parse(propText(item, 'metrics') || '[]');
+    if (Array.isArray(parsedMetrics)) scalarStats = parsedMetrics.slice(0, 4);
+  } catch {
+    scalarStats = [];
+  }
+  if (statItems.length || scalarStats.length) {
     const metrics = document.createElement('dl');
     metrics.className = 'highlight-metrics';
     statItems.forEach((stat) => metrics.append(createStat(stat)));
     if (!statItems.length) {
-      const metric = document.createElement('div');
-      metric.className = 'highlight-stat';
-      const term = document.createElement('dt');
-      term.textContent = scalarLabel;
-      const detail = document.createElement('dd');
-      detail.textContent = [scalarValue, scalarUnit].filter(Boolean).join(' ');
-      metric.append(term, detail);
-      metrics.append(metric);
+      scalarStats.forEach(({
+        value, unit, label,
+      }) => {
+        const metric = document.createElement('div');
+        metric.className = 'highlight-stat';
+        const term = document.createElement('dt');
+        term.textContent = label;
+        instrumentProp(item, 'metrics', term);
+        const detail = document.createElement('dd');
+        detail.textContent = [value, unit].filter(Boolean).join(' ');
+        instrumentProp(item, 'metrics', detail);
+        metric.append(term, detail);
+        metrics.append(metric);
+      });
     }
     copy.append(metrics);
   }
