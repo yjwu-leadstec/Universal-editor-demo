@@ -1747,15 +1747,17 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "textarea",
         "name": "title",
-        "label": "Title",
+        "label": "Desktop Title",
+        "description": "Manual line breaks are preserved",
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "textarea",
         "name": "mobileTitle",
         "label": "Mobile Title Override",
+        "description": "Optional; leave empty to reuse the desktop title",
         "valueType": "string"
       },
       {
@@ -1768,11 +1770,11 @@
         "component": "text",
         "name": "accentColor",
         "label": "Indicator Color",
+        "description": "Optional; defaults to #191919",
         "valueType": "string",
-        "value": "#dbad76",
         "validation": {
           "regExp": "^#[0-9a-fA-F]{6}$",
-          "customErrorMsg": "Enter a six-digit hex color such as #dbad76"
+          "customErrorMsg": "Enter a six-digit hex color such as #191919"
         }
       },
       {
@@ -1798,9 +1800,35 @@
       {
         "component": "boolean",
         "name": "showProgress",
-        "label": "Show Progress",
+        "label": "Show Video Progress",
+        "description": "Show the progress ring around the video control",
         "valueType": "boolean",
         "value": true
+      },
+      {
+        "component": "boolean",
+        "name": "showVideoControl",
+        "label": "Show Video Play / Pause",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "select",
+        "name": "headingColor",
+        "label": "Section Heading Color",
+        "description": "Optional override for the component title",
+        "valueType": "string",
+        "value": "black",
+        "options": [
+          {
+            "name": "White (#FFFFFF)",
+            "value": "white"
+          },
+          {
+            "name": "Black (#191919)",
+            "value": "black"
+          }
+        ]
       },
       {
         "component": "multiselect",
@@ -1810,18 +1838,18 @@
         "maxSize": 2,
         "options": [
           {
-            "name": "Theme",
+            "name": "Background",
             "children": [
               {
-                "name": "Light",
+                "name": "White (#FFFFFF)",
                 "value": "light"
               },
               {
-                "name": "Dark",
+                "name": "Black (#000000)",
                 "value": "dark"
               },
               {
-                "name": "Gray",
+                "name": "Gray (#FAFAFA)",
                 "value": "gray"
               }
             ]
@@ -1830,15 +1858,15 @@
             "name": "Spacing",
             "children": [
               {
-                "name": "Large",
+                "name": "Large (PC 160px / Mobile 80px)",
                 "value": "space-large"
               },
               {
-                "name": "Small",
+                "name": "Small (PC 80px / Mobile 60px)",
                 "value": "space-small"
               },
               {
-                "name": "None",
+                "name": "None (0px)",
                 "value": "space-none"
               }
             ]
@@ -1895,9 +1923,10 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "textarea",
         "name": "title",
         "label": "Card Title",
+        "description": "Manual line breaks are preserved",
         "valueType": "string"
       },
       {
@@ -1907,9 +1936,10 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "textarea",
         "name": "note",
         "label": "Note",
+        "description": "Displayed only when Show Note is enabled",
         "valueType": "string"
       },
       {
@@ -1950,6 +1980,39 @@
             "value": "secondary"
           }
         ]
+      },
+      {
+        "component": "select",
+        "name": "copyColor",
+        "label": "Desktop Card Text Color",
+        "description": "Choose for contrast against this card's media",
+        "valueType": "string",
+        "value": "white",
+        "options": [
+          {
+            "name": "White (#FFFFFF)",
+            "value": "white"
+          },
+          {
+            "name": "Black (#191919)",
+            "value": "black"
+          }
+        ]
+      },
+      {
+        "component": "boolean",
+        "name": "showNote",
+        "label": "Show Note",
+        "description": "Existing notes remain visible unless explicitly disabled",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "textarea",
+        "name": "indicatorLabel",
+        "label": "Indicator Label",
+        "description": "Optional; manual line breaks are preserved",
+        "valueType": "string"
       }
     ]
   },

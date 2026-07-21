@@ -1,7 +1,6 @@
 main .highlight-carousel[data-product-block] {
   left: 50%;
   width: 100vw;
-  padding-block: 160px;
   margin-inline-start: -50vw;
   overflow: hidden;
   font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -26,6 +25,9 @@ main .highlight-carousel .highlight-track {
 }
 
 main .highlight-carousel .highlight-slide {
+  --highlight-copy: #fff;
+  --highlight-muted: rgb(255 255 255 / 72%);
+
   position: absolute;
   inset: 0;
   box-sizing: border-box;
@@ -36,6 +38,26 @@ main .highlight-carousel .highlight-slide {
   transform: translateX(0);
   transition: opacity 300ms ease, transform 300ms ease;
   pointer-events: none;
+}
+
+main .highlight-carousel .highlight-slide.highlight-copy-black {
+  --highlight-copy: #191919;
+  --highlight-muted: rgb(25 25 25 / 72%);
+}
+
+main .highlight-carousel .highlight-slide.highlight-copy-white {
+  --highlight-copy: #fff;
+  --highlight-muted: rgb(255 255 255 / 72%);
+}
+
+main .highlight-carousel.highlight-heading-black .product-section-header {
+  --product-copy: #191919;
+  --product-muted: rgb(25 25 25 / 60%);
+}
+
+main .highlight-carousel.highlight-heading-white .product-section-header {
+  --product-copy: #fff;
+  --product-muted: rgb(255 255 255 / 70%);
 }
 
 main .highlight-carousel .highlight-slide.is-instant {
@@ -78,25 +100,26 @@ main .highlight-carousel .highlight-slide-copy {
   box-sizing: border-box;
   padding: 60px 60px 40px;
   flex-direction: column;
-  color: #fff;
+  color: var(--highlight-copy);
 }
 
 main .highlight-carousel .highlight-slide-copy h3 {
   width: 100%;
   max-width: 1080px;
   margin: 0 auto;
-  color: #fff;
+  color: var(--highlight-copy);
   font-family: licium-medium, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 36px;
   font-weight: 400;
   line-height: 48px;
   text-align: center;
+  white-space: pre-line;
 }
 
 main .highlight-carousel .highlight-eyebrow,
 main .highlight-carousel .highlight-description {
   margin: 0;
-  color: rgb(255 255 255 / 72%);
+  color: var(--highlight-muted);
   font-size: 14px;
   text-align: center;
 }
@@ -121,14 +144,14 @@ main .highlight-carousel .highlight-stat {
 }
 
 main .highlight-carousel .highlight-stat dt {
-  color: #fff;
+  color: var(--highlight-copy);
   font-size: 12px;
   line-height: 20px;
 }
 
 main .highlight-carousel .highlight-stat dd {
   margin: 0;
-  color: #fff;
+  color: var(--highlight-copy);
   font-family: licium-medium, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 22px;
   font-weight: 400;
@@ -137,7 +160,7 @@ main .highlight-carousel .highlight-stat dd {
 }
 
 main .highlight-carousel .highlight-stat-description {
-  color: rgb(255 255 255 / 65%);
+  color: var(--highlight-muted);
   font-size: 12px;
 }
 
@@ -152,6 +175,7 @@ main .highlight-carousel .highlight-note {
   margin: 0;
   color: var(--product-muted);
   font-size: 12px;
+  white-space: pre-line;
 }
 
 main .highlight-carousel .highlight-controls {
@@ -182,7 +206,54 @@ main .highlight-carousel .highlight-dot {
 }
 
 main .highlight-carousel .highlight-dot.is-active {
-  background: #191919;
+  background: var(--highlight-indicator, #191919);
+}
+
+main .highlight-carousel .highlight-controls.has-indicator-labels {
+  height: 84px;
+}
+
+main .highlight-carousel .highlight-dots.has-labels {
+  position: relative;
+  bottom: auto;
+  gap: 24px;
+}
+
+main .highlight-carousel .highlight-dot.has-label {
+  position: relative;
+  width: clamp(98px, 10vw, 160px);
+  height: auto;
+  min-height: 44px;
+  padding: 10px 0 0;
+  color: var(--product-copy);
+  background: transparent;
+  font-size: 12px;
+  line-height: 17px;
+  text-align: left;
+  white-space: normal;
+}
+
+main .highlight-carousel .highlight-dot.has-label::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: #d2d2d2;
+  content: '';
+}
+
+main .highlight-carousel .highlight-dot.has-label.is-active {
+  background: transparent;
+}
+
+main .highlight-carousel .highlight-dot.has-label.is-active::before {
+  background: var(--highlight-indicator, #191919);
+}
+
+main .highlight-carousel .highlight-dot-label {
+  display: block;
+  white-space: pre-line;
 }
 
 main .highlight-carousel .highlight-arrows {
@@ -234,10 +305,6 @@ main .highlight-carousel .highlight-status {
 }
 
 @media (width >= 1025px) and (width <= 1440px) {
-  main .highlight-carousel[data-product-block] {
-    padding-block: 120px;
-  }
-
   main .highlight-carousel .highlight-viewport,
   main .highlight-carousel .highlight-track {
     height: 537.5px;
@@ -277,10 +344,6 @@ main .highlight-carousel .highlight-status {
 }
 
 @media (width >= 721px) and (width <= 1024px) {
-  main .highlight-carousel[data-product-block] {
-    padding-block: 11.9048vw;
-  }
-
   main .highlight-carousel .highlight-viewport,
   main .highlight-carousel .highlight-track {
     height: 406px;
@@ -341,8 +404,16 @@ main .highlight-carousel .highlight-status {
 }
 
 @media (width <= 720px) {
-  main .highlight-carousel[data-product-block] {
+  main .highlight-carousel[data-product-block].space-large {
     padding-block: 80px;
+  }
+
+  main .highlight-carousel[data-product-block].space-small {
+    padding-block: 60px;
+  }
+
+  main .highlight-carousel[data-product-block].space-none {
+    padding-block: 0;
   }
 
   main .highlight-carousel .product-section-header {
@@ -366,6 +437,7 @@ main .highlight-carousel .highlight-status {
     height: auto;
     margin: 0;
     padding: 0;
+    align-items: stretch;
     gap: 0;
   }
 
@@ -375,6 +447,7 @@ main .highlight-carousel .highlight-status {
   main .highlight-carousel .highlight-slide.is-next {
     position: relative;
     inset: auto;
+    display: flex;
     width: 100vw;
     box-sizing: border-box;
     padding-inline: 20px;
@@ -391,8 +464,9 @@ main .highlight-carousel .highlight-status {
   main .highlight-carousel .product-media {
     display: flex;
     width: calc(100vw - 40px);
-    height: auto;
+    height: 100%;
     min-height: 0;
+    flex: 1 1 auto;
     flex-direction: column;
     background: transparent;
     border-radius: 4px;
@@ -411,11 +485,14 @@ main .highlight-carousel .highlight-status {
   }
 
   main .highlight-carousel .highlight-slide-copy {
+    --highlight-copy: var(--product-copy);
+    --highlight-muted: var(--product-muted);
+
     position: static;
-    min-height: 270px;
+    min-height: 0;
     padding: 20px;
-    flex: 1 0 270px;
-    color: var(--product-copy);
+    flex: 1 1 auto;
+    color: var(--highlight-copy);
     background: var(--product-card-bg);
   }
 
@@ -424,7 +501,7 @@ main .highlight-carousel .highlight-status {
     max-width: none;
     margin: 0;
     padding-block-end: 20px;
-    color: var(--product-copy);
+    color: var(--highlight-copy);
     font-size: 18px;
     font-weight: 400;
     line-height: 26px;
@@ -433,7 +510,7 @@ main .highlight-carousel .highlight-status {
 
   main .highlight-carousel .highlight-eyebrow,
   main .highlight-carousel .highlight-description {
-    color: var(--product-muted);
+    color: var(--highlight-muted);
     text-align: left;
   }
 
@@ -455,11 +532,11 @@ main .highlight-carousel .highlight-status {
 
   main .highlight-carousel .highlight-stat dt,
   main .highlight-carousel .highlight-stat-description {
-    color: var(--product-muted);
+    color: var(--highlight-muted);
   }
 
   main .highlight-carousel .highlight-stat dd {
-    color: var(--product-copy);
+    color: var(--highlight-copy);
     font-size: 18px;
     line-height: 26px;
   }
@@ -475,6 +552,17 @@ main .highlight-carousel .highlight-status {
     margin: 0;
   }
 
+  main .highlight-carousel .highlight-controls.has-indicator-labels {
+    height: auto;
+    padding-block: 16px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  main .highlight-carousel .highlight-controls.has-indicator-labels::-webkit-scrollbar {
+    display: none;
+  }
+
   main .highlight-carousel .highlight-dots {
     right: 0;
     bottom: 0;
@@ -483,28 +571,16 @@ main .highlight-carousel .highlight-status {
     margin-inline: auto;
   }
 
+  main .highlight-carousel .highlight-dots.has-labels {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    padding-inline: 20px;
+    margin-inline: 0;
+  }
+
   main .highlight-carousel .highlight-arrows {
     display: none;
-  }
-}
-
-@media (width <= 540px) {
-  main .highlight-carousel .highlight-viewport,
-  main .highlight-carousel .highlight-track {
-    height: calc((100vw - 40px) * 0.5625 + 440px);
-  }
-
-  main .highlight-carousel .highlight-slide {
-    height: 100%;
-  }
-
-  main .highlight-carousel .product-media {
-    height: calc((100vw - 40px) * 0.5625 + 368px);
-    flex: 0 0 auto;
-  }
-
-  main .highlight-carousel .highlight-slide-copy {
-    min-height: 230px;
-    flex: 0 0 230px;
   }
 }

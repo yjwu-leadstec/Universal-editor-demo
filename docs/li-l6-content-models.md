@@ -71,16 +71,18 @@ Block fields:
 
 | Field | Type | Default |
 | --- | --- | --- |
-| `id`, `title`, `mobileTitle`, `description` | text/rich text | optional |
+| `id`, `title`, `mobileTitle`, `description` | text/textarea/rich text | optional; title fields preserve manual line breaks |
 | `autoPlay` | boolean | `true` |
 | `interval` | number | `4`, validated 2–12 seconds |
-| `showProgress` | boolean | `true` |
+| `showVideoControl`, `showProgress` | boolean | `true`; play/pause and its progress ring are independently configurable |
+| `headingColor` | select | `black`; white/black semantic choices |
 | `classes` | multiselect | `light`, `space-small` |
 
 Child `highlight-slide` fields:
 
 - responsive media group plus optional video;
-- `eyebrow`, `title`, `description`, `note`;
+- `eyebrow`, multiline `title`, `description`, multiline `note`;
+- optional `copyColor`, `showNote`, and multiline `indicatorLabel`;
 - `metricValue`, `metricUnit`, `metricLabel`;
 - optional standard link group.
 

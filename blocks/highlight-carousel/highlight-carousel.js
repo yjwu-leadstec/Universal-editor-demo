@@ -47,11 +47,13 @@ function createStat(item) {
 function createSlide(block, item, index) {
   const slide = document.createElement('article');
   slide.className = 'highlight-slide';
+  const copyColor = propText(item, 'copyColor');
+  if (['white', 'black'].includes(copyColor)) slide.classList.add(`highlight-copy-${copyColor}`);
   slide.setAttribute('aria-roledescription', 'slide');
   slide.setAttribute('aria-label', `Slide ${index + 1}`);
   const { element: media } = createMedia(item, {
     autoplay: false,
-    showControls: true,
+    showControls: propBoolean(block, 'showVideoControl', true),
     showProgress: propBoolean(block, 'showProgress', true),
   });
   const copy = document.createElement('div');
@@ -110,7 +112,9 @@ function createSlide(block, item, index) {
     copy.append(metrics);
   }
   const note = propText(item, 'note');
-  if (note) {
+  const showNoteValue = propText(item, 'showNote');
+  const showNote = showNoteValue ? propBoolean(item, 'showNote') : Boolean(note);
+  if (note && showNote) {
     const element = document.createElement('p');
     element.className = 'highlight-note';
     element.textContent = note;
@@ -119,7 +123,7 @@ function createSlide(block, item, index) {
   }
   const link = createProductLink(item);
   if (link) copy.append(link);
-  media.append(copy);
+  if (copy.childElementCount) media.append(copy);
   slide.append(media);
   moveItemInstrumentation(item, slide);
   return slide;
@@ -128,7 +132,9 @@ function createSlide(block, item, index) {
 export default function decorate(block) {
   initProductBlock(block);
   const accentColor = propText(block, 'accentColor');
-  if (accentColor) block.style.setProperty('--product-accent', accentColor);
+  if (accentColor) block.style.setProperty('--highlight-indicator', accentColor);
+  const headingColor = propText(block, 'headingColor');
+  if (['white', 'black'].includes(headingColor)) block.classList.add(`highlight-heading-${headingColor}`);
   const items = modelItems(block, 'highlight-slide');
   const shell = document.createElement('div');
   shell.className = 'highlight-shell';
@@ -190,11 +196,26 @@ export default function decorate(block) {
     dots.className = 'highlight-dots';
     dots.setAttribute('role', 'group');
     dots.setAttribute('aria-label', 'Choose highlight');
+    const indicatorLabels = items.map((item) => propText(item, 'indicatorLabel'));
+    const hasIndicatorLabels = indicatorLabels.some(Boolean);
+    if (hasIndicatorLabels) {
+      controls.classList.add('has-indicator-labels');
+      dots.classList.add('has-labels');
+    }
     const dotButtons = slides.map((_, index) => {
       const dot = document.createElement('button');
       dot.type = 'button';
       dot.className = 'highlight-dot';
-      dot.setAttribute('aria-label', `Go to highlight ${index + 1}`);
+      const labelText = indicatorLabels[index] || propText(items[index], 'title') || `Highlight ${index + 1}`;
+      dot.setAttribute('aria-label', `Go to ${labelText.replaceAll('\n', ' ')}`);
+      if (hasIndicatorLabels) {
+        dot.classList.add('has-label');
+        const label = document.createElement('span');
+        label.className = 'highlight-dot-label';
+        label.textContent = labelText;
+        if (indicatorLabels[index]) instrumentProp(items[index], 'indicatorLabel', label);
+        dot.append(label);
+      }
       return dot;
     });
     dots.append(...dotButtons);
