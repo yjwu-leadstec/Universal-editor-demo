@@ -14,7 +14,7 @@
               "showArrow": true,
               "showVideoControl": true,
               "showProgress": true,
-              "classes": ["light-copy", "center-copy"]
+              "classes": ["light-copy", "top-copy"]
             }
           }
         }

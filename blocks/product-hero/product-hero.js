@@ -80,7 +80,6 @@ export default function decorate(block) {
     cue.type = 'button';
     cue.className = 'product-hero-scroll';
     cue.setAttribute('aria-label', 'Scroll to product highlights');
-    cue.textContent = '↓';
     cue.addEventListener('click', () => block.closest('.section')?.nextElementSibling?.scrollIntoView({ behavior: 'smooth' }));
     instrumentProp(block, 'showArrow', cue);
     shell.append(cue);

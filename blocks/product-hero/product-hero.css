@@ -41,8 +41,12 @@ main .product-hero .product-hero-copy {
 }
 
 main .product-hero.top-copy .product-hero-copy {
-  top: 16%;
+  top: 140px;
   transform: none;
+}
+
+main .product-hero.top-copy .product-hero-shell::after {
+  background: none;
 }
 
 main .product-hero.bottom-copy .product-hero-copy {
@@ -106,15 +110,23 @@ main .product-hero .product-hero-scroll {
   z-index: 3;
   bottom: 24px;
   left: 50%;
-  width: 44px;
-  height: 44px;
+  display: grid;
+  width: 30px;
+  height: 30px;
   padding: 0;
-  color: #fff;
-  background: rgb(0 0 0 / 24%);
-  border: 1px solid rgb(255 255 255 / 58%);
-  border-radius: 50%;
-  font-size: 24px;
+  place-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
   animation: product-hero-cue 1800ms ease-in-out infinite;
+}
+
+main .product-hero .product-hero-scroll::before {
+  width: 18px;
+  height: 11px;
+  background: #fff;
+  content: '';
+  mask: url("/icons/chevron-down.svg") center / contain no-repeat;
 }
 
 @keyframes product-hero-cue {
@@ -124,7 +136,15 @@ main .product-hero .product-hero-scroll {
 
 @media (width <= 719px) {
   main .product-hero {
-    min-height: 660px;
+    min-height: max(660px, calc(100svh - var(--nav-height)));
+  }
+
+  main .product-hero.top-copy .product-hero-copy {
+    top: 16%;
+  }
+
+  main .product-hero .product-hero-scroll {
+    bottom: 7px;
   }
 
   main .product-hero .product-hero-title-desktop:has(+ .product-hero-title-mobile) {
