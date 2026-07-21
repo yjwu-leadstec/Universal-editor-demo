@@ -136,11 +136,11 @@ main .product-hero .product-hero-scroll::before {
 
 @media (width <= 719px) {
   main .product-hero {
-    min-height: max(660px, calc(100svh - var(--nav-height)));
+    min-height: max(660px, calc(100svh - 50px));
   }
 
   main .product-hero.top-copy .product-hero-copy {
-    top: 16%;
+    top: 18%;
   }
 
   main .product-hero .product-hero-scroll {
