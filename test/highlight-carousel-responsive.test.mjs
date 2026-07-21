@@ -36,10 +36,17 @@ test('highlight carousel hides non-participating slides and keeps authored media
 });
 
 test('tablet carousel corrects wrapper padding and centers arrow glyphs', () => {
-  assert.match(carouselCss, /@media \(width >= 721px\) and \(width <= 899px\)[\s\S]*margin-inline-start:\s*-24px/);
-  assert.match(carouselCss, /@media \(width >= 900px\) and \(width <= 1024px\)[\s\S]*margin-inline-start:\s*-32px/);
+  assert.match(carouselCss, /@media \(width >= 721px\) and \(width <= 899px\)[\s\S]*width:\s*calc\(100% \+ 48px\);[\s\S]*margin-inline-start:\s*-24px/);
+  assert.match(carouselCss, /@media \(width >= 900px\) and \(width <= 1024px\)[\s\S]*width:\s*calc\(100% \+ 64px\);[\s\S]*margin-inline-start:\s*-32px/);
   assert.match(carouselCss, /top:\s*50%;\s*\n\s*left:\s*50%/);
   assert.match(carouselCss, /translate\(-50%, -50%\) rotate\(45deg\)/);
+});
+
+test('desktop carousel matches the official 300ms motion and stages non-participating slides instantly', () => {
+  assert.match(carouselCss, /transition:\s*opacity 300ms ease, transform 300ms ease/);
+  assert.match(carouselCss, /\.highlight-slide\.is-instant\s*\{\s*\n\s*transition:\s*none/);
+  assert.match(carouselJs, /index === previousActive \|\| index === active/);
+  assert.match(carouselJs, /slide\.classList\.toggle\('is-instant', !participatesInTransition\)/);
 });
 
 test('mobile carousel disables autoplay and equalizes card copy height', () => {

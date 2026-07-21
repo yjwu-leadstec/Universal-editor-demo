@@ -146,16 +146,28 @@ export default function decorate(block) {
 
   let active = 0;
   let timer = null;
+  let stagingFrame = null;
+  let rendered = false;
   let refreshControls = () => {};
   const interval = Math.max(2000, propNumber(block, 'interval', 4) * 1000);
   const update = (next, scrollMobile = false) => {
+    const previousActive = active;
     active = (next + slides.length) % slides.length;
     slides.forEach((slide, index) => {
+      const participatesInTransition = rendered && (index === previousActive || index === active);
+      slide.classList.toggle('is-instant', !participatesInTransition);
       slide.classList.toggle('is-active', index === active);
       slide.classList.toggle('is-previous', index === (active - 1 + slides.length) % slides.length);
       slide.classList.toggle('is-next', index === (active + 1) % slides.length);
       slide.setAttribute('aria-hidden', String(index !== active));
     });
+    track.getBoundingClientRect();
+    if (stagingFrame) window.cancelAnimationFrame(stagingFrame);
+    stagingFrame = window.requestAnimationFrame(() => {
+      slides.forEach((slide) => slide.classList.remove('is-instant'));
+      stagingFrame = null;
+    });
+    rendered = true;
     shell.style.setProperty('--active-slide', active);
     refreshControls();
     if (scrollMobile && window.matchMedia('(width <= 720px)').matches) {

@@ -34,8 +34,12 @@ main .highlight-carousel .highlight-slide {
   opacity: 0;
   visibility: hidden;
   transform: translateX(0);
-  transition: opacity 550ms ease, transform 550ms ease;
+  transition: opacity 300ms ease, transform 300ms ease;
   pointer-events: none;
+}
+
+main .highlight-carousel .highlight-slide.is-instant {
+  transition: none;
 }
 
 main .highlight-carousel .highlight-slide.is-active {
@@ -323,6 +327,7 @@ main .highlight-carousel .highlight-status {
 @media (width >= 721px) and (width <= 899px) {
   main .highlight-carousel[data-product-block] {
     left: auto;
+    width: calc(100% + 48px);
     margin-inline-start: -24px;
   }
 }
@@ -330,6 +335,7 @@ main .highlight-carousel .highlight-status {
 @media (width >= 900px) and (width <= 1024px) {
   main .highlight-carousel[data-product-block] {
     left: auto;
+    width: calc(100% + 64px);
     margin-inline-start: -32px;
   }
 }
