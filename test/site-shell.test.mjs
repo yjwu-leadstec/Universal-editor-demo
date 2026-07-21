@@ -91,6 +91,30 @@ test('rebases only same-origin page links into the active locale root', () => {
   assert.equal(localizeSiteHref('/service', '/language-master/en', ORIGIN), '/language-master/en/service');
   assert.equal(localizeSiteHref('/', '/language-master/en', ORIGIN), '/language-master/en');
   assert.equal(localizeSiteHref('/en', '/language-master/en', ORIGIN), '/en');
+  assert.equal(
+    localizeSiteHref('/language-master/en/service', '/content/demo-site/language-master/en', ORIGIN),
+    '/content/demo-site/language-master/en/service.html',
+  );
+  assert.equal(
+    localizeSiteHref('/en/service', '/content/demo-site/language-master/en', ORIGIN),
+    '/content/demo-site/en/service.html',
+  );
+  assert.equal(
+    localizeSiteHref('/content/demo-site/ae/ar/homepage', '/content/demo-site/language-master/en', ORIGIN),
+    '/content/demo-site/ae/ar/homepage.html',
+  );
+  assert.equal(
+    localizeSiteHref('/content/demo-site/ae/ar/homepage', '/language-master/en', ORIGIN),
+    '/ae/ar/homepage',
+  );
+  assert.equal(
+    localizeSiteHref('/service?source=nav#plans', '/content/demo-site/language-master/en', ORIGIN),
+    '/content/demo-site/language-master/en/service.html?source=nav#plans',
+  );
+  assert.equal(
+    localizeSiteHref('/content/dam/li-auto/logo.svg', '/content/demo-site/language-master/en', ORIGIN),
+    '/content/dam/li-auto/logo.svg',
+  );
   assert.equal(localizeSiteHref('https://www.lixiang.com/', '/language-master/en', ORIGIN), 'https://www.lixiang.com/');
   assert.equal(localizeSiteHref('mailto:hello@example.com', '/language-master/en', ORIGIN), 'mailto:hello@example.com');
   // eslint-disable-next-line no-script-url

@@ -22,6 +22,22 @@ export function normalizePath(value) {
   return path.length > 1 ? path.replace(/\/+$/, '') : path;
 }
 
+function logicalLocaleRoot(context) {
+  if (!context) return '';
+  if (context.marketCode === 'language-master') {
+    return `/language-master/${context.languageTag.toLowerCase()}`;
+  }
+  if (context.marketCode === 'global') return '/en';
+  return `/${context.marketCode}/${context.languageTag.toLowerCase()}`;
+}
+
+function contentNamespace(localeRoot, context) {
+  const root = normalizePath(localeRoot);
+  if (!root.startsWith('/content/') || !context) return '';
+  const logicalRoot = logicalLocaleRoot(context);
+  return root.endsWith(logicalRoot) ? root.slice(0, -logicalRoot.length) : '';
+}
+
 /**
  * Return a canonical BCP 47 tag, or an empty string when invalid.
  * @param {string} value
@@ -148,12 +164,25 @@ export function localizeSiteHref(href, localeRoot, origin) {
     if (url.origin !== origin) return value;
 
     const pathname = normalizePath(url.pathname);
-    if (NON_PAGE_PREFIXES.some((prefix) => pathname.startsWith(prefix))) return value;
-    if (resolveLocaleContext(pathname)) return `${pathname}${url.search}${url.hash}`;
+    const activeRoot = normalizePath(localeRoot);
+    const activeContext = resolveLocaleContext(activeRoot);
+    const targetContext = resolveLocaleContext(pathname);
 
-    const root = normalizePath(localeRoot);
-    const localized = pathname === '/' ? root : `${root}${pathname}`;
-    return `${localized}${url.search}${url.hash}`;
+    // AEM Author URLs carry /content/<site> and require .html, while EDS
+    // delivery URLs omit both. Always project authored locale links into the
+    // active environment instead of preserving their original namespace.
+    let localized;
+    if (targetContext) {
+      const suffix = pathname.slice(targetContext.root.length);
+      localized = `${contentNamespace(activeRoot, activeContext)}${logicalLocaleRoot(targetContext)}${suffix}`;
+    } else {
+      if (NON_PAGE_PREFIXES.some((prefix) => pathname.startsWith(prefix))) return value;
+      localized = pathname === '/' ? activeRoot : `${activeRoot}${pathname}`;
+    }
+
+    localized = normalizePath(localized);
+    const extension = activeRoot.startsWith('/content/') ? '.html' : '';
+    return `${localized}${extension}${url.search}${url.hash}`;
   } catch {
     return '';
   }

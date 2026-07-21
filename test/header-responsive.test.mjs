@@ -31,3 +31,12 @@ test('mobile accordion vertical rhythm matches the official 48 px rows', () => {
     /header \.header-mobile-item:has\([^)]*aria-expanded="true"[^)]*\) ~ \.header-mobile-language\s*\{[^}]*margin-top:\s*13px;/s,
   );
 });
+
+test('header projects authored links into the active Author or EDS namespace', () => {
+  assert.match(headerJs, /brandTarget = '\/homepage'/);
+  assert.match(headerJs, /extractLocaleMarkets\(directory, localeContext\?\.root \|\| ''\)/);
+  assert.match(
+    headerJs,
+    /href: localizeSiteHref\([\s\S]*?link\.getAttribute\('href'\),[\s\S]*?localeRoot/,
+  );
+});

@@ -12,6 +12,7 @@ import {
   isCurrentLocaleDestination,
   isLocalizedHomepage,
   localizeSiteHref,
+  normalizePath,
   resolveLocaleContext,
   safeFragmentOverride,
 } from '../../scripts/site-shell.mjs';
@@ -165,6 +166,16 @@ function extractNavData(fragment, localeRoot) {
   const toolsSection = sections[2];
   const brandLink = brandSection?.querySelector('a');
   const brandImg = brandSection?.querySelector('img');
+  const authoredBrandHref = brandLink?.getAttribute('href') || '';
+  let brandTarget = authoredBrandHref || '/homepage';
+  try {
+    const brandUrl = new URL(authoredBrandHref || '/', window.location.origin);
+    if (brandUrl.origin === window.location.origin && normalizePath(brandUrl.pathname) === '/') {
+      brandTarget = '/homepage';
+    }
+  } catch {
+    brandTarget = '/homepage';
+  }
 
   const topList = navSection?.querySelector('ul');
   const navItems = topList ? [...topList.children].map((element, index) => {
@@ -193,7 +204,7 @@ function extractNavData(fragment, localeRoot) {
     .find((anchor) => !anchor.closest('.header-settings'));
   return {
     brandSection,
-    brandLink: localizeSiteHref(brandLink?.getAttribute('href') || '/', localeRoot, window.location.origin),
+    brandLink: localizeSiteHref(brandTarget, localeRoot, window.location.origin),
     brandImg: brandImg?.src || '',
     brandImgAlt: brandImg?.alt || 'Li Auto',
     navItems,
@@ -366,7 +377,7 @@ function buildMobileItem(item) {
   return mobileItem;
 }
 
-function extractLocaleMarkets(fragment) {
+function extractLocaleMarkets(fragment, localeRoot) {
   const markets = [];
   const byCode = new Map();
   const seenKeys = new Set();
@@ -386,7 +397,11 @@ function extractLocaleMarkets(fragment) {
     }
     market.languages.push({
       label: link.textContent.trim(),
-      href: link.getAttribute('href'),
+      href: localizeSiteHref(
+        link.getAttribute('href'),
+        localeRoot,
+        window.location.origin,
+      ),
       languageTag,
       direction: item.dataset.textDirection || 'ltr',
     });
@@ -489,7 +504,7 @@ export default async function decorate(block) {
       ? `${localeContext.root}/locale-directory`
       : '');
   const directory = directoryPath ? await loadFragment(directoryPath) : null;
-  const localeMarkets = extractLocaleMarkets(directory);
+  const localeMarkets = extractLocaleMarkets(directory, localeContext?.root || '');
   block.textContent = '';
 
   const nav = document.createElement('nav');
