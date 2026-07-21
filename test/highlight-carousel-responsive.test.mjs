@@ -116,7 +116,7 @@ test('highlight videos loop in place with accessible controls and a true progres
   assert.match(productUtils, /requestAnimationFrame\(animateProgress\)/);
   assert.match(productUtils, /video\.dataset\.userPaused = 'true'/);
   assert.doesNotMatch(productUtils, /icon\.textContent = playing/);
-  assert.match(productBlockCss, /\.product-video-control\s*\{[\s\S]*width:\s*56px;[\s\S]*height:\s*56px;[\s\S]*margin:\s*0/);
+  assert.match(productBlockCss, /\.product-video-control\s*\{[\s\S]*width:\s*52px;[\s\S]*height:\s*52px;[\s\S]*margin:\s*0/);
   assert.match(productBlockCss, /\.product-video-control\.has-progress::before\s*\{[\s\S]*conic-gradient[\s\S]*mask:\s*radial-gradient/);
   assert.doesNotMatch(productBlockCss, /\.product-video-control\.has-progress\s*\{[^}]*background:\s*conic-gradient/);
 });

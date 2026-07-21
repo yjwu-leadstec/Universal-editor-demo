@@ -153,8 +153,8 @@ main [data-product-block] .product-video-control {
   top: 16px;
   right: 16px;
   display: grid;
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   margin: 0;
   padding: 0;
   place-items: center;
