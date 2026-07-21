@@ -119,7 +119,8 @@ function createSlide(block, item, index) {
   }
   const link = createProductLink(item);
   if (link) copy.append(link);
-  slide.append(media, copy);
+  media.append(copy);
+  slide.append(media);
   moveItemInstrumentation(item, slide);
   return slide;
 }
@@ -140,10 +141,12 @@ export default function decorate(block) {
   const slides = items.map((item, index) => createSlide(block, item, index));
   track.append(...slides);
   viewport.append(track);
-  shell.append(header, viewport);
+  if (header.childElementCount) shell.append(header);
+  shell.append(viewport);
 
   let active = 0;
   let timer = null;
+  let refreshControls = () => {};
   const interval = Math.max(2000, propNumber(block, 'interval', 4) * 1000);
   const update = (next, scrollMobile = false) => {
     active = (next + slides.length) % slides.length;
@@ -154,7 +157,8 @@ export default function decorate(block) {
       slide.setAttribute('aria-hidden', String(index !== active));
     });
     shell.style.setProperty('--active-slide', active);
-    if (scrollMobile && window.matchMedia('(width <= 719px)').matches) {
+    refreshControls();
+    if (scrollMobile && window.matchMedia('(width <= 720px)').matches) {
       slides[active].scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
     }
   };
@@ -164,37 +168,64 @@ export default function decorate(block) {
   };
   const start = () => {
     stop();
-    if (!propBoolean(block, 'autoPlay', true) || slides.length < 2 || prefersReducedMotion() || window.matchMedia('(width <= 719px)').matches) return;
+    if (!propBoolean(block, 'autoPlay', true) || slides.length < 2 || prefersReducedMotion() || window.matchMedia('(width <= 720px)').matches) return;
     timer = window.setInterval(() => update(active + 1), interval);
   };
   if (slides.length > 1) {
     const controls = document.createElement('div');
     controls.className = 'highlight-controls';
+    const dots = document.createElement('div');
+    dots.className = 'highlight-dots';
+    dots.setAttribute('role', 'group');
+    dots.setAttribute('aria-label', 'Choose highlight');
+    const dotButtons = slides.map((_, index) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'highlight-dot';
+      dot.setAttribute('aria-label', `Go to highlight ${index + 1}`);
+      return dot;
+    });
+    dots.append(...dotButtons);
+    const arrows = document.createElement('div');
+    arrows.className = 'highlight-arrows';
     const previous = document.createElement('button');
     previous.type = 'button';
+    previous.className = 'highlight-arrow highlight-arrow-previous';
     previous.setAttribute('aria-label', 'Previous highlight');
-    previous.textContent = '←';
     const status = document.createElement('div');
     status.className = 'highlight-status';
     status.setAttribute('aria-live', 'polite');
     const next = document.createElement('button');
     next.type = 'button';
+    next.className = 'highlight-arrow highlight-arrow-next';
     next.setAttribute('aria-label', 'Next highlight');
-    next.textContent = '→';
-    const refresh = () => { status.textContent = `${active + 1} / ${slides.length}`; };
-    previous.addEventListener('click', () => { update(active - 1, true); refresh(); start(); });
-    next.addEventListener('click', () => { update(active + 1, true); refresh(); start(); });
-    controls.append(previous, status, next);
+    refreshControls = () => {
+      status.textContent = `Highlight ${active + 1} of ${slides.length}`;
+      dotButtons.forEach((dot, index) => {
+        dot.classList.toggle('is-active', index === active);
+        if (index === active) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+    };
+    dotButtons.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        update(index, true);
+        start();
+      });
+    });
+    previous.addEventListener('click', () => { update(active - 1, true); start(); });
+    next.addEventListener('click', () => { update(active + 1, true); start(); });
+    arrows.append(previous, next);
+    controls.append(dots, arrows, status);
     shell.append(controls);
-    refresh();
+    refreshControls();
     viewport.addEventListener('scrollend', () => {
-      if (!window.matchMedia('(width <= 719px)').matches) return;
+      if (!window.matchMedia('(width <= 720px)').matches) return;
       const closest = slides.map((slide, index) => ({
         index,
         distance: Math.abs(slide.offsetLeft - viewport.scrollLeft),
       })).sort((a, b) => a.distance - b.distance)[0];
       update(closest.index);
-      refresh();
     });
   }
   shell.addEventListener('mouseenter', stop);
