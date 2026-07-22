@@ -1,0 +1,82 @@
+/* Structured source navigation shown on the dedicated nav authoring page. */
+main .header-navigation {
+  margin-block: 16px;
+  padding: 20px;
+  border: 1px solid #d5d5d5;
+  border-radius: 8px;
+  background: #fff;
+}
+
+main .header-navigation::before {
+  display: block;
+  margin-bottom: 14px;
+  color: #666;
+  font-size: 13px;
+  content: "Navigation items — add and reorder Top Navigation, Group Heading, and Panel Card entries";
+}
+
+main .header-navigation-list,
+main .header-navigation-list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+main .header-navigation-list > li {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+}
+
+main .header-navigation-list > li > :is(a, span) {
+  color: #191919;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+main .header-navigation-list > li > ul {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+  padding-left: 16px;
+  border-left: 2px solid #e5e5e5;
+}
+
+main .header-navigation-list [data-nav-kind="group"] {
+  color: #666;
+  font-size: 13px;
+}
+
+main .header-navigation-card {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 2px 12px;
+  align-items: center;
+  min-height: 56px;
+  color: #191919;
+  text-decoration: none;
+}
+
+main .header-navigation-card picture {
+  grid-row: 1 / span 3;
+  width: 56px;
+  height: 42px;
+}
+
+main .header-navigation-card picture + picture {
+  display: none;
+}
+
+main .header-navigation-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+main .header-navigation-card span,
+main .header-navigation-card em {
+  color: #666;
+  font-size: 12px;
+  font-style: normal;
+}

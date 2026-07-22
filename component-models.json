@@ -1652,6 +1652,88 @@
     ]
   },
   {
+    "id": "header-navigation",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardActionLabel",
+        "label": "Default Card Action Label",
+        "description": "Shared action text for panel cards in this language, for example Learn More",
+        "value": "Learn More",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header-navigation-top",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Navigation Label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "destination",
+        "label": "Destination",
+        "description": "Choose an internal page under demo-site; explicit external HTTPS URLs remain supported",
+        "valueType": "string",
+        "required": true,
+        "validation": {
+          "rootPath": "/content/demo-site"
+        }
+      }
+    ]
+  },
+  {
+    "id": "header-navigation-group",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Group Heading",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "header-navigation-card",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Card Title",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "destination",
+        "label": "Destination",
+        "description": "Choose an internal page under demo-site; explicit external HTTPS URLs remain supported",
+        "valueType": "string",
+        "required": true,
+        "validation": {
+          "rootPath": "/content/demo-site"
+        }
+      },
+      {
+        "component": "reference",
+        "name": "media",
+        "label": "Card Images",
+        "description": "Select the background first and an optional transparent logo/foreground image second",
+        "valueType": "string[]",
+        "multi": true
+      },
+      {
+        "component": "textarea",
+        "name": "description",
+        "label": "Card Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "header-settings",
     "fields": [
       {

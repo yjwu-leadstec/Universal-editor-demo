@@ -27,6 +27,7 @@
 - [x] 3.5 生成语义化 anchors/list DOM；无效项跳过，不生成 `#`。
 - [ ] 3.6 增加重复 key/link、同组 label 不一致、无 enabled items 的防御性校验。
 - [x] 3.7 运行 `npm run build:json` 并检查生成文件只包含预期模型变化。
+- [x] 3.8 新增 `header-navigation` container + flat item model，以 `aem-content` destination picker 替代 Primary Navigation 的嵌套 Rich Text 链接编辑。
 
 ## 4. Header refactor
 
@@ -38,6 +39,7 @@
 - [x] 4.6 保持品牌、主导航、mega panel 与 cards 的现有语义兼容和 instrumentation。
 - [x] 4.7 修复 link/current-state 规范化，不用 `#` 代替缺失 href。
 - [ ] 4.8 验证 desktop panel、dialog、mobile drawer 的 keyboard/focus/ARIA/reduced-motion。
+- [x] 4.9 优先解析结构化 navigation，保留旧 Rich Text semantic list fallback，并迁移对应 instrumentation。
 
 ## 5. Footer refactor
 

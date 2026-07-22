@@ -37,7 +37,8 @@
       "product-param-cta",
       "product-ending",
       "product-guide",
-      "product-download"
+      "product-download",
+      "header-navigation"
     ]
   },
   {
@@ -99,6 +100,14 @@
     "components": [
       "feature-media-item",
       "feature-stat-item"
+    ]
+  },
+  {
+    "id": "header-navigation",
+    "components": [
+      "header-navigation-top",
+      "header-navigation-group",
+      "header-navigation-card"
     ]
   },
   {

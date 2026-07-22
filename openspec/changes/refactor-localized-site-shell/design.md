@@ -92,6 +92,7 @@
 | Component | Responsibility | Must not own |
 | --- | --- | --- |
 | Locale root resolver | 从元数据/URL 得到语言根和 fragment candidates | 市场清单、业务 URL、翻译文案 |
+| Header navigation block | 用扁平、可排序的结构化条目交付一级导航、分组和卡片 | 嵌套 Rich Text、运行时业务 URL |
 | Header settings block | 在 nav 内交付本地化交互文案和 locale directory 引用 | 市场选项、视觉状态 |
 | Header block | 加载 nav，解析 settings，增强主导航/移动菜单/mega panel，加载 locale directory | 硬编码国家与语言 |
 | Footer block | 加载 footer，增强桌面列/移动 accordion/回到顶部 | 固定英文无障碍文案 |
@@ -142,13 +143,26 @@
 
 ### 6.1 Nav page
 
-保留现有语义内容模型以降低迁移成本：
+保留三段 section 契约，但把 Primary section 的首选作者模型改为结构化 collection：
 
 1. Brand section：带链接的 logo 图片；链接必须指向当前语言根首页。
-2. Primary section：顶级无序列表；嵌套列表表达面板、分组和卡片。
+2. Primary section：优先使用 `header-navigation` container；其中扁平 `header-navigation-item` 按 `top → group → card` 顺序表达一级菜单、面板分组和卡片。迁移期仍接受原顶级/嵌套无序列表作为 fallback。
 3. Tools section：保留真实语言入口链接和本地化 label；增强成功后成为语言选择器 trigger，增强失败时仍可跳转。该 section 还包含一个单例 `header-settings` block。
 
 `header-settings` 是无子项的普通 block，source DOM 在 fragment decoration 后必须保持可解析。它提供：
+
+`header-navigation` 使用三个短小的 item model，Author 不需要维护 HTML/list 层级，也不会在一个 dialog 中看到无关字段：
+
+| Field | Type | Required | Purpose |
+| --- | --- | --- | --- |
+| Model | Fields | Purpose |
+| --- | --- | --- |
+| `header-navigation-top` | `label`, `destination` | 一级菜单；destination 使用 `/content/demo-site` picker |
+| `header-navigation-group` | `label` | 面板分组标题 |
+| `header-navigation-card` | `label`, `destination`, multi `media`, `description` | 面板卡片；media 第一张为背景、第二张为可选前景字标 |
+| `header-navigation` | `cardActionLabel` | 当前语言所有卡片共享的 CTA 文案 |
+
+内容顺序即结构：`top` 开始一个一级菜单，之后的 `group` 和 `card` 归属该菜单，直到下一个 `top`。孤立的 `group/card` 被忽略并记录为无效内容。这样保持单层 container + item，不使用不稳定的 multi-container/nested multifield。
 
 | Field | Type | Required | Purpose |
 | --- | --- | --- | --- |

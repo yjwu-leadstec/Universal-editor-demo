@@ -86,8 +86,9 @@ function directTextBetween(element, start, end) {
 }
 
 function extractDropdownEntry(element, localeRoot) {
+  const structuredKind = element.dataset.navKind || '';
   const links = [...element.querySelectorAll('a')];
-  if (!links.length) {
+  if (structuredKind === 'group' || (!links.length && structuredKind !== 'card')) {
     return {
       type: 'group',
       label: directLabel(element),
@@ -97,7 +98,9 @@ function extractDropdownEntry(element, localeRoot) {
   }
 
   const link = links.find((anchor) => anchor.querySelector('strong, em, span')
-    || anchor.textContent.trim()) || links[links.length - 1];
+    || anchor.textContent.trim())
+    || element.querySelector('.header-navigation-card')
+    || links[links.length - 1];
   const titleElement = directContent(link, 'strong');
   const ctaElement = directContent(link, 'em');
   const title = titleElement?.textContent?.trim()
@@ -114,7 +117,11 @@ function extractDropdownEntry(element, localeRoot) {
     subtitle: directContent(link, 'span')?.textContent?.trim()
       || directTextBetween(link, titleElement, ctaElement),
     cta: ctaElement?.textContent?.trim() || '',
-    href: localizeSiteHref(link.getAttribute('href') || links[0].getAttribute('href'), localeRoot, window.location.origin),
+    href: localizeSiteHref(
+      link.getAttribute('href') || links[0]?.getAttribute('href'),
+      localeRoot,
+      window.location.origin,
+    ),
     media: mediaNodes(element),
     element,
     instrumentation: captureInstrumentation(element),
@@ -177,7 +184,10 @@ function extractNavData(fragment, localeRoot) {
     brandTarget = '/homepage';
   }
 
-  const topList = navSection?.querySelector('ul');
+  const structuredList = navSection?.querySelector(
+    '.header-navigation[data-header-navigation="true"] > .header-navigation-list',
+  );
+  const topList = structuredList || navSection?.querySelector('ul');
   const navItems = topList ? [...topList.children].map((element, index) => {
     const labelSource = directContent(element, 'a, p, strong, span');
     const labelLink = labelSource?.matches('a')
