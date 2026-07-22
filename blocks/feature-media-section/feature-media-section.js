@@ -13,18 +13,14 @@ import {
   propSource,
   propText,
   revealElements,
-  setupTabs,
 } from '../../scripts/product-block-utils.js';
 
-function createFeatureItem(item, options) {
-  const article = document.createElement('article');
-  article.className = 'feature-media-item';
-  const { element: media } = createMedia(item, options);
+function createFeatureCopy(item, { showEyebrow = true } = {}) {
   const copy = document.createElement('div');
   copy.className = 'feature-media-copy';
   const eyebrow = propText(item, 'eyebrow');
   const title = propText(item, 'title');
-  if (eyebrow) {
+  if (showEyebrow && eyebrow) {
     const element = document.createElement('p');
     element.className = 'feature-media-eyebrow';
     element.textContent = eyebrow;
@@ -66,6 +62,14 @@ function createFeatureItem(item, options) {
   }
   const link = createProductLink(item);
   if (link) copy.append(link);
+  return copy;
+}
+
+function createFeatureItem(item, options) {
+  const article = document.createElement('article');
+  article.className = 'feature-media-item';
+  const { element: media } = createMedia(item, options);
+  const copy = createFeatureCopy(item);
   article.append(media);
   if (copy.childElementCount) article.append(copy);
   moveItemInstrumentation(item, article);
@@ -97,6 +101,116 @@ function createStats(items) {
   return list;
 }
 
+function setupResponsiveTabs(block, buttons, panels, copies, viewport) {
+  const mobileQuery = window.matchMedia('(width <= 719px)');
+  const autoPlay = propBoolean(block, 'autoPlay', true);
+  const interval = propNumber(block, 'interval', 4) * 1000;
+  let active = 0;
+  let timer = null;
+  let scrollFrame = null;
+
+  const stop = () => {
+    if (timer) window.clearInterval(timer);
+    timer = null;
+  };
+  const activate = (index, { focus = false, scroll = false } = {}) => {
+    active = (index + panels.length) % panels.length;
+    buttons.forEach((button, itemIndex) => {
+      const selected = itemIndex === active;
+      button.setAttribute('aria-selected', String(selected));
+      button.tabIndex = selected ? 0 : -1;
+      panels[itemIndex].hidden = !mobileQuery.matches && !selected;
+      copies[itemIndex].hidden = !selected;
+    });
+    if (focus) buttons[active].focus();
+    if (scroll && mobileQuery.matches) {
+      const padding = Number.parseFloat(window.getComputedStyle(viewport).paddingInlineStart) || 0;
+      viewport.scrollTo({
+        left: Math.max(0, panels[active].offsetLeft - padding),
+        behavior: 'smooth',
+      });
+    }
+  };
+  const start = () => {
+    stop();
+    if (!autoPlay || mobileQuery.matches || panels.length < 2) return;
+    timer = window.setInterval(() => activate(active + 1), Math.max(2000, interval));
+  };
+  const syncFromScroll = () => {
+    scrollFrame = null;
+    if (!mobileQuery.matches) return;
+    const padding = Number.parseFloat(window.getComputedStyle(viewport).paddingInlineStart) || 0;
+    const closest = panels.map((panel, index) => ({
+      index,
+      distance: Math.abs(panel.offsetLeft - padding - viewport.scrollLeft),
+    })).sort((first, second) => first.distance - second.distance)[0];
+    if (closest && closest.index !== active) activate(closest.index);
+  };
+  const applyMode = () => {
+    stop();
+    activate(active);
+    if (mobileQuery.matches) {
+      window.requestAnimationFrame(() => {
+        const styles = window.getComputedStyle(viewport);
+        const padding = Number.parseFloat(styles.paddingInlineStart) || 0;
+        viewport.scrollTo({
+          left: Math.max(0, panels[active].offsetLeft - padding),
+          behavior: 'auto',
+        });
+      });
+    } else start();
+  };
+
+  buttons.forEach((button, index) => {
+    const panel = panels[index];
+    const copy = copies[index];
+    const tabId = `${block.id || block.dataset.productBlock || 'feature'}-tab-${index + 1}`;
+    const panelId = `${block.id || block.dataset.productBlock || 'feature'}-panel-${index + 1}`;
+    const copyId = `${block.id || block.dataset.productBlock || 'feature'}-copy-${index + 1}`;
+    button.id = tabId;
+    button.setAttribute('role', 'tab');
+    button.setAttribute('aria-controls', panelId);
+    panel.id = panelId;
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', tabId);
+    panel.setAttribute('aria-describedby', copyId);
+    copy.id = copyId;
+    button.addEventListener('click', () => {
+      activate(index, { scroll: mobileQuery.matches });
+      start();
+    });
+    button.addEventListener('keydown', (event) => {
+      const keys = {
+        ArrowRight: index + 1,
+        ArrowDown: index + 1,
+        ArrowLeft: index - 1,
+        ArrowUp: index - 1,
+        Home: 0,
+        End: buttons.length - 1,
+      };
+      if (!(event.key in keys)) return;
+      event.preventDefault();
+      activate(keys[event.key], { focus: true, scroll: mobileQuery.matches });
+      start();
+    });
+  });
+  viewport.addEventListener('scroll', () => {
+    if (scrollFrame !== null) return;
+    scrollFrame = window.requestAnimationFrame(syncFromScroll);
+  }, { passive: true });
+  block.addEventListener('mouseenter', stop);
+  block.addEventListener('mouseleave', start);
+  block.addEventListener('focusin', stop);
+  block.addEventListener('focusout', start);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop();
+    else start();
+  });
+  mobileQuery.addEventListener('change', applyMode);
+  activate(0);
+  start();
+}
+
 function buildTabbed(block, items, container, variant) {
   if (items.length === 1) {
     container.append(createFeatureItem(items[0], {
@@ -112,24 +226,35 @@ function buildTabbed(block, items, container, variant) {
   nav.setAttribute('aria-label', 'Feature media');
   const panels = document.createElement('div');
   panels.className = 'feature-media-panels';
+  const copiesContainer = document.createElement('div');
+  copiesContainer.className = 'feature-media-tab-copies';
   const buttons = [];
+  const copies = [];
   items.forEach((item, index) => {
     const button = document.createElement('button');
     button.type = 'button';
-    button.textContent = propText(item, 'eyebrow') || propText(item, 'title') || `Feature ${index + 1}`;
+    const eyebrow = propText(item, 'eyebrow');
+    button.textContent = eyebrow || propText(item, 'title') || `Feature ${index + 1}`;
+    if (eyebrow) instrumentProp(item, 'eyebrow', button);
     buttons.push(button);
     nav.append(button);
-    panels.append(createFeatureItem(item, {
+    const panel = document.createElement('article');
+    panel.className = 'feature-media-item';
+    const { element: media } = createMedia(item, {
       autoplay: true,
       showControls: propBoolean(block, 'showVideoControl', true),
       showProgress: propBoolean(block, 'showProgress', true),
-    }));
+    });
+    panel.append(media);
+    moveItemInstrumentation(item, panel);
+    panels.append(panel);
+    const copy = createFeatureCopy(item, { showEyebrow: false });
+    copy.classList.add('feature-media-tab-copy');
+    copies.push(copy);
+    copiesContainer.append(copy);
   });
-  container.append(panels, nav);
-  setupTabs(block, buttons, [...panels.children], {
-    autoPlay: propBoolean(block, 'autoPlay', true),
-    interval: propNumber(block, 'interval', 4) * 1000,
-  });
+  container.append(panels, nav, copiesContainer);
+  setupResponsiveTabs(block, buttons, [...panels.children], copies, panels);
   if (variant === 'overlay-tabs') container.classList.add('feature-tabs-overlay');
 }
 
@@ -150,6 +275,7 @@ export default function decorate(block) {
   const content = document.createElement('div');
   content.className = 'feature-media-content';
   if (['default', 'overlay-tabs'].includes(variant) && mediaItems.length) {
+    if (mediaItems.length > 1) block.classList.add('is-tabbed');
     buildTabbed(block, mediaItems, content, variant);
   } else {
     const grid = document.createElement('div');
@@ -178,5 +304,8 @@ export default function decorate(block) {
   } else if (content.childElementCount) shell.append(content);
   addBlockAnchor(block, block, shell);
   block.replaceChildren(shell);
-  revealElements(block, '.product-section-header, .feature-stat, .feature-media-item', propBoolean(block, 'enableMotion', true));
+  const revealSelector = block.classList.contains('is-tabbed')
+    ? '.product-section-header, .feature-media-content'
+    : '.product-section-header, .feature-stat, .feature-media-item';
+  revealElements(block, revealSelector, propBoolean(block, 'enableMotion', true));
 }

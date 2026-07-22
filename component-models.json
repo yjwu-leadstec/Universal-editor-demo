@@ -1289,15 +1289,17 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "textarea",
         "name": "title",
         "label": "Desktop Title",
+        "description": "Manual line breaks are preserved",
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "textarea",
         "name": "mobileTitle",
         "label": "Mobile Title Override",
+        "description": "Optional; manual line breaks are preserved",
         "valueType": "string"
       },
       {
@@ -1350,7 +1352,8 @@
       {
         "component": "boolean",
         "name": "autoPlay",
-        "label": "Autoplay Tabs",
+        "label": "Autoplay Tabs on PC / Tablet",
+        "description": "Mobile always uses manual horizontal swipe",
         "valueType": "boolean",
         "value": true
       },
@@ -1421,31 +1424,31 @@
         "maxSize": 4,
         "options": [
           {
-            "name": "Theme",
+            "name": "Background",
             "children": [
               {
-                "name": "Light",
+                "name": "White (#FFFFFF)",
                 "value": "light"
               },
               {
-                "name": "Dark",
+                "name": "Black (#000000)",
                 "value": "dark"
               },
               {
-                "name": "Gray",
+                "name": "Gray (#FAFAFA)",
                 "value": "gray"
               }
             ]
           },
           {
-            "name": "Copy",
+            "name": "Text Color",
             "children": [
               {
-                "name": "Light",
+                "name": "White (#FFFFFF)",
                 "value": "light-copy"
               },
               {
-                "name": "Dark",
+                "name": "Black (#191919)",
                 "value": "dark-copy"
               }
             ]
@@ -1454,15 +1457,15 @@
             "name": "Spacing",
             "children": [
               {
-                "name": "Large",
+                "name": "Large (PC 160px / Mobile 80px)",
                 "value": "space-large"
               },
               {
-                "name": "Small",
+                "name": "Small (PC 80px / Mobile 60px)",
                 "value": "space-small"
               },
               {
-                "name": "None",
+                "name": "None (0px)",
                 "value": "space-none"
               }
             ]
@@ -1536,9 +1539,10 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "textarea",
         "name": "title",
         "label": "Title",
+        "description": "Manual line breaks are preserved",
         "valueType": "string"
       },
       {
@@ -1548,9 +1552,10 @@
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "textarea",
         "name": "note",
-        "label": "Note",
+        "label": "Optional Note",
+        "description": "Leave empty to hide; manual line breaks are preserved",
         "valueType": "string"
       },
       {

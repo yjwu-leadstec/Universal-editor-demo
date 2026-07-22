@@ -69,6 +69,7 @@ main .feature-media-section .feature-media-copy h3 {
   font-family: var(--heading-font-family);
   font-size: clamp(22px, 2.4vw, 36px);
   font-weight: 500;
+  white-space: pre-line;
 }
 
 main .feature-media-section .feature-media-description,
@@ -76,6 +77,10 @@ main .feature-media-section .feature-media-note {
   margin-block-start: 12px;
   color: var(--product-muted);
   line-height: 1.6;
+}
+
+main .feature-media-section .feature-media-note {
+  white-space: pre-line;
 }
 
 main .feature-media-section .feature-media-description p,
@@ -119,6 +124,100 @@ main .feature-media-section .feature-media-tabs button[aria-selected="true"]::af
   left: max(12px, calc(50% - 49px));
 }
 
+main .feature-media-section.variant-default.is-tabbed .feature-media-shell {
+  width: min(77.0833vw, 1480px);
+}
+
+main .feature-media-section.variant-default.is-tabbed .product-section-header {
+  width: min(56.7568%, 840px);
+  max-width: none;
+  margin-inline-start: 11.0811%;
+  margin-block-end: clamp(24px, 3.3333vw, 64px);
+}
+
+main .feature-media-section.variant-default.is-tabbed .product-title {
+  max-width: none;
+  font-size: clamp(24px, 2.3958vw, 46px);
+  line-height: 1.3478;
+}
+
+main .feature-media-section.variant-default.is-tabbed .product-description {
+  max-width: none;
+  margin-block-start: 16px;
+  font-size: clamp(12px, 0.8333vw, 16px);
+  line-height: 1.5;
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-content {
+  display: flex;
+  flex-direction: column;
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-panels {
+  order: 1;
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-tabs {
+  display: flex;
+  width: fit-content;
+  margin: clamp(18px, 1.5625vw, 30px) auto 0;
+  order: 2;
+  background: transparent;
+  border-radius: 0;
+  gap: 30px;
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button {
+  min-width: 0;
+  min-height: 34px;
+  padding: 0 0 10px;
+  color: #999;
+  font-size: clamp(12px, 0.8333vw, 16px);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button::after {
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgb(0 0 0 / 10%);
+  transition: background-color 200ms ease;
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button[aria-selected="true"] {
+  color: #191919;
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button[aria-selected="true"]::after {
+  right: 0;
+  left: 0;
+  background: var(--product-accent);
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copies {
+  order: 3;
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy {
+  width: min(68.1081%, 1008px);
+  margin: clamp(18px, 1.25vw, 24px) auto 0;
+  padding: 0;
+  color: var(--product-copy);
+  text-align: center;
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
+main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
+  margin: 0;
+  font-size: clamp(12px, 0.7292vw, 14px);
+  line-height: 1.5714;
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description p {
+  margin: 0;
+}
+
 main .feature-media-section .feature-media-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -150,6 +249,11 @@ main .feature-media-section.variant-image-grid .product-media {
 main .feature-media-section.variant-image-grid .product-picture img {
   height: 140%;
   transform: translateY(-14%);
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-item {
+  background: transparent;
+  border-radius: 4px;
 }
 
 main .feature-media-section.variant-overview .feature-media-grid {
@@ -229,9 +333,30 @@ main .feature-media-section .feature-primary-metric small {
   color: var(--product-muted);
 }
 
+main .feature-media-section.variant-default.is-tabbed .product-media {
+  height: min(43.3333vw, 832px);
+  min-height: 0;
+  aspect-ratio: auto;
+  border-radius: 4px;
+}
+
 @media (width <= 1024px) {
   main .feature-media-section.variant-three-up .feature-media-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 720px) and (width <= 1440px) {
+  main .feature-media-section.variant-default.is-tabbed {
+    padding-block: clamp(32px, 4.1667vw, 60px);
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-shell {
+    width: calc(77.0833vw - 12px);
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-section-header {
+    width: clamp(450px, 57.377%, 840px);
   }
 }
 
@@ -273,5 +398,115 @@ main .feature-media-section .feature-primary-metric small {
 
   main .feature-media-section.variant-image-grid .product-media {
     min-height: 300px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed {
+    padding-block: 60px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-shell {
+    width: 100%;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-section-header {
+    width: 100%;
+    margin-inline: 0;
+    margin-block-end: 40px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-title {
+    font-size: 24px;
+    line-height: 1.4;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-description {
+    margin-block-start: 8px;
+    font-size: 14px;
+    line-height: 1.5714;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-content {
+    margin-inline: 0;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-panels {
+    display: flex;
+    width: 100%;
+    padding-inline: 16px;
+    overflow-x: auto;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    scroll-padding-inline: 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-panels::-webkit-scrollbar {
+    display: none;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-panels > .feature-media-item,
+  main .feature-media-section.variant-default.is-tabbed .feature-media-panels > .feature-media-item[hidden] {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding-inline: 4px;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-media {
+    height: auto;
+    aspect-ratio: 335 / 197;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copies {
+    order: 2;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy {
+    width: 100%;
+    box-sizing: border-box;
+    margin-block-start: 0;
+    padding: 16px 40px 0;
+    text-align: left;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
+    font-size: 12px;
+    line-height: 1.6667;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs {
+    display: grid;
+    width: auto;
+    margin: 40px 40px 0;
+    order: 3;
+    gap: 0;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button {
+    min-width: 0;
+    min-height: 38px;
+    margin: 0;
+    padding: 8px 0 8px 16px;
+    color: rgb(25 25 25 / 42%);
+    font-size: 14px;
+    line-height: 22px;
+    text-align: left;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button::after {
+    inset: 8px auto 8px 0;
+    width: 1px;
+    height: auto;
+    background: rgb(25 25 25 / 20%);
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button[aria-selected="true"]::after {
+    right: auto;
+    left: 0;
+    background: var(--product-accent);
   }
 }

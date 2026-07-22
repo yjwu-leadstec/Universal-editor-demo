@@ -22,8 +22,8 @@
       "fields": [
         { "component": "text", "name": "id", "label": "ID", "description": "Optional page anchor", "valueType": "string" },
         { "component": "text", "name": "eyebrow", "label": "Eyebrow", "valueType": "string" },
-        { "component": "text", "name": "title", "label": "Desktop Title", "valueType": "string" },
-        { "component": "text", "name": "mobileTitle", "label": "Mobile Title Override", "valueType": "string" },
+        { "component": "textarea", "name": "title", "label": "Desktop Title", "description": "Manual line breaks are preserved", "valueType": "string" },
+        { "component": "textarea", "name": "mobileTitle", "label": "Mobile Title Override", "description": "Optional; manual line breaks are preserved", "valueType": "string" },
         { "component": "richtext", "name": "description", "label": "Description", "valueType": "string" },
         {
           "component": "select",
@@ -42,7 +42,7 @@
             { "name": "Overlay Tabs", "value": "overlay-tabs" }
           ]
         },
-        { "component": "boolean", "name": "autoPlay", "label": "Autoplay Tabs", "valueType": "boolean", "value": true },
+        { "component": "boolean", "name": "autoPlay", "label": "Autoplay Tabs on PC / Tablet", "description": "Mobile always uses manual horizontal swipe", "valueType": "boolean", "value": true },
         { "component": "number", "name": "interval", "label": "Autoplay Interval (seconds)", "valueType": "number", "value": 4, "validation": { "numberMin": 2, "numberMax": 12, "customErrorMsg": "Use an interval from 2 to 12 seconds" } },
         { "component": "boolean", "name": "showVideoControl", "label": "Show Video Control", "valueType": "boolean", "value": true },
         { "component": "boolean", "name": "showProgress", "label": "Show Video Progress", "valueType": "boolean", "value": true },
@@ -57,9 +57,9 @@
           "valueType": "string",
           "maxSize": 4,
           "options": [
-            { "name": "Theme", "children": [{ "name": "Light", "value": "light" }, { "name": "Dark", "value": "dark" }, { "name": "Gray", "value": "gray" }] },
-            { "name": "Copy", "children": [{ "name": "Light", "value": "light-copy" }, { "name": "Dark", "value": "dark-copy" }] },
-            { "name": "Spacing", "children": [{ "name": "Large", "value": "space-large" }, { "name": "Small", "value": "space-small" }, { "name": "None", "value": "space-none" }] },
+            { "name": "Background", "children": [{ "name": "White (#FFFFFF)", "value": "light" }, { "name": "Black (#000000)", "value": "dark" }, { "name": "Gray (#FAFAFA)", "value": "gray" }] },
+            { "name": "Text Color", "children": [{ "name": "White (#FFFFFF)", "value": "light-copy" }, { "name": "Black (#191919)", "value": "dark-copy" }] },
+            { "name": "Spacing", "children": [{ "name": "Large (PC 160px / Mobile 80px)", "value": "space-large" }, { "name": "Small (PC 80px / Mobile 60px)", "value": "space-small" }, { "name": "None (0px)", "value": "space-none" }] },
             { "name": "Media Ratio", "children": [{ "name": "16:9", "value": "ratio-16-9" }, { "name": "2.35:1", "value": "ratio-235-100" }, { "name": "4:3", "value": "ratio-4-3" }] }
           ]
         }
@@ -75,9 +75,9 @@
         { "component": "aem-content", "name": "video", "label": "Desktop Video URL", "valueType": "string" },
         { "component": "aem-content", "name": "mobileVideo", "label": "Mobile Video URL", "valueType": "string" },
         { "component": "text", "name": "eyebrow", "label": "Eyebrow / Tab Label", "valueType": "string" },
-        { "component": "text", "name": "title", "label": "Title", "valueType": "string" },
+        { "component": "textarea", "name": "title", "label": "Title", "description": "Manual line breaks are preserved", "valueType": "string" },
         { "component": "richtext", "name": "description", "label": "Description", "valueType": "string" },
-        { "component": "text", "name": "note", "label": "Note", "valueType": "string" },
+        { "component": "textarea", "name": "note", "label": "Optional Note", "description": "Leave empty to hide; manual line breaks are preserved", "valueType": "string" },
         { "component": "text", "name": "primaryValue", "label": "Primary Metric Value", "valueType": "string" },
         { "component": "text", "name": "primaryUnit", "label": "Primary Metric Unit", "valueType": "string" },
         { "component": "text", "name": "primaryLabel", "label": "Primary Metric Label", "valueType": "string" },
