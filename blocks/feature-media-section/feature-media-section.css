@@ -169,6 +169,7 @@ main .feature-media-section.variant-default.is-tabbed .feature-media-panels {
 }
 
 main .feature-media-section.variant-default.is-tabbed .feature-media-tabs {
+  position: relative;
   display: flex;
   width: fit-content;
   box-sizing: border-box;
@@ -180,7 +181,18 @@ main .feature-media-section.variant-default.is-tabbed .feature-media-tabs {
   gap: clamp(30px, 2.0833vw, 40px);
 }
 
+main .feature-media-section.variant-default.is-tabbed .feature-media-tabs::after {
+  position: absolute;
+  z-index: 0;
+  inset: auto 0 0;
+  height: 2px;
+  background: rgb(0 0 0 / 10%);
+  content: '';
+  pointer-events: none;
+}
+
 main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .feature-media-tab {
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -200,7 +212,7 @@ main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .featu
 main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .feature-media-tab::after {
   inset: auto 0 -2px;
   width: 100%;
-  background: rgb(0 0 0 / 10%);
+  background: transparent;
   transition: background-color 200ms ease;
 }
 
@@ -649,6 +661,10 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
     padding: 0;
     order: 3;
     gap: 0;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs::after {
+    display: none;
   }
 
   main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .feature-media-tab {
