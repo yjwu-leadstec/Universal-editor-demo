@@ -25,7 +25,13 @@ export default function decorate(block) {
   });
   const copy = document.createElement('div');
   copy.className = 'chapter-intro-copy';
-  const eyebrow = propText(block, 'eyebrow');
+  let eyebrow = propText(block, 'eyebrow');
+  let title = propText(block, 'title');
+  const legacyExteriorPrefix = 'Exterior Design ';
+  if (!eyebrow && propText(block, 'id') === 'design' && title.startsWith(legacyExteriorPrefix)) {
+    eyebrow = legacyExteriorPrefix.trim();
+    title = title.slice(legacyExteriorPrefix.length);
+  }
   if (eyebrow) {
     const element = document.createElement('p');
     element.className = 'chapter-intro-eyebrow';
@@ -33,7 +39,6 @@ export default function decorate(block) {
     instrumentProp(block, 'eyebrow', element);
     copy.append(element);
   }
-  const title = propText(block, 'title');
   const mobileTitle = propText(block, 'mobileTitle');
   if (title) {
     const heading = document.createElement('h2');

@@ -437,29 +437,6 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
     font-size: 1.1905vw;
   }
 
-  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs {
-    padding-block-start: 1.7857vw;
-  }
-
-  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button {
-    min-height: 2.9762vw;
-    padding-block-end: 0;
-    font-size: 1.1905vw;
-  }
-
-  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy {
-    margin-block-start: 1.7857vw;
-  }
-
-  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copies {
-    min-height: 3.2738vw;
-  }
-
-  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
-  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
-    font-size: 1.0417vw;
-    line-height: 1.5;
-  }
 }
 
 @media (width >= 720px) and (width <= 768px) {
@@ -482,14 +459,43 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
     line-height: 20px;
   }
 
+}
+
+@media (width >= 821px) and (width <= 1024px) {
   main .feature-media-section.variant-default.is-tabbed .feature-media-tabs {
-    padding-block: 10px 0;
+    padding-block-start: 1.7857vw;
+    gap: 2.9762vw;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button {
+    min-height: 2.9762vw;
+    font-size: 1.1905vw;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy {
+    margin-block-start: 1.7857vw;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copies {
+    min-height: 3.2738vw;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
+    font-size: 1.0417vw;
+    line-height: 1.5;
+  }
+}
+
+@media (width >= 720px) and (width <= 820px) {
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs {
+    padding-block: 8px 2px;
     gap: 8px;
   }
 
   main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button {
     min-height: 38px;
-    padding-block: 8px;
+    padding: 0;
     font-size: 14px;
     line-height: 22px;
   }

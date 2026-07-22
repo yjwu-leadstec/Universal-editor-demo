@@ -1,9 +1,13 @@
+main .section.chapter-intro-container > .chapter-intro-wrapper {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+
 main .chapter-intro {
-  left: 50%;
-  width: 100vw;
+  width: 100%;
   min-height: 0;
   aspect-ratio: 16 / 9;
-  margin-inline-start: -50vw;
   overflow: hidden;
 }
 
@@ -27,10 +31,12 @@ main .chapter-intro .chapter-intro-shell::after {
 main .chapter-intro .chapter-intro-copy {
   position: absolute;
   z-index: 2;
-  right: max(24px, calc((100vw - 1480px) / 2));
-  bottom: 10%;
-  left: max(24px, calc((100vw - 1480px) / 2));
-  max-width: 950px;
+  box-sizing: border-box;
+  right: auto;
+  bottom: 160px;
+  left: 20%;
+  width: 600px;
+  max-width: none;
   color: var(--product-copy);
 }
 
@@ -45,18 +51,24 @@ main .chapter-intro.center-copy .chapter-intro-copy {
 }
 
 main .chapter-intro .chapter-intro-eyebrow {
-  margin: 0 0 18px;
-  color: var(--product-accent);
-  font-size: 16px;
+  margin: 0;
+  padding-block-end: 8px;
+  color: inherit;
+  font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  white-space: pre-line;
 }
 
 main .chapter-intro .chapter-intro-title {
   margin: 0;
+  padding-block-end: 16px;
   color: inherit;
-  font-family: var(--heading-font-family);
-  font-size: clamp(32px, 3vw, 46px);
-  font-weight: 500;
-  line-height: 1.08;
+  font-family: licium-medium, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 46px;
+  font-weight: 400;
+  line-height: 62px;
   white-space: pre-line;
 }
 
@@ -88,18 +100,67 @@ main .chapter-intro .chapter-intro-note {
   font-size: 12px;
 }
 
+@media (width >= 1025px) and (width <= 1440px) {
+  main .chapter-intro .chapter-intro-copy {
+    bottom: 120px;
+    width: 450px;
+  }
+
+  main .chapter-intro .chapter-intro-eyebrow {
+    padding-block-end: 6px;
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  main .chapter-intro .chapter-intro-title {
+    padding-block-end: 12px;
+    font-size: 34.5px;
+    line-height: 46.5px;
+  }
+}
+
+@media (width >= 720px) and (width <= 1024px) {
+  main .chapter-intro .chapter-intro-copy {
+    bottom: 11.9048vw;
+    width: 44.6429vw;
+  }
+
+  main .chapter-intro .chapter-intro-eyebrow {
+    padding-block-end: 0.5952vw;
+    font-size: 1.4881vw;
+    line-height: 2.381vw;
+  }
+
+  main .chapter-intro .chapter-intro-title {
+    padding-block-end: 1.1905vw;
+    font-size: 3.4226vw;
+    line-height: 4.6131vw;
+  }
+}
+
 @media (width <= 719px) {
-  main .chapter-intro {
+  main > .section.chapter-intro-container > .chapter-intro-wrapper > .chapter-intro {
+    left: auto;
+    width: 100%;
     height: 100svh;
     min-height: 700px;
     max-height: 844px;
     aspect-ratio: auto;
+    margin-inline-start: 0;
   }
 
   main .chapter-intro .chapter-intro-copy {
-    right: 20px;
-    bottom: 9%;
-    left: 20px;
+    right: 0;
+    bottom: 160px;
+    left: 0;
+    width: 100%;
+    padding-inline: 40px;
+  }
+
+  main .chapter-intro .chapter-intro-eyebrow {
+    padding-block-end: 8px;
+    font-size: 14px;
+    line-height: 22px;
   }
 
   main .chapter-intro .chapter-intro-title-desktop:has(+ .chapter-intro-title-mobile) {
@@ -111,6 +172,8 @@ main .chapter-intro .chapter-intro-note {
   }
 
   main .chapter-intro .chapter-intro-title {
-    font-size: clamp(20px, 6.4vw, 28px);
+    padding-block-end: 8px;
+    font-size: 24px;
+    line-height: 36px;
   }
 }

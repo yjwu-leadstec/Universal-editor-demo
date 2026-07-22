@@ -21,6 +21,12 @@ test('desktop tab underline spans the tab and sits outside its bottom edge', () 
   assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs button::after\s*\{[\s\S]*transition:\s*background-color 200ms ease/);
 });
 
+test('feature media uses the official compact tab layout through 820px', () => {
+  assert.match(featureCss, /@media \(width >= 720px\) and \(width <= 820px\)[\s\S]*padding-block:\s*8px 2px[\s\S]*gap:\s*8px/);
+  assert.match(featureCss, /@media \(width >= 720px\) and \(width <= 820px\)[\s\S]*min-height:\s*38px[\s\S]*font-size:\s*14px[\s\S]*line-height:\s*22px/);
+  assert.match(featureCss, /@media \(width >= 821px\) and \(width <= 1024px\)[\s\S]*gap:\s*2\.9762vw/);
+});
+
 test('tabbed feature media matches the official desktop height rhythm', () => {
   assert.match(featureCss, /@media \(width >= 1025px\) and \(width <= 1440px\)/);
   assert.match(featureCss, /margin-block-end:\s*42px/);
