@@ -120,7 +120,8 @@ function setupResponsiveTabs(block, buttons, panels, copies, viewport) {
       button.setAttribute('aria-selected', String(selected));
       button.tabIndex = selected ? 0 : -1;
       panels[itemIndex].hidden = !mobileQuery.matches && !selected;
-      copies[itemIndex].hidden = !selected;
+      copies[itemIndex].classList.toggle('is-active', selected);
+      copies[itemIndex].setAttribute('aria-hidden', String(!selected));
     });
     if (focus) buttons[active].focus();
     if (scroll && mobileQuery.matches) {

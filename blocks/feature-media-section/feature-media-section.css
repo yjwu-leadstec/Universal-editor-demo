@@ -128,22 +128,28 @@ main .feature-media-section.variant-default.is-tabbed .feature-media-shell {
   width: min(77.0833vw, 1480px);
 }
 
+main .feature-media-section.variant-default.is-tabbed {
+  font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 main .feature-media-section.variant-default.is-tabbed .product-section-header {
   width: min(56.7568%, 840px);
   max-width: none;
   margin-inline-start: 11.0811%;
-  margin-block-end: clamp(24px, 3.3333vw, 64px);
+  margin-block-end: clamp(42px, 2.9167vw, 56px);
 }
 
 main .feature-media-section.variant-default.is-tabbed .product-title {
   max-width: none;
+  font-family: licium-medium, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: clamp(24px, 2.3958vw, 46px);
+  font-weight: 400;
   line-height: 1.3478;
 }
 
 main .feature-media-section.variant-default.is-tabbed .product-description {
   max-width: none;
-  margin-block-start: 16px;
+  margin-block-start: clamp(12px, 0.8333vw, 16px);
   font-size: clamp(12px, 0.8333vw, 16px);
   line-height: 1.5;
 }
@@ -160,19 +166,25 @@ main .feature-media-section.variant-default.is-tabbed .feature-media-panels {
 main .feature-media-section.variant-default.is-tabbed .feature-media-tabs {
   display: flex;
   width: fit-content;
-  margin: clamp(18px, 1.5625vw, 30px) auto 0;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding-block: clamp(18px, 1.25vw, 24px) 2px;
   order: 2;
   background: transparent;
   border-radius: 0;
-  gap: 30px;
+  gap: clamp(30px, 2.0833vw, 40px);
 }
 
 main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button {
-  min-width: 0;
-  min-height: 34px;
-  padding: 0 0 10px;
+  width: clamp(98px, 5.651vw, 108.5px);
+  min-width: clamp(98px, 5.651vw, 108.5px);
+  min-height: 30px;
+  margin: 0;
+  padding: 0 0 clamp(12px, 0.8333vw, 16px);
   color: #999;
+  font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: clamp(12px, 0.8333vw, 16px);
+  font-weight: 400;
   line-height: 1.5;
   white-space: nowrap;
 }
@@ -196,22 +208,34 @@ main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button
 }
 
 main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copies {
+  display: grid;
+  min-height: 33px;
+  padding-block-end: 2px;
   order: 3;
 }
 
 main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy {
-  width: min(68.1081%, 1008px);
+  grid-area: 1 / 1;
+  width: min(77.8688%, 1008px);
   margin: clamp(18px, 1.25vw, 24px) auto 0;
   padding: 0;
-  color: var(--product-copy);
+  color: #8c8c8c;
+  opacity: 0;
   text-align: center;
+  visibility: hidden;
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy.is-active {
+  opacity: 1;
+  visibility: visible;
 }
 
 main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
 main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
   margin: 0;
-  font-size: clamp(12px, 0.7292vw, 14px);
-  line-height: 1.5714;
+  color: inherit;
+  font-size: clamp(10.5px, 0.7292vw, 14px);
+  line-height: 1.5;
 }
 
 main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description p {
@@ -347,16 +371,143 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
 }
 
 @media (width >= 720px) and (width <= 1440px) {
-  main .feature-media-section.variant-default.is-tabbed {
-    padding-block: clamp(32px, 4.1667vw, 60px);
-  }
-
   main .feature-media-section.variant-default.is-tabbed .feature-media-shell {
     width: calc(77.0833vw - 12px);
   }
 
   main .feature-media-section.variant-default.is-tabbed .product-section-header {
-    width: clamp(450px, 57.377%, 840px);
+    width: min(77.8688%, 630px);
+  }
+}
+
+@media (width >= 1025px) and (width <= 1440px) {
+  main .feature-media-section.variant-default.is-tabbed {
+    padding-block: 60px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-section-header {
+    margin-block-end: 42px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-title {
+    font-size: 34.5px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-description {
+    margin-block-start: 12px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs {
+    padding-block-start: 18px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy {
+    margin-block-start: 18px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
+    font-size: 10.5px;
+    line-height: 15.75px;
+  }
+}
+
+@media (width >= 769px) and (width <= 1024px) {
+  main .feature-media-section.variant-default.is-tabbed {
+    padding-block: 5.9524vw;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-section-header {
+    margin-block-end: 4.1667vw;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-title {
+    font-size: 3.4226vw;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-description {
+    margin-block-start: 1.1905vw;
+    font-size: 1.1905vw;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs {
+    padding-block-start: 1.7857vw;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button {
+    min-height: 2.9762vw;
+    padding-block-end: 1.1905vw;
+    font-size: 1.1905vw;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy {
+    margin-block-start: 1.7857vw;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copies {
+    min-height: 3.2738vw;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
+    font-size: 1.0417vw;
+    line-height: 1.5;
+  }
+}
+
+@media (width >= 720px) and (width <= 768px) {
+  main .feature-media-section.variant-default.is-tabbed {
+    padding-block: 36px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-section-header {
+    margin-block-end: 24px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-title {
+    font-size: 24px;
+    line-height: 33.6px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .product-description {
+    margin-block-start: 4px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs {
+    padding-block: 10px 0;
+    gap: 8px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button {
+    min-height: 38px;
+    padding-block: 8px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy {
+    width: 66.6667%;
+    margin-block-start: 8px;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copies {
+    min-height: 60px;
+    padding-block-end: 0;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
+    font-size: 12px;
+    line-height: 20px;
   }
 }
 
@@ -461,6 +612,8 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
   }
 
   main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copies {
+    min-height: 0;
+    padding-block-end: 0;
     order: 2;
   }
 
@@ -482,11 +635,13 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
     display: grid;
     width: auto;
     margin: 40px 40px 0;
+    padding: 0;
     order: 3;
     gap: 0;
   }
 
   main .feature-media-section.variant-default.is-tabbed .feature-media-tabs button {
+    width: 100%;
     min-width: 0;
     min-height: 38px;
     margin: 0;
