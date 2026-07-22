@@ -16,7 +16,7 @@ test('tabbed feature media uses the official Licium typography and tab geometry'
 });
 
 test('desktop tab underline spans the tab and sits outside its bottom edge', () => {
-  assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs button\s*\{[\s\S]*min-height:\s*clamp\(30px, 2\.0833vw, 40px\)[\s\S]*padding:\s*0/);
+  assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs button\s*\{[\s\S]*min-height:\s*clamp\(30px, 2\.0833vw, 40px\)[\s\S]*padding:\s*0[\s\S]*overflow:\s*visible/);
   assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs button::after\s*\{[\s\S]*inset:\s*auto 0 -2px[\s\S]*width:\s*100%/);
   assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs button::after\s*\{[\s\S]*transition:\s*background-color 200ms ease/);
 });
