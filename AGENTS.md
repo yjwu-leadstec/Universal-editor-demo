@@ -125,6 +125,14 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 - The xwalk cell limits are 6 for carousel and 8 for slide.
 - CSS uses `stylelint-config-standard`.
 
+## 组件样式隔离强制规则
+
+- 组件内具有专属视觉或交互行为的控件必须使用 block 专属 class（例如 `.feature-media-tab`），不得只依赖全局 `button`、`a` 或通用工具类选择器。
+- 当组件设计与全局控件规则不同，应在 block CSS 中显式重置会冲突的属性，例如 `appearance`、`background`、`border`、`border-radius`、`margin`、`padding`、`max-width`、`overflow` 和 `text-overflow`；不得为了单个组件修改全局控件规则。
+- 如果通用逻辑不能完整满足组件设计，应为该组件保留独立实现。不得为了代码复用强行合并行为，导致不同组件的布局、状态、动效或伪元素互相覆盖。
+- 使用定位在控件边界外的伪元素时，必须同时验证祖先和控件本身的裁切规则。状态指示线等连续视觉应由正确的共享容器绘制，激活态只负责覆盖自己的状态段。
+- 修改组件控件样式后，至少验证默认态、激活态、键盘焦点态和响应式变体，并为关键隔离规则增加回归测试。
+
 ## Content Source and Environments
 
 `fstab.yaml` mounts AEM Cloud Service author content as `markup` with an `.html` suffix.
