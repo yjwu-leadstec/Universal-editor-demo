@@ -180,6 +180,20 @@ header/footer change. No header/footer fragment 404 or shell JavaScript error re
 - `li-l6` remains the existing complete product page. The other newly created product
   routes and the Join Us / Investor Relations routes still require their page-body
   content migration; this work only establishes valid navigation destinations.
-- The old Core Text source at `section_0/text` is retained until the structured source,
-  referenced routes, and assets have been published and verified. Before removal, make
-  a git checkpoint and an AEM page version; remove no brand, language, or settings node.
+- The old Core Text source at `section_0/text` was retained through the structured-source
+  validation and the required git checkpoint. It was then removed as the only redundant
+  Author node; brand, language, and settings nodes were preserved.
+
+### Legacy-node removal evidence
+
+- Required pre-delete git checkpoint: `0083716` (`docs: checkpoint complete structured nav setup`).
+- AEM page-version creation and FileVault export were both attempted before deletion,
+  but this service-credential profile returned server/package-filter errors. The old
+  node was therefore read in full before the scoped deletion; no broader subtree was used.
+- Deleted exactly
+  `/content/demo-site/language-master/en/nav/jcr:content/root/section_0/text`.
+- Post-delete verification confirms that node is absent, while `section/link`,
+  `section_0/header_navigation`, `section_1/text`, and `section_1/header-settings`
+  remain present.
+- The structured block still contains all seven vehicle cards, all three corporate
+  cards, 17 formal navigation-card assets, and internal destinations that exist in AEM.
