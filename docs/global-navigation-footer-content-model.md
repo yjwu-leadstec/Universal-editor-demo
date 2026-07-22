@@ -7,23 +7,24 @@
 | Section | Semantic content |
 | --- | --- |
 | Brand | A linked Li Auto logo image. The image alt text supplies the accessible brand label. |
-| Primary navigation | One top-level unordered list. Each top-level item contains a link. Items with a dropdown also contain a nested list. An emphasized list item starts an optional group; linked list items are cards. Card links may contain one or two images, a strong title, subtitle text, and optional emphasized CTA text. |
+| Primary navigation | A `header-navigation` container with ordered `header-navigation-top`, `header-navigation-group`, and `header-navigation-card` items. The legacy nested unordered list remains a migration fallback. |
 | Tools | A language link. The header presents this as the globe control while retaining the authored label and using the URL for the Global English option. |
 
 ### How It Works
 
-The top-level list is a collection of primary navigation items. A nested list turns that item into an expandable panel. Within a nested list, an unlinked emphasized item names a group, while each linked item becomes a panel card. The same markup remains readable before decoration.
+Each Top Navigation item starts a new primary entry. Following Group Heading and Panel Card items belong to that entry until the next Top Navigation item. This flat container/item pattern avoids nested multi-fields and lets authors add, duplicate, remove, and reorder items from the Universal Editor content tree.
 
 EDS may normalize a single authored card into several sibling paragraphs whose anchors repeat the same URL (for example, one paragraph per image and one paragraph for title/subtitle/CTA). The block treats those siblings inside the same list item as one logical card.
 
 ### Key Points
 
-- The first image in a card is treated as its background when two images are supplied; the second is the foreground vehicle image.
+- Top Navigation and Panel Card destinations use `aem-content` with `rootPath=/content/demo-site`, so authors can select internal Sites pages instead of typing paths.
+- The first selected card image is treated as its background; the second optional image is the foreground vehicle wordmark.
 - With one image, the image is rendered as a normal card image.
-- Strong text is the card title, normal text is the subtitle, and emphasized text inside the link is the optional CTA label.
+- Card title and description are separate short fields; the shared CTA label is configured once on the Header Navigation container.
 - Top-level items without nested lists are ordinary links.
-- The fragment can be selected per page with `nav` metadata; fallback is `/nav`.
-- Until the fragment exposes a repeatable locale collection, the other official market/language destinations are supplied by the Header fallback catalog and shared by the desktop dialog and mobile Language panel.
+- The fragment resolves from the current language root and can be overridden safely with page `nav` metadata.
+- If no valid structured container exists, the parser continues to accept the previous semantic nested list during migration.
 
 ## Content Model: Footer Fragment
 
@@ -47,7 +48,7 @@ The footer navigation is a collection model expressed as semantic default conten
 
 ## Best-Practice Validation
 
-- Uses semantic headings, lists, links, emphasis, and images instead of positional configuration fields.
+- Uses a supported container + item pattern instead of an unstable nested multi-field.
 - Keeps repeating items predictable and author-controlled.
-- Does not exceed four cells per row because these fragments use default content rather than table blocks.
-- Optional content is inferred from the supplied semantic elements, so authors do not maintain presentation flags.
+- Every child item contains at most four fields.
+- Internal destinations use the AEM Sites content picker; assets use the DAM reference picker.
