@@ -161,6 +161,17 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 
 管理关系不得编码成 JCR 父子层级：`global`、`central-asia` 和所有对外市场站点处于同一层。Global English 直接使用 `/en`；其他正式语言根为 `ae/{en,ar}`、`sa/ar`、`nl/nl`、`kw/en`、`kz/{kk,ru}`、`uz/{uz,ru}`。每个语言根下维护自己的 `homepage`、`nav`、`footer` 和业务页面；共享国家/语言目录维护在 `/en/locale-directory`。开发和回归测试仍默认使用 `/language-master/en/homepage`，不得自行增加 Germany、Bahrain 或其他未批准市场。
 
+## Language Copy、Live Copy 与新增站点强制规则
+
+- **Language Copy 是语言母版，不是国家站。** 新语言先通过 AEM Sites 的 Create Language Copy 在 `/content/demo-site/language-master/<language>` 建立或更新翻译源；不得把市场目录当作翻译母版，也不得用普通 Copy/Paste 代替 Language Copy。
+- **Live Copy 是市场交付站。** 已批准市场应从 Blueprint `/content/demo-site/language-master` 通过 AEM MSM Create Site / Create Live Copy 建到同层市场根，例如 `/content/demo-site/ae/ar`；不得把 `global`、`central-asia` 或市场站点放到 `language-master` 下。
+- **新增国家站点顺序：** 批准市场与语言矩阵 → 确认所需语言母版已存在 → 配置/复用 Blueprint 与受控 rollout → Create Site 选择初始语言 → 验证 `homepage`、`nav`、`footer`、内部链接、继承状态、Canonical/hreflang → 更新 `/en/locale-directory`，保持 `enabled=false` → Preview 验收后启用并发布。
+- **现有国家新增语言顺序：** 若母版语言不存在，先建 Language Copy；再从 Blueprint 向现有市场根添加该语言的 Live Copy。不得在市场根下手工新建一套无 Live Relationship 的页面树。
+- Header/Footer/locale-directory 是每个语言根下的普通 AEM 页面，必须随语言母版和 Live Copy 一起创建、rollout、验证和发布。结构化 `Header Navigation` 子项会作为组件子资源参与 rollout；市场法务或本地链接需要 override 时，必须有明确的继承取消记录。
+- EDS 代码只负责按 `/{market}/{language}` 解析本地 `nav`、`footer` 和链接；它**不会**创建 Language Copy、Blueprint、Live Copy，不会执行 rollout，也不会自动发布。AEM Sites/MSM 配置与发布属于 Author/Admin 操作。
+- 优先使用 Blueprint Configuration 和人工受控 rollout；未经专门评审不得启用 `onModify` 自动 rollout，也不得把 Activate/Publish 串入 rollout。上线前必须检查 Live Copy Overview、继承状态和内部链接是否指向目标市场语言根。
+- 详细设计与未完成环境任务见 `openspec/changes/refactor-localized-site-shell/`。其中 Blueprint、`/global/en` Live Copy、rollout 与链接重写验证未完成时，不得声称“新增站点/新增语言已经自动化”。
+
 ## Homepage Banner 强制规则
 
 - Homepage 的 `home-banner` 默认在桌面端、平板端和移动端显示；`showOnSmallScreens` 缺失或为 `true` 时，小屏 Banner 消失、未渲染或高度为 `0` 均属于 **BUG / 回归**。
