@@ -153,3 +153,33 @@ MSM rollout, and migration-fallback retirement remain intentionally deferred.
 The homepage still reports three pre-existing missing DAM video requests
 (`video-01-home.mp4`, `video-02-face.mp4`, and `video-03-growth.mp4`) outside this
 header/footer change. No header/footer fragment 404 or shell JavaScript error remains.
+
+## Complete Nav Card Author Configuration — 2026-07-23
+
+### Author source of truth
+
+- Structured navigation lives at
+  `/content/demo-site/language-master/en/nav/jcr:content/root/section_0/header_navigation`.
+- All seven vehicle cards use internal destinations under
+  `/content/demo-site/language-master/en`: `li-i6`, `li-i8`, `li-mega`, `li-l6`,
+  `li-l7`, `li-l8`, and `li-l9`.
+- Each vehicle card has one JPEG `backgroundImage` and one transparent PNG
+  `foregroundImage` under
+  `/content/dam/li-auto/shared/vehicles/<model>/homepage`.
+- About Us, Join Us, and Investor Relations use internal destinations and one
+  navigation background each under `/content/dam/li-auto/shared/corporate/navigation`.
+- The site-shell logo references
+  `/content/dam/li-auto/shared/brand/site-shell/li-auto-logo.svg`.
+- AEM node verification found no legacy `media` field in the ten structured cards;
+  each card exposes the same explicit destination/background/foreground field contract.
+
+### Route availability and rollout boundary
+
+- Existing full pages remain unchanged. Missing destinations were created as minimal
+  route shells so a published navigation link cannot resolve to an absent AEM page.
+- `li-l6` remains the existing complete product page. The other newly created product
+  routes and the Join Us / Investor Relations routes still require their page-body
+  content migration; this work only establishes valid navigation destinations.
+- The old Core Text source at `section_0/text` is retained until the structured source,
+  referenced routes, and assets have been published and verified. Before removal, make
+  a git checkpoint and an AEM page version; remove no brand, language, or settings node.

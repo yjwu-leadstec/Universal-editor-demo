@@ -30,6 +30,7 @@
 - [x] 3.8 新增 `header-navigation` container + flat item model，以 `aem-content` destination picker 替代 Primary Navigation 的嵌套 Rich Text 链接编辑。
 - [x] 3.9 将 nav 源页面改为扁平、逐项可选的 Author 编辑卡；语义嵌套仅作为无 instrumentation 的 delivery 投影。
 - [x] 3.10 将 Header card 背景与透明整车前景拆成两个单值 DAM reference，并验证 Author、Preview、Live 双图交付及首次打开面板的媒体加载。
+- [x] 3.11 补齐 language-master/en 的 7 个车型卡片与 3 个企业卡片：全部 destination 使用站内 AEM 内容路径，车型卡片引用正式 DAM 双图，企业卡片引用正式 DAM 背景图；旧 Rich Text 只在结构化内容发布验证和检查点提交后移除。
 
 ## 4. Header refactor
 
