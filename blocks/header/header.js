@@ -252,6 +252,10 @@ function buildPanelCard(card) {
     media.className = 'panel-card-media';
     media.setAttribute('aria-hidden', 'true');
     card.media.forEach((node, index) => {
+      node.querySelectorAll('img').forEach((image) => {
+        image.loading = 'eager';
+        image.fetchPriority = 'low';
+      });
       node.classList.add(card.media.length > 1 && index === 0 ? 'panel-card-background' : 'panel-card-foreground');
       media.append(node);
     });

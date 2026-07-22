@@ -40,3 +40,8 @@ test('header projects authored links into the active Author or EDS namespace', (
     /href: localizeSiteHref\([\s\S]*?link\.getAttribute\('href'\),[\s\S]*?localeRoot/,
   );
 });
+
+test('hidden mega-panel media is ready on first open without competing with page LCP', () => {
+  assert.match(headerJs, /image\.loading = 'eager'/);
+  assert.match(headerJs, /image\.fetchPriority = 'low'/);
+});

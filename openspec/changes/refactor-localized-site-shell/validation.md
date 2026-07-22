@@ -127,6 +127,23 @@ MSM rollout, locale-directory population, and legacy retirement.
 - Post-publication Live smoke tests pass at 390 and 1440 px with the same localized
   links, five footer columns, `lang=en`, `dir=ltr`, and no horizontal overflow.
 
+### Header card DAM split follow-up (2026-07-23)
+
+- The Li i6 and Li L6 header cards use independent `backgroundImage` and
+  `foregroundImage` references; the foreground is a transparent full-vehicle PNG,
+  not a composite tile with baked model copy.
+- The delivery references resolve only to formal assets under
+  `/content/dam/li-auto/shared/vehicles/<model>/homepage`; intake test assets remain
+  isolated for provenance and are not referenced by the nav fragment.
+- The localized nav was republished through Universal Editor. AEM Admin status and
+  the published `.plain.html` confirm both image references, and all four EDS media
+  URLs return HTTP 200.
+- Hidden mega-panel images are eager-loaded with low fetch priority so they render
+  on the first open without competing with the homepage LCP media.
+- `npm run lint`, the 70-test Node suite, `git diff --check`, and strict OpenSpec
+  validation pass; Live browser smoke testing confirms two rendered images per
+  vehicle card and no console error.
+
 ### Released scope and deferred work
 
 The requested first-wave shell scope is released and verified on

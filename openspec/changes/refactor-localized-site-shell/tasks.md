@@ -29,6 +29,7 @@
 - [x] 3.7 运行 `npm run build:json` 并检查生成文件只包含预期模型变化。
 - [x] 3.8 新增 `header-navigation` container + flat item model，以 `aem-content` destination picker 替代 Primary Navigation 的嵌套 Rich Text 链接编辑。
 - [x] 3.9 将 nav 源页面改为扁平、逐项可选的 Author 编辑卡；语义嵌套仅作为无 instrumentation 的 delivery 投影。
+- [x] 3.10 将 Header card 背景与透明整车前景拆成两个单值 DAM reference，并验证 Author、Preview、Live 双图交付及首次打开面板的媒体加载。
 
 ## 4. Header refactor
 
