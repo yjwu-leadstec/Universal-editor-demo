@@ -1721,11 +1721,17 @@
       },
       {
         "component": "reference",
-        "name": "media",
-        "label": "Card Images (Background, then Logo)",
-        "description": "Select the background first and an optional transparent logo/foreground image second",
-        "valueType": "string[]",
-        "multi": true
+        "name": "backgroundImage",
+        "label": "Card Background Image",
+        "description": "Select the DAM image used as the card background",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "logoImage",
+        "label": "Vehicle Logo Image",
+        "description": "Optionally select a transparent PNG vehicle logo or wordmark",
+        "valueType": "string"
       },
       {
         "component": "textarea",

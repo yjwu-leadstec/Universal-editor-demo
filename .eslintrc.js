@@ -26,6 +26,7 @@ module.exports = {
       'banner-slide': 6,
       'carousel-card': 6,
       'home-carousel': 6,
+      'header-navigation-card': 5,
       'header-settings': 8,
       'chapter-intro': 16,
       'color-switcher': 5,

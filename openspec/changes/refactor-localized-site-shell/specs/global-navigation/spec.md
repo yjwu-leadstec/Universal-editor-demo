@@ -49,6 +49,13 @@ Primary Navigation SHALL 提供 `header-navigation` container + flat item author
 - **THEN** header 把 group 和 cards 归入最近的 top item
 - **AND** 作者可独立新增、删除、复制和排序每个条目
 
+#### Scenario: Author configures layered card media
+
+- **WHEN** 作者分别选择 card background 和可选 vehicle logo
+- **THEN** 两个资源通过独立的单值 DAM reference 字段交付
+- **AND** header 将背景图和透明字标渲染为两个独立图层
+- **AND** 交付结果不依赖多值 reference 的选择顺序或数组导出行为
+
 #### Scenario: Author edits items without nested overlays
 
 - **WHEN** `header-navigation` 在 Universal Editor 画布中渲染

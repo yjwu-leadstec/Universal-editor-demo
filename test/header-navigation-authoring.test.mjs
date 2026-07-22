@@ -30,8 +30,27 @@ test('header navigation uses a flat container/item authoring model', () => {
   ]);
   itemModels.forEach((itemModel) => {
     assert.equal(itemModel.fields.some(({ component }) => component === 'richtext'), false);
-    assert.ok(itemModel.fields.length <= 4);
+    assert.ok(itemModel.fields.length <= 5);
   });
+});
+
+test('header card exports background and logo as separate DAM references', () => {
+  const cardModel = model.models.find(({ id }) => id === 'header-navigation-card');
+  const mediaFields = cardModel.fields.filter(({ name }) => [
+    'backgroundImage',
+    'logoImage',
+  ].includes(name));
+
+  assert.deepEqual(mediaFields.map(({ name }) => name), ['backgroundImage', 'logoImage']);
+  mediaFields.forEach((field) => {
+    assert.equal(field.component, 'reference');
+    assert.equal(field.valueType, 'string');
+    assert.equal(field.multi, undefined);
+  });
+  assert.equal(cardModel.fields.some(({ name }) => name === 'media'), false);
+  assert.match(navigationJs, /fieldPicture\(\s*row,\s*'backgroundImage'/);
+  assert.match(navigationJs, /fieldPicture\(\s*row,\s*'logoImage'/);
+  assert.match(navigationJs, /directField\(row, 'media'\)/);
 });
 
 test('header navigation destinations use the AEM Sites content picker', () => {

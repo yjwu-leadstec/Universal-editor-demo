@@ -49,6 +49,10 @@ function itemKind(row) {
 function extractItem(row) {
   const values = textCells(row);
   const pictures = [...row.querySelectorAll('picture')];
+  const backgroundField = directField(row, 'backgroundImage');
+  const logoField = directField(row, 'logoImage');
+  const legacyMediaField = directField(row, 'media');
+  const hasExplicitMediaFields = backgroundField || logoField;
   const destination = directField(row, 'destination')?.querySelector('a[href]')
     || row.querySelector('a[href]');
   let kind = itemKind(row);
@@ -69,9 +73,18 @@ function extractItem(row) {
     kind,
     label,
     href: destination?.getAttribute('href') || '',
-    background: fieldPicture(row, 'media', pictures[0]),
-    foreground: pictures[1] || null,
-    mediaCount: pictures.length,
+    background: fieldPicture(
+      row,
+      'backgroundImage',
+      hasExplicitMediaFields ? null : fieldPicture(row, 'media', pictures[0]),
+    ),
+    foreground: fieldPicture(
+      row,
+      'logoImage',
+      hasExplicitMediaFields
+        ? null
+        : [...(legacyMediaField?.querySelectorAll('picture') || pictures)][1],
+    ),
     description,
   };
 }
@@ -193,11 +206,15 @@ function buildEditorItem(item, index, hasTop) {
   }
   if (item.kind === 'card') {
     appendEditorDetail(details, 'Description', item.description, 'No description');
+    const configuredMedia = [
+      item.background ? 'background' : '',
+      item.foreground ? 'logo' : '',
+    ].filter(Boolean).join(' and ');
     appendEditorDetail(
       details,
-      'Images',
-      item.mediaCount ? `${item.mediaCount} selected` : '',
-      'No images selected',
+      'Card media',
+      configuredMedia,
+      'No background or logo selected',
     );
   }
 
