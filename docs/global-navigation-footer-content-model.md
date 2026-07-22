@@ -21,7 +21,7 @@ EDS may normalize a single authored card into several sibling paragraphs whose a
 ### Key Points
 
 - Main Navigation Link and Dropdown Link Card targets use `aem-content` with `rootPath=/content/demo-site`, so authors select internal Sites pages with the folder button instead of typing paths.
-- Card background and optional foreground wordmark use separate single-value DAM reference fields (`backgroundImage` and `logoImage`), so delivery does not depend on multi-value export order.
+- Card background and optional transparent vehicle cutout use separate single-value DAM reference fields (`backgroundImage` and `foregroundImage`), so delivery does not depend on multi-value export order.
 - With one image, the image is rendered as a normal card image.
 - Card title and description are separate short fields; the shared CTA label is configured once on the Header Navigation container.
 - Top-level items without nested lists are ordinary links.
@@ -52,5 +52,5 @@ The footer navigation is a collection model expressed as semantic default conten
 
 - Uses a supported container + item pattern instead of an unstable nested multi-field.
 - Keeps repeating items predictable and author-controlled.
-- Every child item keeps a focused dialog; a card has five explicit fields because background and logo are independent DAM references.
+- Every child item keeps a focused dialog; a card has five explicit fields because background and vehicle foreground are independent DAM references.
 - Internal destinations use the AEM Sites content picker; assets use the DAM reference picker.

@@ -157,7 +157,7 @@
 | --- | --- | --- |
 | `header-navigation-top` | `label`, `destination` | 一级菜单；destination 使用 `/content/demo-site` picker |
 | `header-navigation-group` | `label` | 面板分组标题 |
-| `header-navigation-card` | `label`, `destination`, `backgroundImage`, `logoImage`, `description` | 面板卡片；背景图与可选透明字标分别使用单值 DAM reference，避免多值 reference 只导出首项 |
+| `header-navigation-card` | `label`, `destination`, `backgroundImage`, `foregroundImage`, `description` | 面板卡片；背景图与可选透明底整车前景分别使用单值 DAM reference，避免多值 reference 只导出首项和复合 Tile 文字重复 |
 | `header-navigation` | `cardActionLabel` | 当前语言所有卡片共享的 CTA 文案 |
 
 内容顺序即结构：`top` 开始一个一级菜单，之后的 `group` 和 `card` 归属该菜单，直到下一个 `top`。孤立的 `group/card` 被忽略并记录为无效内容。这样保持单层 container + item，不使用不稳定的 multi-container/nested multifield。

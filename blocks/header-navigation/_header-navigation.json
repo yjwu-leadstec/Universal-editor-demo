@@ -140,9 +140,9 @@
         },
         {
           "component": "reference",
-          "name": "logoImage",
-          "label": "Vehicle Logo Image",
-          "description": "Optionally select a transparent PNG vehicle logo or wordmark",
+          "name": "foregroundImage",
+          "label": "Vehicle Foreground Image",
+          "description": "Optionally select a transparent PNG vehicle cutout rendered above the background",
           "valueType": "string"
         },
         {

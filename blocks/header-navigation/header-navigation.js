@@ -50,9 +50,9 @@ function extractItem(row) {
   const values = textCells(row);
   const pictures = [...row.querySelectorAll('picture')];
   const backgroundField = directField(row, 'backgroundImage');
-  const logoField = directField(row, 'logoImage');
+  const foregroundField = directField(row, 'foregroundImage') || directField(row, 'logoImage');
   const legacyMediaField = directField(row, 'media');
-  const hasExplicitMediaFields = backgroundField || logoField;
+  const hasExplicitMediaFields = backgroundField || foregroundField;
   const destination = directField(row, 'destination')?.querySelector('a[href]')
     || row.querySelector('a[href]');
   let kind = itemKind(row);
@@ -80,10 +80,14 @@ function extractItem(row) {
     ),
     foreground: fieldPicture(
       row,
-      'logoImage',
-      hasExplicitMediaFields
-        ? null
-        : [...(legacyMediaField?.querySelectorAll('picture') || pictures)][1],
+      'foregroundImage',
+      fieldPicture(
+        row,
+        'logoImage',
+        hasExplicitMediaFields
+          ? null
+          : [...(legacyMediaField?.querySelectorAll('picture') || pictures)][1],
+      ),
     ),
     description,
   };
@@ -208,13 +212,13 @@ function buildEditorItem(item, index, hasTop) {
     appendEditorDetail(details, 'Description', item.description, 'No description');
     const configuredMedia = [
       item.background ? 'background' : '',
-      item.foreground ? 'logo' : '',
+      item.foreground ? 'vehicle foreground' : '',
     ].filter(Boolean).join(' and ');
     appendEditorDetail(
       details,
       'Card media',
       configuredMedia,
-      'No background or logo selected',
+      'No background or vehicle foreground selected',
     );
   }
 

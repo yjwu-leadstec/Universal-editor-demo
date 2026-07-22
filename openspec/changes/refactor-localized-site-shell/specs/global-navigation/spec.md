@@ -51,10 +51,11 @@ Primary Navigation SHALL 提供 `header-navigation` container + flat item author
 
 #### Scenario: Author configures layered card media
 
-- **WHEN** 作者分别选择 card background 和可选 vehicle logo
+- **WHEN** 作者分别选择 card background 和可选透明底 vehicle foreground
 - **THEN** 两个资源通过独立的单值 DAM reference 字段交付
-- **AND** header 将背景图和透明字标渲染为两个独立图层
+- **AND** header 将背景图和整车前景渲染为两个独立图层
 - **AND** 交付结果不依赖多值 reference 的选择顺序或数组导出行为
+- **AND** 作者不得使用已经包含车型标题或描述的复合 Tile 作为背景或前景
 
 #### Scenario: Author edits items without nested overlays
 
