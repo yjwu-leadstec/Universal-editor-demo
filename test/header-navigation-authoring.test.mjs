@@ -55,3 +55,10 @@ test('header prefers structured items and retains the legacy rich-text fallback'
   assert.match(headerJs, /const structuredList = navSection\?\.querySelector/);
   assert.match(headerJs, /const topList = structuredList \|\| navSection\?\.querySelector\('ul'\)/);
 });
+
+test('new empty navigation items remain selectable only in Universal Editor', () => {
+  assert.match(navigationJs, /data-aue-model/);
+  assert.match(navigationJs, /header-navigation-empty-item/);
+  assert.match(navigationJs, /!item\.row\.hasAttribute\('data-aue-resource'\)/);
+  assert.match(navigationJs, /Configure Top Navigation/);
+});

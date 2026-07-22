@@ -35,6 +35,18 @@ main .header-navigation-list > li > :is(a, span) {
   text-decoration: none;
 }
 
+main .header-navigation-empty-item {
+  border-style: dashed;
+  background: #f7f7f7;
+}
+
+main .header-navigation-empty-item > :is(span, em),
+main .header-navigation-empty-item .header-navigation-card strong {
+  color: #666;
+  font-style: normal;
+  font-weight: 500;
+}
+
 main .header-navigation-list > li > ul {
   display: grid;
   gap: 8px;

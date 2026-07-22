@@ -20,14 +20,25 @@ function fieldPicture(row, property, fallback) {
     || null;
 }
 
+function itemKind(row) {
+  const model = row?.getAttribute('data-aue-model') || '';
+  if (model === 'header-navigation-top') return 'top';
+  if (model === 'header-navigation-group') return 'group';
+  if (model === 'header-navigation-card') return 'card';
+  return '';
+}
+
 function extractItem(row) {
   const values = textCells(row);
   const pictures = [...row.querySelectorAll('picture')];
   const destination = directField(row, 'destination')?.querySelector('a[href]')
     || row.querySelector('a[href]');
-  let kind = 'group';
-  if (destination) kind = 'top';
-  if (pictures.length || row.children.length > 2) kind = 'card';
+  let kind = itemKind(row);
+  if (!kind) {
+    kind = 'group';
+    if (destination) kind = 'top';
+    if (pictures.length || row.children.length > 2) kind = 'card';
+  }
   const label = fieldText(row, 'label', values[0] || '');
   const description = fieldText(
     row,
@@ -58,9 +69,10 @@ function appendMedia(source, target, className, alt) {
 function buildTop(item) {
   const element = document.createElement('li');
   element.dataset.navKind = 'top';
+  element.classList.toggle('header-navigation-empty-item', !item.label);
   const label = document.createElement(item.href ? 'a' : 'span');
   if (item.href) label.href = item.href;
-  label.textContent = item.label;
+  label.textContent = item.label || 'Configure Top Navigation';
   element.append(label);
   moveInstrumentation(item.row, element);
   return element;
@@ -69,8 +81,9 @@ function buildTop(item) {
 function buildGroup(item) {
   const element = document.createElement('li');
   element.dataset.navKind = 'group';
+  element.classList.toggle('header-navigation-empty-item', !item.label);
   const label = document.createElement('em');
-  label.textContent = item.label;
+  label.textContent = item.label || 'Configure Panel Group Heading';
   element.append(label);
   moveInstrumentation(item.row, element);
   return element;
@@ -79,6 +92,7 @@ function buildGroup(item) {
 function buildCard(item, actionLabel) {
   const element = document.createElement('li');
   element.dataset.navKind = 'card';
+  element.classList.toggle('header-navigation-empty-item', !item.label);
   const card = document.createElement(item.href ? 'a' : 'div');
   card.className = 'header-navigation-card';
   if (item.href) card.href = item.href;
@@ -86,7 +100,7 @@ function buildCard(item, actionLabel) {
   appendMedia(item.foreground, card, 'header-navigation-card-foreground', item.label);
 
   const title = document.createElement('strong');
-  title.textContent = item.label;
+  title.textContent = item.label || 'Configure Panel Card';
   card.append(title);
   if (item.description) {
     const description = document.createElement('span');
@@ -122,7 +136,10 @@ export default function decorate(block) {
   let currentSubList = null;
 
   items.forEach((item) => {
-    if (!item.kind || !item.label) return;
+    if (!item.kind) return;
+    // Empty new items must remain selectable in Universal Editor. Delivery HTML
+    // has no item instrumentation, so unfinished entries stay off the live site.
+    if (!item.label && !item.row.hasAttribute('data-aue-resource')) return;
     if (item.kind === 'top') {
       currentTop = buildTop(item);
       currentSubList = document.createElement('ul');
