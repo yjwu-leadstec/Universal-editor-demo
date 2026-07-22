@@ -197,3 +197,40 @@ header/footer change. No header/footer fragment 404 or shell JavaScript error re
   remain present.
 - The structured block still contains all seven vehicle cards, all three corporate
   cards, 17 formal navigation-card assets, and internal destinations that exist in AEM.
+
+## Final Preview/Live Publication and Responsive Regression — 2026-07-23
+
+### Publication evidence
+
+- Added the isolated, non-delivery test directory
+  `/content/dam/li-auto/test/codex/nav-validation`; it is empty and is not referenced
+  by the navigation fragment. Formal delivery assets remain under `/content/dam/li-auto/shared`.
+- Added versionable/replication mixins and an empty section node to each newly created
+  route shell so AEM Sites can publish it consistently.
+- AEM Sites Manage Publication completed for all 19 direct children of
+  `/content/demo-site/language-master/en`, first to Preview and then to Publish.
+- The EDS Live content bus was refreshed for the structured nav and the eight newly
+  created route shells after AEM Publish replication. Admin status records Live nav
+  `lastModified` at `Wed, 22 Jul 2026 19:26:35 GMT` from Author source
+  `Wed, 22 Jul 2026 19:25:28 GMT`.
+- Preview and Live return HTTP 200 for the nav fragment and all ten configured card
+  destinations: seven vehicle routes plus About Us, Join Us, and Investor Relations.
+- The 17 rendered navigation media layers resolve successfully on Live: two non-zero
+  images for each vehicle card and one non-zero image for each corporate card.
+
+### Browser regression evidence
+
+- Playwright verified the Live homepage at 1440, 1024, 999, and 390 px.
+- `>=1000px` renders the desktop navigation and `<1000px` renders the hamburger drawer;
+  all seven vehicle links resolve to their explicit localized routes in both modes.
+- Mobile About Us expansion exposes the three localized corporate destinations.
+- All four widths report zero horizontal overflow and zero broken Header images.
+- The Homepage Banner remains rendered at every tested width; at 390 px it is
+  `display: block`, visible, and 585 px high.
+- The final 390 px browser console contains zero errors and zero warnings.
+
+### Remaining content boundary
+
+- The newly created destination pages are valid published route shells, not completed
+  product/corporate page migrations. Only Li L6 currently has a complete product body;
+  the other route bodies remain a separate content implementation task.
