@@ -436,14 +436,14 @@
           }
         },
         {
-          "title": "Top Navigation",
+          "title": "Main Navigation Link",
           "id": "header-navigation-top",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Top Navigation",
+                  "name": "Main Navigation Link",
                   "model": "header-navigation-top"
                 }
               }
@@ -451,14 +451,14 @@
           }
         },
         {
-          "title": "Panel Group Heading",
+          "title": "Dropdown Section Heading",
           "id": "header-navigation-group",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Panel Group Heading",
+                  "name": "Dropdown Section Heading",
                   "model": "header-navigation-group"
                 }
               }
@@ -466,14 +466,14 @@
           }
         },
         {
-          "title": "Panel Card",
+          "title": "Dropdown Link Card",
           "id": "header-navigation-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Panel Card",
+                  "name": "Dropdown Link Card",
                   "model": "header-navigation-card"
                 }
               }

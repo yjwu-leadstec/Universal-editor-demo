@@ -49,6 +49,13 @@ Primary Navigation SHALL 提供 `header-navigation` container + flat item author
 - **THEN** header 把 group 和 cards 归入最近的 top item
 - **AND** 作者可独立新增、删除、复制和排序每个条目
 
+#### Scenario: Author edits items without nested overlays
+
+- **WHEN** `header-navigation` 在 Universal Editor 画布中渲染
+- **THEN** top、group 和 card 作为同级编辑卡片显示类型、顺序和已选目标
+- **AND** 每张卡片可独立选中并打开自己的 Properties
+- **AND** delivery 所需的菜单层级不得把一个带 instrumentation 的 item 嵌套到另一个 item 下
+
 #### Scenario: Legacy rich text remains during migration
 
 - **WHEN** Primary section 同时存在结构化 navigation 和旧 nested list

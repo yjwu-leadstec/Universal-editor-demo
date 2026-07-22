@@ -1,20 +1,173 @@
-/* Structured source navigation shown on the dedicated nav authoring page. */
-main .header-navigation {
+/* Flat source editor shown on the dedicated nav page in Universal Editor. */
+main .header-navigation[data-header-navigation-view="author"] {
   margin-block: 16px;
-  padding: 20px;
-  border: 1px solid #d5d5d5;
-  border-radius: 8px;
+  padding: 24px;
+  border: 1px solid #d9d9d9;
+  border-radius: 12px;
+  background: #f7f7f8;
+}
+
+main .header-navigation-editor-intro {
+  margin-bottom: 20px;
+  padding: 18px 20px;
+  border: 1px solid #cfd8e3;
+  border-radius: 10px;
   background: #fff;
 }
 
-main .header-navigation::before {
-  display: block;
-  margin-bottom: 14px;
-  color: #666;
-  font-size: 13px;
-  content: "Navigation items — add and reorder Top Navigation, Group Heading, and Panel Card entries";
+main .header-navigation-editor-intro h2 {
+  margin: 0 0 6px;
+  color: #191919;
+  font-size: 20px;
+  line-height: 1.35;
 }
 
+main .header-navigation-editor-intro p {
+  margin: 0;
+  color: #53565a;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+main .header-navigation-editor-intro .header-navigation-editor-action {
+  margin-top: 8px;
+  color: #24527a;
+  font-weight: 600;
+}
+
+main .header-navigation-editor-list {
+  display: grid;
+  gap: 12px;
+}
+
+main .header-navigation-editor-item {
+  position: relative;
+  overflow: hidden;
+  padding: 16px 18px 14px;
+  border: 1px solid #d8d8d8;
+  border-left: 5px solid #6f7a86;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+}
+
+main .header-navigation-editor-item.is-top {
+  border-left-color: #1473e6;
+}
+
+main .header-navigation-editor-item.is-group {
+  border-left-color: #8c5ed7;
+}
+
+main .header-navigation-editor-item.is-card {
+  border-left-color: #2d9d78;
+}
+
+main .header-navigation-editor-item.is-empty,
+main .header-navigation-editor-item.is-orphan {
+  border-style: dashed;
+}
+
+main .header-navigation-editor-item.is-orphan {
+  border-left-color: #c45500;
+  background: #fff8f3;
+}
+
+main .header-navigation-editor-item > header {
+  display: grid;
+  grid-template-columns: 34px max-content 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+main .header-navigation-editor-order {
+  color: #7a7a7a;
+  font: 600 12px/1.2 monospace;
+}
+
+main .header-navigation-editor-type {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #eef1f4;
+  color: #3e454c;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+main .header-navigation-editor-item > header strong {
+  min-width: 0;
+  overflow: hidden;
+  color: #191919;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+main .header-navigation-editor-item.is-empty > header strong {
+  color: #6b6b6b;
+  font-style: italic;
+  font-weight: 500;
+}
+
+main .header-navigation-editor-item dl {
+  display: grid;
+  gap: 5px;
+  margin: 12px 0 0 44px;
+}
+
+main .header-navigation-editor-item dl > div {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 12px;
+}
+
+main .header-navigation-editor-item dt,
+main .header-navigation-editor-item dd {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+main .header-navigation-editor-item dt {
+  color: #656b72;
+  font-weight: 600;
+}
+
+main .header-navigation-editor-item dd {
+  overflow-wrap: anywhere;
+  color: #20242a;
+}
+
+main .header-navigation-editor-item dd.is-empty {
+  color: #8a8a8a;
+  font-style: italic;
+}
+
+main .header-navigation-editor-hint {
+  margin: 11px 0 0 44px;
+  color: #70757b;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+main .header-navigation-editor-item.is-orphan .header-navigation-editor-hint {
+  color: #9b4100;
+  font-weight: 600;
+}
+
+main .header-navigation-editor-empty {
+  margin: 0;
+  padding: 24px;
+  border: 1px dashed #b9b9b9;
+  border-radius: 10px;
+  background: #fff;
+  color: #666;
+  text-align: center;
+}
+
+/* Semantic projection used by the delivery header parser. */
 main .header-navigation-list,
 main .header-navigation-list ul {
   margin: 0;
@@ -24,9 +177,6 @@ main .header-navigation-list ul {
 
 main .header-navigation-list > li {
   margin-top: 12px;
-  padding: 12px 14px;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
 }
 
 main .header-navigation-list > li > :is(a, span) {
@@ -35,24 +185,10 @@ main .header-navigation-list > li > :is(a, span) {
   text-decoration: none;
 }
 
-main .header-navigation-empty-item {
-  border-style: dashed;
-  background: #f7f7f7;
-}
-
-main .header-navigation-empty-item > :is(span, em),
-main .header-navigation-empty-item .header-navigation-card strong {
-  color: #666;
-  font-style: normal;
-  font-weight: 500;
-}
-
 main .header-navigation-list > li > ul {
   display: grid;
   gap: 8px;
   margin-top: 10px;
-  padding-left: 16px;
-  border-left: 2px solid #e5e5e5;
 }
 
 main .header-navigation-list [data-nav-kind="group"] {
@@ -91,4 +227,33 @@ main .header-navigation-card em {
   color: #666;
   font-size: 12px;
   font-style: normal;
+}
+
+@media (width < 720px) {
+  main .header-navigation[data-header-navigation-view="author"] {
+    padding: 14px;
+  }
+
+  main .header-navigation-editor-item > header {
+    grid-template-columns: 28px 1fr;
+  }
+
+  main .header-navigation-editor-type {
+    justify-self: start;
+  }
+
+  main .header-navigation-editor-item > header strong {
+    grid-column: 2;
+    white-space: normal;
+  }
+
+  main .header-navigation-editor-item dl,
+  main .header-navigation-editor-hint {
+    margin-left: 38px;
+  }
+
+  main .header-navigation-editor-item dl > div {
+    grid-template-columns: 1fr;
+    gap: 1px;
+  }
 }

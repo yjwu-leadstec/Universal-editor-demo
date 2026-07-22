@@ -153,8 +153,6 @@
 
 `header-navigation` 使用三个短小的 item model，Author 不需要维护 HTML/list 层级，也不会在一个 dialog 中看到无关字段：
 
-| Field | Type | Required | Purpose |
-| --- | --- | --- | --- |
 | Model | Fields | Purpose |
 | --- | --- | --- |
 | `header-navigation-top` | `label`, `destination` | 一级菜单；destination 使用 `/content/demo-site` picker |
@@ -163,6 +161,8 @@
 | `header-navigation` | `cardActionLabel` | 当前语言所有卡片共享的 CTA 文案 |
 
 内容顺序即结构：`top` 开始一个一级菜单，之后的 `group` 和 `card` 归属该菜单，直到下一个 `top`。孤立的 `group/card` 被忽略并记录为无效内容。这样保持单层 container + item，不使用不稳定的 multi-container/nested multifield。
+
+Author 画布必须保持所有 item 为同级、独立可选的编辑卡片，并明确显示类型、顺序、目标路径和未配置状态；不得为了预览最终 mega menu 而把带 `data-aue-*` 的 item 嵌套到另一个 item 下。block 同时生成一个无 instrumentation 的隐藏语义投影供 header parser 使用；Delivery 只输出语义 `ul`。因此 Content Tree 与 overlay 始终操作扁平 item，而最终 header 仍按 `top → group → card` 顺序形成层级。
 
 | Field | Type | Required | Purpose |
 | --- | --- | --- | --- |
@@ -251,7 +251,7 @@ Author edits language-master/en/nav
 - parser 先生成数据并验证最小契约，再执行 DOM 增强；解析失败时保留原语义 DOM。
 - 不再以 `href="#"` 填充缺失链接；无 href 的项目呈现为 button/label 或跳过。
 - locale directory 必须先产生包含真实 anchors 的语义 DOM；桌面 dialog 和移动列表复用同一数据/节点语义，不维护两份市场数组。
-- Universal Editor instrumentation 按 source → enhanced element 一一迁移或复制，桌面/移动双视图须能定位回同一作者资源。
+- Universal Editor instrumentation 在 nav 源页面迁移到扁平编辑卡，不迁移到隐藏语义投影；最终 header 的桌面/移动双视图仍须能追溯到对应作者资源。
 - 页面主内容不等待 locale directory；nav 与 header-settings 允许先增强品牌/主导航，locale directory 完成后再增强语言选择器，避免额外请求影响 LCP。
 - fragment 请求按 path 缓存进行中的 Promise，避免同页重复请求；失败不得永久缓存，允许重试/刷新恢复。
 

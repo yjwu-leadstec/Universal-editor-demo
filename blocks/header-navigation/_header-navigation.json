@@ -17,14 +17,14 @@
       }
     },
     {
-      "title": "Top Navigation",
+      "title": "Main Navigation Link",
       "id": "header-navigation-top",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Top Navigation",
+              "name": "Main Navigation Link",
               "model": "header-navigation-top"
             }
           }
@@ -32,14 +32,14 @@
       }
     },
     {
-      "title": "Panel Group Heading",
+      "title": "Dropdown Section Heading",
       "id": "header-navigation-group",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Panel Group Heading",
+              "name": "Dropdown Section Heading",
               "model": "header-navigation-group"
             }
           }
@@ -47,14 +47,14 @@
       }
     },
     {
-      "title": "Panel Card",
+      "title": "Dropdown Link Card",
       "id": "header-navigation-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Panel Card",
+              "name": "Dropdown Link Card",
               "model": "header-navigation-card"
             }
           }
@@ -69,8 +69,8 @@
         {
           "component": "text",
           "name": "cardActionLabel",
-          "label": "Default Card Action Label",
-          "description": "Shared action text for panel cards in this language, for example Learn More",
+          "label": "Shared Card Action Text",
+          "description": "One action label shared by every dropdown card in this language, for example Learn More",
           "value": "Learn More",
           "valueType": "string"
         }
@@ -82,14 +82,15 @@
         {
           "component": "text",
           "name": "label",
-          "label": "Navigation Label",
+          "label": "Link Text",
+          "description": "Text shown in the main navigation bar",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "name": "destination",
-          "label": "Destination",
-          "description": "Choose an internal page under demo-site; explicit external HTTPS URLs remain supported",
+          "label": "Target Page or URL",
+          "description": "For an internal link, use the folder button and choose a page under demo-site. You may also enter a complete external HTTPS URL.",
           "valueType": "string",
           "required": true,
           "validation": {
@@ -104,7 +105,8 @@
         {
           "component": "text",
           "name": "label",
-          "label": "Group Heading",
+          "label": "Section Heading",
+          "description": "Heading shown above a group of dropdown cards",
           "valueType": "string"
         }
       ]
@@ -115,14 +117,14 @@
         {
           "component": "text",
           "name": "label",
-          "label": "Card Title",
+          "label": "Link Card Title",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "name": "destination",
-          "label": "Destination",
-          "description": "Choose an internal page under demo-site; explicit external HTTPS URLs remain supported",
+          "label": "Target Page or URL",
+          "description": "For an internal link, use the folder button and choose a page under demo-site. You may also enter a complete external HTTPS URL.",
           "valueType": "string",
           "required": true,
           "validation": {
@@ -132,7 +134,7 @@
         {
           "component": "reference",
           "name": "media",
-          "label": "Card Images",
+          "label": "Card Images (Background, then Logo)",
           "description": "Select the background first and an optional transparent logo/foreground image second",
           "valueType": "string[]",
           "multi": true
@@ -140,7 +142,7 @@
         {
           "component": "textarea",
           "name": "description",
-          "label": "Card Description",
+          "label": "Short Description",
           "valueType": "string"
         }
       ]

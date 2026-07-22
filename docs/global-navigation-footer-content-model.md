@@ -12,13 +12,15 @@
 
 ### How It Works
 
-Each Top Navigation item starts a new primary entry. Following Group Heading and Panel Card items belong to that entry until the next Top Navigation item. This flat container/item pattern avoids nested multi-fields and lets authors add, duplicate, remove, and reorder items from the Universal Editor content tree.
+Each Main Navigation Link starts a new primary entry. Following Dropdown Section Heading and Dropdown Link Card items belong to that entry until the next Main Navigation Link. This flat container/item pattern avoids nested multi-fields and lets authors add, duplicate, remove, and reorder items from the Universal Editor content tree.
+
+On the nav source page, Universal Editor shows every item as a flat editing card with its item type, order, target, and missing-field state. Select exactly one card and open Properties to edit it. The nested semantic list exists only as a delivery projection, so it cannot trap or duplicate item selection in the editor.
 
 EDS may normalize a single authored card into several sibling paragraphs whose anchors repeat the same URL (for example, one paragraph per image and one paragraph for title/subtitle/CTA). The block treats those siblings inside the same list item as one logical card.
 
 ### Key Points
 
-- Top Navigation and Panel Card destinations use `aem-content` with `rootPath=/content/demo-site`, so authors can select internal Sites pages instead of typing paths.
+- Main Navigation Link and Dropdown Link Card targets use `aem-content` with `rootPath=/content/demo-site`, so authors select internal Sites pages with the folder button instead of typing paths.
 - The first selected card image is treated as its background; the second optional image is the foreground vehicle wordmark.
 - With one image, the image is rendered as a normal card image.
 - Card title and description are separate short fields; the shared CTA label is configured once on the Header Navigation container.
