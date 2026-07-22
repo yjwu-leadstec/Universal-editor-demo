@@ -13,12 +13,14 @@ test('tabbed feature media uses the official Licium typography and tab geometry'
   assert.match(featureCss, /width:\s*clamp\(98px, 5\.651vw, 108\.5px\)/);
   assert.match(featureCss, /gap:\s*clamp\(30px, 2\.0833vw, 40px\)/);
   assert.match(featureCss, /font-weight:\s*400/);
+  assert.match(featureJs, /button\.className = 'feature-media-tab'/);
 });
 
 test('desktop tab underline spans the tab and sits outside its bottom edge', () => {
-  assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs button\s*\{[\s\S]*min-height:\s*clamp\(30px, 2\.0833vw, 40px\)[\s\S]*padding:\s*0[\s\S]*overflow:\s*visible/);
-  assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs button::after\s*\{[\s\S]*inset:\s*auto 0 -2px[\s\S]*width:\s*100%/);
-  assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs button::after\s*\{[\s\S]*transition:\s*background-color 200ms ease/);
+  assert.match(featureCss, /\.feature-media-tabs \.feature-media-tab\s*\{[\s\S]*appearance:\s*none[\s\S]*border-radius:\s*0[\s\S]*overflow:\s*visible[\s\S]*text-overflow:\s*clip/);
+  assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs \.feature-media-tab\s*\{[\s\S]*min-height:\s*clamp\(30px, 2\.0833vw, 40px\)[\s\S]*padding:\s*0/);
+  assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs \.feature-media-tab::after\s*\{[\s\S]*inset:\s*auto 0 -2px[\s\S]*width:\s*100%/);
+  assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs \.feature-media-tab::after\s*\{[\s\S]*transition:\s*background-color 200ms ease/);
 });
 
 test('feature media uses the official compact tab layout through 820px', () => {
@@ -46,7 +48,7 @@ test('tab copy height follows the longest authored description', () => {
 
 test('mobile feature media keeps the manual swipe rail and full-width vertical tabs', () => {
   assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*scroll-snap-type:\s*x mandatory/);
-  assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.feature-media-tabs button\s*\{[\s\S]*width:\s*100%/);
+  assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.feature-media-tabs \.feature-media-tab\s*\{[\s\S]*width:\s*100%/);
   assert.match(featureJs, /if \(!autoPlay \|\| mobileQuery\.matches/);
   assert.match(featureJs, /viewport\.addEventListener\('scroll'/);
 });

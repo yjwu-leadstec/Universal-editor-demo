@@ -234,6 +234,7 @@ function buildTabbed(block, items, container, variant) {
   items.forEach((item, index) => {
     const button = document.createElement('button');
     button.type = 'button';
+    button.className = 'feature-media-tab';
     const eyebrow = propText(item, 'eyebrow');
     button.textContent = eyebrow || propText(item, 'title') || `Feature ${index + 1}`;
     if (eyebrow) instrumentProp(item, 'eyebrow', button);
