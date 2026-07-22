@@ -1,1 +1,40 @@
-/* Source-only settings block parsed by header.js; it has no visual presentation. */
+/* Source-only settings block parsed by header.js. */
+.header-settings {
+  display: none;
+}
+
+/* A single card avoids overlapping component/field overlays in Universal Editor. */
+.header-settings[data-aue-resource] {
+  box-sizing: border-box;
+  display: block;
+  min-height: 96px;
+  margin-block: 16px;
+  padding: 20px 24px;
+  border: 1px dashed #8a8a8a;
+  border-radius: 4px;
+  background: #f7f7f7;
+  color: #191919;
+  font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.header-settings[data-aue-resource] > :not(.header-settings-authoring-card) {
+  display: none;
+}
+
+.header-settings-authoring-card {
+  display: grid;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.header-settings-authoring-card strong {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.header-settings-authoring-card span {
+  color: rgb(25 25 25 / 65%);
+  font-size: 14px;
+  line-height: 22px;
+}
