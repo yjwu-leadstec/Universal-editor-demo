@@ -50,6 +50,7 @@ test('header navigation destinations use the AEM Sites content picker', () => {
 test('header prefers structured items and retains the legacy rich-text fallback', () => {
   assert.match(navigationJs, /item\.kind === 'top'/);
   assert.match(navigationJs, /item\.kind === 'group'/);
+  assert.match(navigationJs, /row\.children\.length > 2/);
   assert.match(navigationJs, /dataset\.headerNavigation = 'true'/);
   assert.match(headerJs, /const structuredList = navSection\?\.querySelector/);
   assert.match(headerJs, /const topList = structuredList \|\| navSection\?\.querySelector\('ul'\)/);

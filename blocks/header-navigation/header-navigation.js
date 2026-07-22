@@ -27,7 +27,7 @@ function extractItem(row) {
     || row.querySelector('a[href]');
   let kind = 'group';
   if (destination) kind = 'top';
-  if (pictures.length) kind = 'card';
+  if (pictures.length || row.children.length > 2) kind = 'card';
   const label = fieldText(row, 'label', values[0] || '');
   const description = fieldText(
     row,
