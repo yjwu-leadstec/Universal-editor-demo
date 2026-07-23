@@ -48,9 +48,12 @@ test('tab copy height follows the longest authored description', () => {
   assert.doesNotMatch(featureJs, /copies\[itemIndex\]\.hidden = !selected/);
 });
 
-test('mobile feature media keeps the manual swipe rail and full-width vertical tabs', () => {
+test('mobile feature media keeps the manual swipe rail and official vertical tab geometry', () => {
   assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*scroll-snap-type:\s*x mandatory/);
-  assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.feature-media-tabs \.feature-media-tab\s*\{[\s\S]*width:\s*100%/);
+  assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.variant-default\.is-tabbed \.feature-media-tabs\s*\{[\s\S]*gap:\s*16px/);
+  assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.feature-media-tabs \.feature-media-tab\s*\{[\s\S]*width:\s*calc\(100% - 1px\)[\s\S]*min-height:\s*22px[\s\S]*margin:\s*0 0 0 1px[\s\S]*padding:\s*0 0 0 16px[\s\S]*color:\s*#999/);
+  assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.feature-media-tabs \.feature-media-tab::after\s*\{[\s\S]*inset:\s*0 auto 0 -1px[\s\S]*background:\s*transparent/);
+  assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.feature-media-tab\[aria-selected="true"\]\s*\{[\s\S]*color:\s*#191919/);
   assert.match(featureJs, /if \(!autoPlay \|\| mobileQuery\.matches/);
   assert.match(featureJs, /viewport\.addEventListener\('scroll'/);
 });

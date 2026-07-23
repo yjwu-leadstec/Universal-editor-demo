@@ -660,7 +660,7 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
     margin: 40px 40px 0;
     padding: 0;
     order: 3;
-    gap: 0;
+    gap: 16px;
   }
 
   main .feature-media-section.variant-default.is-tabbed .feature-media-tabs::after {
@@ -669,27 +669,31 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
 
   main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .feature-media-tab {
     justify-content: flex-start;
-    width: 100%;
+    width: calc(100% - 1px);
     min-width: 0;
-    min-height: 38px;
-    margin: 0;
-    padding: 8px 0 8px 16px;
-    color: rgb(25 25 25 / 42%);
+    min-height: 22px;
+    margin: 0 0 0 1px;
+    padding: 0 0 0 16px;
+    color: #999;
     font-size: 14px;
     line-height: 22px;
     text-align: left;
   }
 
   main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .feature-media-tab::after {
-    inset: 8px auto 8px 0;
+    inset: 0 auto 0 -1px;
     width: 1px;
     height: auto;
-    background: rgb(25 25 25 / 20%);
+    background: transparent;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .feature-media-tab[aria-selected="true"] {
+    color: #191919;
   }
 
   main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .feature-media-tab[aria-selected="true"]::after {
     right: auto;
-    left: 0;
+    left: -1px;
     background: var(--product-accent);
   }
 }
