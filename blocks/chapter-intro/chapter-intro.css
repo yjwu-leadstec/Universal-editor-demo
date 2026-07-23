@@ -20,14 +20,6 @@ main .chapter-intro .product-media {
   border-radius: 0;
 }
 
-main .chapter-intro .chapter-intro-shell::after {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgb(0 0 0 / 12%), transparent 45%, rgb(0 0 0 / 48%));
-  content: '';
-  pointer-events: none;
-}
-
 main .chapter-intro .chapter-intro-copy {
   position: absolute;
   z-index: 2;

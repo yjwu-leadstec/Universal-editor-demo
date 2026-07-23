@@ -12,6 +12,27 @@ import {
   revealElements,
 } from '../../scripts/product-block-utils.js';
 
+const LEGACY_CHAPTER_PREFIXES = [
+  'Exterior Design',
+  'Spatial Arrangement',
+  'AI Intelligence',
+  'Advanced Assisted Driving',
+  'Extended Range, 4WD.',
+  'Ultimate Safety',
+];
+
+function splitLegacyChapterTitle(eyebrow, title) {
+  if (eyebrow) return { eyebrow, title };
+  const prefix = LEGACY_CHAPTER_PREFIXES.find((candidate) => (
+    title.startsWith(candidate) && title.slice(candidate.length).trim()
+  ));
+  if (!prefix) return { eyebrow, title };
+  return {
+    eyebrow: prefix,
+    title: title.slice(prefix.length).trimStart(),
+  };
+}
+
 export default function decorate(block) {
   initProductBlock(block);
   const shell = document.createElement('div');
@@ -27,11 +48,7 @@ export default function decorate(block) {
   copy.className = 'chapter-intro-copy';
   let eyebrow = propText(block, 'eyebrow');
   let title = propText(block, 'title');
-  const legacyExteriorPrefix = 'Exterior Design ';
-  if (!eyebrow && propText(block, 'id') === 'design' && title.startsWith(legacyExteriorPrefix)) {
-    eyebrow = legacyExteriorPrefix.trim();
-    title = title.slice(legacyExteriorPrefix.length);
-  }
+  ({ eyebrow, title } = splitLegacyChapterTitle(eyebrow, title));
   if (eyebrow) {
     const element = document.createElement('p');
     element.className = 'chapter-intro-eyebrow';

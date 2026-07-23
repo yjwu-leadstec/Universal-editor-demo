@@ -13,6 +13,7 @@ test('chapter intro uses the official 16:9 desktop video geometry', () => {
   assert.match(chapterCss, /main \.section\.chapter-intro-container > \.chapter-intro-wrapper\s*\{[^}]*width:\s*100%;[^}]*max-width:\s*none;[^}]*padding:\s*0/);
   assert.doesNotMatch(chapterCss, /min-height:\s*min\(1080px, max\(720px, 100svh\)\)/);
   assert.match(chapterCss, /\.chapter-intro-shell,[\s\S]*\.product-media\s*\{[^}]*height:\s*100%/);
+  assert.doesNotMatch(chapterCss, /\.chapter-intro-shell::after/);
   assert.match(chapterJs, /createMedia\(block/);
 });
 
@@ -21,7 +22,8 @@ test('chapter intro matches the official split Licium copy geometry', () => {
   assert.match(chapterCss, /\.chapter-intro-title\s*\{[\s\S]*font-family:\s*licium-medium[\s\S]*font-size:\s*46px[\s\S]*line-height:\s*62px/);
   assert.match(chapterCss, /@media \(width >= 720px\) and \(width <= 1024px\)[\s\S]*bottom:\s*11\.9048vw[\s\S]*width:\s*44\.6429vw/);
   assert.match(chapterCss, /@media \(width >= 1025px\) and \(width <= 1440px\)[\s\S]*bottom:\s*120px[\s\S]*width:\s*450px/);
-  assert.match(chapterJs, /propText\(block, 'id'\) === 'design' && title\.startsWith\(legacyExteriorPrefix\)/);
+  assert.match(chapterJs, /const LEGACY_CHAPTER_PREFIXES = \[[\s\S]*'Spatial Arrangement'[\s\S]*'AI Intelligence'[\s\S]*'Advanced Assisted Driving'[\s\S]*'Extended Range, 4WD\.'[\s\S]*'Ultimate Safety'/);
+  assert.match(chapterJs, /\(\{ eyebrow, title \} = splitLegacyChapterTitle\(eyebrow, title\)\)/);
 });
 
 test('chapter intro keeps the official full-height mobile composition', () => {
