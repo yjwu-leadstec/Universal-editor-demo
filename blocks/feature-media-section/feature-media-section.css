@@ -697,8 +697,11 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
   }
 
   main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .feature-media-tab[aria-selected="true"]::after {
+    z-index: 2;
     right: auto;
     left: -1px;
+    width: 2px;
     background: var(--product-accent);
+    opacity: 1;
   }
 }

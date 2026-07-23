@@ -58,6 +58,7 @@ test('mobile feature media keeps the manual swipe rail and official vertical tab
   assert.match(featureCss, /@media \(width <= 820px\)[\s\S]*\.feature-media-tabs \.feature-media-tab\s*\{[\s\S]*width:\s*100%[\s\S]*min-height:\s*22px[\s\S]*margin:\s*0[\s\S]*padding:\s*0 0 0 16px[\s\S]*color:\s*#999/);
   assert.match(featureCss, /@media \(width <= 820px\)[\s\S]*\.feature-media-tabs \.feature-media-tab::after\s*\{[\s\S]*inset:\s*0 auto 0 -1px[\s\S]*background:\s*transparent/);
   assert.match(featureCss, /@media \(width <= 820px\)[\s\S]*\.feature-media-tab\[aria-selected="true"\]\s*\{[\s\S]*color:\s*#191919/);
+  assert.match(featureCss, /@media \(width <= 820px\)[\s\S]*\.feature-media-tab\[aria-selected="true"\]::after\s*\{[\s\S]*z-index:\s*2[\s\S]*width:\s*2px[\s\S]*background:\s*var\(--product-accent\)[\s\S]*opacity:\s*1/);
   assert.match(featureJs, /matchMedia\('\(width <= 820px\)'\)/);
   assert.match(featureJs, /if \(!autoPlay \|\| mobileQuery\.matches/);
   assert.match(featureJs, /viewport\.addEventListener\('scroll'/);
