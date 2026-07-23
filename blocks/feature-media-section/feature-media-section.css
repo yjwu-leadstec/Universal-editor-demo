@@ -224,6 +224,14 @@ main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .featu
   background: var(--product-accent);
 }
 
+main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .feature-media-tab:focus-visible {
+  outline: none;
+}
+
+main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .feature-media-tab:focus-visible::after {
+  background: var(--product-accent);
+}
+
 main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copies {
   display: grid;
   min-height: 33px;

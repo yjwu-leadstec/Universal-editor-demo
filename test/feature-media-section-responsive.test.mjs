@@ -22,6 +22,8 @@ test('desktop tab underline spans the tab and sits outside its bottom edge', () 
   assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs \.feature-media-tab\s*\{[\s\S]*min-height:\s*clamp\(30px, 2\.0833vw, 40px\)[\s\S]*padding:\s*0/);
   assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs \.feature-media-tab::after\s*\{[\s\S]*inset:\s*auto 0 -2px[\s\S]*width:\s*100%[\s\S]*background:\s*transparent/);
   assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs \.feature-media-tab::after\s*\{[\s\S]*transition:\s*background-color 200ms ease/);
+  assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs \.feature-media-tab:focus-visible\s*\{[\s\S]*outline:\s*none/);
+  assert.match(featureCss, /\.variant-default\.is-tabbed \.feature-media-tabs \.feature-media-tab:focus-visible::after\s*\{[\s\S]*background:\s*var\(--product-accent\)/);
   assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.feature-media-tabs::after\s*\{[\s\S]*display:\s*none/);
 });
 
