@@ -27,9 +27,10 @@ test('desktop tab underline spans the tab and sits outside its bottom edge', () 
   assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.feature-media-tabs::after\s*\{[\s\S]*display:\s*none/);
 });
 
-test('feature media uses the official compact tab layout through 820px', () => {
-  assert.match(featureCss, /@media \(width >= 720px\) and \(width <= 820px\)[\s\S]*padding-block:\s*8px 2px[\s\S]*gap:\s*8px/);
-  assert.match(featureCss, /@media \(width >= 720px\) and \(width <= 820px\)[\s\S]*min-height:\s*38px[\s\S]*font-size:\s*14px[\s\S]*line-height:\s*22px/);
+test('feature media keeps vertical tabs through the medium-small breakpoint', () => {
+  assert.match(featureCss, /@media \(width <= 820px\)[\s\S]*\.feature-media-tab-copies\s*\{[\s\S]*order:\s*2/);
+  assert.match(featureCss, /@media \(width <= 820px\)[\s\S]*\.feature-media-tabs\s*\{[\s\S]*display:\s*grid[\s\S]*grid-template-columns:\s*1fr[\s\S]*order:\s*3[\s\S]*gap:\s*16px/);
+  assert.match(featureCss, /@media \(width <= 820px\)[\s\S]*\.feature-media-tabs \.feature-media-tab\s*\{[\s\S]*width:\s*100%[\s\S]*min-height:\s*22px[\s\S]*font-size:\s*14px[\s\S]*line-height:\s*22px/);
   assert.match(featureCss, /@media \(width >= 821px\) and \(width <= 1024px\)[\s\S]*gap:\s*2\.9762vw/);
 });
 
@@ -52,10 +53,10 @@ test('tab copy height follows the longest authored description', () => {
 
 test('mobile feature media keeps the manual swipe rail and official vertical tab geometry', () => {
   assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*scroll-snap-type:\s*x mandatory/);
-  assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.variant-default\.is-tabbed \.feature-media-tabs\s*\{[\s\S]*border-left:\s*1px solid rgb\(217 217 217 \/ 20%\)[\s\S]*gap:\s*16px/);
-  assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.feature-media-tabs \.feature-media-tab\s*\{[\s\S]*width:\s*100%[\s\S]*min-height:\s*22px[\s\S]*margin:\s*0[\s\S]*padding:\s*0 0 0 16px[\s\S]*color:\s*#999/);
-  assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.feature-media-tabs \.feature-media-tab::after\s*\{[\s\S]*inset:\s*0 auto 0 -1px[\s\S]*background:\s*transparent/);
-  assert.match(featureCss, /@media \(width <= 719px\)[\s\S]*\.feature-media-tab\[aria-selected="true"\]\s*\{[\s\S]*color:\s*#191919/);
+  assert.match(featureCss, /@media \(width <= 820px\)[\s\S]*\.variant-default\.is-tabbed \.feature-media-tabs\s*\{[\s\S]*border-left:\s*1px solid rgb\(217 217 217 \/ 20%\)[\s\S]*gap:\s*16px/);
+  assert.match(featureCss, /@media \(width <= 820px\)[\s\S]*\.feature-media-tabs \.feature-media-tab\s*\{[\s\S]*width:\s*100%[\s\S]*min-height:\s*22px[\s\S]*margin:\s*0[\s\S]*padding:\s*0 0 0 16px[\s\S]*color:\s*#999/);
+  assert.match(featureCss, /@media \(width <= 820px\)[\s\S]*\.feature-media-tabs \.feature-media-tab::after\s*\{[\s\S]*inset:\s*0 auto 0 -1px[\s\S]*background:\s*transparent/);
+  assert.match(featureCss, /@media \(width <= 820px\)[\s\S]*\.feature-media-tab\[aria-selected="true"\]\s*\{[\s\S]*color:\s*#191919/);
   assert.match(featureJs, /if \(!autoPlay \|\| mobileQuery\.matches/);
   assert.match(featureJs, /viewport\.addEventListener\('scroll'/);
 });
