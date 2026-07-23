@@ -25,7 +25,8 @@ export default function decorate(block) {
   const rows = directRows(block);
   const availablePictures = pictures(rows);
 
-  // Collect plain text paragraphs from the block (crosswalk delivers them as <p>s without data-aue-prop).
+  // Collect plain text paragraphs from the block. Crosswalk delivers them as
+  // <p>s without data-aue-prop.
   const textParagraphs = rows
     .flatMap((row) => [...row.querySelectorAll('p')])
     .filter((p) => p.textContent.trim());

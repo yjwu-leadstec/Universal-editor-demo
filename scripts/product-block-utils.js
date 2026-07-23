@@ -1,4 +1,5 @@
 import { moveInstrumentation } from './scripts.js';
+import { MOBILE_MEDIA_QUERY, resolveResponsiveDefault } from './product-media-defaults.mjs';
 
 const PRODUCT_STYLES = '/styles/product-blocks.css';
 
@@ -441,9 +442,14 @@ function safePlay(video) {
   if (result?.catch) result.catch(() => {});
 }
 
-function setupVideoPlayback(media, video, button, autoplay) {
+function setupVideoPlayback(media, video, button, autoplay, {
+  hasActiveSource = () => true,
+  sourceMedia = null,
+} = {}) {
   let progressFrame = null;
+  let isIntersecting = !('IntersectionObserver' in window);
   const tracksProgress = button?.classList.contains('has-progress');
+  const canAutoplay = autoplay && !prefersReducedMotion();
   const stopProgress = () => {
     if (progressFrame === null) return;
     window.cancelAnimationFrame(progressFrame);
@@ -471,6 +477,24 @@ function setupVideoPlayback(media, video, button, autoplay) {
     if (playing && tracksProgress) animateProgress();
     else updateProgress();
   };
+  const activeSourceAvailable = () => (
+    hasActiveSource() && !media.classList.contains('is-video-error')
+  );
+  const syncAvailability = () => {
+    const available = hasActiveSource();
+    media.classList.toggle('has-active-video', available);
+    if (button) button.hidden = !available;
+    if (!available) {
+      video.pause();
+      media.classList.remove('is-video-ready');
+    }
+    return available;
+  };
+  const tryAutoplay = () => {
+    if (!canAutoplay || !isIntersecting || !activeSourceAvailable()) return;
+    if (!video.dataset.userPaused) safePlay(video);
+  };
+
   video.addEventListener('play', updateControl);
   video.addEventListener('pause', updateControl);
   video.addEventListener('ended', updateControl);
@@ -478,9 +502,21 @@ function setupVideoPlayback(media, video, button, autoplay) {
   video.addEventListener('durationchange', updateProgress);
   video.addEventListener('seeked', updateProgress);
   video.addEventListener('timeupdate', updateProgress);
-  video.addEventListener('loadeddata', () => media.classList.add('is-video-ready'));
-  video.addEventListener('error', () => media.classList.add('is-video-error'));
+  video.addEventListener('loadeddata', () => {
+    media.classList.remove('is-video-error');
+    media.classList.add('is-video-ready');
+    syncAvailability();
+    tryAutoplay();
+  });
+  video.addEventListener('error', () => {
+    media.classList.remove('is-video-ready', 'has-active-video');
+    media.classList.add('is-video-error');
+    if (button) button.hidden = true;
+    video.pause();
+    updateControl();
+  });
   button?.addEventListener('click', () => {
+    if (!activeSourceAvailable()) return;
     if (video.paused) {
       delete video.dataset.userPaused;
       safePlay(video);
@@ -490,14 +526,24 @@ function setupVideoPlayback(media, video, button, autoplay) {
     }
   });
   updateControl();
+  syncAvailability();
 
-  if (!autoplay || prefersReducedMotion()) return;
+  sourceMedia?.addEventListener('change', () => {
+    video.pause();
+    media.classList.remove('is-video-ready', 'is-video-error');
+    video.load();
+    syncAvailability();
+    tryAutoplay();
+  });
+
+  if (!canAutoplay) return;
   if (!('IntersectionObserver' in window)) {
-    safePlay(video);
+    tryAutoplay();
     return;
   }
   const observer = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting && !video.dataset.userPaused) safePlay(video);
+    isIntersecting = entry.isIntersecting;
+    if (isIntersecting) tryAutoplay();
     else video.pause();
   }, { threshold: 0.25 });
   observer.observe(media);
@@ -553,7 +599,11 @@ export function createMedia(root, {
   if (hasResponsivePictures && image) {
     appendResponsiveSources(image, mediumImage || image, '(min-width: 821px) and (max-width: 1024px)');
     appendResponsiveSources(image, tabletImage || mediumImage || image, '(min-width: 721px) and (max-width: 820px)');
-    appendResponsiveSources(image, mobileImage || tabletImage || mediumImage || image, '(max-width: 720px)');
+    appendResponsiveSources(
+      image,
+      mobileImage || tabletImage || mediumImage || image,
+      MOBILE_MEDIA_QUERY,
+    );
   }
   const desktopImg = appendPicture(desktopSlot, image, {
     alt: propText(root, 'imageAlt'),
@@ -572,7 +622,11 @@ export function createMedia(root, {
     const mobileSlot = document.createElement('div');
     mobileSlot.className = 'product-picture product-picture-mobile';
     appendPicture(mobileSlot, mobileImage, {
-      alt: propText(root, 'mobileImageAlt') || desktopImg?.alt || '',
+      alt: resolveResponsiveDefault(
+        desktopImg?.alt || '',
+        propText(root, 'mobileImageAlt'),
+        true,
+      ),
       loading: eager ? 'eager' : 'lazy',
       fallbackLabel,
     });
@@ -583,6 +637,7 @@ export function createMedia(root, {
 
   const videoUrl = propUrl(root, 'video');
   const mobileVideoUrl = propUrl(root, 'mobileVideo');
+  const mobileMedia = window.matchMedia(MOBILE_MEDIA_QUERY);
   let video = null;
   if (videoUrl || mobileVideoUrl) {
     video = document.createElement('video');
@@ -596,7 +651,7 @@ export function createMedia(root, {
     }
     if (mobileVideoUrl) {
       const source = document.createElement('source');
-      source.media = '(max-width: 719px)';
+      source.media = MOBILE_MEDIA_QUERY;
       source.src = mobileVideoUrl;
       video.append(source);
     }
@@ -619,7 +674,14 @@ export function createMedia(root, {
       button.append(icon);
       media.append(button);
     }
-    setupVideoPlayback(media, video, button, autoplay);
+    setupVideoPlayback(media, video, button, autoplay, {
+      hasActiveSource: () => Boolean(resolveResponsiveDefault(
+        videoUrl,
+        mobileVideoUrl,
+        mobileMedia.matches,
+      )),
+      sourceMedia: mobileVideoUrl ? mobileMedia : null,
+    });
   }
   return { element: media, video };
 }

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product media defaults fixture</title>
+    <link rel="stylesheet" href="/styles/product-blocks.css">
+    <style>
+      body {
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        padding: 16px;
+        background: #eee;
+      }
+
+      .fixture {
+        min-width: 0;
+      }
+
+      .fixture .product-media {
+        height: 260px;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import { createMedia } from '/scripts/product-block-utils.js';
+
+      const videoPath = '/assets/shared/vehicles/li-l6/product-page/08893f98-c640-437d-bca7-e44168d1bc39.mp4';
+      const cases = [
+        {
+          id: 'mobile-only',
+          fields: { mobileVideo: `${videoPath}?variant=mobile` },
+        },
+        {
+          id: 'desktop-only',
+          fields: { video: `${videoPath}?variant=desktop` },
+        },
+        {
+          id: 'broken-desktop',
+          fields: { video: 'data:video/mp4;base64,AAAA' },
+        },
+        {
+          id: 'both',
+          fields: {
+            video: `${videoPath}?variant=desktop`,
+            mobileVideo: `${videoPath}?variant=mobile`,
+          },
+        },
+      ];
+
+      cases.forEach(({ id, fields }) => {
+        const fixture = document.createElement('section');
+        fixture.className = 'fixture';
+        fixture.dataset.productBlock = 'fixture';
+        fixture.dataset.case = id;
+        Object.entries(fields).forEach(([name, value]) => {
+          const field = document.createElement('div');
+          field.dataset.aueProp = name;
+          field.textContent = value;
+          fixture.append(field);
+        });
+        const { element } = createMedia(fixture, {
+          autoplay: false,
+          showControls: true,
+          showProgress: true,
+        });
+        fixture.replaceChildren(element);
+        document.body.append(fixture);
+        if (id === 'broken-desktop') {
+          element.querySelector('video').dispatchEvent(new Event('error'));
+        }
+      });
+
+      document.documentElement.dataset.fixtureReady = 'true';
+    </script>
+  </body>
+</html>

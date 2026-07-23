@@ -166,6 +166,10 @@ main [data-product-block] .product-video-control {
   backdrop-filter: blur(4px);
 }
 
+main [data-product-block] .product-video-control[hidden] {
+  display: none;
+}
+
 main [data-product-block] .product-video-control.has-progress {
   border-color: transparent;
 }

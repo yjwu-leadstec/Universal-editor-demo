@@ -783,7 +783,8 @@
       {
         "component": "reference",
         "name": "image",
-        "label": "Desktop Poster / Background",
+        "label": "Desktop Poster / Background (Default)",
+        "description": "Default poster/background for desktop and mobile unless a mobile override is provided.",
         "valueType": "string",
         "multi": false
       },
@@ -796,7 +797,8 @@
       {
         "component": "reference",
         "name": "mobileImage",
-        "label": "Mobile Poster / Background",
+        "label": "Mobile Poster / Background (Optional Override)",
+        "description": "Optional override for screens up to 719px. Never used on desktop.",
         "valueType": "string",
         "multi": false
       },
@@ -809,13 +811,15 @@
       {
         "component": "aem-content",
         "name": "video",
-        "label": "Desktop Preview Video URL",
+        "label": "Desktop Preview Video URL (Default)",
+        "description": "Default preview video for desktop and mobile unless a mobile override is provided.",
         "valueType": "string"
       },
       {
         "component": "aem-content",
         "name": "mobileVideo",
-        "label": "Mobile Preview Video URL",
+        "label": "Mobile Preview Video URL (Optional Override)",
+        "description": "Optional override for screens up to 719px. Never used on desktop.",
         "valueType": "string"
       },
       {

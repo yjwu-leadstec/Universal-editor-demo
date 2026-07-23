@@ -27,7 +27,10 @@ test('product hero authors four responsive poster compositions', () => {
 test('responsive product hero sources use the official component breakpoints', () => {
   assert.match(productUtils, /appendResponsiveSources\(image, mediumImage \|\| image, '\(min-width: 821px\) and \(max-width: 1024px\)'\)/);
   assert.match(productUtils, /appendResponsiveSources\(image, tabletImage \|\| mediumImage \|\| image, '\(min-width: 721px\) and \(max-width: 820px\)'\)/);
-  assert.match(productUtils, /appendResponsiveSources\(image, mobileImage \|\| tabletImage \|\| mediumImage \|\| image, '\(max-width: 720px\)'\)/);
+  assert.match(
+    productUtils,
+    /appendResponsiveSources\(\s*image,\s*mobileImage \|\| tabletImage \|\| mediumImage \|\| image,\s*MOBILE_MEDIA_QUERY,\s*\)/,
+  );
   assert.match(productUtils, /has-responsive-picture/);
 });
 
