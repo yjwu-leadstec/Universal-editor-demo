@@ -660,6 +660,7 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
     margin: 40px 40px 0;
     padding: 0;
     order: 3;
+    border-left: 1px solid rgb(217 217 217 / 20%);
     gap: 16px;
   }
 
@@ -669,10 +670,10 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
 
   main .feature-media-section.variant-default.is-tabbed .feature-media-tabs .feature-media-tab {
     justify-content: flex-start;
-    width: calc(100% - 1px);
+    width: 100%;
     min-width: 0;
     min-height: 22px;
-    margin: 0 0 0 1px;
+    margin: 0;
     padding: 0 0 0 16px;
     color: #999;
     font-size: 14px;
