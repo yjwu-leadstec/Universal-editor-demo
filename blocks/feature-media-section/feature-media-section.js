@@ -102,7 +102,7 @@ function createStats(items) {
 }
 
 function setupResponsiveTabs(block, buttons, panels, copies, viewport) {
-  const mobileQuery = window.matchMedia('(width <= 719px)');
+  const mobileQuery = window.matchMedia('(width <= 820px)');
   const autoPlay = propBoolean(block, 'autoPlay', true);
   const interval = propNumber(block, 'interval', 4) * 1000;
   let active = 0;

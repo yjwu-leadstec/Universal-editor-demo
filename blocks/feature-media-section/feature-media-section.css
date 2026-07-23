@@ -599,32 +599,6 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
     margin-inline: 0;
   }
 
-  main .feature-media-section.variant-default.is-tabbed .feature-media-panels {
-    display: flex;
-    width: 100%;
-    padding-inline: 16px;
-    overflow-x: auto;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    scroll-padding-inline: 16px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  main .feature-media-section.variant-default.is-tabbed .feature-media-panels::-webkit-scrollbar {
-    display: none;
-  }
-
-  main .feature-media-section.variant-default.is-tabbed .feature-media-panels > .feature-media-item,
-  main .feature-media-section.variant-default.is-tabbed .feature-media-panels > .feature-media-item[hidden] {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    padding-inline: 4px;
-    flex: 0 0 100%;
-    scroll-snap-align: start;
-  }
-
   main .feature-media-section.variant-default.is-tabbed .product-media {
     height: auto;
     aspect-ratio: 335 / 197;
@@ -653,6 +627,32 @@ main .feature-media-section.variant-default.is-tabbed .product-media {
 }
 
 @media (width <= 820px) {
+  main .feature-media-section.variant-default.is-tabbed .feature-media-panels {
+    display: flex;
+    width: 100%;
+    padding-inline: 16px;
+    overflow-x: auto;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    scroll-padding-inline: 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-panels::-webkit-scrollbar {
+    display: none;
+  }
+
+  main .feature-media-section.variant-default.is-tabbed .feature-media-panels > .feature-media-item,
+  main .feature-media-section.variant-default.is-tabbed .feature-media-panels > .feature-media-item[hidden] {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding-inline: 4px;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
   main .feature-media-section.variant-default.is-tabbed .feature-media-tab-copies {
     order: 2;
   }
