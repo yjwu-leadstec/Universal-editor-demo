@@ -12,24 +12,37 @@ import {
   propSource,
   propText,
   revealElements,
-  semanticSource,
-  semanticSourceAfter,
-  semanticSourceBefore,
 } from '../../scripts/service-block-utils.js';
+
+function combineNodes(nodes) {
+  if (!nodes || nodes.length === 0) return null;
+  const wrapper = document.createElement('div');
+  nodes.forEach((node) => wrapper.append(node.cloneNode(true)));
+  return wrapper;
+}
 
 export default function decorate(block) {
   const rows = directRows(block);
   const availablePictures = pictures(rows);
-  const titleSource = propSource(rows, 'copy_title') || semanticSource(rows, 'h1, h2');
+
+  // Collect plain text paragraphs from the block (crosswalk delivers them as <p>s without data-aue-prop).
+  const textParagraphs = rows
+    .flatMap((row) => [...row.querySelectorAll('p')])
+    .filter((p) => p.textContent.trim());
+
+  // Prefer explicit property rows (UE inline editing), fallback to semantic order.
+  const eyebrowSource = propSource(rows, 'copy_eyebrow') || textParagraphs[0] || null;
+  const titleSource = propSource(rows, 'copy_title') || textParagraphs[1] || null;
   const descriptionSource = propSource(rows, 'copy_description')
-    || semanticSourceAfter(rows, 'p', titleSource);
+    || combineNodes(textParagraphs.slice(2))
+    || null;
+
   const image = propPicture(rows, 'media_image', 'media_imageAlt') || availablePictures[0] || null;
   const mobileImage = propPicture(rows, 'media_mobileImage', 'media_mobileImageAlt')
     || availablePictures[1]
     || null;
-  const eyebrow = propText(rows, 'copy_eyebrow')
-    || semanticSourceBefore(rows, 'p', titleSource)?.textContent.trim()
-    || '';
+
+  const eyebrow = propText(rows, 'copy_eyebrow') || eyebrowSource?.textContent.trim() || '';
   const title = propText(rows, 'copy_title') || titleSource?.textContent.trim() || '';
   const imageAltText = propText(rows, 'media_imageAlt') || imageAlt(image);
   const mobileImageAltText = propText(rows, 'media_mobileImageAlt') || imageAlt(mobileImage) || imageAltText;
