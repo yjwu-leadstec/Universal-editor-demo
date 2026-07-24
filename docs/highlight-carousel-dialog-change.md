@@ -1,5 +1,7 @@
 # Highlight Carousel Dialog Change
 
+> 注：该组件 2026-07-24 已改名为 `lixiang-product-intro-slider`（曾用名 highlight-carousel），代码在 `blocks/lixiang-product-intro-slider/`。本文档记录当时 highlight-carousel 阶段的 dialog 变更，正文名称按历史保留。
+
 ## Scope
 
 Update the existing `lixiang-product-intro-slider` authoring model without changing its
