@@ -9,14 +9,14 @@ const [
   productUtils,
   productBlockCss,
 ] = await Promise.all([
-  readFile(new URL('../blocks/highlight-carousel/highlight-carousel.css', import.meta.url), 'utf8'),
-  readFile(new URL('../blocks/highlight-carousel/highlight-carousel.js', import.meta.url), 'utf8'),
-  readFile(new URL('../blocks/highlight-carousel/_highlight-carousel.json', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/lixiang-product-intro-slider/lixiang-product-intro-slider.css', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/lixiang-product-intro-slider/lixiang-product-intro-slider.js', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/lixiang-product-intro-slider/_lixiang-product-intro-slider.json', import.meta.url), 'utf8'),
   readFile(new URL('../scripts/product-block-utils.js', import.meta.url), 'utf8'),
   readFile(new URL('../styles/product-blocks.css', import.meta.url), 'utf8'),
 ]);
 const carouselConfig = JSON.parse(carouselModelSource);
-const carouselModel = carouselConfig.models.find(({ id }) => id === 'highlight-carousel');
+const carouselModel = carouselConfig.models.find(({ id }) => id === 'lixiang-product-intro-slider');
 const slideModel = carouselConfig.models.find(({ id }) => id === 'highlight-slide');
 
 test('highlight carousel keeps copy inside its 16:9 media container', () => {

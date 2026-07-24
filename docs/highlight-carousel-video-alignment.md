@@ -1,5 +1,7 @@
 # Highlight Carousel video alignment
 
+> 注：该组件 2026-07-24 已改名为 `lixiang-product-intro-slider`（曾用名 highlight-carousel），代码在 `blocks/lixiang-product-intro-slider/`。本文档记录历史阶段的对齐工作，正文名称按历史保留。
+
 ## Design evidence
 
 - Pencil states that carousel media can be an image or a looping video.
