@@ -82,7 +82,7 @@ The component SHALL preserve Universal Editor instrumentation and accessible rel
 #### Scenario: Author opens a deep-page picture group
 
 - **WHEN** the eight images are initially outside the Author canvas viewport
-- **THEN** lazy loading keeps their pictures attached until they load or emit a real error, so Author does not replace valid media with gray fallbacks
+- **THEN** lazy loading keeps their pictures attached until they load, emit a real error, or reach the viewport in a completed failed state, so Author does not replace valid media with gray fallbacks
 
 #### Scenario: Published EDS serialization
 

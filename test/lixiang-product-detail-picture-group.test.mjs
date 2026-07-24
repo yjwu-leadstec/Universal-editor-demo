@@ -146,7 +146,25 @@ test('rendering preserves flat sibling instrumentation, responsive media, and is
   assert.match(blockJs, /moveItemInstrumentation\(group, panel\)/);
   assert.match(blockJs, /showControls:\s*propBoolean\(block, 'showVideoControl', true\)/);
   assert.match(blockJs, /setupTabs\(block, buttons, panels\)/);
-  assert.match(productUtils, /loading !== 'lazy' && image\.complete/);
+  assert.match(productUtils, /loading === 'lazy' && 'IntersectionObserver' in window/);
+  assert.match(productUtils, /if \(image\.complete && !image\.naturalWidth\) recoverImage\(\)/);
   assert.match(blockCss, /\.lixiang-product-detail-picture-group-tabs button:focus-visible/);
   assert.match(blockCss, /border-radius:\s*0/);
+});
+
+test('author recovery uses the eight verified Li-L6 public media originals', () => {
+  const fallbacks = {
+    'c6b06670-f949-42b8-8d21-b983b2141480.png': '323688221162967',
+    'c9f89fc2-e758-4807-8478-78114510b5b1.png': '323705202208602',
+    'efd81868-e882-4a56-91ed-2a4b1a1024cc.png': '323720808718490',
+    '3f5dcb1a-a435-4771-94d2-7ee0a887fb24.jpg': '188456611906995',
+    'aeca793a-74b8-4c77-9954-d3ec0c35a630.jpg': '188471756365441',
+    '6f0a8aa6-725d-42a8-9293-f7de945c1cfb.jpg': '188499859777662',
+    '0ddb4354-1873-4147-bdb4-3c0a096be36e.jpg': '189498925982365',
+    '907a99a8-64aa-4699-8994-1d9441e08e92.jpg': '323841694813338',
+  };
+
+  Object.entries(fallbacks).forEach(([filename, path]) => {
+    assert.match(productUtils, new RegExp(`'${filename}': '${path}'`));
+  });
 });
