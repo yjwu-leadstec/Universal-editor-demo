@@ -34,7 +34,7 @@ The captured Li L6 `pmsData` contains 37 component instances:
 | `SceneBeginning` | 6 | `chapter-intro` |
 | `SceneMegaContentTableX` | 18 | `lixiang-product-intro-carousel` |
 | `SceneMegaContentMultipleImage` | 1 | `lixiang-product-intro-carousel` (`image-grid`) |
-| `ScenePictureGroup` | 1 | `picture-group` |
+| `ScenePictureGroup` | 1 | `lixiang-product-detail-picture-group` |
 | `product-common-summary-detail` | 1 | `spec-table` (`tabbed`) |
 | `product-power` | 1 | `spec-table` (`icon-grid`) |
 | `product-ending` | 1 | `product-ending` |
@@ -59,7 +59,7 @@ The Pencil document contains eight reusable design families: hero, highlight car
 7. `spec-table`
 8. `product-notes`
 9. `text-columns`
-10. `picture-group`
+10. `lixiang-product-detail-picture-group`
 11. `icon-overlay-showcase`
 12. `feature-grid`
 13. `product-param-cta`

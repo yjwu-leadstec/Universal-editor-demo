@@ -671,6 +671,61 @@
           }
         },
         {
+          "title": "Li Xiang Product Detail Picture Group",
+          "id": "lixiang-product-detail-picture-group",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Lixiang Product Detail Picture Group",
+                  "model": "lixiang-product-detail-picture-group",
+                  "filter": "lixiang-product-detail-picture-group",
+                  "showVideoControl": true,
+                  "showProgress": true,
+                  "enableMotion": true,
+                  "classes": [
+                    "light",
+                    "space-large",
+                    "picture-gap-large"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Li Xiang Product Detail Picture Set",
+          "id": "lixiang-product-detail-picture-group-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Lixiang Product Detail Picture Set",
+                  "model": "lixiang-product-detail-picture-group-item",
+                  "filter": "lixiang-product-detail-picture-group-item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Li Xiang Product Detail Picture",
+          "id": "lixiang-product-detail-picture-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Lixiang Product Detail Picture",
+                  "model": "lixiang-product-detail-picture-item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Li Xiang Product Intro Carousel",
           "id": "lixiang-product-intro-carousel",
           "plugins": {
@@ -1074,60 +1129,6 @@
                 "template": {
                   "name": "Media Video Source",
                   "model": "media-video-source"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Picture Group",
-          "id": "picture-group",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Picture Group",
-                  "model": "picture-group",
-                  "filter": "picture-group",
-                  "showVideoControl": true,
-                  "showProgress": true,
-                  "enableMotion": true,
-                  "classes": [
-                    "light",
-                    "space-small"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Picture Group Tab",
-          "id": "picture-group-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Picture Group Tab",
-                  "model": "picture-group-item",
-                  "filter": "picture-group-item"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Picture Media Item",
-          "id": "picture-media-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Picture Media Item",
-                  "model": "picture-media-item"
                 }
               }
             }

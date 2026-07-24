@@ -2286,6 +2286,186 @@
     ]
   },
   {
+    "id": "lixiang-product-detail-picture-group",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "textarea",
+        "name": "title",
+        "label": "Desktop / Tablet Title",
+        "description": "Supports manual line breaks; hidden below 720px to match the approved mobile layout",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Desktop / Tablet Description",
+        "valueType": "string"
+      },
+      {
+        "component": "boolean",
+        "name": "showVideoControl",
+        "label": "Show Video Controls",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "boolean",
+        "name": "showProgress",
+        "label": "Show Video Progress",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "boolean",
+        "name": "enableMotion",
+        "label": "Enable Image Parallax",
+        "description": "Automatically disabled when reduced motion is requested",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Design Style",
+        "valueType": "string",
+        "maxSize": 3,
+        "options": [
+          {
+            "name": "Background",
+            "children": [
+              {
+                "name": "White",
+                "value": "light"
+              },
+              {
+                "name": "Gray",
+                "value": "gray"
+              }
+            ]
+          },
+          {
+            "name": "Outer Spacing",
+            "children": [
+              {
+                "name": "Large (PC 160px / Tablet 64px / Mobile 80px)",
+                "value": "space-large"
+              },
+              {
+                "name": "Small (PC 80px / Tablet 32px / Mobile 40px)",
+                "value": "space-small"
+              },
+              {
+                "name": "None (0px)",
+                "value": "space-none"
+              }
+            ]
+          },
+          {
+            "name": "Title-to-Pictures Gap",
+            "children": [
+              {
+                "name": "Large (PC 80px / Tablet 24px)",
+                "value": "picture-gap-large"
+              },
+              {
+                "name": "Small (PC 56px / Tablet 16px)",
+                "value": "picture-gap-small"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-detail-picture-group-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "groupKey",
+        "label": "Picture Set Key",
+        "description": "Unique stable authoring key",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Picture Set / Tab Label",
+        "description": "Only rendered as a tab when more than one set is authored",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Optional Set Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-detail-picture-item",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop / Tablet Image (use 1.4× source)",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Desktop / Tablet Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Image (optional crop)",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "video",
+        "label": "Desktop / Tablet Video",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "mobileVideo",
+        "label": "Mobile Video",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Picture Caption",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Picture Caption Detail",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "lixiang-product-intro-carousel",
     "fields": [
       {
@@ -3516,198 +3696,6 @@
         "component": "aem-content",
         "name": "video",
         "label": "Video Asset",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "picture-group",
-    "fields": [
-      {
-        "component": "text",
-        "name": "id",
-        "label": "ID",
-        "description": "Optional page anchor",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "eyebrow",
-        "label": "Eyebrow",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Desktop Title",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "mobileTitle",
-        "label": "Mobile Title Override",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Description",
-        "valueType": "string"
-      },
-      {
-        "component": "boolean",
-        "name": "showVideoControl",
-        "label": "Show Video Controls",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "boolean",
-        "name": "showProgress",
-        "label": "Show Video Progress",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "boolean",
-        "name": "enableMotion",
-        "label": "Enable Parallax Motion",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Style",
-        "valueType": "string",
-        "maxSize": 2,
-        "options": [
-          {
-            "name": "Theme",
-            "children": [
-              {
-                "name": "Light",
-                "value": "light"
-              },
-              {
-                "name": "Dark",
-                "value": "dark"
-              },
-              {
-                "name": "Gray",
-                "value": "gray"
-              }
-            ]
-          },
-          {
-            "name": "Spacing",
-            "children": [
-              {
-                "name": "Large",
-                "value": "space-large"
-              },
-              {
-                "name": "Small",
-                "value": "space-small"
-              },
-              {
-                "name": "None",
-                "value": "space-none"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "picture-group-item",
-    "fields": [
-      {
-        "component": "text",
-        "name": "groupKey",
-        "label": "Group Key",
-        "description": "Unique stable key",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Desktop Group Title",
-        "valueType": "string",
-        "required": true
-      },
-      {
-        "component": "text",
-        "name": "mobileTitle",
-        "label": "Mobile Group Title",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Group Description",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "picture-media-item",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Desktop Poster / Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "imageAlt",
-        "label": "Desktop Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "mobileImage",
-        "label": "Mobile Poster / Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "mobileImageAlt",
-        "label": "Mobile Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "video",
-        "label": "Desktop Video URL",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "mobileVideo",
-        "label": "Mobile Video URL",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Media Title",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Media Description",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "note",
-        "label": "Note",
         "valueType": "string"
       }
     ]

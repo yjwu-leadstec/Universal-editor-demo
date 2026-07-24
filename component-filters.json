@@ -31,7 +31,7 @@
       "spec-table",
       "product-notes",
       "text-columns",
-      "picture-group",
+      "lixiang-product-detail-picture-group",
       "icon-overlay-showcase",
       "feature-grid",
       "product-param-cta",
@@ -146,6 +146,18 @@
     ]
   },
   {
+    "id": "lixiang-product-detail-picture-group",
+    "components": [
+      "lixiang-product-detail-picture-group-item"
+    ]
+  },
+  {
+    "id": "lixiang-product-detail-picture-group-item",
+    "components": [
+      "lixiang-product-detail-picture-item"
+    ]
+  },
+  {
     "id": "lixiang-product-intro-carousel",
     "components": [
       "lixiang-product-intro-slide",
@@ -217,18 +229,6 @@
     "id": "media-video",
     "components": [
       "media-video-source"
-    ]
-  },
-  {
-    "id": "picture-group",
-    "components": [
-      "picture-group-item"
-    ]
-  },
-  {
-    "id": "picture-group-item",
-    "components": [
-      "picture-media-item"
     ]
   },
   {

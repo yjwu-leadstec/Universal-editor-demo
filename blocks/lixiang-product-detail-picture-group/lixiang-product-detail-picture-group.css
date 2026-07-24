@@ -1,0 +1,376 @@
+main .lixiang-product-detail-picture-group[data-product-block] {
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+  overflow: hidden;
+}
+
+main .lixiang-product-detail-picture-group[data-product-block].space-large {
+  padding-block: 160px;
+}
+
+main .lixiang-product-detail-picture-group[data-product-block].space-small {
+  padding-block: 80px;
+}
+
+main .lixiang-product-detail-picture-group[data-product-block].space-none {
+  padding-block: 0;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-shell {
+  width: min(77.0833vw, 1480px);
+  margin-inline: auto;
+}
+
+main .lixiang-product-detail-picture-group .product-section-header {
+  width: 56.7568%;
+  max-width: none;
+  margin: 0 0 80px 11.0811%;
+  text-align: left;
+}
+
+main .lixiang-product-detail-picture-group.picture-gap-small .product-section-header {
+  margin-block-end: 56px;
+}
+
+main .lixiang-product-detail-picture-group .product-title,
+main .lixiang-product-detail-picture-group .product-description {
+  max-width: none;
+  margin-inline: 0;
+}
+
+main .lixiang-product-detail-picture-group .product-title {
+  font-size: 46px;
+  line-height: 1.3478;
+  white-space: pre-line;
+}
+
+main .lixiang-product-detail-picture-group .product-description {
+  margin-block-start: 16px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-tabs {
+  display: flex;
+  margin-block-end: 30px;
+  overflow-x: auto;
+  gap: 32px;
+  scrollbar-width: none;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-tabs button {
+  position: relative;
+  appearance: none;
+  min-height: 48px;
+  max-width: none;
+  margin: 0;
+  padding: 8px 4px;
+  overflow: visible;
+  color: var(--product-muted);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  white-space: nowrap;
+  text-overflow: clip;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-tabs button::after {
+  position: absolute;
+  right: 50%;
+  bottom: 2px;
+  left: 50%;
+  height: 2px;
+  background: var(--product-accent);
+  content: '';
+  transition: right 200ms ease, left 200ms ease;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-tabs button[aria-selected='true'] {
+  color: var(--product-copy);
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-tabs button[aria-selected='true']::after {
+  right: 0;
+  left: 0;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-tabs button:focus-visible {
+  outline: 2px solid var(--product-accent);
+  outline-offset: 2px;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-panel[hidden] {
+  display: none;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-description {
+  max-width: 780px;
+  margin: 0 0 32px;
+  color: var(--product-muted);
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-grid {
+  display: grid;
+  aspect-ratio: 1480 / 1420;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: 46fr 2fr 14fr 2fr 30fr 2fr 14fr 2fr 30fr;
+  column-gap: 1.3514%;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media {
+  --product-detail-picture-parallax: 0%;
+
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  background: var(--product-card-bg);
+  border-radius: 0;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(1) {
+  grid-area: 1 / 1 / 4 / 3;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(2) {
+  grid-area: 5 / 1 / 8 / 3;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(3) {
+  grid-area: 9 / 1 / 10 / 2;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(4) {
+  grid-area: 9 / 2 / 10 / 3;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(5) {
+  grid-area: 1 / 3 / 2 / 5;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(6) {
+  grid-area: 3 / 3 / 6 / 4;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(7) {
+  grid-area: 3 / 4 / 6 / 5;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(8) {
+  grid-area: 7 / 3 / 10 / 5;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(n + 9) {
+  grid-column: 1 / -1;
+  min-height: 300px;
+}
+
+main .lixiang-product-detail-picture-group .product-media {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border-radius: 0;
+}
+
+main .lixiang-product-detail-picture-group .product-picture {
+  overflow: hidden;
+}
+
+main .lixiang-product-detail-picture-group .product-picture img {
+  position: relative;
+  left: 50%;
+  width: 140%;
+  max-width: none;
+  height: 140%;
+  object-fit: cover;
+  transform: translate3d(
+    -50%,
+    calc(-14.2857% + var(--product-detail-picture-parallax)),
+    0
+  );
+  transition: transform 120ms linear;
+  will-change: transform;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media figcaption {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 64px 24px 16px;
+  color: #fff;
+  background: linear-gradient(transparent, rgb(0 0 0 / 60%));
+  text-align: center;
+  pointer-events: none;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-description p {
+  margin: 4px 0 0;
+  color: rgb(255 255 255 / 75%);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (width >= 720px) and (width <= 1440px) {
+  main .lixiang-product-detail-picture-group[data-product-block].space-large {
+    padding-block: 64px;
+  }
+
+  main .lixiang-product-detail-picture-group[data-product-block].space-small {
+    padding-block: 32px;
+  }
+
+  main .lixiang-product-detail-picture-group .product-section-header {
+    margin-block-end: 24px;
+  }
+
+  main .lixiang-product-detail-picture-group.picture-gap-small .product-section-header {
+    margin-block-end: 16px;
+  }
+
+  main .lixiang-product-detail-picture-group .product-title {
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  main .lixiang-product-detail-picture-group .product-description {
+    margin-block-start: 6px;
+    font-size: 10px;
+    line-height: 1.8;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-description {
+    margin-block-end: 16px;
+    font-size: 10px;
+    line-height: 1.8;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media figcaption {
+    padding: 32px 12px 8px;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media h3 {
+    font-size: 12px;
+    line-height: 1.6667;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-description p {
+    font-size: 6.4px;
+    line-height: 1.5;
+  }
+}
+
+@media (width <= 719px) {
+  main > .section > div > .lixiang-product-detail-picture-group[data-product-block] {
+    left: 50%;
+    width: 100vw;
+    margin-inline-start: -50vw;
+  }
+
+  main .lixiang-product-detail-picture-group[data-product-block].space-large {
+    padding-block: 80px;
+  }
+
+  main .lixiang-product-detail-picture-group[data-product-block].space-small {
+    padding-block: 40px;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-shell {
+    width: calc(100% - 40px);
+  }
+
+  main .lixiang-product-detail-picture-group .product-section-header {
+    display: none;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-tabs {
+    margin-block-end: 16px;
+    gap: 20px;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-description {
+    margin-block-end: 16px;
+    font-size: 10px;
+    line-height: 1.8;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-grid {
+    aspect-ratio: 335 / 771;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 243fr 8fr 130fr 8fr 49fr 8fr 65fr 8fr 57fr 8fr 57fr 8fr 122fr;
+    column-gap: 2.3881%;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(1) {
+    grid-area: 1 / 1 / 2 / 3;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(2) {
+    grid-area: 3 / 1 / 6 / 2;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(3) {
+    grid-area: 7 / 1 / 10 / 2;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(4) {
+    grid-area: 11 / 1 / 14 / 2;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(5) {
+    grid-area: 3 / 2 / 4 / 3;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(6) {
+    grid-area: 5 / 2 / 8 / 3;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(7) {
+    grid-area: 9 / 2 / 12 / 3;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(8) {
+    grid-area: 13 / 2 / 14 / 3;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media:nth-child(n + 9) {
+    grid-column: 1 / -1;
+    min-height: 180px;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media figcaption {
+    padding: 36px 8px 8px;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-group-media h3 {
+    font-size: 10px;
+    line-height: 1.8;
+  }
+
+  main .lixiang-product-detail-picture-group .lixiang-product-detail-picture-description {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main .lixiang-product-detail-picture-group .product-picture img {
+    transform: translate3d(-50%, -14.2857%, 0);
+    transition: none;
+    will-change: auto;
+  }
+}

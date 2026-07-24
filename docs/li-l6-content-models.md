@@ -169,9 +169,9 @@ Child `text-column-item` fields: `title`, `text` (`richtext`).
 
 Block fields: `id`, `eyebrow`, `title`, `mobileTitle`, `description`, `classes`, `showVideoControl`, `showProgress`, `enableMotion`.
 
-Child `picture-group-item` fields: `groupKey`, `title`, `mobileTitle`, `description`. Its filter accepts `picture-media-item` children.
+Child `lixiang-product-detail-picture-group-item` fields: `groupKey`, `title`, `description`. Its filter accepts `lixiang-product-detail-picture-item` children.
 
-Child `picture-media-item` fields: responsive media group plus `title`, `description`, `note`.
+Child `lixiang-product-detail-picture-item` fields: responsive image/video fields plus optional `title` and `description`.
 
 This three-level model preserves the source `contentList → sublist` relationship and lets each media item retain its instrumentation.
 
