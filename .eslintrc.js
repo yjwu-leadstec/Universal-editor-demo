@@ -35,7 +35,7 @@ module.exports = {
       'feature-grid-item': 6,
       'lixiang-product-intro-carousel': 20,
       'lixiang-product-intro-slide': 16,
-      'highlight-carousel': 11,
+      'lixiang-highlight-carousel': 11,
       'highlight-slide': 13,
       'image-switcher': 11,
       'image-switcher-item': 10,

@@ -1,4 +1,4 @@
-main .highlight-carousel[data-product-block] {
+main .lixiang-highlight-carousel[data-product-block] {
   left: 50%;
   width: 100vw;
   margin-inline-start: -50vw;
@@ -6,25 +6,25 @@ main .highlight-carousel[data-product-block] {
   font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-main .highlight-carousel .highlight-shell {
+main .lixiang-highlight-carousel .highlight-shell {
   position: relative;
   width: 100%;
 }
 
-main .highlight-carousel .highlight-viewport {
+main .lixiang-highlight-carousel .highlight-viewport {
   position: relative;
   height: 706px;
   overflow: hidden;
 }
 
-main .highlight-carousel .highlight-track {
+main .lixiang-highlight-carousel .highlight-track {
   position: relative;
   width: 1240px;
   height: 706px;
   margin-inline: auto;
 }
 
-main .highlight-carousel .highlight-slide {
+main .lixiang-highlight-carousel .highlight-slide {
   --highlight-copy: #fff;
   --highlight-muted: rgb(255 255 255 / 72%);
 
@@ -40,31 +40,31 @@ main .highlight-carousel .highlight-slide {
   pointer-events: none;
 }
 
-main .highlight-carousel .highlight-slide.highlight-copy-black {
+main .lixiang-highlight-carousel .highlight-slide.highlight-copy-black {
   --highlight-copy: #191919;
   --highlight-muted: rgb(25 25 25 / 72%);
 }
 
-main .highlight-carousel .highlight-slide.highlight-copy-white {
+main .lixiang-highlight-carousel .highlight-slide.highlight-copy-white {
   --highlight-copy: #fff;
   --highlight-muted: rgb(255 255 255 / 72%);
 }
 
-main .highlight-carousel.highlight-heading-black .product-section-header {
+main .lixiang-highlight-carousel.highlight-heading-black .product-section-header {
   --product-copy: #191919;
   --product-muted: rgb(25 25 25 / 60%);
 }
 
-main .highlight-carousel.highlight-heading-white .product-section-header {
+main .lixiang-highlight-carousel.highlight-heading-white .product-section-header {
   --product-copy: #fff;
   --product-muted: rgb(255 255 255 / 70%);
 }
 
-main .highlight-carousel .highlight-slide.is-instant {
+main .lixiang-highlight-carousel .highlight-slide.is-instant {
   transition: none;
 }
 
-main .highlight-carousel .highlight-slide.is-active {
+main .lixiang-highlight-carousel .highlight-slide.is-active {
   z-index: 2;
   opacity: 1;
   visibility: visible;
@@ -72,19 +72,19 @@ main .highlight-carousel .highlight-slide.is-active {
   pointer-events: auto;
 }
 
-main .highlight-carousel .highlight-slide.is-previous {
+main .lixiang-highlight-carousel .highlight-slide.is-previous {
   opacity: 1;
   visibility: visible;
   transform: translateX(-100%);
 }
 
-main .highlight-carousel .highlight-slide.is-next {
+main .lixiang-highlight-carousel .highlight-slide.is-next {
   opacity: 1;
   visibility: visible;
   transform: translateX(100%);
 }
 
-main .highlight-carousel .product-media {
+main .lixiang-highlight-carousel .product-media {
   width: 1200px;
   height: 674px;
   min-height: 0;
@@ -92,7 +92,7 @@ main .highlight-carousel .product-media {
   border-radius: 4px;
 }
 
-main .highlight-carousel .highlight-slide-copy {
+main .lixiang-highlight-carousel .highlight-slide-copy {
   position: absolute;
   z-index: 2;
   inset: 0;
@@ -103,7 +103,7 @@ main .highlight-carousel .highlight-slide-copy {
   color: var(--highlight-copy);
 }
 
-main .highlight-carousel .highlight-slide-copy h3 {
+main .lixiang-highlight-carousel .highlight-slide-copy h3 {
   width: 100%;
   max-width: 1080px;
   margin: 0 auto;
@@ -116,19 +116,19 @@ main .highlight-carousel .highlight-slide-copy h3 {
   white-space: pre-line;
 }
 
-main .highlight-carousel .highlight-eyebrow,
-main .highlight-carousel .highlight-description {
+main .lixiang-highlight-carousel .highlight-eyebrow,
+main .lixiang-highlight-carousel .highlight-description {
   margin: 0;
   color: var(--highlight-muted);
   font-size: 14px;
   text-align: center;
 }
 
-main .highlight-carousel .highlight-description p {
+main .lixiang-highlight-carousel .highlight-description p {
   margin: 0;
 }
 
-main .highlight-carousel .highlight-metrics {
+main .lixiang-highlight-carousel .highlight-metrics {
   display: flex;
   width: 100%;
   margin: auto 0 0;
@@ -137,19 +137,19 @@ main .highlight-carousel .highlight-metrics {
   gap: 48px;
 }
 
-main .highlight-carousel .highlight-stat {
+main .lixiang-highlight-carousel .highlight-stat {
   min-width: 74px;
   max-width: 220px;
   flex: 0 1 auto;
 }
 
-main .highlight-carousel .highlight-stat dt {
+main .lixiang-highlight-carousel .highlight-stat dt {
   color: var(--highlight-copy);
   font-size: 12px;
   line-height: 20px;
 }
 
-main .highlight-carousel .highlight-stat dd {
+main .lixiang-highlight-carousel .highlight-stat dd {
   margin: 0;
   color: var(--highlight-copy);
   font-family: licium-medium, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -159,16 +159,16 @@ main .highlight-carousel .highlight-stat dd {
   white-space: nowrap;
 }
 
-main .highlight-carousel .highlight-stat-description {
+main .lixiang-highlight-carousel .highlight-stat-description {
   color: var(--highlight-muted);
   font-size: 12px;
 }
 
-main .highlight-carousel .highlight-stat-description p {
+main .lixiang-highlight-carousel .highlight-stat-description p {
   margin: 4px 0 0;
 }
 
-main .highlight-carousel .highlight-note {
+main .lixiang-highlight-carousel .highlight-note {
   position: absolute;
   top: calc(100% + 16px);
   left: 0;
@@ -178,7 +178,7 @@ main .highlight-carousel .highlight-note {
   white-space: pre-line;
 }
 
-main .highlight-carousel .highlight-controls {
+main .lixiang-highlight-carousel .highlight-controls {
   position: relative;
   z-index: 4;
   width: 1200px;
@@ -186,40 +186,40 @@ main .highlight-carousel .highlight-controls {
   margin-inline: auto;
 }
 
-main .highlight-carousel .highlight-dots {
+main .lixiang-highlight-carousel .highlight-dots {
   position: absolute;
   bottom: 22px;
   left: 0;
   display: flex;
-  gap: 5px;
+  gap: 4px;
 }
 
-main .highlight-carousel .highlight-dot {
+main .lixiang-highlight-carousel .highlight-dot {
   width: 20px;
   height: 2px;
   margin: 0;
   padding: 0;
-  background: #d2d2d2;
+  background: #ccc;
   border: 0;
   border-radius: 0;
   cursor: pointer;
 }
 
-main .highlight-carousel .highlight-dot.is-active {
+main .lixiang-highlight-carousel .highlight-dot.is-active {
   background: var(--highlight-indicator, #191919);
 }
 
-main .highlight-carousel .highlight-controls.has-indicator-labels {
+main .lixiang-highlight-carousel .highlight-controls.has-indicator-labels {
   height: 84px;
 }
 
-main .highlight-carousel .highlight-dots.has-labels {
+main .lixiang-highlight-carousel .highlight-dots.has-labels {
   position: relative;
   bottom: auto;
   gap: 24px;
 }
 
-main .highlight-carousel .highlight-dot.has-label {
+main .lixiang-highlight-carousel .highlight-dot.has-label {
   position: relative;
   width: clamp(98px, 10vw, 160px);
   height: auto;
@@ -233,30 +233,30 @@ main .highlight-carousel .highlight-dot.has-label {
   white-space: normal;
 }
 
-main .highlight-carousel .highlight-dot.has-label::before {
+main .lixiang-highlight-carousel .highlight-dot.has-label::before {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   height: 2px;
-  background: #d2d2d2;
+  background: #ccc;
   content: '';
 }
 
-main .highlight-carousel .highlight-dot.has-label.is-active {
+main .lixiang-highlight-carousel .highlight-dot.has-label.is-active {
   background: transparent;
 }
 
-main .highlight-carousel .highlight-dot.has-label.is-active::before {
+main .lixiang-highlight-carousel .highlight-dot.has-label.is-active::before {
   background: var(--highlight-indicator, #191919);
 }
 
-main .highlight-carousel .highlight-dot-label {
+main .lixiang-highlight-carousel .highlight-dot-label {
   display: block;
   white-space: pre-line;
 }
 
-main .highlight-carousel .highlight-arrows {
+main .lixiang-highlight-carousel .highlight-arrows {
   position: absolute;
   top: 20px;
   right: 0;
@@ -264,20 +264,20 @@ main .highlight-carousel .highlight-arrows {
   gap: 16px;
 }
 
-main .highlight-carousel .highlight-arrow {
+main .lixiang-highlight-carousel .highlight-arrow {
   position: relative;
   width: 46px;
   height: 46px;
   margin: 0;
   padding: 0;
   color: #191919;
-  background: #f7f7f7;
+  background: rgb(236 236 236 / 60%);
   border: 0;
   border-radius: 50%;
   cursor: pointer;
 }
 
-main .highlight-carousel .highlight-arrow::before {
+main .lixiang-highlight-carousel .highlight-arrow::before {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -289,11 +289,11 @@ main .highlight-carousel .highlight-arrow::before {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-main .highlight-carousel .highlight-arrow-previous::before {
+main .lixiang-highlight-carousel .highlight-arrow-previous::before {
   transform: translate(-50%, -50%) rotate(-135deg);
 }
 
-main .highlight-carousel .highlight-status {
+main .lixiang-highlight-carousel .highlight-status {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -305,90 +305,90 @@ main .highlight-carousel .highlight-status {
 }
 
 @media (width >= 1025px) and (width <= 1440px) {
-  main .highlight-carousel .highlight-viewport,
-  main .highlight-carousel .highlight-track {
+  main .lixiang-highlight-carousel .highlight-viewport,
+  main .lixiang-highlight-carousel .highlight-track {
     height: 537.5px;
   }
 
-  main .highlight-carousel .highlight-track {
+  main .lixiang-highlight-carousel .highlight-track {
     width: 940px;
   }
 
-  main .highlight-carousel .product-media,
-  main .highlight-carousel .highlight-controls {
+  main .lixiang-highlight-carousel .product-media,
+  main .lixiang-highlight-carousel .highlight-controls {
     width: 900px;
   }
 
-  main .highlight-carousel .product-media {
+  main .lixiang-highlight-carousel .product-media {
     height: 505.5px;
   }
 
-  main .highlight-carousel .highlight-slide-copy {
+  main .lixiang-highlight-carousel .highlight-slide-copy {
     padding: 60px 40px 32px;
   }
 
-  main .highlight-carousel .highlight-slide-copy h3 {
+  main .lixiang-highlight-carousel .highlight-slide-copy h3 {
     max-width: 820px;
     font-size: 28px;
     line-height: 40px;
   }
 
-  main .highlight-carousel .highlight-metrics {
+  main .lixiang-highlight-carousel .highlight-metrics {
     gap: 38px;
   }
 
-  main .highlight-carousel .highlight-stat dd {
+  main .lixiang-highlight-carousel .highlight-stat dd {
     font-size: 16px;
     line-height: 24px;
   }
 }
 
 @media (width >= 721px) and (width <= 1024px) {
-  main .highlight-carousel .highlight-viewport,
-  main .highlight-carousel .highlight-track {
+  main .lixiang-highlight-carousel .highlight-viewport,
+  main .lixiang-highlight-carousel .highlight-track {
     height: 406px;
   }
 
-  main .highlight-carousel .highlight-track {
+  main .lixiang-highlight-carousel .highlight-track {
     width: 670px;
   }
 
-  main .highlight-carousel .product-media,
-  main .highlight-carousel .highlight-controls {
+  main .lixiang-highlight-carousel .product-media,
+  main .lixiang-highlight-carousel .highlight-controls {
     width: 630px;
   }
 
-  main .highlight-carousel .product-media {
+  main .lixiang-highlight-carousel .product-media {
     height: 354px;
   }
 
-  main .highlight-carousel .highlight-slide-copy {
+  main .lixiang-highlight-carousel .highlight-slide-copy {
     padding: 40px 20px 24px;
   }
 
-  main .highlight-carousel .highlight-slide-copy h3 {
+  main .lixiang-highlight-carousel .highlight-slide-copy h3 {
     max-width: 590px;
     font-size: 22px;
     line-height: 34px;
   }
 
-  main .highlight-carousel .highlight-metrics {
+  main .lixiang-highlight-carousel .highlight-metrics {
     gap: 28px;
   }
 
-  main .highlight-carousel .highlight-stat dt {
+  main .lixiang-highlight-carousel .highlight-stat dt {
     font-size: 12px;
     line-height: 20px;
   }
 
-  main .highlight-carousel .highlight-stat dd {
+  main .lixiang-highlight-carousel .highlight-stat dd {
     font-size: 14px;
     line-height: 22px;
   }
 }
 
 @media (width >= 721px) and (width <= 899px) {
-  main .highlight-carousel[data-product-block] {
+  main .lixiang-highlight-carousel[data-product-block] {
     left: auto;
     width: calc(100% + 48px);
     margin-inline-start: -24px;
@@ -396,7 +396,7 @@ main .highlight-carousel .highlight-status {
 }
 
 @media (width >= 900px) and (width <= 1024px) {
-  main .highlight-carousel[data-product-block] {
+  main .lixiang-highlight-carousel[data-product-block] {
     left: auto;
     width: calc(100% + 64px);
     margin-inline-start: -32px;
@@ -404,34 +404,34 @@ main .highlight-carousel .highlight-status {
 }
 
 @media (width <= 720px) {
-  main .highlight-carousel[data-product-block].space-large {
+  main .lixiang-highlight-carousel[data-product-block].space-large {
     padding-block: 80px;
   }
 
-  main .highlight-carousel[data-product-block].space-small {
+  main .lixiang-highlight-carousel[data-product-block].space-small {
     padding-block: 60px;
   }
 
-  main .highlight-carousel[data-product-block].space-none {
+  main .lixiang-highlight-carousel[data-product-block].space-none {
     padding-block: 0;
   }
 
-  main .highlight-carousel .product-section-header {
+  main .lixiang-highlight-carousel .product-section-header {
     padding-inline: 20px;
   }
 
-  main .highlight-carousel .highlight-viewport {
+  main .lixiang-highlight-carousel .highlight-viewport {
     height: auto;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
   }
 
-  main .highlight-carousel .highlight-viewport::-webkit-scrollbar {
+  main .lixiang-highlight-carousel .highlight-viewport::-webkit-scrollbar {
     display: none;
   }
 
-  main .highlight-carousel .highlight-track {
+  main .lixiang-highlight-carousel .highlight-track {
     display: flex;
     width: max-content;
     height: auto;
@@ -441,10 +441,10 @@ main .highlight-carousel .highlight-status {
     gap: 0;
   }
 
-  main .highlight-carousel .highlight-slide,
-  main .highlight-carousel .highlight-slide.is-active,
-  main .highlight-carousel .highlight-slide.is-previous,
-  main .highlight-carousel .highlight-slide.is-next {
+  main .lixiang-highlight-carousel .highlight-slide,
+  main .lixiang-highlight-carousel .highlight-slide.is-active,
+  main .lixiang-highlight-carousel .highlight-slide.is-previous,
+  main .lixiang-highlight-carousel .highlight-slide.is-next {
     position: relative;
     inset: auto;
     display: flex;
@@ -461,7 +461,7 @@ main .highlight-carousel .highlight-status {
     scroll-snap-align: start;
   }
 
-  main .highlight-carousel .product-media {
+  main .lixiang-highlight-carousel .product-media {
     display: flex;
     width: calc(100vw - 40px);
     height: 100%;
@@ -472,11 +472,11 @@ main .highlight-carousel .highlight-status {
     border-radius: 4px;
   }
 
-  main .highlight-carousel .product-media::after {
+  main .lixiang-highlight-carousel .product-media::after {
     display: none;
   }
 
-  main .highlight-carousel .product-picture {
+  main .lixiang-highlight-carousel .product-picture {
     height: auto;
     aspect-ratio: 16 / 9;
     flex: 0 0 auto;
@@ -484,7 +484,7 @@ main .highlight-carousel .highlight-status {
     border-radius: 4px 4px 0 0;
   }
 
-  main .highlight-carousel .highlight-slide-copy {
+  main .lixiang-highlight-carousel .highlight-slide-copy {
     --highlight-copy: var(--product-copy);
     --highlight-muted: var(--product-muted);
 
@@ -496,7 +496,7 @@ main .highlight-carousel .highlight-status {
     background: var(--product-card-bg);
   }
 
-  main .highlight-carousel .highlight-slide-copy h3 {
+  main .lixiang-highlight-carousel .highlight-slide-copy h3 {
     width: 100%;
     max-width: none;
     margin: 0;
@@ -508,13 +508,13 @@ main .highlight-carousel .highlight-status {
     text-align: center;
   }
 
-  main .highlight-carousel .highlight-eyebrow,
-  main .highlight-carousel .highlight-description {
+  main .lixiang-highlight-carousel .highlight-eyebrow,
+  main .lixiang-highlight-carousel .highlight-description {
     color: var(--highlight-muted);
     text-align: left;
   }
 
-  main .highlight-carousel .highlight-metrics {
+  main .lixiang-highlight-carousel .highlight-metrics {
     display: grid;
     width: 100%;
     margin: 0;
@@ -523,47 +523,47 @@ main .highlight-carousel .highlight-status {
     gap: 0;
   }
 
-  main .highlight-carousel .highlight-stat {
+  main .lixiang-highlight-carousel .highlight-stat {
     min-width: 0;
     max-width: none;
     min-height: 62px;
     padding: 0;
   }
 
-  main .highlight-carousel .highlight-stat dt,
-  main .highlight-carousel .highlight-stat-description {
+  main .lixiang-highlight-carousel .highlight-stat dt,
+  main .lixiang-highlight-carousel .highlight-stat-description {
     color: var(--highlight-muted);
   }
 
-  main .highlight-carousel .highlight-stat dd {
+  main .lixiang-highlight-carousel .highlight-stat dd {
     color: var(--highlight-copy);
     font-size: 18px;
     line-height: 26px;
   }
 
-  main .highlight-carousel .highlight-note {
+  main .lixiang-highlight-carousel .highlight-note {
     position: static;
     margin-block-start: 16px;
   }
 
-  main .highlight-carousel .highlight-controls {
+  main .lixiang-highlight-carousel .highlight-controls {
     width: 100%;
     height: 22px;
     margin: 0;
   }
 
-  main .highlight-carousel .highlight-controls.has-indicator-labels {
+  main .lixiang-highlight-carousel .highlight-controls.has-indicator-labels {
     height: auto;
     padding-block: 16px 0;
     overflow-x: auto;
     scrollbar-width: none;
   }
 
-  main .highlight-carousel .highlight-controls.has-indicator-labels::-webkit-scrollbar {
+  main .lixiang-highlight-carousel .highlight-controls.has-indicator-labels::-webkit-scrollbar {
     display: none;
   }
 
-  main .highlight-carousel .highlight-dots {
+  main .lixiang-highlight-carousel .highlight-dots {
     right: 0;
     bottom: 0;
     left: 0;
@@ -571,7 +571,7 @@ main .highlight-carousel .highlight-status {
     margin-inline: auto;
   }
 
-  main .highlight-carousel .highlight-dots.has-labels {
+  main .lixiang-highlight-carousel .highlight-dots.has-labels {
     position: relative;
     right: auto;
     bottom: auto;
@@ -580,7 +580,7 @@ main .highlight-carousel .highlight-status {
     margin-inline: 0;
   }
 
-  main .highlight-carousel .highlight-arrows {
+  main .lixiang-highlight-carousel .highlight-arrows {
     display: none;
   }
 }
