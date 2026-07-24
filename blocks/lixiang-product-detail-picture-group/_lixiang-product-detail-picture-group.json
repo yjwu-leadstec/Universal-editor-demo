@@ -3,12 +3,12 @@
     {
       "title": "Li Xiang Product Detail Picture Group",
       "id": "lixiang-product-detail-picture-group",
-      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Lixiang Product Detail Picture Group", "model": "lixiang-product-detail-picture-group", "filter": "lixiang-product-detail-picture-group", "showVideoControl": true, "showProgress": true, "enableMotion": true, "classes": ["light", "space-large", "picture-gap-large"] } } } }
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Lixiang Product Detail Picture Group", "model": "lixiang-product-detail-picture-group", "filter": "lixiang-product-detail-picture-group", "showVideoControl": true, "showProgress": true, "enableMotion": true, "classes": "light space-large picture-gap-large" } } } }
     },
     {
       "title": "Li Xiang Product Detail Picture Set",
       "id": "lixiang-product-detail-picture-group-item",
-      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Lixiang Product Detail Picture Set", "model": "lixiang-product-detail-picture-group-item", "filter": "lixiang-product-detail-picture-group-item" } } } }
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Lixiang Product Detail Picture Set", "model": "lixiang-product-detail-picture-group-item" } } } }
     },
     {
       "title": "Li Xiang Product Detail Picture",
@@ -27,15 +27,24 @@
         { "component": "boolean", "name": "showProgress", "label": "Show Video Progress", "valueType": "boolean", "value": true },
         { "component": "boolean", "name": "enableMotion", "label": "Enable Image Parallax", "description": "Automatically disabled when reduced motion is requested", "valueType": "boolean", "value": true },
         {
-          "component": "multiselect",
+          "component": "select",
           "name": "classes",
           "label": "Design Style",
           "valueType": "string",
-          "maxSize": 3,
+          "value": "light space-large picture-gap-large",
           "options": [
-            { "name": "Background", "children": [{ "name": "White", "value": "light" }, { "name": "Gray", "value": "gray" }] },
-            { "name": "Outer Spacing", "children": [{ "name": "Large (PC 160px / Tablet 64px / Mobile 80px)", "value": "space-large" }, { "name": "Small (PC 80px / Tablet 32px / Mobile 40px)", "value": "space-small" }, { "name": "None (0px)", "value": "space-none" }] },
-            { "name": "Title-to-Pictures Gap", "children": [{ "name": "Large (PC 80px / Tablet 24px)", "value": "picture-gap-large" }, { "name": "Small (PC 56px / Tablet 16px)", "value": "picture-gap-small" }] }
+            { "name": "White · Large Spacing · Large Picture Gap", "value": "light space-large picture-gap-large" },
+            { "name": "White · Large Spacing · Small Picture Gap", "value": "light space-large picture-gap-small" },
+            { "name": "White · Small Spacing · Large Picture Gap", "value": "light space-small picture-gap-large" },
+            { "name": "White · Small Spacing · Small Picture Gap", "value": "light space-small picture-gap-small" },
+            { "name": "White · No Spacing · Large Picture Gap", "value": "light space-none picture-gap-large" },
+            { "name": "White · No Spacing · Small Picture Gap", "value": "light space-none picture-gap-small" },
+            { "name": "Gray · Large Spacing · Large Picture Gap", "value": "gray space-large picture-gap-large" },
+            { "name": "Gray · Large Spacing · Small Picture Gap", "value": "gray space-large picture-gap-small" },
+            { "name": "Gray · Small Spacing · Large Picture Gap", "value": "gray space-small picture-gap-large" },
+            { "name": "Gray · Small Spacing · Small Picture Gap", "value": "gray space-small picture-gap-small" },
+            { "name": "Gray · No Spacing · Large Picture Gap", "value": "gray space-none picture-gap-large" },
+            { "name": "Gray · No Spacing · Small Picture Gap", "value": "gray space-none picture-gap-small" }
           ]
         }
       ]

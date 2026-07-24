@@ -84,6 +84,11 @@ main .lixiang-product-intro-slider .highlight-slide.is-next {
   transform: translateX(100%);
 }
 
+main .lixiang-product-intro-slider .highlight-slide.is-instant.is-staging-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
 main .lixiang-product-intro-slider .product-media {
   width: 1200px;
   height: 674px;
@@ -170,11 +175,12 @@ main .lixiang-product-intro-slider .highlight-stat-description p {
 
 main .lixiang-product-intro-slider .highlight-note {
   position: absolute;
-  top: calc(100% + 16px);
-  left: 0;
+  top: 688px;
+  left: 20px;
   margin: 0;
   color: var(--product-muted);
   font-size: 12px;
+  line-height: 16px;
   white-space: pre-line;
 }
 
@@ -264,6 +270,7 @@ main .lixiang-product-intro-slider .highlight-arrows {
   gap: 16px;
 }
 
+main .lixiang-product-intro-slider .highlight-rotation-control,
 main .lixiang-product-intro-slider .highlight-arrow {
   position: relative;
   width: 46px;
@@ -275,6 +282,33 @@ main .lixiang-product-intro-slider .highlight-arrow {
   border: 0;
   border-radius: 50%;
   cursor: pointer;
+}
+
+main .lixiang-product-intro-slider .highlight-rotation-control {
+  position: absolute;
+  top: 20px;
+  right: 124px;
+}
+
+main .lixiang-product-intro-slider .highlight-rotation-control::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 10px;
+  border-right: 2px solid currentcolor;
+  border-left: 2px solid currentcolor;
+  content: '';
+  transform: translate(-50%, -50%);
+}
+
+main .lixiang-product-intro-slider .highlight-rotation-control.is-paused::before {
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-right: 0;
+  border-bottom: 6px solid transparent;
+  border-left: 9px solid currentcolor;
 }
 
 main .lixiang-product-intro-slider .highlight-arrow::before {
@@ -304,6 +338,19 @@ main .lixiang-product-intro-slider .highlight-status {
   border: 0;
 }
 
+@media (width >= 721px) and (width <= 1440px) {
+  main .lixiang-product-intro-slider .highlight-controls.has-indicator-labels .highlight-dots.has-labels {
+    display: grid;
+    width: calc(100% - 190px);
+    grid-template-columns: repeat(var(--highlight-slide-count), minmax(0, 1fr));
+  }
+
+  main .lixiang-product-intro-slider .highlight-controls.has-indicator-labels .highlight-dot.has-label {
+    width: auto;
+    min-width: 0;
+  }
+}
+
 @media (width >= 1025px) and (width <= 1440px) {
   main .lixiang-product-intro-slider .highlight-viewport,
   main .lixiang-product-intro-slider .highlight-track {
@@ -325,6 +372,10 @@ main .lixiang-product-intro-slider .highlight-status {
 
   main .lixiang-product-intro-slider .highlight-slide-copy {
     padding: 60px 40px 32px;
+  }
+
+  main .lixiang-product-intro-slider .highlight-note {
+    top: 519.5px;
   }
 
   main .lixiang-product-intro-slider .highlight-slide-copy h3 {
@@ -364,6 +415,10 @@ main .lixiang-product-intro-slider .highlight-status {
 
   main .lixiang-product-intro-slider .highlight-slide-copy {
     padding: 40px 20px 24px;
+  }
+
+  main .lixiang-product-intro-slider .highlight-note {
+    top: 368px;
   }
 
   main .lixiang-product-intro-slider .highlight-slide-copy h3 {
@@ -452,6 +507,7 @@ main .lixiang-product-intro-slider .highlight-status {
     box-sizing: border-box;
     padding-inline: 20px;
     flex: 0 0 auto;
+    flex-direction: column;
     overflow: visible;
     background: transparent;
     opacity: 1;
@@ -543,7 +599,17 @@ main .lixiang-product-intro-slider .highlight-status {
 
   main .lixiang-product-intro-slider .highlight-note {
     position: static;
-    margin-block-start: 16px;
+    width: calc(100vw - 40px);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 16px 20px 20px;
+    background: var(--product-card-bg);
+    border-radius: 0 0 4px 4px;
+    line-height: 1.6;
+  }
+
+  main .lixiang-product-intro-slider .highlight-slide.has-note .product-media {
+    border-radius: 4px 4px 0 0;
   }
 
   main .lixiang-product-intro-slider .highlight-controls {
@@ -580,7 +646,14 @@ main .lixiang-product-intro-slider .highlight-status {
     margin-inline: 0;
   }
 
+  main .lixiang-product-intro-slider .highlight-rotation-control,
   main .lixiang-product-intro-slider .highlight-arrows {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main .lixiang-product-intro-slider .highlight-slide {
+    transition: none;
   }
 }

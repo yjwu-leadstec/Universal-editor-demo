@@ -3,7 +3,7 @@
     {
       "title": "Lixiang Product Intro Slider",
       "id": "lixiang-product-intro-slider",
-      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Lixiang Product Intro Slider", "model": "lixiang-product-intro-slider", "filter": "lixiang-product-intro-slider", "autoPlay": true, "interval": 4, "showVideoControl": true, "showProgress": true, "headingColor": "black", "classes": ["light", "space-small"] } } } }
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Lixiang Product Intro Slider", "model": "lixiang-product-intro-slider", "filter": "lixiang-product-intro-slider", "autoPlay": true, "interval": 4, "showVideoControl": true, "showProgress": true, "headingColor": "black", "classes": "light space-small" } } } }
     },
     {
       "title": "Highlight Slide",
@@ -31,14 +31,21 @@
         { "component": "boolean", "name": "showVideoControl", "label": "Show Video Play / Pause", "valueType": "boolean", "value": true },
         { "component": "select", "name": "headingColor", "label": "Section Heading Color", "description": "Optional override for the component title", "valueType": "string", "value": "black", "options": [{ "name": "White (#FFFFFF)", "value": "white" }, { "name": "Black (#191919)", "value": "black" }] },
         {
-          "component": "multiselect",
+          "component": "select",
           "name": "classes",
           "label": "Style",
           "valueType": "string",
-          "maxSize": 2,
+          "value": "light space-small",
           "options": [
-            { "name": "Background", "children": [{ "name": "White (#FFFFFF)", "value": "light" }, { "name": "Black (#000000)", "value": "dark" }, { "name": "Gray (#FAFAFA)", "value": "gray" }] },
-            { "name": "Spacing", "children": [{ "name": "Large (PC 160px / Mobile 80px)", "value": "space-large" }, { "name": "Small (PC 80px / Mobile 60px)", "value": "space-small" }, { "name": "None (0px)", "value": "space-none" }] }
+            { "name": "White · Large Spacing", "value": "light space-large" },
+            { "name": "White · Small Spacing", "value": "light space-small" },
+            { "name": "White · No Spacing", "value": "light space-none" },
+            { "name": "Black · Large Spacing", "value": "dark space-large" },
+            { "name": "Black · Small Spacing", "value": "dark space-small" },
+            { "name": "Black · No Spacing", "value": "dark space-none" },
+            { "name": "Gray · Large Spacing", "value": "gray space-large" },
+            { "name": "Gray · Small Spacing", "value": "gray space-small" },
+            { "name": "Gray · No Spacing", "value": "gray space-none" }
           ]
         }
       ]
@@ -56,7 +63,6 @@
         { "component": "textarea", "name": "title", "label": "Card Title", "description": "Manual line breaks are preserved", "valueType": "string" },
         { "component": "richtext", "name": "description", "label": "Card Description", "valueType": "string" },
         { "component": "textarea", "name": "note", "label": "Note", "description": "Displayed only when Show Note is enabled", "valueType": "string" },
-        { "component": "textarea", "name": "metrics", "label": "Published Metrics JSON", "description": "Fallback for published markup when nested statistics are unavailable", "valueType": "string" },
         { "component": "aem-content", "name": "link", "label": "Link", "valueType": "string" },
         { "component": "text", "name": "linkText", "label": "Link Text", "valueType": "string" },
         { "component": "select", "name": "linkType", "label": "Link Type", "valueType": "string", "options": [{ "name": "Text", "value": "text" }, { "name": "Primary", "value": "primary" }, { "name": "Secondary", "value": "secondary" }] },

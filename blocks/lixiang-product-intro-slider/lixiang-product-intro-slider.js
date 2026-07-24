@@ -16,6 +16,9 @@ import {
   revealElements,
 } from '../../scripts/product-block-utils.js';
 
+const MOBILE_QUERY = '(width <= 720px)';
+const carouselInstances = new WeakMap();
+
 function createStat(item) {
   const stat = document.createElement('div');
   stat.className = 'highlight-stat';
@@ -49,9 +52,14 @@ function createSlide(block, item, index) {
   slide.className = 'highlight-slide';
   const copyColor = propText(item, 'copyColor');
   if (['white', 'black'].includes(copyColor)) slide.classList.add(`highlight-copy-${copyColor}`);
+  slide.setAttribute('role', 'group');
   slide.setAttribute('aria-roledescription', 'slide');
   slide.setAttribute('aria-label', `Slide ${index + 1}`);
-  const { element: media } = createMedia(item, {
+  const {
+    element: media,
+    setActive: setMediaActive,
+    destroy: destroyMedia,
+  } = createMedia(item, {
     autoplay: true,
     showControls: propBoolean(block, 'showVideoControl', true),
     showProgress: propBoolean(block, 'showProgress', true),
@@ -112,29 +120,36 @@ function createSlide(block, item, index) {
     copy.append(metrics);
   }
   const note = propText(item, 'note');
-  const showNoteValue = propText(item, 'showNote');
-  const showNote = showNoteValue ? propBoolean(item, 'showNote') : Boolean(note);
+  const showNote = propBoolean(item, 'showNote', Boolean(note));
+  let noteElement = null;
   if (note && showNote) {
-    const element = document.createElement('p');
-    element.className = 'highlight-note';
-    element.textContent = note;
-    instrumentProp(item, 'note', element);
-    copy.append(element);
+    noteElement = document.createElement('p');
+    noteElement.className = 'highlight-note';
+    noteElement.textContent = note;
+    instrumentProp(item, 'note', noteElement);
+    slide.classList.add('has-note');
   }
   const link = createProductLink(item);
   if (link) copy.append(link);
   if (copy.childElementCount) media.append(copy);
   slide.append(media);
+  if (noteElement) slide.append(noteElement);
   moveItemInstrumentation(item, slide);
-  return slide;
+  return {
+    element: slide,
+    setMediaActive,
+    destroyMedia,
+  };
 }
 
 export default function decorate(block) {
+  carouselInstances.get(block)?.();
   initProductBlock(block);
   const accentColor = propText(block, 'accentColor');
   if (accentColor) block.style.setProperty('--highlight-indicator', accentColor);
   const headingColor = propText(block, 'headingColor');
   if (['white', 'black'].includes(headingColor)) block.classList.add(`highlight-heading-${headingColor}`);
+  const sectionTitle = propText(block, 'title');
   const autoPlay = propBoolean(block, 'autoPlay', true);
   const items = modelItems(block, 'highlight-slide');
   const shell = document.createElement('div');
@@ -142,42 +157,76 @@ export default function decorate(block) {
   const header = createSectionHeader(block);
   const viewport = document.createElement('div');
   viewport.className = 'highlight-viewport';
+  viewport.setAttribute('role', 'region');
   viewport.setAttribute('aria-roledescription', 'carousel');
+  viewport.setAttribute('aria-label', sectionTitle.replaceAll('\n', ' ') || 'Product highlights');
   const track = document.createElement('div');
   track.className = 'highlight-track';
-  const slides = items.map((item, index) => createSlide(block, item, index));
+  const slideEntries = items.map((item, index) => createSlide(block, item, index));
+  const slides = slideEntries.map(({ element }) => element);
   track.append(...slides);
   viewport.append(track);
   if (header.childElementCount) shell.append(header);
   shell.append(viewport);
 
+  const eventController = new AbortController();
+  const { signal } = eventController;
   let active = 0;
   let timer = null;
   let stagingFrame = null;
+  let releaseFrame = null;
+  let scrollSyncTimer = null;
   let rendered = false;
+  let destroyed = false;
+  let rotationPaused = false;
+  let pointerActivatingRotation = false;
+  let hovering = false;
+  let rotationControl = null;
   let refreshControls = () => {};
-  const interval = Math.max(2000, propNumber(block, 'interval', 4) * 1000);
+  let refreshRotationControl = () => {};
+  const interval = Math.min(12000, Math.max(2000, propNumber(block, 'interval', 4) * 1000));
+  const listen = (target, type, handler, options = {}) => {
+    target.addEventListener(type, handler, { ...options, signal });
+  };
+  const clearStaging = () => {
+    if (stagingFrame !== null) window.cancelAnimationFrame(stagingFrame);
+    if (releaseFrame !== null) window.cancelAnimationFrame(releaseFrame);
+    stagingFrame = null;
+    releaseFrame = null;
+    slides.forEach((slide) => slide.classList.remove('is-instant', 'is-staging-hidden'));
+  };
   const update = (next, scrollMobile = false) => {
+    if (destroyed || !slides.length) return;
+    clearStaging();
     const previousActive = active;
     active = (next + slides.length) % slides.length;
     slides.forEach((slide, index) => {
       const participatesInTransition = rendered && (index === previousActive || index === active);
-      slide.classList.toggle('is-instant', !participatesInTransition);
+      const stagesWithoutMotion = !participatesInTransition;
+      slide.classList.toggle('is-instant', stagesWithoutMotion);
+      slide.classList.toggle('is-staging-hidden', rendered && stagesWithoutMotion);
       slide.classList.toggle('is-active', index === active);
       slide.classList.toggle('is-previous', index === (active - 1 + slides.length) % slides.length);
       slide.classList.toggle('is-next', index === (active + 1) % slides.length);
-      slide.setAttribute('aria-hidden', String(index !== active));
+      const inactive = index !== active;
+      slide.setAttribute('aria-hidden', String(inactive));
+      slide.toggleAttribute('inert', inactive);
+      slideEntries[index].setMediaActive(!inactive);
     });
     track.getBoundingClientRect();
-    if (stagingFrame) window.cancelAnimationFrame(stagingFrame);
     stagingFrame = window.requestAnimationFrame(() => {
-      slides.forEach((slide) => slide.classList.remove('is-instant'));
+      slides.forEach((slide) => slide.classList.remove('is-staging-hidden'));
+      track.getBoundingClientRect();
       stagingFrame = null;
+      releaseFrame = window.requestAnimationFrame(() => {
+        slides.forEach((slide) => slide.classList.remove('is-instant'));
+        releaseFrame = null;
+      });
     });
     rendered = true;
     shell.style.setProperty('--active-slide', active);
     refreshControls();
-    if (scrollMobile && window.matchMedia('(width <= 720px)').matches) {
+    if (scrollMobile && window.matchMedia(MOBILE_QUERY).matches) {
       slides[active].scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
     }
   };
@@ -187,12 +236,54 @@ export default function decorate(block) {
   };
   const start = () => {
     stop();
-    if (!autoPlay || slides.length < 2 || prefersReducedMotion() || window.matchMedia('(width <= 720px)').matches) return;
+    if (
+      destroyed
+      || rotationPaused
+      || hovering
+      || !autoPlay
+      || slides.length < 2
+      || prefersReducedMotion()
+      || window.matchMedia(MOBILE_QUERY).matches
+    ) return;
     timer = window.setInterval(() => update(active + 1), interval);
+  };
+  const pauseRotation = () => {
+    rotationPaused = true;
+    stop();
+    refreshRotationControl();
+  };
+  const resumeRotation = () => {
+    rotationPaused = false;
+    refreshRotationControl();
+    start();
   };
   if (slides.length > 1) {
     const controls = document.createElement('div');
     controls.className = 'highlight-controls';
+    if (autoPlay && !prefersReducedMotion()) {
+      rotationControl = document.createElement('button');
+      rotationControl.type = 'button';
+      rotationControl.className = 'highlight-rotation-control';
+      refreshRotationControl = () => {
+        rotationControl.classList.toggle('is-paused', rotationPaused);
+        rotationControl.setAttribute(
+          'aria-label',
+          rotationPaused ? 'Start slide rotation' : 'Pause slide rotation',
+        );
+      };
+      refreshRotationControl();
+      listen(rotationControl, 'pointerdown', () => {
+        pointerActivatingRotation = true;
+      });
+      listen(rotationControl, 'pointercancel', () => {
+        pointerActivatingRotation = false;
+      });
+      listen(rotationControl, 'click', () => {
+        pointerActivatingRotation = false;
+        if (rotationPaused) resumeRotation();
+        else pauseRotation();
+      });
+    }
     const dots = document.createElement('div');
     dots.className = 'highlight-dots';
     dots.setAttribute('role', 'group');
@@ -201,6 +292,7 @@ export default function decorate(block) {
     const hasIndicatorLabels = indicatorLabels.some(Boolean);
     if (hasIndicatorLabels) {
       controls.classList.add('has-indicator-labels');
+      controls.style.setProperty('--highlight-slide-count', slides.length);
       dots.classList.add('has-labels');
     }
     const dotButtons = slides.map((_, index) => {
@@ -242,33 +334,71 @@ export default function decorate(block) {
       });
     };
     dotButtons.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
+      listen(dot, 'click', () => {
+        pauseRotation();
         update(index, true);
-        start();
       });
     });
-    previous.addEventListener('click', () => { update(active - 1, true); start(); });
-    next.addEventListener('click', () => { update(active + 1, true); start(); });
+    listen(previous, 'click', () => {
+      pauseRotation();
+      update(active - 1, true);
+    });
+    listen(next, 'click', () => {
+      pauseRotation();
+      update(active + 1, true);
+    });
     arrows.append(previous, next);
+    if (rotationControl) controls.append(rotationControl);
     controls.append(dots, arrows, status);
     shell.append(controls);
     refreshControls();
-    viewport.addEventListener('scrollend', () => {
-      if (!window.matchMedia('(width <= 720px)').matches) return;
+    const syncMobileScroll = () => {
+      if (!window.matchMedia(MOBILE_QUERY).matches) return;
       const closest = slides.map((slide, index) => ({
         index,
         distance: Math.abs(slide.offsetLeft - viewport.scrollLeft),
       })).sort((a, b) => a.distance - b.distance)[0];
       update(closest.index);
-    });
+    };
+    if ('onscrollend' in viewport) {
+      listen(viewport, 'scrollend', syncMobileScroll);
+    } else {
+      listen(viewport, 'scroll', () => {
+        if (scrollSyncTimer !== null) window.clearTimeout(scrollSyncTimer);
+        scrollSyncTimer = window.setTimeout(() => {
+          scrollSyncTimer = null;
+          syncMobileScroll();
+        }, 120);
+      });
+    }
   }
-  shell.addEventListener('mouseenter', stop);
-  shell.addEventListener('mouseleave', start);
-  shell.addEventListener('focusin', stop);
-  shell.addEventListener('focusout', start);
+  listen(shell, 'mouseenter', () => {
+    hovering = true;
+    stop();
+  });
+  listen(shell, 'mouseleave', () => {
+    hovering = false;
+    start();
+  });
+  listen(shell, 'focusin', () => {
+    if (!pointerActivatingRotation) pauseRotation();
+  });
+  const cleanup = () => {
+    if (destroyed) return;
+    destroyed = true;
+    stop();
+    clearStaging();
+    if (scrollSyncTimer !== null) window.clearTimeout(scrollSyncTimer);
+    scrollSyncTimer = null;
+    eventController.abort();
+    slideEntries.forEach(({ destroyMedia }) => destroyMedia());
+    if (carouselInstances.get(block) === cleanup) carouselInstances.delete(block);
+  };
+  carouselInstances.set(block, cleanup);
+  listen(block, 'aem:block-unload', cleanup, { once: true });
   addBlockAnchor(block, block, shell);
   block.replaceChildren(shell);
-  update(0);
+  if (slides.length) update(0);
   start();
   revealElements(block, '.product-section-header');
 }

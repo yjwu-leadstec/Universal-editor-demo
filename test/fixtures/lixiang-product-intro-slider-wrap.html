@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Highlight carousel wrap fixture</title>
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/blocks/lixiang-product-intro-slider/lixiang-product-intro-slider.css">
+  <style>
+    body { margin: 0; }
+    main { overflow: hidden; }
+    .fixture-controls { position: fixed; z-index: 10000; top: 8px; left: 8px; }
+  </style>
+</head>
+<body>
+  <header></header>
+  <div class="fixture-controls">
+    <button id="unload-carousel" type="button">Unload carousel test instance</button>
+    <button id="replace-carousel" type="button">Replace carousel test instance</button>
+  </div>
+  <main>
+    <div class="lixiang-product-intro-slider" data-block-name="lixiang-product-intro-slider" data-block-status="loaded">
+      <div data-aue-prop="title">Wrap transition verification</div>
+      <div data-aue-prop="mobileTitle">Wrap transition verification</div>
+      <div data-aue-prop="description"></div>
+      <div data-aue-prop="accentColor">#191919</div>
+      <div data-aue-prop="autoPlay">true</div>
+      <div data-aue-prop="interval">2</div>
+      <div data-aue-prop="showProgress">true</div>
+      <div data-aue-prop="showVideoControl">true</div>
+      <div data-aue-prop="headingColor">black</div>
+    </div>
+  </main>
+  <footer></footer>
+  <script type="module">
+    import decorate from '/blocks/lixiang-product-intro-slider/lixiang-product-intro-slider.js';
+
+    let block = document.querySelector('.lixiang-product-intro-slider');
+    const images = [
+      '/scraped-images/liauto/homepage/brand-story/banner-01.jpg',
+      '/scraped-images/liauto/homepage/brand-story/banner-02.jpg',
+      '/scraped-images/liauto/homepage/brand-story/banner-03.jpg',
+      '/scraped-images/liauto/homepage/brand-story/banner-01.jpg',
+      '/scraped-images/liauto/homepage/brand-story/banner-02.jpg',
+    ];
+    images.forEach((image, index) => {
+      const slide = document.createElement('div');
+      slide.dataset.aueModel = 'highlight-slide';
+      const fields = {
+        image: `<picture><img src="${image}" alt="Card ${index + 1}"></picture>`,
+        imageAlt: `Card ${index + 1}`,
+        mobileImage: '',
+        mobileImageAlt: '',
+        video: '',
+        mobileVideo: '',
+        eyebrow: '',
+        title: `Card ${index + 1}`,
+        description: '',
+        note: index === 0 ? 'This note must remain visible below the media.' : '',
+        metrics: '[]',
+        link: '',
+        linkText: '',
+        linkType: '',
+        copyColor: 'white',
+        showNote: index === 0 ? 'true' : 'false',
+        indicatorLabel: `Card ${index + 1}`,
+      };
+      Object.entries(fields).forEach(([name, value]) => {
+        const field = document.createElement('div');
+        field.dataset.aueProp = name;
+        field.innerHTML = value;
+        slide.append(field);
+      });
+      block.append(slide);
+    });
+    const pristineBlock = block.cloneNode(true);
+    decorate(block);
+    document.querySelector('#unload-carousel').addEventListener('click', () => {
+      document.documentElement.dataset.unloadRequested = 'true';
+      block.dispatchEvent(new CustomEvent('aem:block-unload'));
+    });
+    document.querySelector('#replace-carousel').addEventListener('click', () => {
+      document.documentElement.dataset.replaceRequested = 'true';
+      block.dispatchEvent(new CustomEvent('aem:block-unload'));
+      const replacement = pristineBlock.cloneNode(true);
+      block.replaceWith(replacement);
+      block = replacement;
+      decorate(block);
+    });
+  </script>
+</body>
+</html>

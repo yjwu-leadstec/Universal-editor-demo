@@ -11,6 +11,11 @@ import {
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
 
+function unloadBlocks(root) {
+  const blocks = root.matches?.('.block') ? [root] : [...root.querySelectorAll?.('.block') || []];
+  blocks.forEach((block) => block.dispatchEvent(new CustomEvent('aem:block-unload')));
+}
+
 async function applyChanges(event) {
   // redecorate default content and blocks on patches (in the properties rail)
   const { detail } = event;
@@ -39,6 +44,7 @@ async function applyChanges(event) {
       decorateMain(newMain);
       decorateRichtext(newMain);
       await loadSections(newMain);
+      unloadBlocks(element);
       element.remove();
       newMain.style.display = null;
       // eslint-disable-next-line no-use-before-define
@@ -58,6 +64,7 @@ async function applyChanges(event) {
         decorateBlock(newBlock);
         decorateRichtext(newBlock);
         await loadBlock(newBlock);
+        unloadBlocks(block);
         block.remove();
         newBlock.style.display = null;
         return true;
@@ -77,6 +84,7 @@ async function applyChanges(event) {
           decorateSections(parentElement);
           decorateBlocks(parentElement);
           await loadSections(parentElement);
+          unloadBlocks(element);
           element.remove();
           newSection.style.display = null;
         } else {

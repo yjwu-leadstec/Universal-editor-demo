@@ -15,8 +15,11 @@ import {
   setupTabs,
 } from '../../scripts/product-block-utils.js';
 
+const pictureGroupInstances = new WeakMap();
+
 function setupParallax(block) {
   block.productDetailPictureGroupMotion?.abort();
+  block.productDetailPictureGroupMotion = null;
   if (prefersReducedMotion()) return;
   const media = [...block.querySelectorAll('.lixiang-product-detail-picture-group-media')];
   if (!media.length) return;
@@ -41,6 +44,9 @@ function setupParallax(block) {
   window.addEventListener('resize', requestUpdate, { signal: controller.signal });
   controller.signal.addEventListener('abort', () => {
     if (frame) window.cancelAnimationFrame(frame);
+    if (block.productDetailPictureGroupMotion === controller) {
+      block.productDetailPictureGroupMotion = null;
+    }
   }, { once: true });
   update();
 }
@@ -84,12 +90,15 @@ function collectPictureSets(block) {
 function createPanel(block, group, pictures) {
   const panel = document.createElement('section');
   panel.className = 'lixiang-product-detail-picture-group-panel';
+  const mediaCleanups = [];
   const descriptionSource = group ? propSource(group, 'description') : null;
   if (descriptionSource?.textContent.trim()) {
-    panel.append(createRichText(
+    const description = createRichText(
       descriptionSource,
       'lixiang-product-detail-picture-group-description',
-    ));
+    );
+    instrumentProp(group, 'description', description);
+    panel.append(description);
   }
 
   const grid = document.createElement('div');
@@ -97,10 +106,11 @@ function createPanel(block, group, pictures) {
   pictures.forEach((item) => {
     const figure = document.createElement('figure');
     figure.className = 'lixiang-product-detail-picture-group-media';
-    const { element: media } = createMedia(item, {
+    const { element: media, destroy: destroyMedia } = createMedia(item, {
       showControls: propBoolean(block, 'showVideoControl', true),
       showProgress: propBoolean(block, 'showProgress', true),
     });
+    mediaCleanups.push(destroyMedia);
     figure.append(media);
 
     const title = propText(item, 'title');
@@ -114,10 +124,12 @@ function createPanel(block, group, pictures) {
         caption.append(heading);
       }
       if (description?.textContent.trim()) {
-        caption.append(createRichText(
+        const detail = createRichText(
           description,
           'lixiang-product-detail-picture-description',
-        ));
+        );
+        instrumentProp(item, 'description', detail);
+        caption.append(detail);
       }
       figure.append(caption);
     }
@@ -127,11 +139,16 @@ function createPanel(block, group, pictures) {
   });
   panel.append(grid);
   if (group) moveItemInstrumentation(group, panel);
-  return panel;
+  return {
+    element: panel,
+    destroy: () => mediaCleanups.forEach((cleanup) => cleanup()),
+  };
 }
 
 export default function decorate(block) {
+  pictureGroupInstances.get(block)?.();
   initProductBlock(block);
+  const eventController = new AbortController();
   const pictureSets = collectPictureSets(block);
   const shell = document.createElement('div');
   shell.className = 'lixiang-product-detail-picture-group-shell';
@@ -146,11 +163,15 @@ export default function decorate(block) {
     const button = document.createElement('button');
     button.type = 'button';
     button.textContent = (group && propText(group, 'title')) || `Picture set ${index + 1}`;
+    if (pictureSets.length > 1 && group) instrumentProp(group, 'title', button);
     tabs.append(button);
     return button;
   });
 
-  const panels = pictureSets.map(({ group, pictures }) => createPanel(block, group, pictures));
+  const panelEntries = pictureSets.map(
+    ({ group, pictures }) => createPanel(block, group, pictures),
+  );
+  const panels = panelEntries.map(({ element }) => element);
   const panelList = document.createElement('div');
   panelList.className = 'lixiang-product-detail-picture-group-panels';
   panelList.append(...panels);
@@ -159,7 +180,7 @@ export default function decorate(block) {
   addBlockAnchor(block, block, shell);
   block.replaceChildren(shell);
 
-  if (buttons.length > 1) setupTabs(block, buttons, panels);
+  const tabController = buttons.length > 1 ? setupTabs(block, buttons, panels) : null;
   const enableMotion = propBoolean(block, 'enableMotion', true);
   revealElements(
     block,
@@ -168,4 +189,19 @@ export default function decorate(block) {
   );
   if (enableMotion) setupParallax(block);
   else block.productDetailPictureGroupMotion?.abort();
+  let destroyed = false;
+  const cleanup = () => {
+    if (destroyed) return;
+    destroyed = true;
+    eventController.abort();
+    tabController?.destroy?.();
+    block.productDetailPictureGroupMotion?.abort();
+    panelEntries.forEach(({ destroy }) => destroy());
+    if (pictureGroupInstances.get(block) === cleanup) pictureGroupInstances.delete(block);
+  };
+  pictureGroupInstances.set(block, cleanup);
+  block.addEventListener('aem:block-unload', cleanup, {
+    once: true,
+    signal: eventController.signal,
+  });
 }

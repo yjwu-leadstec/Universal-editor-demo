@@ -684,11 +684,7 @@
                   "showVideoControl": true,
                   "showProgress": true,
                   "enableMotion": true,
-                  "classes": [
-                    "light",
-                    "space-large",
-                    "picture-gap-large"
-                  ]
+                  "classes": "light space-large picture-gap-large"
                 }
               }
             }
@@ -703,8 +699,7 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Lixiang Product Detail Picture Set",
-                  "model": "lixiang-product-detail-picture-group-item",
-                  "filter": "lixiang-product-detail-picture-group-item"
+                  "model": "lixiang-product-detail-picture-group-item"
                 }
               }
             }
@@ -832,10 +827,7 @@
                   "showVideoControl": true,
                   "showProgress": true,
                   "headingColor": "black",
-                  "classes": [
-                    "light",
-                    "space-small"
-                  ]
+                  "classes": "light space-small"
                 }
               }
             }

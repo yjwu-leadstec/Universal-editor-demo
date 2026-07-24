@@ -2,6 +2,8 @@ import { moveInstrumentation } from './scripts.js';
 import { MOBILE_MEDIA_QUERY, resolveResponsiveDefault } from './product-media-defaults.mjs';
 
 const PRODUCT_STYLES = '/styles/product-blocks.css';
+let productTabsInstance = 0;
+const productTabInstances = new WeakMap();
 
 const PRODUCT_MEDIA_FALLBACKS = {
   '014b26dc-f3d1-493f-9f54-5d9684388b2a.jpg': '349837577446335',
@@ -482,7 +484,12 @@ function setupVideoPlayback(media, video, button, autoplay, {
   hasActiveSource = () => true,
   sourceMedia = null,
 } = {}) {
+  const eventController = new AbortController();
+  const { signal } = eventController;
   let progressFrame = null;
+  let observer = null;
+  let isActive = true;
+  let failedSources = new WeakSet();
   let isIntersecting = !('IntersectionObserver' in window);
   const tracksProgress = button?.classList.contains('has-progress');
   const canAutoplay = autoplay && !prefersReducedMotion();
@@ -514,7 +521,7 @@ function setupVideoPlayback(media, video, button, autoplay, {
     else updateProgress();
   };
   const activeSourceAvailable = () => (
-    hasActiveSource() && !media.classList.contains('is-video-error')
+    isActive && hasActiveSource() && !media.classList.contains('is-video-error')
   );
   const syncAvailability = () => {
     const available = hasActiveSource();
@@ -530,26 +537,55 @@ function setupVideoPlayback(media, video, button, autoplay, {
     if (!canAutoplay || !isIntersecting || !activeSourceAvailable()) return;
     if (!video.dataset.userPaused) safePlay(video);
   };
-
-  video.addEventListener('play', updateControl);
-  video.addEventListener('pause', updateControl);
-  video.addEventListener('ended', updateControl);
-  video.addEventListener('loadedmetadata', updateProgress);
-  video.addEventListener('durationchange', updateProgress);
-  video.addEventListener('seeked', updateProgress);
-  video.addEventListener('timeupdate', updateProgress);
-  video.addEventListener('loadeddata', () => {
-    media.classList.remove('is-video-error');
-    media.classList.add('is-video-ready');
-    syncAvailability();
-    tryAutoplay();
-  });
-  video.addEventListener('error', () => {
+  const markVideoError = () => {
     media.classList.remove('is-video-ready', 'has-active-video');
     media.classList.add('is-video-error');
     if (button) button.hidden = true;
     video.pause();
     updateControl();
+  };
+  const handleSourceError = (event) => {
+    const failedSource = event.currentTarget;
+    failedSources.add(failedSource);
+    const eligibleSources = [...video.querySelectorAll('source')].filter((source) => (
+      !source.media || window.matchMedia(source.media).matches
+    ));
+    if (eligibleSources.some((source) => !failedSources.has(source))) return;
+    markVideoError();
+  };
+  const setActive = (nextActive) => {
+    isActive = Boolean(nextActive);
+    if (!isActive) {
+      video.pause();
+      return;
+    }
+    tryAutoplay();
+  };
+  const destroy = () => {
+    observer?.disconnect();
+    observer = null;
+    eventController.abort();
+    stopProgress();
+    video.pause();
+  };
+
+  video.addEventListener('play', updateControl, { signal });
+  video.addEventListener('pause', updateControl, { signal });
+  video.addEventListener('ended', updateControl, { signal });
+  video.addEventListener('loadedmetadata', updateProgress, { signal });
+  video.addEventListener('durationchange', updateProgress, { signal });
+  video.addEventListener('seeked', updateProgress, { signal });
+  video.addEventListener('timeupdate', updateProgress, { signal });
+  video.addEventListener('loadeddata', () => {
+    failedSources = new WeakSet();
+    media.classList.remove('is-video-error');
+    media.classList.add('is-video-ready');
+    syncAvailability();
+    tryAutoplay();
+  }, { signal });
+  video.addEventListener('error', markVideoError, { signal });
+  video.querySelectorAll('source').forEach((source) => {
+    source.addEventListener('error', handleSourceError, { signal });
   });
   button?.addEventListener('click', () => {
     if (!activeSourceAvailable()) return;
@@ -560,7 +596,7 @@ function setupVideoPlayback(media, video, button, autoplay, {
       video.dataset.userPaused = 'true';
       video.pause();
     }
-  });
+  }, { signal });
   updateControl();
   syncAvailability();
 
@@ -570,19 +606,20 @@ function setupVideoPlayback(media, video, button, autoplay, {
     video.load();
     syncAvailability();
     tryAutoplay();
-  });
+  }, { signal });
 
-  if (!canAutoplay) return;
+  if (!canAutoplay) return { setActive, destroy };
   if (!('IntersectionObserver' in window)) {
     tryAutoplay();
-    return;
+    return { setActive, destroy };
   }
-  const observer = new IntersectionObserver(([entry]) => {
+  observer = new IntersectionObserver(([entry]) => {
     isIntersecting = entry.isIntersecting;
     if (isIntersecting) tryAutoplay();
     else video.pause();
   }, { threshold: 0.25 });
   observer.observe(media);
+  return { setActive, destroy };
 }
 
 function appendResponsiveSources(targetPicture, sourcePicture, mediaRange) {
@@ -675,6 +712,10 @@ export function createMedia(root, {
   const mobileVideoUrl = propUrl(root, 'mobileVideo');
   const mobileMedia = window.matchMedia(MOBILE_MEDIA_QUERY);
   let video = null;
+  let playback = {
+    setActive: () => {},
+    destroy: () => {},
+  };
   if (videoUrl || mobileVideoUrl) {
     video = document.createElement('video');
     video.className = 'product-video';
@@ -710,7 +751,7 @@ export function createMedia(root, {
       button.append(icon);
       media.append(button);
     }
-    setupVideoPlayback(media, video, button, autoplay, {
+    playback = setupVideoPlayback(media, video, button, autoplay, {
       hasActiveSource: () => Boolean(resolveResponsiveDefault(
         videoUrl,
         mobileVideoUrl,
@@ -719,7 +760,7 @@ export function createMedia(root, {
       sourceMedia: mobileVideoUrl ? mobileMedia : null,
     });
   }
-  return { element: media, video };
+  return { element: media, video, ...playback };
 }
 
 export function revealElements(block, selector, enabled = true) {
@@ -744,10 +785,19 @@ export function setupTabs(block, tabs, panels, {
   interval = 4000,
   onChange = () => {},
 } = {}) {
+  productTabInstances.get(block)?.();
   if (!tabs.length || tabs.length !== panels.length) return () => {};
+  const eventController = new AbortController();
+  const { signal } = eventController;
+  const instanceId = `${block.dataset.productBlock || 'product'}-tabs-${productTabsInstance += 1}`;
   let active = 0;
   let timer = null;
+  let destroyed = false;
+  const listen = (target, type, handler, options = {}) => {
+    target.addEventListener(type, handler, { ...options, signal });
+  };
   const activate = (index, focus = false) => {
+    if (destroyed) return;
     active = (index + tabs.length) % tabs.length;
     tabs.forEach((tab, itemIndex) => {
       const selected = itemIndex === active;
@@ -764,24 +814,24 @@ export function setupTabs(block, tabs, panels, {
   };
   const start = () => {
     stop();
-    if (!autoPlay || tabs.length < 2 || prefersReducedMotion()) return;
+    if (destroyed || !autoPlay || tabs.length < 2 || prefersReducedMotion()) return;
     timer = window.setInterval(() => activate(active + 1), Math.max(2000, interval));
   };
   tabs.forEach((tab, index) => {
     const panel = panels[index];
-    const tabId = `${block.id || block.dataset.productBlock || 'product'}-tab-${index + 1}`;
-    const panelId = `${block.id || block.dataset.productBlock || 'product'}-panel-${index + 1}`;
+    const tabId = `${instanceId}-tab-${index + 1}`;
+    const panelId = `${instanceId}-panel-${index + 1}`;
     tab.id = tabId;
     tab.setAttribute('role', 'tab');
     tab.setAttribute('aria-controls', panelId);
     panel.id = panelId;
     panel.setAttribute('role', 'tabpanel');
     panel.setAttribute('aria-labelledby', tabId);
-    tab.addEventListener('click', () => {
+    listen(tab, 'click', () => {
       activate(index);
       start();
     });
-    tab.addEventListener('keydown', (event) => {
+    listen(tab, 'keydown', (event) => {
       const keys = {
         ArrowRight: index + 1,
         ArrowDown: index + 1,
@@ -796,16 +846,26 @@ export function setupTabs(block, tabs, panels, {
       start();
     });
   });
-  block.addEventListener('mouseenter', stop);
-  block.addEventListener('mouseleave', start);
-  block.addEventListener('focusin', stop);
-  block.addEventListener('focusout', start);
-  document.addEventListener('visibilitychange', () => {
+  listen(block, 'mouseenter', stop);
+  listen(block, 'mouseleave', start);
+  listen(block, 'focusin', stop);
+  listen(block, 'focusout', start);
+  listen(document, 'visibilitychange', () => {
     if (document.hidden) stop();
     else start();
   });
+  const cleanup = () => {
+    if (destroyed) return;
+    destroyed = true;
+    stop();
+    eventController.abort();
+    if (productTabInstances.get(block) === cleanup) productTabInstances.delete(block);
+  };
+  productTabInstances.set(block, cleanup);
+  listen(block, 'aem:block-unload', cleanup, { once: true });
   activate(0);
   start();
+  activate.destroy = cleanup;
   return activate;
 }
 

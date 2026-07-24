@@ -31,6 +31,10 @@ test('product detail picture group uses one canonical namespace', async () => {
     config.definitions[0].plugins.xwalk.page.template.name,
     'Lixiang Product Detail Picture Group',
   );
+  assert.equal(
+    config.definitions[1].plugins.xwalk.page.template.filter,
+    undefined,
+  );
   assert.match(sectionSource, /"lixiang-product-detail-picture-group"/);
   assert.match(productUtils, /'lixiang-product-detail-picture-group':/);
   assert.match(productUtils, /'lixiang-product-detail-picture-group-item':/);
@@ -56,18 +60,22 @@ test('dialog exposes only design-backed themes, spacing, copy, and media fields'
     'classes',
   ]);
   assert.equal(container.title.component, 'text');
-  assert.deepEqual(
-    container.classes.options[0].children.map(({ value }) => value),
-    ['light', 'gray'],
-  );
-  assert.deepEqual(
-    container.classes.options[1].children.map(({ value }) => value),
-    ['space-large', 'space-small', 'space-none'],
-  );
-  assert.deepEqual(
-    container.classes.options[2].children.map(({ value }) => value),
-    ['picture-gap-large', 'picture-gap-small'],
-  );
+  assert.equal(container.classes.component, 'select');
+  assert.equal(container.classes.value, 'light space-large picture-gap-large');
+  assert.equal(container.classes.options.length, 12);
+  container.classes.options.forEach(({ value }) => {
+    const tokens = value.split(' ');
+    assert.equal(tokens.filter((token) => ['light', 'gray'].includes(token)).length, 1);
+    assert.equal(tokens.filter((token) => [
+      'space-large',
+      'space-small',
+      'space-none',
+    ].includes(token)).length, 1);
+    assert.equal(tokens.filter((token) => [
+      'picture-gap-large',
+      'picture-gap-small',
+    ].includes(token)).length, 1);
+  });
   assert.deepEqual(Object.keys(pictureSet), ['groupKey', 'title', 'description']);
   assert.deepEqual(Object.keys(picture), [
     'image',
@@ -129,6 +137,8 @@ test('parallax uses a centered 1.4x canvas and respects reduced motion', () => {
   assert.match(blockJs, /if \(prefersReducedMotion\(\)\) return/);
   assert.match(blockJs, /productDetailPictureGroupMotion\?\.abort\(\)/);
   assert.match(blockJs, /addEventListener\('scroll', requestUpdate, \{ passive: true, signal: controller\.signal \}\)/);
+  assert.match(blockJs, /block\.addEventListener\('aem:block-unload', cleanup/);
+  assert.match(blockJs, /panelEntries\.forEach\(\(\{ destroy \}\) => destroy\(\)\)/);
 });
 
 test('rendering preserves flat sibling instrumentation, responsive media, and isolated controls', () => {
@@ -142,10 +152,19 @@ test('rendering preserves flat sibling instrumentation, responsive media, and is
       'lixiang-product-detail-picture-item',
     ],
   );
+  assert.equal(config.filters.length, 1);
   assert.match(blockJs, /moveItemInstrumentation\(item, figure\)/);
   assert.match(blockJs, /moveItemInstrumentation\(group, panel\)/);
+  assert.match(blockJs, /instrumentProp\(group, 'title', button\)/);
+  assert.match(blockJs, /instrumentProp\(group, 'description', description\)/);
+  assert.match(blockJs, /instrumentProp\(item, 'description', detail\)/);
   assert.match(blockJs, /showControls:\s*propBoolean\(block, 'showVideoControl', true\)/);
   assert.match(blockJs, /setupTabs\(block, buttons, panels\)/);
+  assert.match(productUtils, /const productTabInstances = new WeakMap\(\)/);
+  assert.match(productUtils, /const instanceId = `\$\{block\.dataset\.productBlock \|\| 'product'\}-tabs-\$\{productTabsInstance \+= 1\}`/);
+  assert.match(productUtils, /listen\(document, 'visibilitychange'/);
+  assert.match(productUtils, /listen\(block, 'aem:block-unload', cleanup/);
+  assert.match(productUtils, /activate\.destroy = cleanup/);
   assert.match(productUtils, /loading === 'lazy' && 'IntersectionObserver' in window/);
   assert.match(productUtils, /if \(image\.complete && !image\.naturalWidth\) recoverImage\(\)/);
   assert.match(blockCss, /\.lixiang-product-detail-picture-group-tabs button:focus-visible/);

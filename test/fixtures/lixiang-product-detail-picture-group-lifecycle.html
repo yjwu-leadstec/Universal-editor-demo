@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product detail picture group lifecycle fixture</title>
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/blocks/lixiang-product-detail-picture-group/lixiang-product-detail-picture-group.css">
+  <style>
+    body { margin: 0; }
+    main { overflow: hidden; }
+    .fixture-controls { position: fixed; z-index: 10000; top: 8px; left: 8px; }
+    .fixture-tabs { min-height: 160px; padding: 24px; background: #fff; }
+  </style>
+</head>
+<body>
+  <header></header>
+  <div class="fixture-controls">
+    <button id="unload-detail" type="button">Unload first picture group</button>
+    <button id="unload-tabs" type="button">Unload shared tabs</button>
+    <button id="replace-tabs" type="button">Replace shared tabs</button>
+  </div>
+  <main></main>
+  <footer></footer>
+  <script type="module">
+    import decoratePictureGroup from '/blocks/lixiang-product-detail-picture-group/lixiang-product-detail-picture-group.js';
+    import { setupTabs } from '/scripts/product-block-utils.js';
+
+    const images = [
+      '/scraped-images/liauto/homepage/brand-story/banner-01.jpg',
+      '/scraped-images/liauto/homepage/brand-story/banner-02.jpg',
+    ];
+    const appendField = (root, name, value, richText = false) => {
+      const field = document.createElement('div');
+      field.dataset.aueProp = name;
+      if (richText) {
+        const paragraph = document.createElement('p');
+        paragraph.textContent = value;
+        field.append(paragraph);
+      } else {
+        field.textContent = value;
+      }
+      root.append(field);
+    };
+    const createPictureGroup = (instance) => {
+      const block = document.createElement('div');
+      block.className = 'lixiang-product-detail-picture-group light space-small picture-gap-small';
+      block.dataset.blockName = 'lixiang-product-detail-picture-group';
+      block.dataset.blockStatus = 'loaded';
+      appendField(block, 'title', `Picture Group ${instance}`);
+      appendField(block, 'description', `Container description ${instance}`, true);
+      appendField(block, 'showVideoControl', 'true');
+      appendField(block, 'showProgress', 'true');
+      appendField(block, 'enableMotion', 'true');
+
+      ['Exterior', 'Interior'].forEach((label, setIndex) => {
+        const group = document.createElement('div');
+        group.dataset.aueModel = 'lixiang-product-detail-picture-group-item';
+        appendField(group, 'groupKey', `${instance}-${setIndex + 1}`);
+        appendField(group, 'title', `${label} ${instance}`);
+        appendField(group, 'description', `${label} description ${instance}`, true);
+        block.append(group);
+
+        const pictureItem = document.createElement('div');
+        pictureItem.dataset.aueModel = 'lixiang-product-detail-picture-item';
+        const imageField = document.createElement('div');
+        imageField.dataset.aueProp = 'image';
+        const picture = document.createElement('picture');
+        const image = document.createElement('img');
+        image.src = images[setIndex];
+        image.alt = `${label} ${instance}`;
+        picture.append(image);
+        imageField.append(picture);
+        pictureItem.append(imageField);
+        appendField(pictureItem, 'imageAlt', `${label} ${instance}`);
+        appendField(pictureItem, 'mobileImage', '');
+        appendField(pictureItem, 'mobileImageAlt', '');
+        appendField(
+          pictureItem,
+          'video',
+          instance === 1 && setIndex === 0
+            ? '/scraped-images/liauto/homepage/brand-story/video-01-home.mp4'
+            : '',
+        );
+        appendField(pictureItem, 'mobileVideo', '');
+        appendField(pictureItem, 'title', `${label} caption ${instance}`);
+        appendField(pictureItem, 'description', `${label} detail ${instance}`, true);
+        block.append(pictureItem);
+      });
+
+      document.querySelector('main').append(block);
+      decoratePictureGroup(block);
+      return block;
+    };
+
+    const pictureGroups = [createPictureGroup(1), createPictureGroup(2)];
+    const sharedTabs = document.createElement('section');
+    sharedTabs.className = 'fixture-tabs';
+    sharedTabs.dataset.productBlock = 'fixture-shared-tabs';
+    document.querySelector('main').append(sharedTabs);
+    let sharedTabsController = null;
+    const replaceSharedTabs = () => {
+      const buttons = ['One', 'Two'].map((label) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = label;
+        return button;
+      });
+      const panels = ['Panel one', 'Panel two'].map((label) => {
+        const panel = document.createElement('section');
+        panel.textContent = label;
+        return panel;
+      });
+      sharedTabs.replaceChildren(...buttons, ...panels);
+      sharedTabsController = setupTabs(sharedTabs, buttons, panels, {
+        autoPlay: true,
+        interval: 2000,
+      });
+    };
+    replaceSharedTabs();
+
+    document.querySelector('#unload-detail').addEventListener('click', () => {
+      document.documentElement.dataset.detailUnloadRequested = 'true';
+      pictureGroups[0].dispatchEvent(new CustomEvent('aem:block-unload'));
+    });
+    document.querySelector('#unload-tabs').addEventListener('click', () => {
+      document.documentElement.dataset.tabsUnloadRequested = 'true';
+      sharedTabs.dispatchEvent(new CustomEvent('aem:block-unload'));
+    });
+    document.querySelector('#replace-tabs').addEventListener('click', () => {
+      document.documentElement.dataset.tabsReplaceRequested = 'true';
+      sharedTabsController?.destroy?.();
+      replaceSharedTabs();
+    });
+  </script>
+</body>
+</html>

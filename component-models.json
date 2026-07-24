@@ -2331,54 +2331,59 @@
         "value": true
       },
       {
-        "component": "multiselect",
+        "component": "select",
         "name": "classes",
         "label": "Design Style",
         "valueType": "string",
-        "maxSize": 3,
+        "value": "light space-large picture-gap-large",
         "options": [
           {
-            "name": "Background",
-            "children": [
-              {
-                "name": "White",
-                "value": "light"
-              },
-              {
-                "name": "Gray",
-                "value": "gray"
-              }
-            ]
+            "name": "White · Large Spacing · Large Picture Gap",
+            "value": "light space-large picture-gap-large"
           },
           {
-            "name": "Outer Spacing",
-            "children": [
-              {
-                "name": "Large (PC 160px / Tablet 64px / Mobile 80px)",
-                "value": "space-large"
-              },
-              {
-                "name": "Small (PC 80px / Tablet 32px / Mobile 40px)",
-                "value": "space-small"
-              },
-              {
-                "name": "None (0px)",
-                "value": "space-none"
-              }
-            ]
+            "name": "White · Large Spacing · Small Picture Gap",
+            "value": "light space-large picture-gap-small"
           },
           {
-            "name": "Title-to-Pictures Gap",
-            "children": [
-              {
-                "name": "Large (PC 80px / Tablet 24px)",
-                "value": "picture-gap-large"
-              },
-              {
-                "name": "Small (PC 56px / Tablet 16px)",
-                "value": "picture-gap-small"
-              }
-            ]
+            "name": "White · Small Spacing · Large Picture Gap",
+            "value": "light space-small picture-gap-large"
+          },
+          {
+            "name": "White · Small Spacing · Small Picture Gap",
+            "value": "light space-small picture-gap-small"
+          },
+          {
+            "name": "White · No Spacing · Large Picture Gap",
+            "value": "light space-none picture-gap-large"
+          },
+          {
+            "name": "White · No Spacing · Small Picture Gap",
+            "value": "light space-none picture-gap-small"
+          },
+          {
+            "name": "Gray · Large Spacing · Large Picture Gap",
+            "value": "gray space-large picture-gap-large"
+          },
+          {
+            "name": "Gray · Large Spacing · Small Picture Gap",
+            "value": "gray space-large picture-gap-small"
+          },
+          {
+            "name": "Gray · Small Spacing · Large Picture Gap",
+            "value": "gray space-small picture-gap-large"
+          },
+          {
+            "name": "Gray · Small Spacing · Small Picture Gap",
+            "value": "gray space-small picture-gap-small"
+          },
+          {
+            "name": "Gray · No Spacing · Large Picture Gap",
+            "value": "gray space-none picture-gap-large"
+          },
+          {
+            "name": "Gray · No Spacing · Small Picture Gap",
+            "value": "gray space-none picture-gap-small"
           }
         ]
       }
@@ -3002,45 +3007,47 @@
         ]
       },
       {
-        "component": "multiselect",
+        "component": "select",
         "name": "classes",
         "label": "Style",
         "valueType": "string",
-        "maxSize": 2,
+        "value": "light space-small",
         "options": [
           {
-            "name": "Background",
-            "children": [
-              {
-                "name": "White (#FFFFFF)",
-                "value": "light"
-              },
-              {
-                "name": "Black (#000000)",
-                "value": "dark"
-              },
-              {
-                "name": "Gray (#FAFAFA)",
-                "value": "gray"
-              }
-            ]
+            "name": "White · Large Spacing",
+            "value": "light space-large"
           },
           {
-            "name": "Spacing",
-            "children": [
-              {
-                "name": "Large (PC 160px / Mobile 80px)",
-                "value": "space-large"
-              },
-              {
-                "name": "Small (PC 80px / Mobile 60px)",
-                "value": "space-small"
-              },
-              {
-                "name": "None (0px)",
-                "value": "space-none"
-              }
-            ]
+            "name": "White · Small Spacing",
+            "value": "light space-small"
+          },
+          {
+            "name": "White · No Spacing",
+            "value": "light space-none"
+          },
+          {
+            "name": "Black · Large Spacing",
+            "value": "dark space-large"
+          },
+          {
+            "name": "Black · Small Spacing",
+            "value": "dark space-small"
+          },
+          {
+            "name": "Black · No Spacing",
+            "value": "dark space-none"
+          },
+          {
+            "name": "Gray · Large Spacing",
+            "value": "gray space-large"
+          },
+          {
+            "name": "Gray · Small Spacing",
+            "value": "gray space-small"
+          },
+          {
+            "name": "Gray · No Spacing",
+            "value": "gray space-none"
           }
         ]
       }
@@ -3111,13 +3118,6 @@
         "name": "note",
         "label": "Note",
         "description": "Displayed only when Show Note is enabled",
-        "valueType": "string"
-      },
-      {
-        "component": "textarea",
-        "name": "metrics",
-        "label": "Published Metrics JSON",
-        "description": "Fallback for published markup when nested statistics are unavailable",
         "valueType": "string"
       },
       {
