@@ -28,9 +28,9 @@
 
 ## 5. AEM migration and visual verification
 
-- [ ] 5.1 Deploy the canonical source and generated component configuration.
-- [ ] 5.2 Migrate active, aligned, and backup Li-L6 container/set/media metadata.
-- [ ] 5.3 Verify repository and `/content/demo-site` contain zero legacy `picture-group` identities.
-- [ ] 5.4 Publish the active Li-L6 page.
-- [ ] 5.5 Verify Author and Preview at 1920, 1440, 1024, 768, and 390px with no block errors, console errors, or horizontal overflow.
-- [ ] 5.6 Record final migration and visual evidence.
+- [x] 5.1 Deploy the canonical source and generated component configuration.
+- [x] 5.2 Migrate active, aligned, and backup Li-L6 container/set/media metadata.
+- [x] 5.3 Verify repository and `/content/demo-site` contain zero legacy `picture-group` identities.
+- [x] 5.4 Publish the active Li-L6 page.
+- [x] 5.5 Verify Author and Preview at 1920, 1440, 1024, 768, and 390px with no block errors, component console errors, or horizontal overflow.
+- [x] 5.6 Record final migration and visual evidence.
