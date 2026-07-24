@@ -1,0 +1,875 @@
+main .lixiang-product-intro-carousel {
+  --product-intro-divider: rgb(0 0 0 / 10%);
+  --product-intro-tag: var(--product-accent);
+  --product-intro-unit: var(--product-copy);
+  --product-intro-ratio: 16 / 9;
+
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+  overflow: hidden;
+}
+
+main .lixiang-product-intro-carousel.dark,
+main .lixiang-product-intro-carousel.light-copy {
+  --product-intro-divider: rgb(255 255 255 / 20%);
+}
+
+main .lixiang-product-intro-carousel .feature-media-shell {
+  width: min(100% - 40px, 1480px);
+  margin-inline: auto;
+}
+
+main .lixiang-product-intro-carousel .product-section-header {
+  width: 100%;
+  max-width: 1152px;
+  margin-inline: 0;
+  text-align: left;
+}
+
+main .lixiang-product-intro-carousel .product-title,
+main .lixiang-product-intro-carousel .product-description {
+  margin-inline: 0;
+}
+
+main .lixiang-product-intro-carousel .feature-media-content {
+  position: relative;
+}
+
+main .lixiang-product-intro-carousel .feature-media-panels {
+  position: relative;
+}
+
+main .lixiang-product-intro-carousel .feature-media-panels > .feature-media-item[hidden] {
+  display: none;
+}
+
+main .lixiang-product-intro-carousel .feature-media-item {
+  overflow: hidden;
+  background: var(--product-card-bg);
+  border-radius: 4px;
+}
+
+main .lixiang-product-intro-carousel .product-media {
+  aspect-ratio: var(--product-intro-ratio);
+  border-radius: 4px 4px 0 0;
+}
+
+main .lixiang-product-intro-carousel.ratio-235-100 .product-media {
+  --product-intro-ratio: 2.35 / 1;
+}
+
+main .lixiang-product-intro-carousel.ratio-4-3 .product-media {
+  --product-intro-ratio: 4 / 3;
+}
+
+main .lixiang-product-intro-carousel .product-intro-video-link {
+  display: inline-flex;
+  margin-block-start: 20px;
+  align-items: center;
+  color: var(--product-copy);
+  text-decoration: none;
+}
+
+main .lixiang-product-intro-carousel .product-intro-video-link::after {
+  margin-inline-start: 8px;
+  content: "↗";
+}
+
+main .lixiang-product-intro-carousel .product-intro-video-link:focus-visible {
+  outline: 2px solid var(--product-accent);
+  outline-offset: 4px;
+}
+
+main .lixiang-product-intro-carousel .product-intro-highlights {
+  display: flex;
+  max-width: 1180px;
+  margin: 0 auto 56px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px 48px;
+}
+
+main .lixiang-product-intro-carousel .product-intro-highlight-group {
+  display: grid;
+  flex: 0 1 auto;
+  grid-auto-columns: minmax(150px, 1fr);
+  grid-auto-flow: column;
+  break-inside: avoid;
+  gap: 24px;
+}
+
+main .lixiang-product-intro-carousel .product-intro-highlight {
+  min-width: 150px;
+  color: var(--product-copy);
+  text-align: center;
+}
+
+main .lixiang-product-intro-carousel .product-intro-highlight-tag {
+  margin: 0 0 8px;
+  color: var(--product-intro-tag);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+main .lixiang-product-intro-carousel .product-intro-highlight-value {
+  margin: 0;
+  color: var(--product-intro-unit);
+}
+
+main .lixiang-product-intro-carousel .product-intro-highlight-value strong {
+  color: var(--product-copy);
+  font-size: clamp(28px, 2.5vw, 48px);
+  font-weight: 400;
+}
+
+main .lixiang-product-intro-carousel .product-intro-highlight-value span {
+  margin-inline-start: 6px;
+  font-size: 16px;
+}
+
+main .lixiang-product-intro-carousel .product-intro-highlight-description {
+  margin-block-start: 8px;
+  color: var(--product-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+main .lixiang-product-intro-carousel .product-intro-highlight-description > :first-child {
+  margin-block-start: 0;
+}
+
+main .lixiang-product-intro-carousel .product-intro-highlight-description > :last-child {
+  margin-block-end: 0;
+}
+
+main .lixiang-product-intro-carousel .feature-media-copy {
+  padding: 24px 28px 30px;
+  color: var(--product-copy);
+}
+
+main .lixiang-product-intro-carousel .feature-media-eyebrow {
+  margin: 0 0 10px;
+  color: var(--product-accent);
+  font-size: 14px;
+}
+
+main .lixiang-product-intro-carousel .feature-media-copy h3 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: clamp(22px, 2.4vw, 36px);
+  font-weight: 500;
+  white-space: pre-line;
+}
+
+main .lixiang-product-intro-carousel .feature-media-description,
+main .lixiang-product-intro-carousel .feature-media-note {
+  margin-block-start: 12px;
+  color: var(--product-muted);
+  line-height: 1.6;
+}
+
+main .lixiang-product-intro-carousel .feature-media-note {
+  white-space: pre-line;
+}
+
+main .lixiang-product-intro-carousel .feature-media-description p,
+main .lixiang-product-intro-carousel .feature-media-note {
+  margin-block-end: 0;
+}
+
+main .lixiang-product-intro-carousel .feature-media-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  background: var(--product-card-bg);
+  border-radius: 0 0 4px 4px;
+}
+
+main .lixiang-product-intro-carousel .feature-media-tabs .feature-media-tab {
+  position: relative;
+  max-width: none;
+  min-height: 70px;
+  padding: 16px;
+  color: var(--product-muted);
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+main .lixiang-product-intro-carousel .feature-media-tabs .feature-media-tab::after {
+  position: absolute;
+  right: 50%;
+  bottom: 10px;
+  left: 50%;
+  height: 2px;
+  background: var(--product-accent);
+  content: '';
+  transition: right 250ms ease, left 250ms ease;
+}
+
+main .lixiang-product-intro-carousel .feature-media-tabs .feature-media-tab[aria-selected="true"] {
+  color: var(--product-copy);
+}
+
+main .lixiang-product-intro-carousel .feature-media-tabs .feature-media-tab[aria-selected="true"]::after {
+  right: max(12px, calc(50% - 49px));
+  left: max(12px, calc(50% - 49px));
+}
+
+main .lixiang-product-intro-carousel.variant-default .feature-media-shell {
+  width: min(77.0833vw, 1480px);
+}
+
+main .lixiang-product-intro-carousel.variant-default {
+  font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+main .lixiang-product-intro-carousel.variant-default .product-section-header {
+  width: min(56.7568%, 840px);
+  max-width: none;
+  margin-inline-start: 11.0811%;
+  margin-block-end: clamp(42px, 2.9167vw, 56px);
+}
+
+main .lixiang-product-intro-carousel.variant-default .product-title {
+  max-width: none;
+  font-family: licium-medium, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: clamp(24px, 2.3958vw, 46px);
+  font-weight: 400;
+  line-height: 1.3478;
+}
+
+main .lixiang-product-intro-carousel.variant-default .product-description {
+  max-width: none;
+  margin-block-start: clamp(12px, 0.8333vw, 16px);
+  font-size: clamp(12px, 0.8333vw, 16px);
+  line-height: 1.5;
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-content {
+  display: flex;
+  flex-direction: column;
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-panels {
+  order: 1;
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding-block: clamp(18px, 1.25vw, 24px) 2px;
+  order: 3;
+  background: transparent;
+  border-radius: 0;
+  gap: clamp(30px, 2.0833vw, 40px);
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs::after {
+  position: absolute;
+  z-index: 0;
+  inset: auto 0 0;
+  height: 2px;
+  background: var(--product-intro-divider);
+  content: '';
+  pointer-events: none;
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs .feature-media-tab {
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  min-width: 98px;
+  min-height: clamp(30px, 2.0833vw, 40px);
+  margin: 0;
+  padding: 0;
+  color: var(--product-muted);
+  font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: clamp(12px, 0.8333vw, 16px);
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs .feature-media-tab::after {
+  inset: auto 0 -2px;
+  width: 100%;
+  background: transparent;
+  transition: background-color 200ms ease;
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs .feature-media-tab[aria-selected="true"] {
+  color: var(--product-copy);
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs .feature-media-tab[aria-selected="true"]::after {
+  background: var(--product-accent);
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs .feature-media-tab:focus-visible {
+  outline: none;
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs .feature-media-tab:focus-visible::after {
+  background: var(--product-accent);
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copies {
+  display: grid;
+  min-height: 33px;
+  padding-block-end: 2px;
+  order: 4;
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy {
+  grid-area: 1 / 1;
+  width: min(77.8688%, 1008px);
+  margin: clamp(18px, 1.25vw, 24px) auto 0;
+  padding: 0;
+  color: var(--product-muted);
+  opacity: 0;
+  text-align: center;
+  visibility: hidden;
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+main .lixiang-product-intro-carousel.variant-default .feature-media-single-copy {
+  width: min(77.8688%, 1008px);
+  margin: clamp(18px, 1.25vw, 24px) auto 0;
+  padding: 0;
+  color: var(--product-muted);
+  text-align: center;
+}
+
+main .lixiang-product-intro-carousel.variant-default .feature-media-single-copy .feature-media-description,
+main .lixiang-product-intro-carousel.variant-default .feature-media-single-copy .feature-media-note {
+  margin: 0;
+  color: inherit;
+  font-size: clamp(10.5px, 0.7292vw, 14px);
+  line-height: 1.5;
+}
+
+main .lixiang-product-intro-carousel.variant-default .feature-media-single-copy .feature-media-description p {
+  margin: 0;
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
+  margin: 0;
+  color: inherit;
+  font-size: clamp(10.5px, 0.7292vw, 14px);
+  line-height: 1.5;
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description p {
+  margin: 0;
+}
+
+main .lixiang-product-intro-carousel .feature-media-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+main .lixiang-product-intro-carousel.variant-three-up .feature-media-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+main .lixiang-product-intro-carousel.variant-image-grid .feature-media-grid {
+  grid-template-columns: repeat(12, 1fr);
+}
+
+main .lixiang-product-intro-carousel.variant-image-grid .feature-media-item {
+  grid-column: span 5;
+}
+
+main .lixiang-product-intro-carousel.variant-image-grid .feature-media-item:nth-child(3n + 1) {
+  grid-column: span 7;
+}
+
+main .lixiang-product-intro-carousel.variant-image-grid .product-media {
+  height: 100%;
+  min-height: 360px;
+  aspect-ratio: auto;
+}
+
+main .lixiang-product-intro-carousel.variant-image-grid .product-picture img {
+  height: 140%;
+  transform: translateY(-14%);
+}
+
+main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-item {
+  background: transparent;
+  border-radius: 4px;
+}
+
+main .lixiang-product-intro-carousel.variant-overview .feature-media-grid {
+  display: block;
+}
+
+main .lixiang-product-intro-carousel.variant-overview .feature-media-copy {
+  display: none;
+}
+
+main .lixiang-product-intro-carousel.variant-expandable .feature-media-item:nth-child(n + 3) {
+  display: none;
+}
+
+main .lixiang-product-intro-carousel.variant-expandable .is-expanded .feature-media-item:nth-child(n + 3) {
+  display: block;
+}
+
+main .lixiang-product-intro-carousel .feature-expand-toggle {
+  display: block;
+  min-height: 44px;
+  margin: 32px auto 0;
+  padding: 0 28px;
+  color: var(--product-copy);
+  background: transparent;
+  border: 1px solid currentcolor;
+}
+
+main .lixiang-product-intro-carousel .product-intro-bottom-metrics {
+  display: grid;
+  overflow: hidden;
+  background: var(--product-card-bg);
+  border-radius: 0 0 4px 4px;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  order: 2;
+}
+
+main .lixiang-product-intro-carousel .product-intro-bottom-metrics.is-standalone {
+  max-width: 1180px;
+  margin-inline: auto;
+  border-radius: 4px;
+}
+
+main .lixiang-product-intro-carousel .product-intro-bottom-metric {
+  min-width: 0;
+  padding: 24px;
+  color: var(--product-copy);
+  text-align: center;
+}
+
+main .lixiang-product-intro-carousel .product-intro-bottom-metric + .product-intro-bottom-metric {
+  border-inline-start: 1px solid var(--product-intro-divider);
+}
+
+main .lixiang-product-intro-carousel .product-intro-bottom-metric-value {
+  margin: 0;
+  white-space: nowrap;
+}
+
+main .lixiang-product-intro-carousel .product-intro-bottom-metric-value strong {
+  font-size: clamp(24px, 2.5vw, 40px);
+  font-weight: 400;
+}
+
+main .lixiang-product-intro-carousel .product-intro-bottom-metric-value span {
+  margin-inline-start: 6px;
+  color: var(--product-intro-unit);
+  font-size: 14px;
+}
+
+main .lixiang-product-intro-carousel .product-intro-bottom-metric-title {
+  margin: 8px 0 0;
+  color: var(--product-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+main .lixiang-product-intro-carousel .feature-primary-metric {
+  display: flex;
+  margin: 20px 0 0;
+  align-items: baseline;
+  gap: 6px;
+}
+
+main .lixiang-product-intro-carousel .feature-primary-metric strong {
+  color: var(--product-accent);
+  font-size: 48px;
+}
+
+main .lixiang-product-intro-carousel .feature-primary-metric small {
+  margin-inline-start: 10px;
+  color: var(--product-muted);
+}
+
+main .lixiang-product-intro-carousel.variant-default .product-media {
+  height: auto;
+  min-height: 0;
+  aspect-ratio: var(--product-intro-ratio);
+  border-radius: 4px;
+}
+
+main .lixiang-product-intro-carousel.variant-default.has-bottom-metrics .product-media {
+  border-radius: 4px 4px 0 0;
+}
+
+@media (width <= 1024px) {
+  main .lixiang-product-intro-carousel.variant-three-up .feature-media-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 720px) and (width <= 1440px) {
+  main .lixiang-product-intro-carousel.variant-default .feature-media-shell {
+    width: calc(77.0833vw - 12px);
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .product-section-header {
+    width: min(77.8688%, 630px);
+  }
+}
+
+@media (width >= 1025px) and (width <= 1440px) {
+  main .lixiang-product-intro-carousel.variant-default .product-section-header {
+    margin-block-end: 42px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .product-title {
+    font-size: 34.5px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .product-description {
+    margin-block-start: 12px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs {
+    padding-block-start: 18px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs .feature-media-tab {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy {
+    margin-block-start: 18px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
+    font-size: 10.5px;
+    line-height: 15.75px;
+  }
+}
+
+@media (width >= 769px) and (width <= 1024px) {
+  main .lixiang-product-intro-carousel.variant-default .product-section-header {
+    margin-block-end: 4.1667vw;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .product-title {
+    font-size: 3.4226vw;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .product-description {
+    margin-block-start: 1.1905vw;
+    font-size: 1.1905vw;
+  }
+
+}
+
+@media (width >= 720px) and (width <= 768px) {
+  main .lixiang-product-intro-carousel.variant-default .product-section-header {
+    margin-block-end: 24px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .product-title {
+    font-size: 24px;
+    line-height: 33.6px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .product-description {
+    margin-block-start: 4px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+}
+
+@media (width >= 821px) and (width <= 1024px) {
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs {
+    padding-block-start: 1.7857vw;
+    gap: 2.9762vw;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs .feature-media-tab {
+    min-height: 2.9762vw;
+    font-size: 1.1905vw;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy {
+    margin-block-start: 1.7857vw;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copies {
+    min-height: 3.2738vw;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
+    font-size: 1.0417vw;
+    line-height: 1.5;
+  }
+}
+
+@media (width >= 720px) and (width <= 820px) {
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy {
+    width: 66.6667%;
+    margin-block-start: 8px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copies {
+    min-height: 60px;
+    padding-block-end: 0;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
+    font-size: 12px;
+    line-height: 20px;
+  }
+}
+
+@media (width <= 719px) {
+  main .lixiang-product-intro-carousel .feature-media-shell {
+    width: 100%;
+  }
+
+  main .lixiang-product-intro-carousel .product-section-header {
+    width: 100%;
+    padding-inline: 40px;
+  }
+
+  main .lixiang-product-intro-carousel .feature-media-content,
+  main .lixiang-product-intro-carousel .product-intro-highlights {
+    margin-inline: 20px;
+  }
+
+  main .lixiang-product-intro-carousel .product-intro-highlights {
+    margin-block-end: 40px;
+    gap: 20px;
+  }
+
+  main .lixiang-product-intro-carousel .product-intro-highlight-group {
+    width: 100%;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  main .lixiang-product-intro-carousel .product-intro-highlight {
+    min-width: 0;
+  }
+
+  main .lixiang-product-intro-carousel .product-intro-highlight-value strong {
+    font-size: 28px;
+  }
+
+  main .lixiang-product-intro-carousel .product-intro-highlight-description,
+  main .lixiang-product-intro-carousel .product-intro-bottom-metric-title {
+    font-size: 12px;
+  }
+
+  main .lixiang-product-intro-carousel .product-intro-bottom-metric {
+    padding: 16px 8px;
+  }
+
+  main .lixiang-product-intro-carousel .product-intro-bottom-metric-value strong {
+    font-size: 20px;
+  }
+
+  main .lixiang-product-intro-carousel .product-intro-bottom-metric-value span {
+    margin-inline-start: 3px;
+    font-size: 11px;
+  }
+
+  main .lixiang-product-intro-carousel .feature-media-tabs {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  main .lixiang-product-intro-carousel .feature-media-tabs .feature-media-tab {
+    min-width: 130px;
+    flex: 1 0 auto;
+  }
+
+  main .lixiang-product-intro-carousel .feature-media-grid,
+  main .lixiang-product-intro-carousel.variant-three-up .feature-media-grid,
+  main .lixiang-product-intro-carousel.variant-image-grid .feature-media-grid {
+    grid-template-columns: 1fr;
+  }
+
+  main .lixiang-product-intro-carousel.variant-image-grid .feature-media-item,
+  main .lixiang-product-intro-carousel.variant-image-grid .feature-media-item:nth-child(3n + 1) {
+    grid-column: auto;
+  }
+
+  main .lixiang-product-intro-carousel.variant-image-grid .product-media {
+    min-height: 300px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .feature-media-shell {
+    width: 100%;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .product-section-header {
+    width: 100%;
+    margin-inline: 0;
+    margin-block-end: 40px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .product-title {
+    font-size: 24px;
+    line-height: 1.4;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .product-description {
+    margin-block-start: 8px;
+    font-size: 14px;
+    line-height: 1.5714;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-content {
+    margin-inline: 0;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .product-media {
+    aspect-ratio: var(--product-intro-ratio);
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copies {
+    min-height: 0;
+    padding-block-end: 0;
+    order: 3;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy {
+    width: 100%;
+    box-sizing: border-box;
+    margin-block-start: 0;
+    padding: 16px 40px 0;
+    text-align: left;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .feature-media-single-copy {
+    width: 100%;
+    box-sizing: border-box;
+    margin-block-start: 0;
+    padding: 16px 20px 0;
+    text-align: left;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default .feature-media-single-copy .feature-media-description,
+  main .lixiang-product-intro-carousel.variant-default .feature-media-single-copy .feature-media-note {
+    font-size: 12px;
+    line-height: 1.6667;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy .feature-media-description,
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copy .feature-media-note {
+    font-size: 12px;
+    line-height: 1.6667;
+  }
+
+}
+
+@media (width <= 820px) {
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .product-intro-bottom-metrics {
+    margin-inline: 20px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-panels {
+    display: flex;
+    width: 100%;
+    padding-inline: 16px;
+    overflow-x: auto;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    scroll-padding-inline: 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-panels::-webkit-scrollbar {
+    display: none;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-panels > .feature-media-item,
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-panels > .feature-media-item[hidden] {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding-inline: 4px;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tab-copies {
+    order: 3;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: auto;
+    margin: 40px 40px 0;
+    padding: 0;
+    order: 4;
+    border-left: 1px solid var(--product-intro-divider);
+    gap: 16px;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs::after {
+    display: none;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs .feature-media-tab {
+    justify-content: flex-start;
+    width: 100%;
+    min-width: 0;
+    min-height: 22px;
+    margin: 0;
+    padding: 0 0 0 16px;
+    color: var(--product-muted);
+    font-size: 14px;
+    line-height: 22px;
+    text-align: left;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs .feature-media-tab::after {
+    inset: 0 auto 0 -1px;
+    width: 1px;
+    height: auto;
+    background: transparent;
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs .feature-media-tab[aria-selected="true"] {
+    color: var(--product-copy);
+  }
+
+  main .lixiang-product-intro-carousel.variant-default.is-tabbed .feature-media-tabs .feature-media-tab[aria-selected="true"]::after {
+    z-index: 2;
+    right: auto;
+    left: -1px;
+    width: 2px;
+    background: var(--product-accent);
+    opacity: 1;
+  }
+}

@@ -1277,375 +1277,6 @@
     ]
   },
   {
-    "id": "feature-media-section",
-    "fields": [
-      {
-        "component": "text",
-        "name": "id",
-        "label": "ID",
-        "description": "Optional page anchor",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "eyebrow",
-        "label": "Eyebrow",
-        "valueType": "string"
-      },
-      {
-        "component": "textarea",
-        "name": "title",
-        "label": "Desktop Title",
-        "description": "Manual line breaks are preserved",
-        "valueType": "string"
-      },
-      {
-        "component": "textarea",
-        "name": "mobileTitle",
-        "label": "Mobile Title Override",
-        "description": "Optional; manual line breaks are preserved",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Description",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "name": "variant",
-        "label": "Layout",
-        "valueType": "string",
-        "value": "default",
-        "options": [
-          {
-            "name": "Default Tabs",
-            "value": "default"
-          },
-          {
-            "name": "Overview",
-            "value": "overview"
-          },
-          {
-            "name": "Three Up",
-            "value": "three-up"
-          },
-          {
-            "name": "Image Grid",
-            "value": "image-grid"
-          },
-          {
-            "name": "Expandable",
-            "value": "expandable"
-          },
-          {
-            "name": "Primary Metric",
-            "value": "primary-metric"
-          },
-          {
-            "name": "Statistics",
-            "value": "stat"
-          },
-          {
-            "name": "Overlay Tabs",
-            "value": "overlay-tabs"
-          }
-        ]
-      },
-      {
-        "component": "boolean",
-        "name": "autoPlay",
-        "label": "Autoplay Tabs on PC / Tablet",
-        "description": "Mobile always uses manual horizontal swipe",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "number",
-        "name": "interval",
-        "label": "Autoplay Interval (seconds)",
-        "valueType": "number",
-        "value": 4,
-        "validation": {
-          "numberMin": 2,
-          "numberMax": 12,
-          "customErrorMsg": "Use an interval from 2 to 12 seconds"
-        }
-      },
-      {
-        "component": "boolean",
-        "name": "showVideoControl",
-        "label": "Show Video Control",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "boolean",
-        "name": "showProgress",
-        "label": "Show Video Progress",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "boolean",
-        "name": "enableMotion",
-        "label": "Enable Reveal / Parallax Motion",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "text",
-        "name": "openLabel",
-        "label": "Expandable Open Label",
-        "valueType": "string",
-        "value": "View More"
-      },
-      {
-        "component": "text",
-        "name": "closeLabel",
-        "label": "Expandable Close Label",
-        "valueType": "string",
-        "value": "View Less"
-      },
-      {
-        "component": "text",
-        "name": "accentColor",
-        "label": "Indicator Color",
-        "description": "Hex color, for example #dbad76",
-        "valueType": "string",
-        "value": "#dbad76",
-        "validation": {
-          "regExp": "^#[0-9a-fA-F]{6}$",
-          "customErrorMsg": "Enter a six-digit hex color such as #dbad76"
-        }
-      },
-      {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Style",
-        "valueType": "string",
-        "maxSize": 4,
-        "options": [
-          {
-            "name": "Background",
-            "children": [
-              {
-                "name": "White (#FFFFFF)",
-                "value": "light"
-              },
-              {
-                "name": "Black (#000000)",
-                "value": "dark"
-              },
-              {
-                "name": "Gray (#FAFAFA)",
-                "value": "gray"
-              }
-            ]
-          },
-          {
-            "name": "Text Color",
-            "children": [
-              {
-                "name": "White (#FFFFFF)",
-                "value": "light-copy"
-              },
-              {
-                "name": "Black (#191919)",
-                "value": "dark-copy"
-              }
-            ]
-          },
-          {
-            "name": "Spacing",
-            "children": [
-              {
-                "name": "Large (PC 160px / Mobile 80px)",
-                "value": "space-large"
-              },
-              {
-                "name": "Small (PC 80px / Mobile 60px)",
-                "value": "space-small"
-              },
-              {
-                "name": "None (0px)",
-                "value": "space-none"
-              }
-            ]
-          },
-          {
-            "name": "Media Ratio",
-            "children": [
-              {
-                "name": "16:9",
-                "value": "ratio-16-9"
-              },
-              {
-                "name": "2.35:1",
-                "value": "ratio-235-100"
-              },
-              {
-                "name": "4:3",
-                "value": "ratio-4-3"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "feature-media-item",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Desktop Poster / Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "imageAlt",
-        "label": "Desktop Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "mobileImage",
-        "label": "Mobile Poster / Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "mobileImageAlt",
-        "label": "Mobile Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "video",
-        "label": "Desktop Video URL",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "mobileVideo",
-        "label": "Mobile Video URL",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "eyebrow",
-        "label": "Eyebrow / Tab Label",
-        "valueType": "string"
-      },
-      {
-        "component": "textarea",
-        "name": "title",
-        "label": "Title",
-        "description": "Manual line breaks are preserved",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Description",
-        "valueType": "string"
-      },
-      {
-        "component": "textarea",
-        "name": "note",
-        "label": "Optional Note",
-        "description": "Leave empty to hide; manual line breaks are preserved",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "primaryValue",
-        "label": "Primary Metric Value",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "primaryUnit",
-        "label": "Primary Metric Unit",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "primaryLabel",
-        "label": "Primary Metric Label",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "linkText",
-        "label": "Link Text",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "name": "linkType",
-        "label": "Link Type",
-        "valueType": "string",
-        "value": "text",
-        "options": [
-          {
-            "name": "Text",
-            "value": "text"
-          },
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "feature-stat-item",
-    "fields": [
-      {
-        "component": "text",
-        "name": "value",
-        "label": "Value",
-        "valueType": "string",
-        "required": true
-      },
-      {
-        "component": "text",
-        "name": "unit",
-        "label": "Unit",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "label",
-        "label": "Label",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Description",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "fragment",
     "fields": [
       {
@@ -2960,6 +2591,448 @@
         "component": "text",
         "name": "note",
         "label": "Note",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-intro-carousel",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "eyebrow",
+        "label": "Eyebrow",
+        "valueType": "string"
+      },
+      {
+        "component": "textarea",
+        "name": "title",
+        "label": "Desktop Title",
+        "description": "Manual line breaks are preserved",
+        "valueType": "string"
+      },
+      {
+        "component": "textarea",
+        "name": "mobileTitle",
+        "label": "Mobile Title Override",
+        "description": "Optional; manual line breaks are preserved",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "videoLink",
+        "label": "Optional Header Video Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "videoLinkText",
+        "label": "Header Video Link Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "variant",
+        "label": "Layout",
+        "valueType": "string",
+        "value": "default",
+        "options": [
+          {
+            "name": "Default Tabs",
+            "value": "default"
+          },
+          {
+            "name": "Overview",
+            "value": "overview"
+          },
+          {
+            "name": "Three Up",
+            "value": "three-up"
+          },
+          {
+            "name": "Image Grid",
+            "value": "image-grid"
+          },
+          {
+            "name": "Expandable",
+            "value": "expandable"
+          },
+          {
+            "name": "Primary Metric",
+            "value": "primary-metric"
+          },
+          {
+            "name": "Statistics",
+            "value": "stat"
+          }
+        ]
+      },
+      {
+        "component": "boolean",
+        "name": "autoPlay",
+        "label": "Autoplay Tabs on PC / Tablet",
+        "description": "Mobile always uses manual horizontal swipe; reduced-motion preferences disable autoplay",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "number",
+        "name": "interval",
+        "label": "Autoplay Interval (seconds)",
+        "valueType": "number",
+        "value": 4,
+        "validation": {
+          "numberMin": 2,
+          "numberMax": 12,
+          "customErrorMsg": "Use an interval from 2 to 12 seconds"
+        }
+      },
+      {
+        "component": "boolean",
+        "name": "showVideoControl",
+        "label": "Show Video Control",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "boolean",
+        "name": "showProgress",
+        "label": "Show Video Progress",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "boolean",
+        "name": "enableMotion",
+        "label": "Enable Reveal / Parallax Motion",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "boolean",
+        "name": "showHighlightTags",
+        "label": "Show Highlight Tags",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "text",
+        "name": "openLabel",
+        "label": "Expandable Open Label",
+        "valueType": "string",
+        "value": "View More"
+      },
+      {
+        "component": "text",
+        "name": "closeLabel",
+        "label": "Expandable Close Label",
+        "valueType": "string",
+        "value": "View Less"
+      },
+      {
+        "component": "text",
+        "name": "accentColor",
+        "label": "Indicator Color",
+        "description": "Hex color, for example #dbad76",
+        "valueType": "string",
+        "value": "#dbad76",
+        "validation": {
+          "regExp": "^#[0-9a-fA-F]{6}$",
+          "customErrorMsg": "Enter a six-digit hex color such as #dbad76"
+        }
+      },
+      {
+        "component": "text",
+        "name": "highlightTagColor",
+        "label": "Highlight Tag Color",
+        "description": "Optional six-digit hex color",
+        "valueType": "string",
+        "validation": {
+          "regExp": "^$|^#[0-9a-fA-F]{6}$",
+          "customErrorMsg": "Enter a six-digit hex color such as #dbad76"
+        }
+      },
+      {
+        "component": "text",
+        "name": "highlightUnitColor",
+        "label": "Highlight Unit Color",
+        "description": "Optional six-digit hex color",
+        "valueType": "string",
+        "validation": {
+          "regExp": "^$|^#[0-9a-fA-F]{6}$",
+          "customErrorMsg": "Enter a six-digit hex color such as #191919"
+        }
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Style",
+        "description": "Select exactly one option from each group",
+        "valueType": "string",
+        "maxSize": 4,
+        "options": [
+          {
+            "name": "Background",
+            "children": [
+              {
+                "name": "White (#FFFFFF)",
+                "value": "light"
+              },
+              {
+                "name": "Black (#000000)",
+                "value": "dark"
+              },
+              {
+                "name": "Gray (#FAFAFA)",
+                "value": "gray"
+              }
+            ]
+          },
+          {
+            "name": "Text Color",
+            "children": [
+              {
+                "name": "White (#FFFFFF)",
+                "value": "light-copy"
+              },
+              {
+                "name": "Black (#191919)",
+                "value": "dark-copy"
+              }
+            ]
+          },
+          {
+            "name": "Spacing",
+            "children": [
+              {
+                "name": "Large (PC 160px / Mobile 80px)",
+                "value": "space-large"
+              },
+              {
+                "name": "Small (PC 80px / Mobile 60px)",
+                "value": "space-small"
+              },
+              {
+                "name": "None (0px)",
+                "value": "space-none"
+              }
+            ]
+          },
+          {
+            "name": "Media Ratio",
+            "children": [
+              {
+                "name": "16:9",
+                "value": "ratio-16-9"
+              },
+              {
+                "name": "2.35:1",
+                "value": "ratio-235-100"
+              },
+              {
+                "name": "4:3",
+                "value": "ratio-4-3"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-intro-slide",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop Poster / Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Poster / Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "video",
+        "label": "Desktop Video URL",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "mobileVideo",
+        "label": "Mobile Video URL",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "eyebrow",
+        "label": "Eyebrow / Tab Label",
+        "valueType": "string"
+      },
+      {
+        "component": "textarea",
+        "name": "title",
+        "label": "Title",
+        "description": "Manual line breaks are preserved",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "textarea",
+        "name": "note",
+        "label": "Optional Note",
+        "description": "Leave empty to hide; manual line breaks are preserved",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "primaryValue",
+        "label": "Primary Metric Value",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "primaryUnit",
+        "label": "Primary Metric Unit",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "primaryLabel",
+        "label": "Primary Metric Label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "Link Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "linkType",
+        "label": "Link Type",
+        "valueType": "string",
+        "value": "text",
+        "options": [
+          {
+            "name": "Text",
+            "value": "text"
+          },
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-intro-highlight-group",
+    "fields": [
+      {
+        "component": "text",
+        "name": "groupKey",
+        "label": "Group Key",
+        "description": "Optional authoring identifier; not displayed",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-intro-highlight",
+    "fields": [
+      {
+        "component": "text",
+        "name": "value",
+        "label": "Value",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "unit",
+        "label": "Unit",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "tag",
+        "label": "Tag",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-intro-metric",
+    "fields": [
+      {
+        "component": "text",
+        "name": "unit",
+        "label": "Unit",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "value",
+        "label": "Value",
         "valueType": "string"
       }
     ]

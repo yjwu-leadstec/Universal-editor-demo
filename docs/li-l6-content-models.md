@@ -100,27 +100,35 @@ The dialog recommends three to four cards but the runtime accepts one or more, i
 
 No free-form coordinates are exposed. `fullVideo` is intentionally separate from the muted preview video.
 
-## Feature Media Section — mixed collection
+## Li Xiang Product Intro Carousel — nested mixed collection
 
 Block fields:
 
-- `id`, `eyebrow`, `title`, `mobileTitle`, `description`;
-- `variant`: `default`, `overview`, `three-up`, `image-grid`, `expandable`, `primary-metric`, `stat`, `overlay-tabs`;
+- `id`, `eyebrow`, `title`, `mobileTitle`, `description`, `videoLink`, `videoLinkText`;
+- `variant`: `default`, `overview`, `three-up`, `image-grid`, `expandable`, `primary-metric`, `stat`;
 - `autoPlay`, `interval`, `showVideoControl`, `showProgress`, `enableMotion`;
+- `showHighlightTags`, `highlightTagColor`, `highlightUnitColor`;
 - `openLabel`, `closeLabel` for the expandable variant;
 - `accentColor` restricted by text validation to a hex color;
 - `classes`: theme, spacing, copy color, ratio.
 
-Child `feature-media-item` fields:
+Child `lixiang-product-intro-slide` fields:
 
 - responsive media group;
 - `eyebrow`, `title`, `description`, `note`;
 - standard link group;
 - `primaryValue`, `primaryUnit`, `primaryLabel` for primary-metric layouts.
 
-Child `feature-stat-item` fields: `value`, `unit`, `label`, `description`.
+Nested `lixiang-product-intro-highlight-group` contains
+`lixiang-product-intro-highlight` items with `value`, `unit`, `tag`, and
+`description`. This preserves the source `topList[].topSublist[]` grouping.
 
-The filter permits media and stat items. Item model identity, not row order, determines the item type.
+Child `lixiang-product-intro-metric` fields are `unit`, `title`, and `value`.
+These items represent the separate attached `bottomList`, not `topList`.
+
+The container filter permits slides, highlight groups, and bottom metrics. The
+highlight-group filter permits only highlight items. Item model identity, not
+row order, determines the item type.
 
 ## Color Switcher — collection
 

@@ -32,8 +32,8 @@ The captured Li L6 `pmsData` contains 37 component instances:
 | `product-first` | 2 | `product-hero` |
 | `SceneTableHorizontal` | 1 | `highlight-carousel` |
 | `SceneBeginning` | 6 | `chapter-intro` |
-| `SceneMegaContentTableX` | 18 | `feature-media-section` |
-| `SceneMegaContentMultipleImage` | 1 | `feature-media-section` (`image-grid`) |
+| `SceneMegaContentTableX` | 18 | `lixiang-product-intro-carousel` |
+| `SceneMegaContentMultipleImage` | 1 | `lixiang-product-intro-carousel` (`image-grid`) |
 | `ScenePictureGroup` | 1 | `picture-group` |
 | `product-common-summary-detail` | 1 | `spec-table` (`tabbed`) |
 | `product-power` | 1 | `spec-table` (`icon-grid`) |
@@ -54,7 +54,7 @@ The Pencil document contains eight reusable design families: hero, highlight car
 2. `product-sticky-nav`
 3. `highlight-carousel`
 4. `chapter-intro`
-5. `feature-media-section`
+5. `lixiang-product-intro-carousel`
 6. `color-switcher`
 7. `spec-table`
 8. `product-notes`
@@ -158,7 +158,7 @@ The Pencil document contains eight reusable design families: hero, highlight car
 
 ### Feature Media Section
 
-- Supported layouts are `default`, `overview`, `three-up`, `image-grid`, `expandable`, `primary-metric`, `stat`, and `overlay-tabs`.
+- Supported layouts are `default`, `overview`, `three-up`, `image-grid`, `expandable`, `primary-metric`, and `stat`.
 - The block supports independent desktop/mobile titles and media, light/dark/gray backgrounds, light/dark text, 16:9/2.35:1/4:3 media, and large/small/none spacing.
 - Default/overlay tab layouts auto-advance every four seconds and support manual keyboard switching.
 - `image-grid` implements the Pencil big/small and multi-image compositions; media remains proportional and parallax is contained inside the frame.

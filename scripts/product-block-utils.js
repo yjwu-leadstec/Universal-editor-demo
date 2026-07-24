@@ -46,6 +46,11 @@ const PRODUCT_MODEL_FIELDS = {
   'feature-media-section': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['variant', 'select'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean'], ['enableMotion', 'boolean'], ['openLabel', 'text'], ['closeLabel', 'text'], ['accentColor', 'text']],
   'feature-media-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['eyebrow', 'text'], ['title', 'text'], ['description', 'richtext'], ['note', 'text'], ['primaryValue', 'text'], ['primaryUnit', 'text'], ['primaryLabel', 'text'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
   'feature-stat-item': [['value', 'text'], ['unit', 'text'], ['label', 'text'], ['description', 'richtext']],
+  'lixiang-product-intro-carousel': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['videoLink', 'aem-content'], ['videoLinkText', 'text'], ['variant', 'select'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean'], ['enableMotion', 'boolean'], ['showHighlightTags', 'boolean'], ['openLabel', 'text'], ['closeLabel', 'text'], ['accentColor', 'text'], ['highlightTagColor', 'text'], ['highlightUnitColor', 'text']],
+  'lixiang-product-intro-slide': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['eyebrow', 'text'], ['title', 'text'], ['description', 'richtext'], ['note', 'text'], ['primaryValue', 'text'], ['primaryUnit', 'text'], ['primaryLabel', 'text'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
+  'lixiang-product-intro-highlight-group': [['groupKey', 'text']],
+  'lixiang-product-intro-highlight': [['value', 'text'], ['unit', 'text'], ['tag', 'text'], ['description', 'richtext']],
+  'lixiang-product-intro-metric': [['unit', 'text'], ['title', 'text'], ['value', 'text']],
   'image-switcher': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['accentColor', 'text'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean']],
   'image-switcher-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['label', 'text'], ['title', 'text'], ['description', 'richtext'], ['value', 'text'], ['unit', 'text'], ['note', 'text']],
   'big-small-gallery': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['videoLink', 'aem-content'], ['videoLinkText', 'text'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean'], ['enableMotion', 'boolean']],
@@ -84,6 +89,15 @@ const PRODUCT_COLLECTION_MODELS = {
   'highlight-carousel': 'highlight-slide',
   'highlight-slide': 'highlight-stat',
   'feature-media-section': (row) => (row.children.length <= 4 ? 'feature-stat-item' : 'feature-media-item'),
+  'lixiang-product-intro-carousel': (row) => {
+    const hasNestedItems = [...row.children].some((child) => child.children.length > 1);
+    if (hasNestedItems) return 'lixiang-product-intro-highlight-group';
+    if (row.querySelector('picture, img, video') || row.children.length > 8) {
+      return 'lixiang-product-intro-slide';
+    }
+    return 'lixiang-product-intro-metric';
+  },
+  'lixiang-product-intro-highlight-group': 'lixiang-product-intro-highlight',
   'image-switcher': 'image-switcher-item',
   'big-small-gallery': (row) => (row.children.length <= 4 ? 'big-small-stat' : 'big-small-item'),
   'color-switcher': 'color-switcher-item',
@@ -372,6 +386,7 @@ export function createProductLink(root, prefix = '', className = 'product-link')
   const defaultTypes = {
     'product-hero-cta': root.previousElementSibling?.dataset.aueModel === model ? 'secondary' : 'primary',
     'feature-media-item': 'text',
+    'lixiang-product-intro-slide': 'text',
     'feature-grid-item': 'text',
     'product-guide-item': 'primary',
     'product-ending': prefix ? 'secondary' : 'primary',

@@ -31,7 +31,7 @@ The canvas explicitly numbers and describes eight visual component families.
 | --- | --- | --- | ---: | --- |
 | 1 | 介绍页首屏 | `product-hero` | 2 | The Pencil opening hero is reused, and the current public page's second image-only configuration hero is retained after the 28-block story. |
 | 2 | 亮点轮播 | `highlight-carousel` | 1 | Realigned to the 1200×674 desktop center card with adjacent cards, circular controls, nested statistics, and manual mobile scroller. |
-| 3 | 内容展示 | `feature-media-section` | 10 | Reused for one gray, one large, and eight compact content-display sections. Single-item sections no longer render an empty tab strip. |
+| 3 | 内容展示 | `lixiang-product-intro-carousel` | 10 | Reused for one gray, one large, and eight compact content-display sections. Single-item sections no longer render an empty tab strip. |
 | 4 | 图上切换 | `image-switcher` | 6 | Split into a first-class block with image/video panels, manual switching, four-second autoplay, accent/indicator settings, and mobile tabs. |
 | 5 | 大小图 | `big-small-gallery` | 2 | Split into a first-class block with one large plus two small desktop cards and a mobile stack. |
 | 6 | 单图－图上字 | `chapter-intro` | 6 | Reused for the six full-bleed chapter media sections in the composed page. |
@@ -47,7 +47,7 @@ types:
 | `product-sticky-nav` | 1 |
 | `highlight-carousel` | 1 |
 | `chapter-intro` | 5 |
-| `feature-media-section` | 5 |
+| `lixiang-product-intro-carousel` | 5 |
 | `picture-group` | 1 |
 | `spec-table` | 2 |
 | `product-ending` | 1 |
