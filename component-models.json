@@ -4020,6 +4020,166 @@
     ]
   },
   {
+    "id": "product-feature-picture-group",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "eyebrow",
+        "label": "Eyebrow",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Desktop Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "mobileTitle",
+        "label": "Mobile Title Override",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "note",
+        "label": "Note",
+        "valueType": "string"
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "maxSize": 3,
+        "options": [
+          {
+            "name": "Background",
+            "children": [
+              {
+                "name": "White",
+                "value": "light"
+              },
+              {
+                "name": "Black",
+                "value": "dark"
+              },
+              {
+                "name": "Gray",
+                "value": "gray"
+              }
+            ]
+          },
+          {
+            "name": "Text Color",
+            "children": [
+              {
+                "name": "Light",
+                "value": "light-copy"
+              },
+              {
+                "name": "Dark",
+                "value": "dark-copy"
+              }
+            ]
+          },
+          {
+            "name": "Spacing",
+            "children": [
+              {
+                "name": "Large",
+                "value": "space-large"
+              },
+              {
+                "name": "Small",
+                "value": "space-small"
+              },
+              {
+                "name": "None",
+                "value": "space-none"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "product-feature-picture-group-group",
+    "fields": [
+      {
+        "component": "text",
+        "name": "groupKey",
+        "label": "Group Key",
+        "description": "Unique stable key",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Group Title",
+        "valueType": "string",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "product-feature-picture-group-card",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Card Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Card Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "product-guide",
     "fields": [
       {

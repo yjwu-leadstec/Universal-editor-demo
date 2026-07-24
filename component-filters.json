@@ -34,6 +34,7 @@
       "lixiang-product-detail-picture-group",
       "icon-overlay-showcase",
       "feature-grid",
+      "product-feature-picture-group",
       "product-param-cta",
       "product-ending",
       "product-guide",
@@ -224,6 +225,19 @@
     "id": "media-video",
     "components": [
       "media-video-source"
+    ]
+  },
+  {
+    "id": "product-feature-picture-group",
+    "components": [
+      "product-feature-picture-group-group",
+      "product-feature-picture-group-card"
+    ]
+  },
+  {
+    "id": "product-feature-picture-group-group",
+    "components": [
+      "product-feature-picture-group-card"
     ]
   },
   {

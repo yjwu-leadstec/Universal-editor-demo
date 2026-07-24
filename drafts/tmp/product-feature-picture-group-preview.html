@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="product-feature-picture-group block local preview">
+  <title>Product Feature Picture Group | preview</title>
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/styles/product-blocks.css">
+</head>
+<body>
+  <header></header>
+  <main></main>
+  <footer></footer>
+  <script type="module">
+    const response = await fetch('./product-feature-picture-group.plain.html');
+    document.querySelector('main').innerHTML = await response.text();
+    await import('/scripts/scripts.js');
+  </script>
+</body>
+</html>

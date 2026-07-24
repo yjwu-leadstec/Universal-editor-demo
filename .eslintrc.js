@@ -33,6 +33,8 @@ module.exports = {
       'color-switcher-item': 7,
       'feature-grid': 7,
       'feature-grid-item': 6,
+      'product-feature-picture-group': 7,
+      'product-feature-picture-group-card': 6,
       'lixiang-product-intro-carousel': 20,
       'lixiang-product-intro-slide': 16,
       'lixiang-product-intro-slider': 11,

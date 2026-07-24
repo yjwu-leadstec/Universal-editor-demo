@@ -79,6 +79,9 @@ const PRODUCT_MODEL_FIELDS = {
   'feature-grid': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['note', 'text']],
   'feature-grid-group': [['groupKey', 'text'], ['title', 'text']],
   'feature-grid-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['title', 'text'], ['description', 'richtext'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
+  'product-feature-picture-group': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['note', 'text']],
+  'product-feature-picture-group-group': [['groupKey', 'text'], ['title', 'text']],
+  'product-feature-picture-group-card': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],
   'product-param-cta': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['secondaryLink', 'aem-content'], ['secondaryLinkText', 'text'], ['secondaryLinkType', 'select']],
   'product-ending': [['id', 'text'], ['title', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['showVideoControl', 'boolean'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['secondaryLink', 'aem-content'], ['secondaryLinkText', 'text'], ['secondaryLinkType', 'select']],
   'product-guide': [['id', 'text'], ['title', 'text']],
@@ -119,6 +122,8 @@ const PRODUCT_COLLECTION_MODELS = {
   'overlay-panel': 'overlay-hotspot',
   'feature-grid': (row) => (row.children.length <= 2 ? 'feature-grid-group' : 'feature-grid-item'),
   'feature-grid-group': 'feature-grid-item',
+  'product-feature-picture-group': (row) => (row.children.length <= 2 ? 'product-feature-picture-group-group' : 'product-feature-picture-group-card'),
+  'product-feature-picture-group-group': 'product-feature-picture-group-card',
   'product-guide': 'product-guide-item',
 };
 

@@ -1,0 +1,189 @@
+main .product-feature-picture-group {
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+  overflow: hidden;
+}
+
+main .product-feature-picture-group .product-feature-picture-group-shell {
+  width: min(100% - 40px, 1480px);
+  margin-inline: auto;
+}
+
+main .product-feature-picture-group .product-section-header {
+  width: 100%;
+  max-width: 1152px;
+  margin-inline: 0;
+  text-align: left;
+}
+
+main .product-feature-picture-group .product-title,
+main .product-feature-picture-group .product-description {
+  margin-inline: 0;
+}
+
+main .product-feature-picture-group .product-feature-picture-group-group + .product-feature-picture-group-group {
+  margin-block-start: 80px;
+}
+
+main .product-feature-picture-group .product-feature-picture-group-group-title {
+  margin: 0 0 32px;
+  color: var(--product-copy);
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+main .product-feature-picture-group .product-feature-picture-group-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+main .product-feature-picture-group .product-feature-picture-group-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 275px;
+  background: var(--product-card-bg);
+  border-radius: 10px;
+}
+
+main .product-feature-picture-group .product-feature-picture-group-card .product-media {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  border-radius: 0;
+}
+
+/* Placeholder ("图片") state — grey tile with large translucent label, per design */
+main .product-feature-picture-group .product-feature-picture-group-card .product-media.is-media-fallback::before,
+main .product-feature-picture-group .product-feature-picture-group-card .product-picture.is-media-fallback::before {
+  color: rgb(255 255 255 / 20%);
+  background: #b6b6b6;
+  font-family: var(--heading-font-family);
+  font-size: 70px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+main .product-feature-picture-group.dark .product-feature-picture-group-card .product-media.is-media-fallback::before,
+main .product-feature-picture-group.dark .product-feature-picture-group-card .product-picture.is-media-fallback::before {
+  background: #5d5d5d;
+}
+
+main .product-feature-picture-group .product-feature-picture-group-copy {
+  position: absolute;
+  z-index: 2;
+  right: 40px;
+  bottom: 40px;
+  left: 40px;
+  color: #fff;
+}
+
+main .product-feature-picture-group .product-feature-picture-group-copy::before {
+  position: absolute;
+  z-index: -1;
+  inset: -100px -40px -40px;
+  background: linear-gradient(transparent, rgb(0 0 0 / 66%));
+  content: '';
+}
+
+main .product-feature-picture-group .product-feature-picture-group-copy h3 {
+  margin: 0;
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+main .product-feature-picture-group .product-feature-picture-group-description {
+  margin-block-start: 8px;
+  color: rgb(255 255 255 / 90%);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+main .product-feature-picture-group .product-feature-picture-group-description > :first-child,
+main .product-feature-picture-group .product-feature-picture-group-description > :last-child {
+  margin-block: 0;
+}
+
+main .product-feature-picture-group .product-feature-picture-group-note {
+  margin: 24px 0 0;
+  color: var(--product-muted);
+  font-size: 12px;
+}
+
+@media (width <= 1024px) and (width >= 720px) {
+  main .product-feature-picture-group .product-feature-picture-group-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width <= 719px) {
+  main .product-feature-picture-group .product-feature-picture-group-shell,
+  main .product-feature-picture-group .product-section-header {
+    width: 100%;
+  }
+
+  main .product-feature-picture-group .product-section-header,
+  main .product-feature-picture-group .product-feature-picture-group-group-title,
+  main .product-feature-picture-group .product-feature-picture-group-note {
+    padding-inline: 40px;
+  }
+
+  main .product-feature-picture-group .product-feature-picture-group-group + .product-feature-picture-group-group {
+    margin-block-start: 72px;
+  }
+
+  main .product-feature-picture-group .product-feature-picture-group-group-title {
+    margin-block-end: 24px;
+    font-size: 18px;
+  }
+
+  main .product-feature-picture-group .product-feature-picture-group-list {
+    display: grid;
+    padding-inline: 20px;
+    overflow-x: auto;
+    grid-auto-columns: 281px;
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-auto-rows: 158px;
+    gap: 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  main .product-feature-picture-group .product-feature-picture-group-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  main .product-feature-picture-group .product-feature-picture-group-card {
+    min-height: 0;
+    scroll-snap-align: start;
+  }
+
+  main .product-feature-picture-group .product-feature-picture-group-card .product-media.is-media-fallback::before,
+  main .product-feature-picture-group .product-feature-picture-group-card .product-picture.is-media-fallback::before {
+    font-size: 40px;
+  }
+
+  main .product-feature-picture-group .product-feature-picture-group-copy {
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+  }
+
+  main .product-feature-picture-group .product-feature-picture-group-copy::before {
+    inset: -70px -16px -16px;
+  }
+
+  main .product-feature-picture-group .product-feature-picture-group-copy h3 {
+    font-size: 18px;
+  }
+
+  main .product-feature-picture-group .product-feature-picture-group-description {
+    font-size: 13px;
+  }
+}
