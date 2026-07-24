@@ -45,10 +45,46 @@ function setupParallax(block) {
   update();
 }
 
-function createPanel(block, group) {
+function collectPictureSets(block) {
+  const groups = modelItems(block, 'lixiang-product-detail-picture-group-item');
+  const pictures = modelItems(block, 'lixiang-product-detail-picture-item');
+  if (!groups.length) return [{ group: null, pictures }];
+
+  const groupSources = new Set(groups);
+  const pictureSources = new Set(pictures);
+  const pictureSets = [];
+  let currentSet = null;
+
+  [...block.children].forEach((source) => {
+    if (groupSources.has(source)) {
+      currentSet = { group: source, pictures: [] };
+      pictureSets.push(currentSet);
+      return;
+    }
+    if (pictureSources.has(source)) {
+      if (!currentSet) {
+        currentSet = { group: null, pictures: [] };
+        pictureSets.push(currentSet);
+      }
+      currentSet.pictures.push(source);
+    }
+  });
+
+  const onlyEmptySets = pictures.length
+    && pictureSets.every(({ pictures: setPictures }) => !setPictures.length);
+  if (onlyEmptySets) {
+    return groups.map((group) => {
+      const groupPictures = pictures.filter((picture) => group.contains(picture));
+      return { group, pictures: groupPictures };
+    });
+  }
+  return pictureSets;
+}
+
+function createPanel(block, group, pictures) {
   const panel = document.createElement('section');
   panel.className = 'lixiang-product-detail-picture-group-panel';
-  const descriptionSource = propSource(group, 'description');
+  const descriptionSource = group ? propSource(group, 'description') : null;
   if (descriptionSource?.textContent.trim()) {
     panel.append(createRichText(
       descriptionSource,
@@ -58,7 +94,7 @@ function createPanel(block, group) {
 
   const grid = document.createElement('div');
   grid.className = 'lixiang-product-detail-picture-group-grid';
-  modelItems(group, 'lixiang-product-detail-picture-item').forEach((item) => {
+  pictures.forEach((item) => {
     const figure = document.createElement('figure');
     figure.className = 'lixiang-product-detail-picture-group-media';
     const { element: media } = createMedia(item, {
@@ -90,13 +126,13 @@ function createPanel(block, group) {
     grid.append(figure);
   });
   panel.append(grid);
-  moveItemInstrumentation(group, panel);
+  if (group) moveItemInstrumentation(group, panel);
   return panel;
 }
 
 export default function decorate(block) {
   initProductBlock(block);
-  const groups = modelItems(block, 'lixiang-product-detail-picture-group-item');
+  const pictureSets = collectPictureSets(block);
   const shell = document.createElement('div');
   shell.className = 'lixiang-product-detail-picture-group-shell';
   const header = createSectionHeader(block);
@@ -106,15 +142,15 @@ export default function decorate(block) {
   tabs.className = 'lixiang-product-detail-picture-group-tabs';
   tabs.setAttribute('role', 'tablist');
   tabs.setAttribute('aria-label', 'Product detail picture sets');
-  const buttons = groups.map((group, index) => {
+  const buttons = pictureSets.map(({ group }, index) => {
     const button = document.createElement('button');
     button.type = 'button';
-    button.textContent = propText(group, 'title') || `Picture set ${index + 1}`;
+    button.textContent = (group && propText(group, 'title')) || `Picture set ${index + 1}`;
     tabs.append(button);
     return button;
   });
 
-  const panels = groups.map((group) => createPanel(block, group));
+  const panels = pictureSets.map(({ group, pictures }) => createPanel(block, group, pictures));
   const panelList = document.createElement('div');
   panelList.className = 'lixiang-product-detail-picture-group-panels';
   panelList.append(...panels);

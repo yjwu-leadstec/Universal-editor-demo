@@ -165,15 +165,15 @@ Block fields: `id`, `title`, `mobileTitle`, `description`, `classes`.
 
 Child `text-column-item` fields: `title`, `text` (`richtext`).
 
-## Picture Group — nested collection
+## Li Xiang Product Detail Picture Group — ordered sibling collection
 
-Block fields: `id`, `eyebrow`, `title`, `mobileTitle`, `description`, `classes`, `showVideoControl`, `showProgress`, `enableMotion`.
+Block fields: `id`, `title`, `description`, `showVideoControl`, `showProgress`, `enableMotion`, `classes`.
 
-Child `lixiang-product-detail-picture-group-item` fields: `groupKey`, `title`, `description`. Its filter accepts `lixiang-product-detail-picture-item` children.
+Direct child `lixiang-product-detail-picture-group-item` fields: `groupKey`, `title`, `description`. It is a set marker; each following picture belongs to that set until the next marker.
 
-Child `lixiang-product-detail-picture-item` fields: responsive image/video fields plus optional `title` and `description`.
+Direct child `lixiang-product-detail-picture-item` fields: responsive image/video fields plus optional `title` and `description`.
 
-This three-level model preserves the source `contentList → sublist` relationship and lets each media item retain its instrumentation.
+Both child models are ordered siblings because EDS/Universal Editor serializes one block-item level. The runtime projects the flat authoring sequence into accessible set panels and tabs while retaining each item’s instrumentation.
 
 ## Icon Overlay Showcase — nested collection
 

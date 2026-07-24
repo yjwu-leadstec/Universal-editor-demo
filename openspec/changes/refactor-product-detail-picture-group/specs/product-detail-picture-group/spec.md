@@ -77,7 +77,12 @@ The component SHALL preserve Universal Editor instrumentation and accessible rel
 #### Scenario: AEM content is decorated
 
 - **WHEN** the block restructures container, set, and media item markup
-- **THEN** the corresponding `data-aue-*` instrumentation remains attached to the rendered editable elements
+- **THEN** ordered block-level set/media siblings are grouped into panels and the corresponding `data-aue-*` instrumentation remains attached to the rendered editable elements
+
+#### Scenario: Published EDS serialization
+
+- **WHEN** the active page is requested through `.plain.html`
+- **THEN** all eight approved media items are serialized as direct block children rather than being lost below a nested block item
 
 #### Scenario: Multiple sets are authored
 

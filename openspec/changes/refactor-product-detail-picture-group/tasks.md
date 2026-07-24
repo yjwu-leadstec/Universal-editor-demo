@@ -2,7 +2,7 @@
 
 - [x] 1.1 Read the selected Pencil nodes and record desktop, tablet, mobile, and requirement geometry.
 - [x] 1.2 Inventory repository references and all AEM content instances.
-- [x] 1.3 Define the canonical component, nested models, dialog contract, and migration plan.
+- [x] 1.3 Define the canonical component, serializable sibling item grammar, dialog contract, and migration plan.
 
 ## 2. Component and dialog
 
@@ -17,7 +17,7 @@
 - [x] 3.2 Implement the approved 335×771 mobile staggered mosaic.
 - [x] 3.3 Align header geometry, typography, captions, square corners, and component-specific spacing.
 - [x] 3.4 Render the centered 1.4× image canvas and reduced-motion-safe parallax.
-- [x] 3.5 Preserve Universal Editor instrumentation, video controls, tabs, and responsive media.
+- [x] 3.5 Preserve Universal Editor instrumentation, ordered set/media siblings, video controls, tabs, and responsive media.
 
 ## 4. Tests and generated integration
 

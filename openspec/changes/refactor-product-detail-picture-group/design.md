@@ -2,7 +2,7 @@
 
 Li-L6 Pencil nodes `SdaWn`, `YAfqr`, and `pwCcp` define three responsive compositions for section `7 / 多图`. Node `y6yvQ5` requires white/gray themes and scroll-linked image movement. Node `kicca` further requires optional copy, image/video media, responsive spacing choices, and source media large enough to support parallax.
 
-The current block already preserves Universal Editor instrumentation and supports nested media items, so the content hierarchy can be retained while its canonical identities and presentation are corrected.
+Universal Editor serializes one item level below an EDS block. The previous three-level set/media hierarchy therefore left nested media out of `.plain.html`; the canonical model must keep set markers and media items as ordered siblings directly below the block.
 
 ## Goals / Non-Goals
 
@@ -18,13 +18,13 @@ The current block already preserves Universal Editor instrumentation and support
 
 ## Decisions
 
-- Keep the existing three-level content hierarchy to avoid destructive item reparenting, but rename all three models to the product-specific namespace.
+- Keep the three product-specific models, but serialize set markers and media items as ordered block-level siblings. A set marker starts a picture set and each following media item belongs to it until the next marker.
 - Use a nine-track proportional desktop/tablet grid. This reproduces the approved 620/460/300px left column and 460/460/460px right column at 1920px, scaling to the 768px board.
 - Use a thirteen-track mobile grid to reproduce the independent left and right staggered columns on the 375px board.
 - Use component-scoped spacing overrides: desktop 160/80px, tablet 64/32px, and mobile 80/40px for large/small.
 - Render the section header only from 720px upward because the approved mobile board contains the media mosaic only.
 - Render images on a centered 1.4× canvas and move them vertically; stop scroll-linked motion under `prefers-reduced-motion`.
-- Keep nested set labels for Author organization and multi-set accessibility, while a single set renders without tabs.
+- Keep set labels for Author organization and multi-set accessibility, while a single set renders without tabs. The block filter accepts both set markers and media items so Universal Editor can author the serializable sibling grammar.
 
 ## Risks / Trade-offs
 
@@ -36,8 +36,7 @@ The current block already preserves Universal Editor instrumentation and support
 
 1. Add the canonical block, models, filters, parser mappings, allow-list, and tests.
 2. Build and deploy the generated component JSON and block source.
-3. Update the three known container nodes and their nested set/media item metadata.
+3. Update the three known container nodes and set/media item metadata, then lift media nodes to ordered block-level siblings.
 4. Verify active, aligned, and backup content return only canonical identities.
 5. Remove the old block directory and legacy parser/allow-list identities.
 6. Publish and validate the active Li-L6 page in Author and EDS Preview.
-

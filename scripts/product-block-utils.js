@@ -101,7 +101,11 @@ const PRODUCT_COLLECTION_MODELS = {
   'spec-group': 'spec-row',
   'product-notes': 'product-note-item',
   'text-columns': 'text-column-item',
-  'lixiang-product-detail-picture-group': 'lixiang-product-detail-picture-group-item',
+  'lixiang-product-detail-picture-group': (row) => (
+    row.querySelector('picture, img, video') || row.children.length > 3
+      ? 'lixiang-product-detail-picture-item'
+      : 'lixiang-product-detail-picture-group-item'
+  ),
   'lixiang-product-detail-picture-group-item': 'lixiang-product-detail-picture-item',
   'icon-overlay-showcase': 'overlay-panel',
   'overlay-panel': 'overlay-hotspot',

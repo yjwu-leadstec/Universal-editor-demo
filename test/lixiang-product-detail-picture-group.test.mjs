@@ -131,9 +131,17 @@ test('parallax uses a centered 1.4x canvas and respects reduced motion', () => {
   assert.match(blockJs, /addEventListener\('scroll', requestUpdate, \{ passive: true, signal: controller\.signal \}\)/);
 });
 
-test('rendering preserves nested instrumentation, responsive media, and isolated controls', () => {
+test('rendering preserves flat sibling instrumentation, responsive media, and isolated controls', () => {
   assert.match(blockJs, /modelItems\(block, 'lixiang-product-detail-picture-group-item'\)/);
-  assert.match(blockJs, /modelItems\(group, 'lixiang-product-detail-picture-item'\)/);
+  assert.match(blockJs, /modelItems\(block, 'lixiang-product-detail-picture-item'\)/);
+  assert.match(blockJs, /\[\.\.\.block\.children\]\.forEach/);
+  assert.deepEqual(
+    config.filters[0].components,
+    [
+      'lixiang-product-detail-picture-group-item',
+      'lixiang-product-detail-picture-item',
+    ],
+  );
   assert.match(blockJs, /moveItemInstrumentation\(item, figure\)/);
   assert.match(blockJs, /moveItemInstrumentation\(group, panel\)/);
   assert.match(blockJs, /showControls:\s*propBoolean\(block, 'showVideoControl', true\)/);
