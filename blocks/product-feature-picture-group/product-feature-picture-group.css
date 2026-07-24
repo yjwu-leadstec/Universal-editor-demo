@@ -22,6 +22,12 @@ main .product-feature-picture-group .product-description {
   margin-inline: 0;
 }
 
+/* Design spec (Li-L6 ending section): eyebrow follows the theme copy color
+   (dark on light, light on dark), not the shared gold --product-accent. */
+main .product-feature-picture-group .product-eyebrow {
+  color: var(--product-copy);
+}
+
 main .product-feature-picture-group .product-feature-picture-group-group + .product-feature-picture-group-group {
   margin-block-start: 80px;
 }
