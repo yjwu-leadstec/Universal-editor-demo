@@ -4,7 +4,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('https://lilibrary-public.liauto.com/lilibrary/20260107/d9e1ec18-975d-409c-ab26-b3224badb123.woff2') format('woff2');
+  src: url('../fonts/licium-font-en-2022-regular.woff2') format('woff2');
 }
 
 @font-face {
@@ -12,7 +12,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('https://lilibrary-public.liauto.com/lilibrary/20260107/14d31356-9e3d-4b06-969b-4c0f51c6a3cb.woff2') format('woff2');
+  src: url('../fonts/licium-font-en-2022-medium.woff2') format('woff2');
 }
 
 @font-face {
