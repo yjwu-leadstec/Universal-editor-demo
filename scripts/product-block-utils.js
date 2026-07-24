@@ -43,9 +43,6 @@ const PRODUCT_MODEL_FIELDS = {
   'highlight-slide': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'aem-content'], ['mobileVideo', 'aem-content'], ['eyebrow', 'text'], ['title', 'textarea'], ['description', 'richtext'], ['note', 'textarea'], ['metrics', 'textarea'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['copyColor', 'select'], ['showNote', 'boolean'], ['indicatorLabel', 'textarea']],
   'highlight-stat': [['value', 'text'], ['unit', 'text'], ['label', 'text'], ['description', 'richtext']],
   'chapter-intro': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['note', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['fullVideo', 'reference'], ['playLabel', 'text'], ['loop', 'boolean'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean']],
-  'feature-media-section': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['variant', 'select'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean'], ['enableMotion', 'boolean'], ['openLabel', 'text'], ['closeLabel', 'text'], ['accentColor', 'text']],
-  'feature-media-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['eyebrow', 'text'], ['title', 'text'], ['description', 'richtext'], ['note', 'text'], ['primaryValue', 'text'], ['primaryUnit', 'text'], ['primaryLabel', 'text'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
-  'feature-stat-item': [['value', 'text'], ['unit', 'text'], ['label', 'text'], ['description', 'richtext']],
   'lixiang-product-intro-carousel': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['videoLink', 'aem-content'], ['videoLinkText', 'text'], ['variant', 'select'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean'], ['enableMotion', 'boolean'], ['showHighlightTags', 'boolean'], ['openLabel', 'text'], ['closeLabel', 'text'], ['accentColor', 'text'], ['highlightTagColor', 'text'], ['highlightUnitColor', 'text']],
   'lixiang-product-intro-slide': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['eyebrow', 'text'], ['title', 'text'], ['description', 'richtext'], ['note', 'text'], ['primaryValue', 'text'], ['primaryUnit', 'text'], ['primaryLabel', 'text'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
   'lixiang-product-intro-highlight-group': [['groupKey', 'text']],
@@ -88,7 +85,6 @@ const PRODUCT_COLLECTION_MODELS = {
   'product-sticky-nav': 'product-sticky-nav-item',
   'highlight-carousel': 'highlight-slide',
   'highlight-slide': 'highlight-stat',
-  'feature-media-section': (row) => (row.children.length <= 4 ? 'feature-stat-item' : 'feature-media-item'),
   'lixiang-product-intro-carousel': (row) => {
     const hasNestedItems = [...row.children].some((child) => child.children.length > 1);
     if (hasNestedItems) return 'lixiang-product-intro-highlight-group';
@@ -385,7 +381,6 @@ export function createProductLink(root, prefix = '', className = 'product-link')
   if (!href || !text) return null;
   const defaultTypes = {
     'product-hero-cta': root.previousElementSibling?.dataset.aueModel === model ? 'secondary' : 'primary',
-    'feature-media-item': 'text',
     'lixiang-product-intro-slide': 'text',
     'feature-grid-item': 'text',
     'product-guide-item': 'primary',

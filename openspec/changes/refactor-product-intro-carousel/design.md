@@ -12,7 +12,7 @@ Pencil section `3 / 内容展示` defines a product introduction carousel with r
 - The canonical container is `lixiang-product-intro-carousel`; child models use the same namespace.
 - `topList` is represented as highlight groups containing highlight items, preserving `topSublist` grouping.
 - `bottomList` is represented as a separate metric item collection attached below the media.
-- The source-backed layout variants remain. `overlay-tabs` is treated as a legacy alias of `default` at runtime but is removed from authoring.
+- The source-backed layout variants remain. `overlay-tabs` is absent from AEM content and is removed from both authoring and runtime.
 - A small legacy loader adapter keeps published `feature-media-section` content working only between the first code deployment and the content migration. It is removed in the final deployment.
 - The component relies on the shared product spacing classes instead of overriding them at intermediate breakpoints.
 

@@ -28,9 +28,9 @@
 ## 5. Complete AEM migration
 
 - [x] 5.1 Inventory every legacy container and child node under `/content/demo-site`.
-- [ ] 5.2 Deploy the canonical component with the temporary runtime adapter.
-- [ ] 5.3 Migrate all legacy container and child nodes, including JCR node names and model metadata.
+- [x] 5.2 Deploy the canonical component with the temporary runtime adapter.
+- [x] 5.3 Migrate all legacy container and child nodes, including JCR node names and model metadata.
 - [ ] 5.4 Publish and verify all affected pages with real migrated Author content.
-- [ ] 5.5 Remove the legacy block directory and parser mappings.
-- [ ] 5.6 Verify the legacy AEM query and repository search both return zero identities.
+- [x] 5.5 Remove the legacy block directory and parser mappings.
+- [x] 5.6 Verify the legacy AEM query and repository production-source search both return zero identities.
 - [ ] 5.7 Re-run generated JSON, tests, lint, strict OpenSpec validation, and multi-breakpoint delivery checks.

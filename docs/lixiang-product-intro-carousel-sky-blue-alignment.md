@@ -5,7 +5,7 @@
 - Pencil：`Li-L6.pen` 的 `3 / 内容展示`，PC 节点 `xyTDo` / `ANbVI`，移动节点 `GmQsG` / `XOng2` / `C58gGn` / `KNptl`，需求节点 `BqsC4`。
 - 真实内容：L6 `SceneMegaContentTableX` 数据与当前 EDS Preview 的 `New Color, Sky Blue.` 区块。
 - 规范 block：`lixiang-product-intro-carousel`。
-- 迁移期线上节点仍可能名为 `feature-media-section`；旧入口只负责调用规范实现，不再提供作者模型。
+- `/content/demo-site` 下的旧容器与 Slide 节点已全部迁移到规范模型，旧运行时入口已经移除。
 
 ## 内容结构
 
@@ -33,7 +33,7 @@
 ## 变体边界
 
 - 保留真实源类型使用的 `default`、`overview`、`three-up`、`image-grid`、`expandable`、`primary-metric`、`stat`。
-- `overlay-tabs` 没有来源矩阵或页面用例，不出现在 Universal Editor；旧内容值仅按 `default` 兼容。
+- `overlay-tabs` 没有来源矩阵或页面用例，AEM 全站查询为零，因此不出现在 Universal Editor 或运行时兼容逻辑中。
 
 ## 回归标准
 

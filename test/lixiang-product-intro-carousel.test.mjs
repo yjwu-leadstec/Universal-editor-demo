@@ -6,22 +6,61 @@ const blockUrl = new URL(
   '../blocks/lixiang-product-intro-carousel/',
   import.meta.url,
 );
-const [blockCss, blockJs, blockModelSource, legacyCss, legacyJs, productCss] = await Promise.all([
+const [
+  blockCss,
+  blockJs,
+  blockModelSource,
+  productCss,
+  productUtils,
+  componentDefinitionSource,
+  componentModelsSource,
+  componentFiltersSource,
+] = await Promise.all([
   readFile(new URL('lixiang-product-intro-carousel.css', blockUrl), 'utf8'),
   readFile(new URL('lixiang-product-intro-carousel.js', blockUrl), 'utf8'),
   readFile(new URL('_lixiang-product-intro-carousel.json', blockUrl), 'utf8'),
-  readFile(new URL('../blocks/feature-media-section/feature-media-section.css', import.meta.url), 'utf8'),
-  readFile(new URL('../blocks/feature-media-section/feature-media-section.js', import.meta.url), 'utf8'),
   readFile(new URL('../styles/product-blocks.css', import.meta.url), 'utf8'),
+  readFile(new URL('../scripts/product-block-utils.js', import.meta.url), 'utf8'),
+  readFile(new URL('../component-definition.json', import.meta.url), 'utf8'),
+  readFile(new URL('../component-models.json', import.meta.url), 'utf8'),
+  readFile(new URL('../component-filters.json', import.meta.url), 'utf8'),
 ]);
 const blockModel = JSON.parse(blockModelSource);
 
-test('uses the canonical component identity and a rendering-only legacy adapter', () => {
-  assert.equal(blockModel.definitions[0].id, 'lixiang-product-intro-carousel');
+test('uses only the canonical component identity after content migration', async () => {
+  const canonicalDefinition = blockModel.definitions[0];
+  const canonicalTemplate = canonicalDefinition.plugins.xwalk.page.template;
+  assert.equal(canonicalDefinition.id, 'lixiang-product-intro-carousel');
+  assert.equal(canonicalTemplate.name, 'Lixiang Product Intro Carousel');
+  assert.equal(
+    canonicalTemplate.name.toLowerCase().replaceAll(' ', '-'),
+    canonicalDefinition.id,
+  );
   assert.equal(blockModel.models[0].id, 'lixiang-product-intro-carousel');
-  assert.match(legacyCss, /lixiang-product-intro-carousel\.css/);
-  assert.match(legacyJs, /classList\.replace\('feature-media-section', 'lixiang-product-intro-carousel'\)/);
-  assert.match(legacyJs, /dataset\.blockName = 'feature-media-section'/);
+  await assert.rejects(
+    readFile(
+      new URL(
+        '../blocks/feature-media-section/feature-media-section.js',
+        import.meta.url,
+      ),
+    ),
+    { code: 'ENOENT' },
+  );
+  await assert.rejects(
+    readFile(
+      new URL(
+        '../blocks/feature-media-section/feature-media-section.css',
+        import.meta.url,
+      ),
+    ),
+    { code: 'ENOENT' },
+  );
+  assert.doesNotMatch(blockJs, /feature-media-section|feature-media-item|feature-stat-item/);
+  assert.doesNotMatch(productUtils, /feature-media-section|feature-media-item|feature-stat-item/);
+  assert.doesNotMatch(
+    [componentDefinitionSource, componentModelsSource, componentFiltersSource].join('\n'),
+    /feature-media-section|feature-media-item|feature-stat-item/,
+  );
 });
 
 test('models slides, grouped top highlights, and bottom metrics separately', () => {
@@ -69,7 +108,7 @@ test('keeps source-backed variants and removes the unsupported overlay option', 
     'stat',
   ]);
   assert.doesNotMatch(blockModelSource, /"value": "overlay-tabs"/);
-  assert.match(blockJs, /authoredVariant === 'overlay-tabs' \? 'default'/);
+  assert.doesNotMatch(blockJs, /overlay-tabs/);
 });
 
 test('uses theme variables for tabs, copy, and divider rules', () => {

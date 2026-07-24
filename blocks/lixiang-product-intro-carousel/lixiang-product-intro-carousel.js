@@ -17,10 +17,9 @@ import {
 } from '../../scripts/product-block-utils.js';
 
 const ITEM_MODELS = {
-  slides: ['lixiang-product-intro-slide', 'feature-media-item'],
+  slides: ['lixiang-product-intro-slide'],
   highlightGroups: ['lixiang-product-intro-highlight-group'],
   highlights: ['lixiang-product-intro-highlight'],
-  legacyHighlights: ['feature-stat-item'],
   bottomMetrics: ['lixiang-product-intro-metric'],
 };
 
@@ -143,7 +142,7 @@ function createFeatureCopy(item, { showEyebrow = true } = {}) {
 
 function createFeatureItem(item, options) {
   const article = document.createElement('article');
-  article.className = 'feature-media-item';
+  article.className = 'product-intro-slide-card';
   const { element: media } = createMedia(item, options);
   const copy = createFeatureCopy(item);
   article.append(media);
@@ -208,7 +207,7 @@ function createHighlightGroup(group, highlightItems, showTags) {
   return groupElement;
 }
 
-function createHighlights(groups, legacyItems, showTags) {
+function createHighlights(groups, showTags) {
   const list = document.createElement('div');
   list.className = 'product-intro-highlights';
   groups.forEach((group) => {
@@ -219,10 +218,6 @@ function createHighlights(groups, legacyItems, showTags) {
     );
     if (groupElement) list.append(groupElement);
   });
-  if (legacyItems.length) {
-    const legacyGroup = createHighlightGroup(null, legacyItems, showTags);
-    if (legacyGroup) list.append(legacyGroup);
-  }
   return list;
 }
 
@@ -397,7 +392,7 @@ function buildTabbed(block, items, container, bottomMetrics) {
   if (items.length === 1) {
     const item = items[0];
     const panel = document.createElement('article');
-    panel.className = 'feature-media-item';
+    panel.className = 'product-intro-slide-card';
     const { element: media } = createMedia(item, {
       autoplay: true,
       showControls: propBoolean(block, 'showVideoControl', true),
@@ -437,7 +432,7 @@ function buildTabbed(block, items, container, bottomMetrics) {
     buttons.push(button);
     nav.append(button);
     const panel = document.createElement('article');
-    panel.className = 'feature-media-item';
+    panel.className = 'product-intro-slide-card';
     const { element: media } = createMedia(item, {
       autoplay: true,
       showControls: propBoolean(block, 'showVideoControl', true),
@@ -459,8 +454,7 @@ function buildTabbed(block, items, container, bottomMetrics) {
 
 export default function decorate(block) {
   initProductBlock(block);
-  const authoredVariant = propText(block, 'variant') || 'default';
-  const variant = authoredVariant === 'overlay-tabs' ? 'default' : authoredVariant;
+  const variant = propText(block, 'variant') || 'default';
   block.classList.add(`variant-${variant}`);
   const accentColor = propText(block, 'accentColor');
   const tagColor = propText(block, 'highlightTagColor');
@@ -471,7 +465,6 @@ export default function decorate(block) {
 
   const mediaItems = itemsFor(block, ITEM_MODELS.slides);
   const highlightGroups = itemsFor(block, ITEM_MODELS.highlightGroups);
-  const legacyHighlights = itemsFor(block, ITEM_MODELS.legacyHighlights);
   const bottomMetricItems = itemsFor(block, ITEM_MODELS.bottomMetrics);
   const bottomMetrics = createBottomMetrics(bottomMetricItems);
   if (bottomMetrics.childElementCount) block.classList.add('has-bottom-metrics');
@@ -485,7 +478,6 @@ export default function decorate(block) {
 
   const highlights = createHighlights(
     highlightGroups,
-    legacyHighlights,
     propBoolean(block, 'showHighlightTags', true),
   );
   if (highlights.childElementCount) shell.append(highlights);
@@ -536,7 +528,7 @@ export default function decorate(block) {
       '.product-section-header',
       '.product-intro-highlight',
       '.product-intro-bottom-metric',
-      '.feature-media-item',
+      '.product-intro-slide-card',
     ].join(', ');
   revealElements(block, revealSelector, propBoolean(block, 'enableMotion', true));
 }

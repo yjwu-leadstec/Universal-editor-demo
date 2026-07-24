@@ -12,7 +12,7 @@ The system SHALL expose the product content-display block only as `lixiang-produ
 #### Scenario: Completed content migration
 
 - **WHEN** the migration is complete
-- **THEN** `/content/demo-site`, the generated component JSON, runtime parser mappings, tests, and block directories contain no `feature-media-section` or `feature-media-item` identity
+- **THEN** `/content/demo-site`, generated component JSON, production block source, runtime parser mappings, and tests contain no `feature-media-section` or `feature-media-item` identity
 
 ### Requirement: Responsive carousel content
 
