@@ -49,3 +49,14 @@ test('mobile hero keeps the official tall composition and fixed logo geometry', 
   assert.match(heroCss, /top:\s*calc\(32vw \+ 16px\)/);
   assert.match(heroCss, /width:\s*186\.7px/);
 });
+
+test('Universal Editor caps product hero height after responsive viewport rules', () => {
+  const authorRule = '.adobe-ue-edit main .product-hero';
+  assert.ok(
+    heroCss.lastIndexOf(authorRule) > heroCss.lastIndexOf('@media (width <= 720px)'),
+  );
+  assert.match(
+    heroCss,
+    /\.adobe-ue-edit main \.product-hero\s*\{[^}]*min-height:\s*clamp\(720px, 100vh, 1080px\)/s,
+  );
+});

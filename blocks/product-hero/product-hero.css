@@ -237,3 +237,8 @@ main .product-hero .product-hero-scroll::before {
     animation: none;
   }
 }
+
+/* Universal Editor auto-sizes its canvas iframe; cap viewport units after all responsive overrides. */
+.adobe-ue-edit main .product-hero {
+  min-height: clamp(720px, 100vh, 1080px);
+}
