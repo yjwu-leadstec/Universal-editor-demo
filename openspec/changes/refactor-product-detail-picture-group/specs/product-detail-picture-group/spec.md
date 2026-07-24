@@ -79,6 +79,11 @@ The component SHALL preserve Universal Editor instrumentation and accessible rel
 - **WHEN** the block restructures container, set, and media item markup
 - **THEN** ordered block-level set/media siblings are grouped into panels and the corresponding `data-aue-*` instrumentation remains attached to the rendered editable elements
 
+#### Scenario: Author opens a deep-page picture group
+
+- **WHEN** the eight images are initially outside the Author canvas viewport
+- **THEN** lazy loading keeps their pictures attached until they load or emit a real error, so Author does not replace valid media with gray fallbacks
+
 #### Scenario: Published EDS serialization
 
 - **WHEN** the active page is requested through `.plain.html`

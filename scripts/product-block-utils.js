@@ -62,7 +62,7 @@ const PRODUCT_MODEL_FIELDS = {
   'product-note-item': [['text', 'richtext']],
   'text-columns': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext']],
   'text-column-item': [['title', 'text'], ['text', 'richtext']],
-  'lixiang-product-detail-picture-group': [['id', 'text'], ['title', 'textarea'], ['description', 'richtext'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean'], ['enableMotion', 'boolean']],
+  'lixiang-product-detail-picture-group': [['id', 'text'], ['title', 'text'], ['description', 'richtext'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean'], ['enableMotion', 'boolean']],
   'lixiang-product-detail-picture-group-item': [['groupKey', 'text'], ['title', 'text'], ['description', 'richtext']],
   'lixiang-product-detail-picture-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'aem-content'], ['mobileVideo', 'aem-content'], ['title', 'text'], ['description', 'richtext']],
   'icon-overlay-showcase': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext']],
@@ -437,10 +437,7 @@ export function appendPicture(container, picture, {
     };
     image.addEventListener('error', recoverImage, { once: true });
     container.append(picture);
-    if (image.complete && !image.naturalWidth) recoverImage();
-    window.setTimeout(() => {
-      if (image.isConnected && image.complete && !image.naturalWidth) recoverImage();
-    }, 1000);
+    if (loading !== 'lazy' && image.complete && !image.naturalWidth) recoverImage();
     return image;
   }
   container.append(picture);

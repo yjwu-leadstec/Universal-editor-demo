@@ -17,7 +17,7 @@
 - [x] 3.2 Implement the approved 335×771 mobile staggered mosaic.
 - [x] 3.3 Align header geometry, typography, captions, square corners, and component-specific spacing.
 - [x] 3.4 Render the centered 1.4× image canvas and reduced-motion-safe parallax.
-- [x] 3.5 Preserve Universal Editor instrumentation, ordered set/media siblings, video controls, tabs, and responsive media.
+- [x] 3.5 Preserve Universal Editor instrumentation, ordered set/media siblings, offscreen lazy images, video controls, tabs, and responsive media.
 
 ## 4. Tests and generated integration
 

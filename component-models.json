@@ -2296,10 +2296,10 @@
         "valueType": "string"
       },
       {
-        "component": "textarea",
+        "component": "text",
         "name": "title",
         "label": "Desktop / Tablet Title",
-        "description": "Supports manual line breaks; hidden below 720px to match the approved mobile layout",
+        "description": "Automatically wraps; hidden below 720px to match the approved mobile layout",
         "valueType": "string"
       },
       {

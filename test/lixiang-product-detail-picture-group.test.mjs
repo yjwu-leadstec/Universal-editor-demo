@@ -55,7 +55,7 @@ test('dialog exposes only design-backed themes, spacing, copy, and media fields'
     'enableMotion',
     'classes',
   ]);
-  assert.equal(container.title.component, 'textarea');
+  assert.equal(container.title.component, 'text');
   assert.deepEqual(
     container.classes.options[0].children.map(({ value }) => value),
     ['light', 'gray'],
@@ -146,6 +146,7 @@ test('rendering preserves flat sibling instrumentation, responsive media, and is
   assert.match(blockJs, /moveItemInstrumentation\(group, panel\)/);
   assert.match(blockJs, /showControls:\s*propBoolean\(block, 'showVideoControl', true\)/);
   assert.match(blockJs, /setupTabs\(block, buttons, panels\)/);
+  assert.match(productUtils, /loading !== 'lazy' && image\.complete/);
   assert.match(blockCss, /\.lixiang-product-detail-picture-group-tabs button:focus-visible/);
   assert.match(blockCss, /border-radius:\s*0/);
 });

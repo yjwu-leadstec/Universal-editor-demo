@@ -25,12 +25,14 @@ Universal Editor serializes one item level below an EDS block. The previous thre
 - Render the section header only from 720px upward because the approved mobile board contains the media mosaic only.
 - Render images on a centered 1.4× canvas and move them vertically; stop scroll-linked motion under `prefers-reduced-motion`.
 - Keep set labels for Author organization and multi-set accessibility, while a single set renders without tabs. The block filter accepts both set markers and media items so Universal Editor can author the serializable sibling grammar.
+- Treat lazy offscreen images as pending rather than broken. Recovery is driven by the browser error event; the shared media helper must not remove deep-page Author images after an arbitrary one-second timeout.
 
 ## Risks / Trade-offs
 
 - Existing published content will request the old block until migration and publication complete. Mitigation: deploy the canonical code first, then migrate all three known content trees, verify zero legacy identities, and publish the active Li-L6 page.
 - Fixed design proportions can expose unusual results with fewer or more than eight media items. Mitigation: document and test the approved eight-item authoring contract; extra items fall back below the designed mosaic.
 - Hiding the header on mobile intentionally follows the selected 375px Pencil board. Desktop and tablet copy remain authorable and visible.
+- Author images are far below the initial viewport on Li-L6. A timeout-based broken-image heuristic produced false fallbacks there; explicit load errors remain recoverable without racing lazy loading.
 
 ## Migration Plan
 

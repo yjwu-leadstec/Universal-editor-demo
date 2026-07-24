@@ -21,7 +21,7 @@
       "id": "lixiang-product-detail-picture-group",
       "fields": [
         { "component": "text", "name": "id", "label": "ID", "description": "Optional page anchor", "valueType": "string" },
-        { "component": "textarea", "name": "title", "label": "Desktop / Tablet Title", "description": "Supports manual line breaks; hidden below 720px to match the approved mobile layout", "valueType": "string" },
+        { "component": "text", "name": "title", "label": "Desktop / Tablet Title", "description": "Automatically wraps; hidden below 720px to match the approved mobile layout", "valueType": "string" },
         { "component": "richtext", "name": "description", "label": "Desktop / Tablet Description", "valueType": "string" },
         { "component": "boolean", "name": "showVideoControl", "label": "Show Video Controls", "valueType": "boolean", "value": true },
         { "component": "boolean", "name": "showProgress", "label": "Show Video Progress", "valueType": "boolean", "value": true },
