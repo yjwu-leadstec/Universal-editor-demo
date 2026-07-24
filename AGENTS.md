@@ -117,6 +117,22 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 - `scripts/editor-support.js` handles `aue:content-patch/update/add/move/remove/copy` events and re-decorates affected content without a full reload.
 - `scripts/editor-support-rte.js` supports rich-text editing and dynamically added instrumentation.
 
+## Universal Editor Author 画布强制规则
+
+- Universal Editor 会根据页面内容自动扩展 Editable App iframe。全屏组件直接使用 `100vh`、`100svh` 或 `100dvh` 作为 `height` / `min-height` 时，可能形成“内容高度 → iframe 高度 → viewport unit → 内容高度”的循环，最终膨胀到浏览器约 `33,554,432px` 的布局上限。Preview 使用普通视口，可能完全无法暴露此问题，因此 **Preview 正常不代表 Author 正常**。
+- 使用 viewport unit 的首屏、Hero、Banner 或全屏 Carousel 必须提供 `.adobe-ue-edit` 专用高度上限，并直接命中实际 block class；不得依赖内容中未保证存在的 Section class。例如：
+
+```css
+.adobe-ue-edit main .product-hero {
+  min-height: clamp(720px, 100vh, 1080px);
+}
+```
+
+- Author 专用规则必须放在该 block 的全部响应式媒体查询之后，确保能够覆盖 `1025-1440px`、`821-1024px`、`721-820px` 和移动端规则中的 viewport unit。只在基础规则中设置上限、随后又被断点规则覆盖，仍属于 BUG。
+- 修改全屏组件或响应式高度后，必须同时验证真实 Universal Editor Author 画布和 EDS Preview。Author 验收至少包括：画布内容可见、组件可选择、首个全屏 block 高度有界、页面未达到 `33,554,432px` 布局上限、所有 block 的 `data-block-status="loaded"`、无 `.block-error`、无组件控制台错误。
+- Author 回归必须覆盖约 `1006px` 的 Editable App iframe 宽度，因为它会命中 `821-1024px` 规则，是 viewport-unit 高度循环的高风险区。Preview 仍须验证 `1920 / 1440 / 1024 / 768 / 390px` 五个宽度且无横向溢出。
+- 对关键 Author 限高规则增加自动化测试，测试必须验证规则存在，并位于所有可能覆盖它的响应式规则之后。
+
 ## Linting Rules
 
 - ESLint uses `airbnb-base` and `plugin:xwalk/recommended`.
