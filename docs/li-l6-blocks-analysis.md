@@ -66,6 +66,7 @@ The Pencil document contains eight reusable design families: hero, highlight car
 14. `product-ending`
 15. `product-guide`
 16. `product-download`
+17. `product-feature-picture-group` — ending "flagship configuration" image-card grid (Pencil segment 8 「结尾总结」); overlaid-copy sibling of `feature-grid`. See `li-l6-content-models.md`.
 
 ### Non-visible content
 

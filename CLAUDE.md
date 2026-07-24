@@ -107,6 +107,13 @@ The `moveInstrumentation(source, target)` function transfers `data-aue-*` and `d
   - `component-filters.json` - Placement rules
 - **Husky pre-commit hook** automatically runs `build:json` and stages the merged files when any `_*.json` model file is committed — no manual rebuild needed.
 
+### Adding a product-series block (checklist)
+Template = `blocks/feature-grid/`; reuse the shared helpers in `scripts/product-block-utils.js` (`initProductBlock` / `createSectionHeader` / `createMedia` / `modelItems` / `instrumentProp` / `moveItemInstrumentation` / `addBlockAnchor` / `revealElements`). `decorate()` must call `addBlockAnchor(block, block, shell)` **before** `block.replaceChildren(shell)` or the Universal Editor canvas loses field editability. Beyond `blocks/<name>/{<name>.js,.css,_<name>.json}`, three existing files must also be edited or the build/delivery breaks:
+- `scripts/product-block-utils.js` — register the block + each item model in **both** `PRODUCT_MODEL_FIELDS` and `PRODUCT_COLLECTION_MODELS` (else doc-based aem.live delivery can't rebuild field markers / detect groups → fields render empty).
+- `.eslintrc.js` — add any model with >4 fields to `xwalk/max-cells` (else `npm run lint` / the pre-commit hook fails).
+- `models/_section.json` — add the block id to `filters[0].components` (else authors can't insert it into a section).
+
+
 ### Script Loading Phases
 - **Eager** (`loadEager`): Critical above-the-fold content, first section only
 - **Lazy** (`loadLazy`): Remaining sections, header, footer, lazy-styles.css

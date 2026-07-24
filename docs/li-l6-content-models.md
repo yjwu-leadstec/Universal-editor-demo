@@ -195,6 +195,18 @@ Block fields: `id`, `eyebrow`, `title`, `mobileTitle`, `description`, `note`, `c
 
 Child `feature-grid-item` fields: responsive media group, `title`, `description`, optional standard link group. This replaces all numbered `imageUrlN` source fields.
 
+## Product Feature Picture Group — nested collection
+
+Li L6 ending "flagship configuration" image-card grid (Pencil segment 8 「结尾总结」, Figma `52:887`). A section header sits over a grid of image-fill cards, each with its `title`/`description` overlaid on the lower-left of the tile; a card with no image renders the grey `图片` placeholder state. Structurally close to Feature Grid but the copy is overlaid on the image (not stacked below) and there is no per-card link.
+
+Block fields: `id`, `eyebrow`, `title`, `mobileTitle`, `description`, `note`, `classes`.
+
+Child `product-feature-picture-group-group` (optional label group) fields: `groupKey`, `title`.
+
+Child `product-feature-picture-group-card` fields: responsive image group (`image`/`imageAlt`/`mobileImage`/`mobileImageAlt`), `title`, `description`.
+
+Filters: block → `[group, card]`; group → `[card]`. `classes` groups background (`light`/`dark`/`gray`), text (`light-copy`/`dark-copy`), and spacing (`space-large`/`space-small`/`space-none`); default `light space-small`. The block CSS overrides the shared gold eyebrow accent to the theme copy color (`--product-copy`) to match the design.
+
 ## Product Parameter CTA — standalone
 
 Fields: `id`, `title`, `mobileTitle`, `description`, responsive media group, primary link group (`link*`), secondary link group (`secondaryLink*`), and `classes`.
