@@ -22,7 +22,7 @@
       "product-showcase",
       "product-hero",
       "product-sticky-nav",
-      "lixiang-highlight-carousel",
+      "lixiang-product-intro-slider",
       "chapter-intro",
       "lixiang-product-intro-carousel",
       "image-switcher",
@@ -146,18 +146,6 @@
     ]
   },
   {
-    "id": "lixiang-highlight-carousel",
-    "components": [
-      "highlight-slide"
-    ]
-  },
-  {
-    "id": "highlight-slide",
-    "components": [
-      "highlight-stat"
-    ]
-  },
-  {
     "id": "lixiang-product-intro-carousel",
     "components": [
       "lixiang-product-intro-slide",
@@ -169,6 +157,18 @@
     "id": "lixiang-product-intro-highlight-group",
     "components": [
       "lixiang-product-intro-highlight"
+    ]
+  },
+  {
+    "id": "lixiang-product-intro-slider",
+    "components": [
+      "highlight-slide"
+    ]
+  },
+  {
+    "id": "highlight-slide",
+    "components": [
+      "highlight-stat"
     ]
   },
   {

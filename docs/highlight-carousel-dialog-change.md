@@ -2,7 +2,7 @@
 
 ## Scope
 
-Update the existing `lixiang-highlight-carousel` authoring model without changing its
+Update the existing `lixiang-product-intro-slider` authoring model without changing its
 circular carousel behavior. Existing L6 content at
 `/language-master/en/li-l6` is the regression fixture.
 
@@ -38,7 +38,7 @@ circular carousel behavior. Existing L6 content at
 
 ## Content model
 
-### `lixiang-highlight-carousel`
+### `lixiang-product-intro-slider`
 
 Existing fields remain. `title` and `mobileTitle` become multiline inputs.
 New optional fields are `headingColor` and `showVideoControl`; the existing
