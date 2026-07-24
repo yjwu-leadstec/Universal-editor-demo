@@ -39,7 +39,7 @@ const PRODUCT_MODEL_FIELDS = {
   'product-hero-responsive-media': [['mediumImage', 'reference'], ['tabletImage', 'reference']],
   'product-sticky-nav': [['id', 'text'], ['carName', 'text']],
   'product-sticky-nav-item': [['link', 'aem-content'], ['linkText', 'text']],
-  'lixiang-highlight-carousel': [['id', 'text'], ['title', 'textarea'], ['mobileTitle', 'textarea'], ['description', 'richtext'], ['accentColor', 'text'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showProgress', 'boolean'], ['showVideoControl', 'boolean'], ['headingColor', 'select']],
+  'lixiang-product-intro-slider': [['id', 'text'], ['title', 'textarea'], ['mobileTitle', 'textarea'], ['description', 'richtext'], ['accentColor', 'text'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showProgress', 'boolean'], ['showVideoControl', 'boolean'], ['headingColor', 'select']],
   'highlight-slide': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'aem-content'], ['mobileVideo', 'aem-content'], ['eyebrow', 'text'], ['title', 'textarea'], ['description', 'richtext'], ['note', 'textarea'], ['metrics', 'textarea'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['copyColor', 'select'], ['showNote', 'boolean'], ['indicatorLabel', 'textarea']],
   'highlight-stat': [['value', 'text'], ['unit', 'text'], ['label', 'text'], ['description', 'richtext']],
   'chapter-intro': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['note', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['fullVideo', 'reference'], ['playLabel', 'text'], ['loop', 'boolean'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean']],
@@ -83,7 +83,7 @@ const PRODUCT_COLLECTION_MODELS = {
     ? 'product-hero-responsive-media'
     : 'product-hero-cta'),
   'product-sticky-nav': 'product-sticky-nav-item',
-  'lixiang-highlight-carousel': 'highlight-slide',
+  'lixiang-product-intro-slider': 'highlight-slide',
   'highlight-slide': 'highlight-stat',
   'lixiang-product-intro-carousel': (row) => {
     const hasNestedItems = [...row.children].some((child) => child.children.length > 1);

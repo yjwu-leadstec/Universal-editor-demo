@@ -2286,316 +2286,6 @@
     ]
   },
   {
-    "id": "lixiang-highlight-carousel",
-    "fields": [
-      {
-        "component": "text",
-        "name": "id",
-        "label": "ID",
-        "description": "Optional page anchor",
-        "valueType": "string"
-      },
-      {
-        "component": "textarea",
-        "name": "title",
-        "label": "Desktop Title",
-        "description": "Manual line breaks are preserved",
-        "valueType": "string"
-      },
-      {
-        "component": "textarea",
-        "name": "mobileTitle",
-        "label": "Mobile Title Override",
-        "description": "Optional; leave empty to reuse the desktop title",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Description",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "accentColor",
-        "label": "Indicator Color",
-        "description": "Optional; defaults to #191919",
-        "valueType": "string",
-        "validation": {
-          "regExp": "^#[0-9a-fA-F]{6}$",
-          "customErrorMsg": "Enter a six-digit hex color such as #191919"
-        }
-      },
-      {
-        "component": "boolean",
-        "name": "autoPlay",
-        "label": "Desktop Autoplay",
-        "description": "Mobile is always manual",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "number",
-        "name": "interval",
-        "label": "Autoplay Interval (seconds)",
-        "valueType": "number",
-        "value": 4,
-        "validation": {
-          "numberMin": 2,
-          "numberMax": 12,
-          "customErrorMsg": "Use an interval from 2 to 12 seconds"
-        }
-      },
-      {
-        "component": "boolean",
-        "name": "showProgress",
-        "label": "Show Video Progress",
-        "description": "Show the progress ring around the video control",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "boolean",
-        "name": "showVideoControl",
-        "label": "Show Video Play / Pause",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "select",
-        "name": "headingColor",
-        "label": "Section Heading Color",
-        "description": "Optional override for the component title",
-        "valueType": "string",
-        "value": "black",
-        "options": [
-          {
-            "name": "White (#FFFFFF)",
-            "value": "white"
-          },
-          {
-            "name": "Black (#191919)",
-            "value": "black"
-          }
-        ]
-      },
-      {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Style",
-        "valueType": "string",
-        "maxSize": 2,
-        "options": [
-          {
-            "name": "Background",
-            "children": [
-              {
-                "name": "White (#FFFFFF)",
-                "value": "light"
-              },
-              {
-                "name": "Black (#000000)",
-                "value": "dark"
-              },
-              {
-                "name": "Gray (#FAFAFA)",
-                "value": "gray"
-              }
-            ]
-          },
-          {
-            "name": "Spacing",
-            "children": [
-              {
-                "name": "Large (PC 160px / Mobile 80px)",
-                "value": "space-large"
-              },
-              {
-                "name": "Small (PC 80px / Mobile 60px)",
-                "value": "space-small"
-              },
-              {
-                "name": "None (0px)",
-                "value": "space-none"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "highlight-slide",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Desktop Poster / Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "imageAlt",
-        "label": "Desktop Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "mobileImage",
-        "label": "Mobile Poster / Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "mobileImageAlt",
-        "label": "Mobile Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "video",
-        "label": "Desktop Video URL",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "mobileVideo",
-        "label": "Mobile Video URL",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "eyebrow",
-        "label": "Eyebrow",
-        "valueType": "string"
-      },
-      {
-        "component": "textarea",
-        "name": "title",
-        "label": "Card Title",
-        "description": "Manual line breaks are preserved",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Card Description",
-        "valueType": "string"
-      },
-      {
-        "component": "textarea",
-        "name": "note",
-        "label": "Note",
-        "description": "Displayed only when Show Note is enabled",
-        "valueType": "string"
-      },
-      {
-        "component": "textarea",
-        "name": "metrics",
-        "label": "Published Metrics JSON",
-        "description": "Fallback for published markup when nested statistics are unavailable",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "linkText",
-        "label": "Link Text",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "name": "linkType",
-        "label": "Link Type",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Text",
-            "value": "text"
-          },
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "copyColor",
-        "label": "Desktop Card Text Color",
-        "description": "Choose for contrast against this card's media",
-        "valueType": "string",
-        "value": "white",
-        "options": [
-          {
-            "name": "White (#FFFFFF)",
-            "value": "white"
-          },
-          {
-            "name": "Black (#191919)",
-            "value": "black"
-          }
-        ]
-      },
-      {
-        "component": "boolean",
-        "name": "showNote",
-        "label": "Show Note",
-        "description": "Existing notes remain visible unless explicitly disabled",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "textarea",
-        "name": "indicatorLabel",
-        "label": "Indicator Label",
-        "description": "Optional; manual line breaks are preserved",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "highlight-stat",
-    "fields": [
-      {
-        "component": "text",
-        "name": "value",
-        "label": "Value",
-        "valueType": "string",
-        "required": true
-      },
-      {
-        "component": "text",
-        "name": "unit",
-        "label": "Unit",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "label",
-        "label": "Label",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Description",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "lixiang-product-intro-carousel",
     "fields": [
       {
@@ -3033,6 +2723,316 @@
         "component": "text",
         "name": "value",
         "label": "Value",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-intro-slider",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "textarea",
+        "name": "title",
+        "label": "Desktop Title",
+        "description": "Manual line breaks are preserved",
+        "valueType": "string"
+      },
+      {
+        "component": "textarea",
+        "name": "mobileTitle",
+        "label": "Mobile Title Override",
+        "description": "Optional; leave empty to reuse the desktop title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "accentColor",
+        "label": "Indicator Color",
+        "description": "Optional; defaults to #191919",
+        "valueType": "string",
+        "validation": {
+          "regExp": "^#[0-9a-fA-F]{6}$",
+          "customErrorMsg": "Enter a six-digit hex color such as #191919"
+        }
+      },
+      {
+        "component": "boolean",
+        "name": "autoPlay",
+        "label": "Desktop Autoplay",
+        "description": "Mobile is always manual",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "number",
+        "name": "interval",
+        "label": "Autoplay Interval (seconds)",
+        "valueType": "number",
+        "value": 4,
+        "validation": {
+          "numberMin": 2,
+          "numberMax": 12,
+          "customErrorMsg": "Use an interval from 2 to 12 seconds"
+        }
+      },
+      {
+        "component": "boolean",
+        "name": "showProgress",
+        "label": "Show Video Progress",
+        "description": "Show the progress ring around the video control",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "boolean",
+        "name": "showVideoControl",
+        "label": "Show Video Play / Pause",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "select",
+        "name": "headingColor",
+        "label": "Section Heading Color",
+        "description": "Optional override for the component title",
+        "valueType": "string",
+        "value": "black",
+        "options": [
+          {
+            "name": "White (#FFFFFF)",
+            "value": "white"
+          },
+          {
+            "name": "Black (#191919)",
+            "value": "black"
+          }
+        ]
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "maxSize": 2,
+        "options": [
+          {
+            "name": "Background",
+            "children": [
+              {
+                "name": "White (#FFFFFF)",
+                "value": "light"
+              },
+              {
+                "name": "Black (#000000)",
+                "value": "dark"
+              },
+              {
+                "name": "Gray (#FAFAFA)",
+                "value": "gray"
+              }
+            ]
+          },
+          {
+            "name": "Spacing",
+            "children": [
+              {
+                "name": "Large (PC 160px / Mobile 80px)",
+                "value": "space-large"
+              },
+              {
+                "name": "Small (PC 80px / Mobile 60px)",
+                "value": "space-small"
+              },
+              {
+                "name": "None (0px)",
+                "value": "space-none"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "highlight-slide",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop Poster / Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Poster / Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "video",
+        "label": "Desktop Video URL",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "mobileVideo",
+        "label": "Mobile Video URL",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "eyebrow",
+        "label": "Eyebrow",
+        "valueType": "string"
+      },
+      {
+        "component": "textarea",
+        "name": "title",
+        "label": "Card Title",
+        "description": "Manual line breaks are preserved",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Card Description",
+        "valueType": "string"
+      },
+      {
+        "component": "textarea",
+        "name": "note",
+        "label": "Note",
+        "description": "Displayed only when Show Note is enabled",
+        "valueType": "string"
+      },
+      {
+        "component": "textarea",
+        "name": "metrics",
+        "label": "Published Metrics JSON",
+        "description": "Fallback for published markup when nested statistics are unavailable",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "Link Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "linkType",
+        "label": "Link Type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Text",
+            "value": "text"
+          },
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "copyColor",
+        "label": "Desktop Card Text Color",
+        "description": "Choose for contrast against this card's media",
+        "valueType": "string",
+        "value": "white",
+        "options": [
+          {
+            "name": "White (#FFFFFF)",
+            "value": "white"
+          },
+          {
+            "name": "Black (#191919)",
+            "value": "black"
+          }
+        ]
+      },
+      {
+        "component": "boolean",
+        "name": "showNote",
+        "label": "Show Note",
+        "description": "Existing notes remain visible unless explicitly disabled",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "textarea",
+        "name": "indicatorLabel",
+        "label": "Indicator Label",
+        "description": "Optional; manual line breaks are preserved",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "highlight-stat",
+    "fields": [
+      {
+        "component": "text",
+        "name": "value",
+        "label": "Value",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "unit",
+        "label": "Unit",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Label",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
         "valueType": "string"
       }
     ]
