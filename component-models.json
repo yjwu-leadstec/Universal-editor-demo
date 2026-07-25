@@ -2286,6 +2286,156 @@
     ]
   },
   {
+    "id": "live-media-grid",
+    "fields": [
+      {
+        "component": "select",
+        "name": "type",
+        "label": "Media Type",
+        "value": "newsroom",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Newsroom",
+            "value": "newsroom"
+          },
+          {
+            "name": "Photos",
+            "value": "photos"
+          },
+          {
+            "name": "Videos",
+            "value": "videos"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "live-media-card",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "date",
+        "label": "Publication Date",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Cover Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Destination",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "live-media-card-meta",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Card Title",
+        "description": "Must exactly match the card title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "quantity",
+        "label": "Photo Count",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "duration",
+        "label": "Video Duration",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "live-media-header",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Page Title",
+        "value": "Newsroom",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "activeTab",
+        "label": "Active Tab",
+        "value": "newsroom",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Newsroom",
+            "value": "newsroom"
+          },
+          {
+            "name": "Photos",
+            "value": "photos"
+          },
+          {
+            "name": "Videos",
+            "value": "videos"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "live-media-route",
+    "fields": [
+      {
+        "component": "select",
+        "name": "tabKey",
+        "label": "Tab",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Newsroom",
+            "value": "newsroom"
+          },
+          {
+            "name": "Photos",
+            "value": "photos"
+          },
+          {
+            "name": "Videos",
+            "value": "videos"
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "href",
+        "label": "Route",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "lixiang-product-detail-picture-group",
     "fields": [
       {

@@ -157,6 +157,19 @@
     ]
   },
   {
+    "id": "live-media-grid",
+    "components": [
+      "live-media-card",
+      "live-media-card-meta"
+    ]
+  },
+  {
+    "id": "live-media-header",
+    "components": [
+      "live-media-route"
+    ]
+  },
+  {
     "id": "lixiang-product-detail-picture-group",
     "components": [
       "lixiang-product-detail-picture-group-item",
