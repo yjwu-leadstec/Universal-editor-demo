@@ -199,9 +199,11 @@ function restorePublishedModel(root, model) {
 // The Universal Editor sometimes instruments only the collection items and
 // leaves the block's own fields as bare cells. The guard below used to bail on
 // any data-aue-model, so in that case neither path claimed those cells and
-// every block-level field read as empty. Map the leading bare cells onto the
-// block's field list; stop at the first child the editor already marked so
-// instrumented items are never touched.
+// every block-level field read as empty. Claim the leading bare cells using the
+// same positional walk restorePublishedModel uses, including its type check --
+// delivery omits cells for empty values, so a blind index-to-field mapping
+// would slide later fields onto the wrong cells. Stop at the first child the
+// editor already marked so instrumented items are never touched.
 function restoreBlockFields(block, model) {
   const fields = PRODUCT_MODEL_FIELDS[model];
   if (!fields) return;
@@ -211,9 +213,19 @@ function restoreBlockFields(block, model) {
     bare.push(child);
     return true;
   });
-  bare.slice(0, fields.length).forEach((source, index) => {
-    const [name] = fields[index];
+  if (!bare.length) return;
+  const fieldSources = new Map();
+  let sourceIndex = 0;
+  fields.forEach(([name, component]) => {
+    const restoredCompanion = restoreAltField(block, name, fieldSources)
+      || restoreLinkField(block, name, fieldSources);
+    if (restoredCompanion) return;
+    const source = bare[sourceIndex];
+    if (!source) return;
+    if (!matchesPublishedField(source, component)) return;
     source.dataset.aueProp = name;
+    fieldSources.set(name, source);
+    sourceIndex += 1;
   });
 }
 
