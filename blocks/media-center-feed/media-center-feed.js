@@ -3,6 +3,8 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 const MEDIA_TYPES = ['newsroom', 'photos', 'videos'];
+const CONTENT_FRAGMENT_ROOT = '/content/dam/li-auto/media-center-v2';
+const GRAPHQL_QUERY_URL = 'https://publish-p80707-e1685574.adobeaemcloud.com/graphql/execute.json/global/media-center-feed';
 
 function sourceFor(rows, name, fallbackIndex) {
   const selector = `[data-aue-prop="${name}"]`;
@@ -35,6 +37,14 @@ function normalizePath(path) {
   return String(path || '').replace(/^https?:\/\/[^/]+/, '').replace(/\.html$/, '').replace(/\/$/, '');
 }
 
+function localizeDetailPath(path) {
+  const normalizedPath = normalizePath(path);
+  if (!normalizedPath.startsWith('/media-library/')) return normalizedPath;
+  const currentPath = normalizePath(window.location.pathname);
+  const pageIndex = currentPath.indexOf('/media-center-v2');
+  return pageIndex === -1 ? normalizedPath : `${currentPath.slice(0, pageIndex)}${normalizedPath}`;
+}
+
 function titleFor(type) {
   return type === 'newsroom' ? 'Newsroom' : `${type.charAt(0).toUpperCase()}${type.slice(1)}`;
 }
@@ -52,10 +62,11 @@ function formatDate(value) {
 }
 
 function mediaEntry(entry) {
-  const path = normalizePath(firstValue(entry, ['path', '_path', 'detailPath', 'detail-path']));
+  const path = localizeDetailPath(firstValue(entry, ['detailPath', 'detail-path', 'path']));
   const displayMode = String(firstValue(entry, ['displayMode', 'display-mode']) || 'grid').toLowerCase();
   return {
     path,
+    contentFragmentPath: normalizePath(firstValue(entry, ['_path', 'contentFragmentPath'])),
     title: firstValue(entry, ['title', 'name']),
     date: firstValue(entry, ['publishDate', 'publish-date', 'date']),
     type: String(firstValue(entry, ['mediaType', 'media-type', 'type'])).toLowerCase(),
@@ -78,17 +89,41 @@ function sortEntries(entries) {
   });
 }
 
+function parseJsonEntry(entry) {
+  const jsonEntry = firstValue(entry, ['jsonEntry']);
+  const value = Array.isArray(jsonEntry) ? jsonEntry[0] : jsonEntry;
+  if (typeof value === 'object' && value) return value;
+  if (typeof value !== 'string') return {};
+  try {
+    return JSON.parse(value);
+  } catch {
+    return {};
+  }
+}
+
+function fragmentEntry(entry) {
+  const fragmentPath = Object.getOwnPropertyDescriptor(entry, '_path')?.value;
+  return mediaEntry({ ...parseJsonEntry(entry), _path: fragmentPath });
+}
+
+function contentFragmentRoot(sourcePath) {
+  const configuredRoot = normalizePath(sourcePath);
+  return configuredRoot.startsWith('/content/dam/') ? configuredRoot : CONTENT_FRAGMENT_ROOT;
+}
+
 async function loadEntries(sourcePath) {
-  const response = await fetch('/query-index.json');
-  if (!response.ok) throw new Error(`Media index request failed (${response.status})`);
+  const response = await fetch(GRAPHQL_QUERY_URL, {
+    headers: { Accept: 'application/json' },
+  });
+  if (!response.ok) throw new Error(`Media content request failed (${response.status})`);
   const payload = await response.json();
-  let items = [];
-  if (Array.isArray(payload.data)) items = payload.data;
-  if (Array.isArray(payload.items)) items = payload.items;
-  const root = normalizePath(sourcePath) || '/media-library';
+  const items = payload?.data?.simpleJsonObjectList?.items;
+  const root = contentFragmentRoot(sourcePath);
+  if (!Array.isArray(items)) return [];
   return items
-    .map(mediaEntry)
-    .filter((entry) => entry.path === root || entry.path.startsWith(`${root}/`));
+    .map(fragmentEntry)
+    .filter((entry) => entry.contentFragmentPath === root
+      || entry.contentFragmentPath.startsWith(`${root}/`));
 }
 
 function createCard(entry, type) {

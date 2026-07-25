@@ -1,148 +1,83 @@
 # Media Center v2 使用、配置与发布手册
 
-## 1. 适用范围
+## 1. 内容来源与范围
 
-本手册用于独立的 Media Center v2 页面。它不修改旧的 `/media-center` 页面，也不使用旧页面中逐张录入卡片的方式。
-
-v2 的唯一内容源是 `/media-library` 下的详情页。`media-center-feed` 在运行时读取 EDS 的 `query-index.json`，自动生成 Newsroom、Photos、Videos 三个列表。`helix-query.yaml` 必须保留对 Media Center 元数据的索引定义；页面虽然会输出这些 meta 字段，但不会自动进入 Query Index。
-
-当前语言母版路径：
+Media Center v2 是独立页面，不修改旧 `/media-center`。Newsroom、Photos、Videos 不再逐张维护卡片，也不依赖 EDS Query Index；每条卡片由一个 AEM Content Fragment（CF）自动渲染。
 
 | 用途 | AEM Author 路径 | EDS 路径 |
 | --- | --- | --- |
-| Newsroom 列表 | `/content/demo-site/language-master/en/media-center-v2` | `/language-master/en/media-center-v2` |
-| Photos 列表 | `/content/demo-site/language-master/en/media-center-v2/photos` | `/language-master/en/media-center-v2/photos` |
-| Videos 列表 | `/content/demo-site/language-master/en/media-center-v2/videos` | `/language-master/en/media-center-v2/videos` |
-| 详情记录根 | `/content/demo-site/language-master/en/media-library` | `/language-master/en/media-library` |
+| Newsroom | `/content/demo-site/language-master/en/media-center-v2` | `/language-master/en/media-center-v2` |
+| Photos | `/content/demo-site/language-master/en/media-center-v2/photos` | `/language-master/en/media-center-v2/photos` |
+| Videos | `/content/demo-site/language-master/en/media-center-v2/videos` | `/language-master/en/media-center-v2/videos` |
+| CF 根目录 | `/content/dam/li-auto/media-center-v2` | 不直接访问 |
 
-## 2. 工作原理
+数据流为：
 
 ```text
-详情页元数据
-  -> EDS Query Index
-  -> media-center-feed
+Content Fragment 的 jsonEntry
+  -> AEM Publish Persisted GraphQL Query（global/media-center-feed）
+  -> media-center-feed block
   -> Newsroom / Photos / Videos 列表
 ```
 
-列表不会保存或复制标题、日期、图片、链接。编辑详情页一次，所有匹配的列表会在发布并完成索引后自动更新。
+## 2. CF 数据契约
 
-渲染规则：
+在 CF 根目录中用 **Simple JSON Object** 模型创建记录，在 `jsonEntry` 填入 JSON 对象。每个列表页仅配置 CF 根目录；新增、隐藏、排序或整行展示均只改 CF，不改列表页。
 
-1. 仅显示 `visible=true` 且 `mediaType` 与当前列表一致的详情页。
-2. 先按 `featured=true` 排序，再按 `sortOrder` 升序，最后按 `publishDate` 倒序。
-3. `displayMode=grid` 为两列卡片；`displayMode=full-width` 在桌面端跨两列。
-4. Photos 使用 `photoCount`，Videos 使用 `videoDuration` 作为卡片附加信息。
-5. `publishDate` 在 Author 中使用 `YYYY-MM-DD`，列表 UI 使用英文长日期格式，例如 `June 29, 2026`。
-
-## 3. 视觉与断点规则
-
-Media Center v2 的列表样式需要对齐 Li Auto EN 现网页面，而不是旧 `/media-center` 的手工卡片样式。
-
-| 断点 | 页面标题 | Tab | 列表布局 |
-| --- | --- | --- | --- |
-| `<1000px` | 不显示独立 H1，只保留移动 Header 后的列表 | 顶部横向 Tab，`64px` 高，文字 `16px`，当前项为黑色 | 单列卡片，左右约 `20px` 安全边距 |
-| `1000px-1440px` | 居中 `Newsroom`，约 `48px / 67.5px` | Tab 居中，当前项黑色并有下划线 | 两列网格，卡片白底圆角，内容区左右约 `165px` |
-| `1441px+` | 居中 `Newsroom`，约 `64px / 90px` | Tab 居中，当前项下划线为 `#dbad76`，宽约 `98px`，高 `2px` | 两列网格，内容区宽约 `1480px`，左右约 `220px` |
-
-验收时必须特别看 `999px / 1000px` 和 `1440px / 1441px` 两组边界。卡片图片区不得遮挡 Tab，Tab 与第一行卡片之间必须保留现网间距。
-
-## 4. Query Index 字段契约
-
-`helix-query.yaml` 中的字段名与页面 meta 名称必须保持一致。改字段名时要同步修改 Author 模型、详情页属性、索引配置和 `media-center-feed` 读取逻辑。
-
-| Query Index 字段 | 页面 meta 来源 | 用途 |
+| 字段 | 必填 | 规则 |
 | --- | --- | --- |
-| `title` | `og:title` | 卡片标题 |
-| `description` | `description` | 详情摘要 |
-| `mediaType` | `mediatype` | 分到 Newsroom、Photos、Videos |
-| `visible` | `visible` | 控制是否进入列表 |
-| `displayMode` | `displaymode` | 普通两列或桌面跨整行 |
-| `featured` | `featured` | 精选排序 |
-| `sortOrder` | `sortorder` | 人工排序 |
-| `publishDate` | `publishdate` | 日期展示和排序 |
-| `coverImage` | `coverimage` | 卡片封面 |
-| `imageAlt` | `imagealt` | 图片替代文本 |
-| `photoCount` | `photocount` | Photos 附加信息 |
-| `videoDuration` | `videoduration` | Videos 附加信息 |
-
-## 5. 一次性代码配置
-
-代码只需在 `main` 合并一次：
-
-1. 确认 `blocks/media-center-feed/`、`models/_page.json` 与根目录三个 `component-*.json` 都已提交。
-2. 确认 `helix-query.yaml` 中已配置 `mediaType`、`visible`、`displayMode`、`featured`、`sortOrder`、`publishDate`、`coverImage` 等索引字段。
-3. 推送 `main` 后等待 GitHub Build 成功。
-4. 访问远程源码，确认 `media-center-feed.js` 包含 `query-index.json`：
-
-   ```text
-   https://main--universal-editor-demo--yjwu-leadstec.aem.page/blocks/media-center-feed/media-center-feed.js
-   ```
-
-5. Build 失败时不得继续发布内容；先修复并重新推送 `main`。
-
-> 项目验收以远程 `main` 为准。仅本地 `aem up`、本地截图或未推送的代码不算完成。
-
-## 6. 新建一条媒体详情记录
-
-在对应的详情目录下新建普通 AEM 页面，而不是在列表页增加卡片：
-
-| 类型 | 推荐目录 | 示例 slug |
-| --- | --- | --- |
-| Newsroom | `/media-library/news` | `kazakhstan-flagship` |
-| Photos | `/media-library/photos` | `li-l6` |
-| Videos | `/media-library/videos` | `l9-central-asia-launch` |
-
-在页面 Properties 的 Media Entry 字段填写：
-
-| 字段 | 必填 | 示例 / 规则 |
-| --- | --- | --- |
-| `jcr:title` | 是 | 卡片标题与详情页标题 |
-| `jcr:description` | 建议 | 详情摘要与搜索摘要 |
-| `mediaType` | 是 | `newsroom`、`photos` 或 `videos` |
-| `visible` | 是 | `true` 显示，`false` 从所有 v2 列表隐藏 |
-| `displayMode` | 是 | `grid` 或 `full-width` |
-| `featured` | 建议 | `true` 会排在非精选记录之前 |
-| `sortOrder` | 建议 | 数字越小越靠前，例如 `10`、`20`、`30` |
-| `publishDate` | 是 | `YYYY-MM-DD`，例如 `2026-07-21` |
-| `coverImage` | 是 | `/content/dam/li-auto/...` 的 DAM 图片 |
-| `imageAlt` | 是 | 卡片封面替代文本 |
-| `photoCount` | Photos | 相册图片数量，例如 `5` |
+| `mediaType` | 是 | `newsroom`、`photos`、`videos` |
+| `title` | 是 | 卡片标题 |
+| `publishDate` | 是 | `YYYY-MM-DD` |
+| `coverImage` | 是 | `/content/dam/li-auto/...` 图片 |
+| `imageAlt` | 是 | 封面替代文本 |
+| `detailPath` | 是 | `/media-library/...` 的详情页路径；block 自动补当前站点根路径 |
+| `visible` | 是 | `true` 显示，`false` 隐藏但保留记录 |
+| `displayMode` | 是 | `grid` 或 `full-width`；后者在桌面端占满一行 |
+| `featured` | 建议 | `true` 优先展示 |
+| `sortOrder` | 建议 | 数字越小越靠前 |
+| `photoCount` | Photos | 相册数量，例如 `5` |
 | `videoDuration` | Videos | 时长，例如 `01:52` |
 
-禁止做法：
+排序顺序：`featured=true` 优先，随后 `sortOrder` 升序、`publishDate` 降序。图片只能引用 `/content/dam/li-auto/...`，不得使用 Dynamic Media、Scene7 或 UUID URL。
 
-- 不要在 `media-center-feed` 下新建手工卡片行。
-- 不要把图片写成 Dynamic Media、Scene7 或 UUID URL；只保存 `/content/dam/li-auto/...` 引用。
-- 不要通过删除详情页隐藏内容；使用 `visible=false`，以保留可恢复的编辑记录。
+## 3. 列表页配置
 
-## 7. 配置三个列表页
-
-每个列表页只放一个 `Media Center Feed` block。字段如下：
+每个列表页只保留一个 `Media Center Feed` block：
 
 | Block 字段 | Newsroom | Photos | Videos |
 | --- | --- | --- | --- |
 | `title` | `Newsroom` | `Photos` | `Videos` |
 | `activeType` | `newsroom` | `photos` | `videos` |
-| `sourcePath` | `/content/demo-site/language-master/en/media-library` | 同左 | 同左 |
+| `sourcePath` | `/content/dam/li-auto/media-center-v2` | 同左 | 同左 |
 | `routeBase` | `/content/demo-site/language-master/en/media-center-v2` | 同左 | 同左 |
 
-`routeBase` 会自动产生 `/photos`、`/videos` Tab 链接；不要在每个页面重复维护三组卡片或三组 Tab 路径。
+`routeBase` 自动生成 `/photos`、`/videos` Tab。不要添加手工卡片行，也不要为三页重复维护内容。
 
-## 8. 发布顺序
+## 4. 一次性 AEM GraphQL 配置
 
-代码和内容的发布分开处理。每一步均需在 AEM 或 GitHub 看到成功状态后再进行下一步。
+在 Global 配置中启用 **GraphQL Persisted Queries**，并发布下列配置：
 
-1. **代码变更**：提交并推送 `main`，等待 GitHub Build 成功。没有远程 Build 成功，不进入验收。
-2. **DAM 素材**：在 Assets 中 Quick Publish 本次新增或替换的 `coverImage`。素材必须位于 `/content/dam/li-auto`，其文件夹需保留 `cq:conf=/conf/demo-site`。
-3. **详情记录**：发布本次新增或修改的详情页。只有首次创建 `/media-library`、`news`、`photos`、`videos` 目录，或目录发布状态缺失时，才需要补发布对应根目录和类型目录。
-4. **列表页**：只有新增列表页、调整列表页 block 字段、修改路由或改页面结构时，才发布 `/media-center-v2`、`/media-center-v2/photos`、`/media-center-v2/videos`。普通新闻、图片、视频详情页的元数据更新不需要反复发布列表页。
-5. **索引等待**：EDS Query Index 异步更新。列表短时间显示“等待发布”不等于配置丢失；等待索引后再验证。
+1. Endpoint：`/content/cq:graphql/global/endpoint`
+2. Persisted query：`/conf/global/settings/graphql/persistentQueries/media-center-feed`
+3. Publish 查询地址：`https://publish-p80707-e1685574.adobeaemcloud.com/graphql/execute.json/global/media-center-feed`
 
-在 AEM 页面编辑器中，可通过 **Page Information -> Publish Page** 发布当前页面；需要批量发布时使用 Sites 的 **Manage Publication**，只勾选本次 v2 路径与其引用素材。不得选择旧 `/media-center`。
+查询必须返回 `simpleJsonObjectList.items` 的 `_path` 和 `jsonEntry`，并仅筛选 `/content/dam/li-auto/media-center-v2/` 下的 CF。若前端域名与 AEM Publish 域名不同，管理员还必须为该 Preview/Production 域配置允许的 CORS Origin；没有此响应头，浏览器会拦截列表请求。
 
-## 9. 远程验收
+## 5. 发布顺序
 
-发布后，强制刷新以下远程 Preview：
+1. 代码只从 `main` 合并并推送，等待 GitHub Build 成功。
+2. 首次部署或查询变更时，发布 GraphQL endpoint 与 persisted query。
+3. 在 Assets 中 Quick Publish 每条 CF 的 `coverImage`。
+4. 发布新增或变更的 CF。
+5. 发布其 `detailPath` 指向的详情页，确保卡片链接可打开。
+6. 强刷远程页面，确认 GraphQL 返回内容且页面实际渲染。
+
+普通内容更新无需重新发布列表页。只在列表页结构、block 字段或路由变化时发布列表页。
+
+## 6. 远程验收
+
+必须验证远程 `main`：
 
 ```text
 https://main--universal-editor-demo--yjwu-leadstec.aem.page/language-master/en/media-center-v2
@@ -150,28 +85,22 @@ https://main--universal-editor-demo--yjwu-leadstec.aem.page/language-master/en/m
 https://main--universal-editor-demo--yjwu-leadstec.aem.page/language-master/en/media-center-v2/videos
 ```
 
-验收清单：
+- GitHub Build 成功，且 AEM Publish GraphQL 返回已发布的 CF。
+- Newsroom、Photos、Videos 各仅出现自身类型；`visible=false` 不出现。
+- `full-width` 在桌面跨两列，移动端仍为单列；封面不遮挡 Tab。
+- 在 `1920`、`1441`、`1440`、`1024`、`1000`、`999`、`768`、`390` 宽度确认字体、位置、图片比例、圆角和无横向溢出。
+- 卡片链接包含当前站点根路径，封面正常加载，无 `.block-error`、404 或浏览器 CORS 错误。
 
-- GitHub Build 已成功，且远程 Preview 加载的是最新 `main`。
-- `query-index.json` 中能查到已发布详情页，且包含正确的类型、日期、封面和可见性字段。
-- Newsroom、Photos、Videos 各只显示自身类型。
-- `visible=false` 的记录不显示。
-- `full-width` 的记录在桌面端占满一行；移动端仍为单列卡片。
-- 卡片日期按英文长日期显示，例如 `June 29, 2026`。
-- 封面图片均由 `/assets/...` 成功加载，无 Dynamic Media URL、404、横向溢出或 `.block-error`。
-- 在 `1920`、`1440`、`1441`、`1024`、`1000`、`999`、`768`、`390` 宽度验证；Author 画布还需验证约 `1006px`。
-- 标题、Tab、卡片位置、字体大小、图片比例和卡片圆角需对齐现网；卡片图片区不得遮挡 Tab。
-- GitHub Build、AEM Author、远程 Preview 三者均通过后，才视为完成。
+本地 `aem up`、本地截图或未推送的提交均不属于完成。任务结束后关闭本次打开的测试页。
 
-## 10. 常见问题与回滚
+## 7. 常见问题与回滚
 
-| 现象 | 排查与处理 |
+| 现象 | 处理 |
 | --- | --- |
-| 列表显示“等待发布” | 检查详情页是否已发布、详情页是否位于 `sourcePath` 下、等待 Query Index 更新后强刷 Preview。 |
-| 卡片不显示 | 检查 `visible=true`、`mediaType` 是否匹配、`publishDate` 与封面字段是否已保存。 |
-| 图片不显示 | 检查 `coverImage` 是否为 `/content/dam/li-auto/...`，并确认资产已 Quick Publish。 |
-| 顺序不对 | 检查 `featured`、`sortOrder`、`publishDate`，优先级依次降低。 |
-| 样式像旧页面 | 确认页面使用 `media-center-feed`，不是旧 `/media-center` 的手工卡片 block；再检查远程 Build 是否已成功。 |
-| 需要暂时下线一条内容 | 设 `visible=false`，发布详情页；不要删除页面。 |
+| 列表为空 | 检查 CF、endpoint、persisted query 是否都已发布，且 `visible=true`、`mediaType` 匹配。 |
+| 浏览器请求被拦截 | 为 EDS Preview/Production 域添加 AEM Publish CORS Origin，再复测响应头。 |
+| 图片不显示 | 确认 `coverImage` 是已 Quick Publish 的 `/content/dam/li-auto/...` 路径。 |
+| 链接 404 | 发布 `detailPath` 对应详情页，并确认路径以 `/media-library/` 开始。 |
+| 需要下线 | 将 `visible` 改为 `false` 并发布 CF；不要删除记录。 |
 
-回滚遵循可恢复原则：先在 AEM 为详情页创建版本或恢复旧版本，再取消发布 v2 列表页或将记录设为 `visible=false`。代码回滚使用 `git revert` 生成新提交、推送 `main` 并等待新的 GitHub Build；不要使用强制推送或重写远程历史。
+代码回滚使用 `git revert` 生成新提交并推送 `main`，不要强制推送或重写远程历史。

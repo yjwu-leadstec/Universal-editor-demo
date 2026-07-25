@@ -22,7 +22,7 @@
       "fields": [
         { "component": "text", "name": "title", "label": "Page Title", "value": "Newsroom", "valueType": "string" },
         { "component": "select", "name": "activeType", "label": "Active Feed", "value": "newsroom", "valueType": "string", "options": [{ "name": "Newsroom", "value": "newsroom" }, { "name": "Photos", "value": "photos" }, { "name": "Videos", "value": "videos" }] },
-        { "component": "aem-content", "name": "sourcePath", "label": "Detail Record Root", "value": "/media-library", "valueType": "string" },
+        { "component": "aem-content", "name": "sourcePath", "label": "Content Fragment Root", "value": "/content/dam/li-auto/media-center-v2", "valueType": "string" },
         { "component": "aem-content", "name": "routeBase", "label": "Newsroom Route", "valueType": "string" }
       ]
     }

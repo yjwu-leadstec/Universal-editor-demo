@@ -3778,8 +3778,8 @@
       {
         "component": "aem-content",
         "name": "sourcePath",
-        "label": "Detail Record Root",
-        "value": "/media-library",
+        "label": "Content Fragment Root",
+        "value": "/content/dam/li-auto/media-center-v2",
         "valueType": "string"
       },
       {
