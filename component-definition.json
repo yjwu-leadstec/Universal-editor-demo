@@ -684,7 +684,11 @@
                   "showVideoControl": true,
                   "showProgress": true,
                   "enableMotion": true,
-                  "classes": "light space-large picture-gap-large"
+                  "classes": [
+                    "light",
+                    "space-large",
+                    "picture-gap-large"
+                  ]
                 }
               }
             }

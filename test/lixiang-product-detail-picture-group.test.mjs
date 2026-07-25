@@ -60,22 +60,20 @@ test('dialog exposes only design-backed themes, spacing, copy, and media fields'
     'classes',
   ]);
   assert.equal(container.title.component, 'text');
-  assert.equal(container.classes.component, 'select');
-  assert.equal(container.classes.value, 'light space-large picture-gap-large');
-  assert.equal(container.classes.options.length, 12);
-  container.classes.options.forEach(({ value }) => {
-    const tokens = value.split(' ');
-    assert.equal(tokens.filter((token) => ['light', 'gray'].includes(token)).length, 1);
-    assert.equal(tokens.filter((token) => [
-      'space-large',
-      'space-small',
-      'space-none',
-    ].includes(token)).length, 1);
-    assert.equal(tokens.filter((token) => [
-      'picture-gap-large',
-      'picture-gap-small',
-    ].includes(token)).length, 1);
-  });
+  assert.equal(container.classes.component, 'multiselect');
+  assert.equal(container.classes.maxSize, 3);
+  assert.deepEqual(
+    container.classes.options.map(({ name }) => name),
+    ['Background', 'Outer Spacing', 'Title-to-Pictures Gap'],
+  );
+  assert.deepEqual(
+    container.classes.options.map(({ children }) => children.map(({ value }) => value)),
+    [
+      ['light', 'gray'],
+      ['space-large', 'space-small', 'space-none'],
+      ['picture-gap-large', 'picture-gap-small'],
+    ],
+  );
   assert.deepEqual(Object.keys(pictureSet), ['groupKey', 'title', 'description']);
   assert.deepEqual(Object.keys(picture), [
     'image',
