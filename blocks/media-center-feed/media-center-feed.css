@@ -18,6 +18,7 @@ main .media-center-feed {
 }
 
 main .media-center-feed-shell > header {
+  height: auto;
   padding: 78px 0 40px;
 }
 
