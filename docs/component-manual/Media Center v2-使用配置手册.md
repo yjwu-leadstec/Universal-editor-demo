@@ -62,7 +62,7 @@ Content Fragment 的 jsonEntry
 2. Persisted query：`/conf/global/settings/graphql/persistentQueries/media-center-feed`
 3. Publish 查询地址：`https://publish-p80707-e1685574.adobeaemcloud.com/graphql/execute.json/global/media-center-feed`
 
-查询必须返回 `simpleJsonObjectList.items` 的 `_path` 和 `jsonEntry`，并仅筛选 `/content/dam/li-auto/media-center-v2/` 下的 CF。若前端域名与 AEM Publish 域名不同，管理员还必须为该 Preview/Production 域配置允许的 CORS Origin；没有此响应头，浏览器会拦截列表请求。
+查询必须返回 `simpleJsonObjectList.items` 的 `_path` 和 `jsonEntry`，并仅筛选 `/content/dam/li-auto/media-center-v2/` 下的 CF。若前端域名与 AEM Publish 域名不同，管理员还必须为该 Preview/Production 域配置允许的 CORS Origin；没有此响应头，浏览器会拦截列表请求。block 使用五分钟缓存窗口参数读取 Persisted Query，避免 Publish 默认两小时 CDN 缓存延迟 CF 的新增、隐藏和排序结果。
 
 ## 5. 发布顺序
 
@@ -71,7 +71,7 @@ Content Fragment 的 jsonEntry
 3. 在 Assets 中 Quick Publish 每条 CF 的 `coverImage`。
 4. 发布新增或变更的 CF。
 5. 发布其 `detailPath` 指向的详情页，确保卡片链接可打开。
-6. 强刷远程页面，确认 GraphQL 返回内容且页面实际渲染。
+6. 等待最多五分钟使 block 的查询缓存窗口更新，然后强刷远程页面，确认 GraphQL 返回内容且页面实际渲染。
 
 普通内容更新无需重新发布列表页。只在列表页结构、block 字段或路由变化时发布列表页。
 

@@ -5,6 +5,7 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 const MEDIA_TYPES = ['newsroom', 'photos', 'videos'];
 const CONTENT_FRAGMENT_ROOT = '/content/dam/li-auto/media-center-v2';
 const GRAPHQL_QUERY_URL = 'https://publish-p80707-e1685574.adobeaemcloud.com/graphql/execute.json/global/media-center-feed';
+const GRAPHQL_CACHE_WINDOW_MS = 5 * 60 * 1000;
 
 function sourceFor(rows, name, fallbackIndex) {
   const selector = `[data-aue-prop="${name}"]`;
@@ -112,7 +113,9 @@ function contentFragmentRoot(sourcePath) {
 }
 
 async function loadEntries(sourcePath) {
-  const response = await fetch(GRAPHQL_QUERY_URL, {
+  const queryUrl = new URL(GRAPHQL_QUERY_URL);
+  queryUrl.searchParams.set('cache', Math.floor(Date.now() / GRAPHQL_CACHE_WINDOW_MS));
+  const response = await fetch(queryUrl, {
     headers: { Accept: 'application/json' },
   });
   if (!response.ok) throw new Error(`Media content request failed (${response.status})`);
