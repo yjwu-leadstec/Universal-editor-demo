@@ -39,6 +39,18 @@ function titleFor(type) {
   return type === 'newsroom' ? 'Newsroom' : `${type.charAt(0).toUpperCase()}${type.slice(1)}`;
 }
 
+function formatDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+  const date = new Date(`${value}T00:00:00Z`);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
+}
+
 function mediaEntry(entry) {
   const path = normalizePath(firstValue(entry, ['path', '_path', 'detailPath', 'detail-path']));
   const displayMode = String(firstValue(entry, ['displayMode', 'display-mode']) || 'grid').toLowerCase();
@@ -100,7 +112,7 @@ function createCard(entry, type) {
   let detail = '';
   if (type === 'photos') detail = entry.quantity;
   if (type === 'videos') detail = entry.duration;
-  meta.textContent = [detail, entry.date].filter(Boolean).join(' | ');
+  meta.textContent = [detail, formatDate(entry.date)].filter(Boolean).join(' | ');
   copy.append(title, meta);
   card.append(media, copy);
   return card;
