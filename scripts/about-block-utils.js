@@ -131,7 +131,16 @@ export function propPicture(root, name) {
   const source = propSource(root, name);
   if (!source) return null;
   const picture = source.matches('picture') ? source : source.querySelector('picture');
-  return picture || null;
+  if (picture) return picture;
+  const link = source.matches('a') ? source : source.querySelector('a');
+  const url = link?.getAttribute('href') || source.textContent.trim();
+  if (!url) return null;
+  const generated = document.createElement('picture');
+  const img = document.createElement('img');
+  img.src = url;
+  img.loading = 'lazy';
+  generated.append(img);
+  return generated;
 }
 
 export function propUrl(root, name) {
