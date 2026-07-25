@@ -1,5 +1,15 @@
 [
   {
+    "id": "assets-filter",
+    "assets": {
+      "deliveryTier": "publish",
+      "selectionTier": [
+        "author"
+      ],
+      "disableRemote": true
+    }
+  },
+  {
     "id": "main",
     "components": [
       "section"
