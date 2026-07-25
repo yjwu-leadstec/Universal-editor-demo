@@ -46,6 +46,10 @@ function localizeDetailPath(path) {
   return pageIndex === -1 ? normalizedPath : `${currentPath.slice(0, pageIndex)}${normalizedPath}`;
 }
 
+function toEdsAssetPath(path) {
+  return normalizePath(path).replace(/^\/content\/dam\/li-auto\//, '/assets/');
+}
+
 function titleFor(type) {
   return type === 'newsroom' ? 'Newsroom' : `${type.charAt(0).toUpperCase()}${type.slice(1)}`;
 }
@@ -138,7 +142,9 @@ function createCard(entry, type) {
 
   const media = document.createElement('span');
   media.className = 'media-center-feed-media';
-  if (entry.image) media.append(createOptimizedPicture(entry.image, entry.alt || entry.title));
+  if (entry.image) {
+    media.append(createOptimizedPicture(toEdsAssetPath(entry.image), entry.alt || entry.title));
+  }
   if (type === 'photos' || type === 'videos') {
     const marker = document.createElement('span');
     marker.className = `media-center-feed-marker is-${type}`;
