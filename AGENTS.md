@@ -17,6 +17,14 @@ Keep this managed block so 'openspec update' can refresh the instructions.
 
 <!-- OPENSPEC:END -->
 
+## Codex OpenSpec Policy
+
+When the assistant is Codex, do not use OpenSpec unless the user explicitly
+requests OpenSpec. Do not read, create, update, validate, or archive OpenSpec
+artifacts for ordinary development tasks. Existing `openspec/` content is
+reference material only. This policy overrides the managed OpenSpec block above
+for Codex.
+
 # Repository Guidelines
 
 ## Project Overview

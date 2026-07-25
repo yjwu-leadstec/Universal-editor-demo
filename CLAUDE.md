@@ -99,6 +99,13 @@ Available lit-html exports: `html`, `svg`, `render`, `nothing`, `noChange`, `uns
 ### Universal Editor Instrumentation
 The `moveInstrumentation(source, target)` function transfers `data-aue-*` and `data-richtext-*` attributes from content rows to decorated elements, enabling in-context editing. Every block must preserve instrumentation for the Universal Editor to work.
 
+### ⚠️ `data-aue-*` does NOT exist in published delivery
+Author/Universal Editor markup carries `data-aue-prop` / `data-aue-model`; the **published `.aem.page` / `.aem.live` markup does not** (rows arrive as bare `<div>`s). Any detection built on `propSource` / `propText` / `hasModel` / `isPropertyRow` therefore silently collapses in delivery — blocks that look perfect in the editor can render empty fields, missing headings, or leak block-level fields (`title` / `description` / `id`) as junk items. Two supported remedies, depending on how the model lays out fields:
+- **Flat fields** (one cell per field) — restore the markers before decorating: `initProductBlock` (product family) / `initServiceBlock` (service family), backed by a `*_MODEL_FIELDS` registry.
+- **Grouped fields** (`copy_*` / `media_*` / `cta_*` collapse into ONE cell holding several `<p>`/`<picture>`) — marker restore does not apply; give the block a semantic fallback scoped to that group cell (read the group's `<p>`s positionally).
+
+**Always verify a block in published mode** (`aem up`, or the branch `.aem.live`) — never editor-only.
+
 ### Component Model System
 - Source models in `/models/_*.json` define field types
 - `npm run build:json` merges into root JSON files:
