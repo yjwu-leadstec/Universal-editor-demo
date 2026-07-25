@@ -132,9 +132,34 @@ function restorePublishedModel(root, model) {
   });
 }
 
+// The Universal Editor sometimes instruments only the collection items and
+// leaves the block's own fields as bare cells. The guard below used to bail on
+// any data-aue-model, so in that case neither path claimed those cells and
+// every block-level field (title, mobileTitle, accentColor, the booleans...)
+// read as empty. Map the leading bare cells onto the block's field list; stop
+// at the first child the editor already marked so instrumented items are never
+// touched.
+function restoreBlockFields(block, model) {
+  const fields = PRODUCT_MODEL_FIELDS[model];
+  if (!fields) return;
+  const bare = [];
+  [...block.children].every((child) => {
+    if (child.dataset.aueProp || child.dataset.aueModel) return false;
+    bare.push(child);
+    return true;
+  });
+  bare.slice(0, fields.length).forEach((source, index) => {
+    const [name] = fields[index];
+    source.dataset.aueProp = name;
+  });
+}
+
 function restorePublishedMarkup(block) {
-  if (block.querySelector('[data-aue-prop], [data-aue-model]')) return;
   const model = block.dataset.blockName || block.classList[0];
+  if (block.querySelector('[data-aue-prop], [data-aue-model]')) {
+    restoreBlockFields(block, model);
+    return;
+  }
   restorePublishedModel(block, model);
 }
 
