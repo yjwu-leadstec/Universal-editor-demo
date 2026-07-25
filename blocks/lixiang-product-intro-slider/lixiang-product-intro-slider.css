@@ -357,24 +357,26 @@ main .lixiang-product-intro-slider .highlight-shell {
 main .lixiang-product-intro-slider .highlight-viewport {
   position: relative;
 
-  /* Match .highlight-controls so the card and the dots/arrows share one centre
-   * line. Without a width the viewport stretches to the canvas -- which the
-   * Universal Editor does -- and the card drifts away from the controls. */
-  width: 1200px;
+  /* Break out of .highlight-shell's inline padding so the clip box spans the
+   * whole block. The design shows the previous/next slides peeking in ~320px
+   * from each edge; clipping at the shell's 1200px content box hid them
+   * entirely. The track keeps the active card aligned with the controls. */
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
   height: 706px;
-  margin-inline: auto;
   overflow: hidden;
 }
 
 main .lixiang-product-intro-slider .highlight-track {
   position: relative;
 
-  /* 1200px card + the slide's 20px inline padding on each side. The symmetric
-   * negative margins pull that padding back so the card centres on the same
+  /* 1200px card + the slide's 20px inline padding on each side. Centring the
+   * padded box inside the now full-width viewport puts the card on the same
    * axis as .highlight-controls. */
   width: 1240px;
   height: 706px;
-  margin-inline: -20px;
+  margin-inline: auto;
 }
 
 main .lixiang-product-intro-slider .highlight-slide {
