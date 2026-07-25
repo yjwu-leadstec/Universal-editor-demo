@@ -219,7 +219,13 @@ export function directRows(root) {
 
 export function propSource(root, name) {
   if (root.matches?.(`[data-aue-prop="${name}"]`)) return root;
-  return root.querySelector?.(`[data-aue-prop="${name}"]`) || null;
+  const match = root.querySelector?.(`[data-aue-prop="${name}"]`);
+  if (!match) return null;
+  // Never reach into a nested collection item: a parent that lacks the field would
+  // otherwise claim its first child's field and strip that child's instrumentation.
+  const owner = match.parentElement?.closest('[data-aue-model]');
+  if (owner && owner !== root && root.contains(owner)) return null;
+  return match;
 }
 
 export function textWithBreaks(source) {
