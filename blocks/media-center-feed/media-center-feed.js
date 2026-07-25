@@ -101,6 +101,17 @@ function createCard(entry, type) {
   const media = document.createElement('span');
   media.className = 'media-center-feed-media';
   if (entry.image) media.append(createOptimizedPicture(entry.image, entry.alt || entry.title));
+  if (type === 'photos' || type === 'videos') {
+    const marker = document.createElement('span');
+    marker.className = `media-center-feed-marker is-${type}`;
+    if (type === 'photos') {
+      marker.textContent = entry.quantity;
+      marker.setAttribute('aria-label', `${entry.quantity || '0'} photos`);
+    } else {
+      marker.setAttribute('aria-hidden', 'true');
+    }
+    media.append(marker);
+  }
 
   const copy = document.createElement('span');
   copy.className = 'media-center-feed-copy';
