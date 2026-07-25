@@ -154,9 +154,15 @@ The `moveInstrumentation(source, target)` function transfers `data-aue-*` and `d
 
 ### Adding a product-series block (checklist)
 Template = `blocks/feature-grid/`; reuse the shared helpers in `scripts/product-block-utils.js` (`initProductBlock` / `createSectionHeader` / `createMedia` / `modelItems` / `instrumentProp` / `moveItemInstrumentation` / `addBlockAnchor` / `revealElements`). `decorate()` must call `addBlockAnchor(block, block, shell)` **before** `block.replaceChildren(shell)` or the Universal Editor canvas loses field editability. Beyond `blocks/<name>/{<name>.js,.css,_<name>.json}`, three existing files must also be edited or the build/delivery breaks:
-- `scripts/product-block-utils.js` — register the block + each item model in **both** `PRODUCT_MODEL_FIELDS` and `PRODUCT_COLLECTION_MODELS` (else doc-based aem.live delivery can't rebuild field markers / detect groups → fields render empty).
+- `scripts/product-block-utils.js` — register the block + each item model in **both** `PRODUCT_MODEL_FIELDS` and `PRODUCT_COLLECTION_MODELS` (else doc-based aem.live delivery can't rebuild field markers / detect groups → fields render empty). The field list is **positional and must match `_<name>.json` exactly**: the editor often instruments only the collection items and leaves the block's own cells bare, and `restoreBlockFields` maps those cells by position. Delivery also omits cells for empty values, so entries are matched by field type — reordering or inserting a field mid-list silently shifts every field after it.
 - `.eslintrc.js` — add any model with >4 fields to `xwalk/max-cells` (else `npm run lint` / the pre-commit hook fails).
 - `models/_section.json` — add the block id to `filters[0].components` (else authors can't insert it into a section).
+
+When a parent model and its child model share a field name, check that the parent actually
+declares that field. `propSource` only rejects a match owned by a nested `[data-aue-model]`
+because of an explicit guard; before that guard, a parent lacking the field would claim its
+first child's field and strip that child's instrumentation, so the value rendered in the
+wrong place and the child became uneditable.
 
 **Exception — `blocks/lixiang-product-intro-slider/`** is deliberately self-contained. It uses
 its own `slider-utils.js` and keeps its `product-*` CSS in its own stylesheet, so it imports
