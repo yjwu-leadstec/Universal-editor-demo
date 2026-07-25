@@ -1,7 +1,9 @@
-/* Compatibility styles for legacy service-contact-cards content rendered as Official Center.
-   The decorate function is re-exported from official-center.js and adds
-   .official-center class names, so these styles must match official-center.css.
-   Aligned with https://www.liauto.com/support/aftersale via --oc-r scaling. */
+/* Li Auto Official Center page block.
+   Aligned with https://www.liauto.com/support/aftersale.
+   The live site uses rem units with a dynamic html font-size (112px > 1440px,
+   84px <= 1440px, 8.333vw <= 1024px, px overrides <= 720px).
+   We cannot modify the global root font-size, so we simulate the same scaling
+   inside the block via the --oc-r custom property and calc(). */
 
 main > .section > .official-center-wrapper,
 main .section.official-center-wrapper {

@@ -1225,6 +1225,52 @@
           }
         },
         {
+          "title": "Li Auto Official Center",
+          "id": "official-center",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Official Center",
+                  "model": "official-center",
+                  "filter": "official-center"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Official Center Card",
+          "id": "official-center-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Official Center Card",
+                  "model": "official-center-card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Official Center Field",
+          "id": "official-center-field",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Official Center Field",
+                  "model": "official-center-field"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Product Download",
           "id": "product-download",
           "plugins": {

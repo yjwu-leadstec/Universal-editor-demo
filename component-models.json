@@ -3983,6 +3983,92 @@
     ]
   },
   {
+    "id": "official-center",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Overview Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "Overview Link Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "official-center-card",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardKey",
+        "label": "Card Key",
+        "description": "Stable key used by Official Center Field items",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Card Title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "official-center-field",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cardKey",
+        "label": "Card Key",
+        "description": "Must match an Official Center Card key",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Field Label",
+        "description": "Address, Telephone, Opening hours, Email, etc.",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "value",
+        "label": "Field Value",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Field Link (optional)",
+        "description": "Use for an explicit address or external link; email and telephone values are auto-linked",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "product-download",
     "fields": [
       {

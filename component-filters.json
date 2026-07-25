@@ -255,6 +255,13 @@
     ]
   },
   {
+    "id": "official-center",
+    "components": [
+      "official-center-card",
+      "official-center-field"
+    ]
+  },
+  {
     "id": "product-feature-picture-group",
     "components": [
       "product-feature-picture-group-group",
