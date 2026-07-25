@@ -128,7 +128,11 @@ test('highlight slide dialog exposes optional copy color, note toggle, and indic
   assert.equal(fields.indicatorLabel.component, 'textarea');
   assert.equal(fields.metrics, undefined);
   assert.ok(slideModel.fields.findIndex(({ name }) => name === 'copyColor') > slideModel.fields.findIndex(({ name }) => name === 'linkType'));
-  assert.match(productUtils, /\['copyColor', 'select'\], \['showNote', 'boolean'\], \['indicatorLabel', 'textarea'\]/);
+  // Field entries carry [name, component, label]; the label feeds data-aue-label
+  // so the content tree can name the field instead of falling back to the raw key.
+  assert.match(productUtils, /\['copyColor', 'select', '[^']+'\], \['showNote', 'boolean', '[^']+'\], \['indicatorLabel', 'textarea', '[^']+'\]/);
+  assert.match(productUtils, /source\.dataset\.aueLabel = label/);
+  assert.match(productUtils, /source\.dataset\.aueType = component/);
 });
 
 test('highlight dialog fields are wired to rendered colors, notes, indicators, and video controls', () => {

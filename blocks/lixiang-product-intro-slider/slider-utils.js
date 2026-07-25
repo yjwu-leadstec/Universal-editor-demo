@@ -55,19 +55,36 @@ const PRODUCT_MEDIA_FALLBACKS = {
 // only contains positional rows/cells. Keep the runtime independent of author-only
 // data-aue attributes by restoring those field/model markers before decoration.
 const PRODUCT_MODEL_FIELDS = {
-  'lixiang-product-intro-slider': [['id', 'text'], ['title', 'textarea'], ['mobileTitle', 'textarea'], ['description', 'richtext'], ['accentColor', 'text'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showProgress', 'boolean'], ['showVideoControl', 'boolean'], ['background', 'select'], ['spacing', 'select']],
-  'highlight-slide': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'aem-content'], ['mobileVideo', 'aem-content'], ['eyebrow', 'text'], ['title', 'textarea'], ['description', 'richtext'], ['note', 'textarea'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['copyColor', 'select'], ['showNote', 'boolean'], ['indicatorLabel', 'textarea']],
-  'highlight-stat': [['value', 'text'], ['unit', 'text'], ['label', 'text'], ['description', 'richtext']],
+  'lixiang-product-intro-slider': [['id', 'text', 'ID'], ['title', 'textarea', 'Desktop Title'], ['mobileTitle', 'textarea', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['accentColor', 'text', 'Indicator Color'], ['autoPlay', 'boolean', 'Desktop Autoplay'], ['interval', 'number', 'Autoplay Interval (seconds)'], ['showProgress', 'boolean', 'Show Video Progress'], ['showVideoControl', 'boolean', 'Show Video Play / Pause'], ['background', 'select', 'Background'], ['spacing', 'select', 'Spacing']],
+  'highlight-slide': [['image', 'reference', 'Desktop Poster / Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'aem-content', 'Desktop Video URL'], ['mobileVideo', 'aem-content', 'Mobile Video URL'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'textarea', 'Card Title'], ['description', 'richtext', 'Card Description'], ['note', 'textarea', 'Note'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type'], ['copyColor', 'select', 'Desktop Card Text Color'], ['showNote', 'boolean', 'Show Note'], ['indicatorLabel', 'textarea', 'Indicator Label']],
+  'highlight-stat': [['value', 'text', 'Value'], ['unit', 'text', 'Unit'], ['label', 'text', 'Label'], ['description', 'richtext', 'Description']],
 };
 
 const PRODUCT_COLLECTION_MODELS = {
-  'lixiang-product-intro-slider': 'highlight-slide',
+  // Nested items arrive as siblings of their parent, so the block's leftover rows
+  // are a mix of slides and statistics. Tell them apart by cell count: a slide
+  // carries its 12 authored fields (and usually media), a statistic only four.
+  'lixiang-product-intro-slider': (row) => (
+    row.querySelector('picture, img, video') || row.children.length > 6
+      ? 'highlight-slide'
+      : 'highlight-stat'
+  ),
   'highlight-slide': 'highlight-stat',
 };
 
 function collectionModelFor(model, row) {
   const resolver = PRODUCT_COLLECTION_MODELS[model];
   return typeof resolver === 'function' ? resolver(row) : resolver;
+}
+
+// The content tree labels each field from data-aue-label and picks its editor
+// from data-aue-type. Writing only data-aue-prop leaves the tree with nothing
+// to show, so it falls back to the raw field name -- which is why block-level
+// fields read as "title"/"description" while instrumented items read properly.
+function markField(source, name, component, label) {
+  source.dataset.aueProp = name;
+  if (component) source.dataset.aueType = component;
+  if (label) source.dataset.aueLabel = label;
 }
 
 function restoreAltField(root, name, fieldSources) {
@@ -111,7 +128,7 @@ function restorePublishedModel(root, model) {
   const fieldSources = new Map();
   let sourceIndex = 0;
 
-  fields.forEach(([name, component]) => {
+  fields.forEach(([name, component, label]) => {
     const restoredCompanion = restoreAltField(root, name, fieldSources)
       || restoreLinkField(root, name, fieldSources);
     if (restoredCompanion) return;
@@ -119,7 +136,7 @@ function restorePublishedModel(root, model) {
     if (!source) return;
     if (PRODUCT_COLLECTION_MODELS[model] && source.children.length > 1) return;
     if (!matchesPublishedField(source, component)) return;
-    source.dataset.aueProp = name;
+    markField(source, name, component, label);
     fieldSources.set(name, source);
     sourceIndex += 1;
   });
@@ -153,14 +170,14 @@ function restoreBlockFields(block, model) {
   if (!bare.length) return;
   const fieldSources = new Map();
   let sourceIndex = 0;
-  fields.forEach(([name, component]) => {
+  fields.forEach(([name, component, label]) => {
     const restoredCompanion = restoreAltField(block, name, fieldSources)
       || restoreLinkField(block, name, fieldSources);
     if (restoredCompanion) return;
     const source = bare[sourceIndex];
     if (!source) return;
     if (!matchesPublishedField(source, component)) return;
-    source.dataset.aueProp = name;
+    markField(source, name, component, label);
     fieldSources.set(name, source);
     sourceIndex += 1;
   });
@@ -188,8 +205,8 @@ export function directRows(root) {
 }
 
 export function propSource(root, name) {
-  if (root.matches?.(`[data-aue-prop="${name}"]`)) return root;
-  const match = root.querySelector?.(`[data-aue-prop="${name}"]`);
+  if (root.matches?.(`[data-aue-prop='${name}']`)) return root;
+  const match = root.querySelector?.(`[data-aue-prop='${name}']`);
   if (!match) return null;
   // Never reach into a nested collection item: a parent that lacks the field would
   // otherwise claim its first child's field and strip that child's instrumentation.
@@ -246,7 +263,7 @@ export function propPicture(root, name) {
 }
 
 export function modelItems(root, model) {
-  const explicit = [...root.querySelectorAll(`[data-aue-model="${model}"]`)];
+  const explicit = [...root.querySelectorAll(`[data-aue-model='${model}']`)];
   if (explicit.length) return explicit;
   if (root.querySelector('[data-aue-model]')) return [];
   return directRows(root).filter((row) => !row.hasAttribute('data-aue-prop'));

@@ -47,7 +47,7 @@ function createStat(item) {
   return stat;
 }
 
-function createSlide(block, item, index) {
+function createSlide(block, item, index, statItems = []) {
   const slide = document.createElement('article');
   slide.className = 'highlight-slide';
   const copyColor = propText(item, 'copyColor');
@@ -87,13 +87,13 @@ function createSlide(block, item, index) {
     instrumentProp(item, 'description', description);
     copy.append(description);
   }
-  const statItems = modelItems(item, 'highlight-stat').filter((stat) => (
+  const stats = statItems.filter((stat) => (
     ['value', 'unit', 'label', 'description'].some((name) => propText(stat, name))
   ));
-  if (statItems.length) {
+  if (stats.length) {
     const metrics = document.createElement('dl');
     metrics.className = 'highlight-metrics';
-    statItems.forEach((stat) => metrics.append(createStat(stat)));
+    stats.forEach((stat) => metrics.append(createStat(stat)));
     copy.append(metrics);
   }
   const note = propText(item, 'note');
@@ -117,6 +117,26 @@ function createSlide(block, item, index) {
     setMediaActive,
     destroyMedia,
   };
+}
+
+// Nested collection items are delivered as siblings of their parent rather than
+// as its children, with order carrying the relationship -- each highlight-stat
+// belongs to the highlight-slide that precedes it. Reading them with
+// modelItems(slide, ...) finds nothing, which is why authored statistics never
+// rendered.
+function groupSlideStats(block, slides) {
+  const slideSet = new Set(slides);
+  const statSet = new Set(modelItems(block, 'highlight-stat'));
+  const byslide = new Map(slides.map((slide) => [slide, []]));
+  let current = null;
+  [...block.children].forEach((child) => {
+    if (slideSet.has(child)) {
+      current = child;
+      return;
+    }
+    if (statSet.has(child) && current) byslide.get(current).push(child);
+  });
+  return byslide;
 }
 
 export default function decorate(block) {
@@ -145,7 +165,10 @@ export default function decorate(block) {
   viewport.setAttribute('aria-label', sectionTitle.replaceAll('\n', ' ') || 'Product highlights');
   const track = document.createElement('div');
   track.className = 'highlight-track';
-  const slideEntries = items.map((item, index) => createSlide(block, item, index));
+  const statsBySlide = groupSlideStats(block, items);
+  const slideEntries = items.map(
+    (item, index) => createSlide(block, item, index, statsBySlide.get(item) || []),
+  );
   const slides = slideEntries.map(({ element }) => element);
   track.append(...slides);
   viewport.append(track);
