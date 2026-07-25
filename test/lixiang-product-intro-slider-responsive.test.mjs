@@ -96,20 +96,26 @@ test('highlight carousel dialog exposes multiline titles, semantic colors, spaci
   assert.equal(fields.showVideoControl.component, 'boolean');
   assert.equal(fields.showVideoControl.value, true);
   assert.equal(fields.showProgress.label, 'Show Video Progress');
-  assert.deepEqual(fields.headingColor.options.map(({ value }) => value), ['white', 'black']);
-  assert.equal(fields.classes.component, 'multiselect');
-  // The default lives on the block template, as it does for the sibling carousel.
-  assert.deepEqual(carouselDefinition.plugins.xwalk.page.template.classes, ['light', 'space-small']);
-  // Two option groups (background, spacing); the author picks exactly one from each.
-  assert.equal(fields.classes.maxSize, 2);
+  // Background and spacing are separate selects rather than one combined
+  // `classes` multiselect, so the author picks each independently.
+  assert.equal(fields.classes, undefined);
+  assert.equal(fields.background.component, 'select');
   assert.deepEqual(
-    fields.classes.options.map(({ name }) => name),
-    ['Background', 'Spacing'],
+    fields.background.options.map(({ value }) => value),
+    ['light', 'dark', 'gray'],
   );
+  assert.equal(fields.spacing.component, 'select');
   assert.deepEqual(
-    fields.classes.options.flatMap(({ children }) => children.map(({ value }) => value)),
-    ['light', 'dark', 'gray', 'space-large', 'space-small', 'space-none'],
+    fields.spacing.options.map(({ value }) => value),
+    ['space-large', 'space-small', 'space-none'],
   );
+  const { template } = carouselDefinition.plugins.xwalk.page;
+  assert.equal(template.background, 'light');
+  assert.equal(template.spacing, 'space-small');
+  // Heading colour follows the background, so there is no manual override.
+  assert.equal(fields.headingColor, undefined);
+  assert.match(carouselJs, /block\.classList\.add\(background\)/);
+  assert.match(carouselJs, /block\.classList\.add\(spacing\)/);
 });
 
 test('highlight slide dialog exposes optional copy color, note toggle, and indicator label', () => {

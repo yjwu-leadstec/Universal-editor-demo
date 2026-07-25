@@ -906,11 +906,8 @@
                   "interval": 4,
                   "showVideoControl": true,
                   "showProgress": true,
-                  "headingColor": "black",
-                  "classes": [
-                    "light",
-                    "space-small"
-                  ]
+                  "background": "light",
+                  "spacing": "space-small"
                 }
               }
             }

@@ -20,6 +20,8 @@ main .lixiang-product-intro-slider[data-product-block].dark {
 main .lixiang-product-intro-slider[data-product-block].gray {
   --product-bg: #fafafa;
   --product-card-bg: #fff;
+  --product-copy: #fff;
+  --product-muted: rgb(255 255 255 / 70%);
 }
 
 main .lixiang-product-intro-slider[data-product-block].light-copy {
@@ -403,16 +405,6 @@ main .lixiang-product-intro-slider .highlight-slide.highlight-copy-black {
 main .lixiang-product-intro-slider .highlight-slide.highlight-copy-white {
   --highlight-copy: #fff;
   --highlight-muted: rgb(255 255 255 / 72%);
-}
-
-main .lixiang-product-intro-slider.highlight-heading-black .product-section-header {
-  --product-copy: #191919;
-  --product-muted: rgb(25 25 25 / 60%);
-}
-
-main .lixiang-product-intro-slider.highlight-heading-white .product-section-header {
-  --product-copy: #fff;
-  --product-muted: rgb(255 255 255 / 70%);
 }
 
 main .lixiang-product-intro-slider .highlight-slide.is-instant {

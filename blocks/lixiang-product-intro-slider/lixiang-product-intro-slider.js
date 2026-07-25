@@ -124,8 +124,14 @@ export default function decorate(block) {
   initProductBlock(block);
   const accentColor = propText(block, 'accentColor');
   if (accentColor) block.style.setProperty('--highlight-indicator', accentColor);
-  const headingColor = propText(block, 'headingColor');
-  if (['white', 'black'].includes(headingColor)) block.classList.add(`highlight-heading-${headingColor}`);
+  // `background` and `spacing` replace the combined `classes` multiselect. AEM only
+  // turns a field literally named `classes` into block classes, so apply these two
+  // by hand. Text colour follows the background variables, so there is no separate
+  // heading-colour field: white on dark/gray, black on light.
+  const background = propText(block, 'background');
+  if (['light', 'dark', 'gray'].includes(background)) block.classList.add(background);
+  const spacing = propText(block, 'spacing');
+  if (['space-large', 'space-small', 'space-none'].includes(spacing)) block.classList.add(spacing);
   const sectionTitle = propText(block, 'title');
   const autoPlay = propBoolean(block, 'autoPlay', true);
   const items = modelItems(block, 'highlight-slide');

@@ -3244,63 +3244,45 @@
       },
       {
         "component": "select",
-        "name": "headingColor",
-        "label": "Section Heading Color",
-        "description": "Optional override for the component title",
+        "name": "background",
+        "label": "Background",
+        "description": "Section background. Text color follows automatically: white on black/gray, black on white.",
         "valueType": "string",
-        "value": "black",
+        "value": "light",
         "options": [
           {
             "name": "White (#FFFFFF)",
-            "value": "white"
+            "value": "light"
           },
           {
-            "name": "Black (#191919)",
-            "value": "black"
+            "name": "Black (#000000)",
+            "value": "dark"
+          },
+          {
+            "name": "Gray (#FAFAFA)",
+            "value": "gray"
           }
         ]
       },
       {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Style",
-        "description": "Select exactly one option from each group",
+        "component": "select",
+        "name": "spacing",
+        "label": "Spacing",
+        "description": "Vertical padding: PC 160/80/0px, mobile 80/60/0px",
         "valueType": "string",
-        "maxSize": 2,
+        "value": "space-small",
         "options": [
           {
-            "name": "Background",
-            "children": [
-              {
-                "name": "White (#FFFFFF)",
-                "value": "light"
-              },
-              {
-                "name": "Black (#000000)",
-                "value": "dark"
-              },
-              {
-                "name": "Gray (#FAFAFA)",
-                "value": "gray"
-              }
-            ]
+            "name": "Large",
+            "value": "space-large"
           },
           {
-            "name": "Spacing",
-            "children": [
-              {
-                "name": "Large Spacing",
-                "value": "space-large"
-              },
-              {
-                "name": "Small Spacing",
-                "value": "space-small"
-              },
-              {
-                "name": "No Spacing",
-                "value": "space-none"
-              }
-            ]
+            "name": "Small",
+            "value": "space-small"
+          },
+          {
+            "name": "None",
+            "value": "space-none"
           }
         ]
       }
