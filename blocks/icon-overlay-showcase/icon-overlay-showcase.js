@@ -5,6 +5,7 @@ import {
   createMedia,
   createRichText,
   createSectionHeader,
+  groupChildItems,
   initProductBlock,
   modelItems,
   moveItemInstrumentation,
@@ -16,7 +17,7 @@ import {
   setupTabs,
 } from '../../scripts/product-block-utils.js';
 
-function createPanel(panelSource) {
+function createPanel(panelSource, hotspotItems = []) {
   const panel = document.createElement('section');
   panel.className = 'overlay-panel';
   const media = createMedia(panelSource, { autoplay: false, showControls: false }).element;
@@ -28,7 +29,7 @@ function createPanel(panelSource) {
     appendPicture(layer, mask, { alt: propText(panelSource, 'maskAlt'), fallbackLabel: '' });
     media.append(layer);
   }
-  modelItems(panelSource, 'overlay-hotspot').forEach((item) => {
+  hotspotItems.forEach((item) => {
     const hotspot = document.createElement('div');
     hotspot.className = 'overlay-hotspot';
     const x = clamp(propNumber(item, 'x', 50), 0, 100);
@@ -79,7 +80,8 @@ export default function decorate(block) {
   shell.className = 'overlay-showcase-shell';
   const header = createSectionHeader(block);
   if (header.childElementCount) shell.append(header);
-  const panels = sources.map(createPanel);
+  const hotspotsByPanel = groupChildItems(block, sources, 'overlay-hotspot');
+  const panels = sources.map((source) => createPanel(source, hotspotsByPanel.get(source) || []));
   const panelList = document.createElement('div');
   panelList.className = 'overlay-panels';
   panelList.append(...panels);

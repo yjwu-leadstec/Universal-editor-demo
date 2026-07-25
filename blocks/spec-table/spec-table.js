@@ -3,6 +3,7 @@ import {
   createMedia,
   createRichText,
   createSectionHeader,
+  groupChildItems,
   initProductBlock,
   modelItems,
   moveItemInstrumentation,
@@ -12,7 +13,7 @@ import {
   setupTabs,
 } from '../../scripts/product-block-utils.js';
 
-function createGroup(group) {
+function createGroup(group, rowItems = []) {
   const panel = document.createElement('section');
   panel.className = 'spec-group';
   if (propSource(group, 'image')) panel.append(createMedia(group, { autoplay: false, showControls: false }).element);
@@ -20,7 +21,7 @@ function createGroup(group) {
   if (descriptionSource?.textContent.trim()) panel.append(createRichText(descriptionSource, 'spec-group-description'));
   const rows = document.createElement('dl');
   rows.className = 'spec-rows';
-  modelItems(group, 'spec-row').forEach((item) => {
+  rowItems.forEach((item) => {
     const row = document.createElement('div');
     row.className = 'spec-row';
     const iconSource = propSource(item, 'icon');
@@ -56,7 +57,8 @@ export default function decorate(block) {
   shell.className = 'spec-table-shell';
   const header = createSectionHeader(block);
   if (header.childElementCount) shell.append(header);
-  const panels = groups.map(createGroup);
+  const rowsByGroup = groupChildItems(block, groups, 'spec-row');
+  const panels = groups.map((group) => createGroup(group, rowsByGroup.get(group) || []));
   if (variant === 'tabbed' && panels.length) {
     const tabs = document.createElement('div');
     tabs.className = 'spec-tabs';

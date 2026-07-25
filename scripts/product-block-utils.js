@@ -327,6 +327,26 @@ export function modelItems(root, model) {
   return directRows(root).filter((row) => !row.hasAttribute('data-aue-prop'));
 }
 
+// Nested collection items are delivered as siblings of their parent rather than
+// as its children -- order carries the relationship, so each child item belongs
+// to the most recent parent before it. Looking for them inside the parent finds
+// nothing, and modelItems' bare-row fallback then mistakes the parent's own
+// field cells for items. Returns a Map of parent element -> its child items.
+export function groupChildItems(block, parents, childModel) {
+  const parentSet = new Set(parents);
+  const childSet = new Set(modelItems(block, childModel));
+  const grouped = new Map(parents.map((parent) => [parent, []]));
+  let current = null;
+  [...block.children].forEach((child) => {
+    if (parentSet.has(child)) {
+      current = child;
+      return;
+    }
+    if (childSet.has(child) && current) grouped.get(current).push(child);
+  });
+  return grouped;
+}
+
 export function moveItemInstrumentation(source, target) {
   if (source && target) moveInstrumentation(source, target);
 }
