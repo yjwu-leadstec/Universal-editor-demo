@@ -459,18 +459,6 @@ main .lixiang-product-intro-slider .highlight-status {
 }
 
 @media (width <= 720px) {
-  main .lixiang-product-intro-slider[data-product-block].space-large {
-    padding-block: 80px;
-  }
-
-  main .lixiang-product-intro-slider[data-product-block].space-small {
-    padding-block: 60px;
-  }
-
-  main .lixiang-product-intro-slider[data-product-block].space-none {
-    padding-block: 0;
-  }
-
   main .lixiang-product-intro-slider .product-section-header {
     padding-inline: 20px;
   }

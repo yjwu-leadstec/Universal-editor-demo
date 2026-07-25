@@ -3002,47 +3002,54 @@
         ]
       },
       {
-        "component": "select",
+        "component": "boolean",
+        "name": "showRotationControl",
+        "label": "Show Slide Rotation Pause",
+        "description": "Show an explicit pause button for the automatic slide rotation",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
+        "component": "multiselect",
         "name": "classes",
         "label": "Style",
+        "description": "Select exactly one option from each group",
         "valueType": "string",
-        "value": "light space-small",
+        "maxSize": 2,
         "options": [
           {
-            "name": "White · Large Spacing",
-            "value": "light space-large"
+            "name": "Background",
+            "children": [
+              {
+                "name": "White (#FFFFFF)",
+                "value": "light"
+              },
+              {
+                "name": "Black (#000000)",
+                "value": "dark"
+              },
+              {
+                "name": "Gray (#FAFAFA)",
+                "value": "gray"
+              }
+            ]
           },
           {
-            "name": "White · Small Spacing",
-            "value": "light space-small"
-          },
-          {
-            "name": "White · No Spacing",
-            "value": "light space-none"
-          },
-          {
-            "name": "Black · Large Spacing",
-            "value": "dark space-large"
-          },
-          {
-            "name": "Black · Small Spacing",
-            "value": "dark space-small"
-          },
-          {
-            "name": "Black · No Spacing",
-            "value": "dark space-none"
-          },
-          {
-            "name": "Gray · Large Spacing",
-            "value": "gray space-large"
-          },
-          {
-            "name": "Gray · Small Spacing",
-            "value": "gray space-small"
-          },
-          {
-            "name": "Gray · No Spacing",
-            "value": "gray space-none"
+            "name": "Spacing",
+            "children": [
+              {
+                "name": "Large Spacing",
+                "value": "space-large"
+              },
+              {
+                "name": "Small Spacing",
+                "value": "space-small"
+              },
+              {
+                "name": "No Spacing",
+                "value": "space-none"
+              }
+            ]
           }
         ]
       }

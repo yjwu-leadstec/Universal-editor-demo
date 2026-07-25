@@ -37,7 +37,7 @@ module.exports = {
       'product-feature-picture-group-card': 6,
       'lixiang-product-intro-carousel': 20,
       'lixiang-product-intro-slide': 16,
-      'lixiang-product-intro-slider': 11,
+      'lixiang-product-intro-slider': 12,
       'highlight-slide': 13,
       'image-switcher': 11,
       'image-switcher-item': 10,

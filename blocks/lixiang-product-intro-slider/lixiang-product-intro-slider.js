@@ -90,33 +90,10 @@ function createSlide(block, item, index) {
   const statItems = modelItems(item, 'highlight-stat').filter((stat) => (
     ['value', 'unit', 'label', 'description'].some((name) => propText(stat, name))
   ));
-  let scalarStats = [];
-  try {
-    const parsedMetrics = JSON.parse(propText(item, 'metrics') || '[]');
-    if (Array.isArray(parsedMetrics)) scalarStats = parsedMetrics.slice(0, 4);
-  } catch {
-    scalarStats = [];
-  }
-  if (statItems.length || scalarStats.length) {
+  if (statItems.length) {
     const metrics = document.createElement('dl');
     metrics.className = 'highlight-metrics';
     statItems.forEach((stat) => metrics.append(createStat(stat)));
-    if (!statItems.length) {
-      scalarStats.forEach(({
-        value, unit, label,
-      }) => {
-        const metric = document.createElement('div');
-        metric.className = 'highlight-stat';
-        const term = document.createElement('dt');
-        term.textContent = label;
-        instrumentProp(item, 'metrics', term);
-        const detail = document.createElement('dd');
-        detail.textContent = [value, unit].filter(Boolean).join(' ');
-        instrumentProp(item, 'metrics', detail);
-        metric.append(term, detail);
-        metrics.append(metric);
-      });
-    }
     copy.append(metrics);
   }
   const note = propText(item, 'note');
@@ -151,6 +128,7 @@ export default function decorate(block) {
   if (['white', 'black'].includes(headingColor)) block.classList.add(`highlight-heading-${headingColor}`);
   const sectionTitle = propText(block, 'title');
   const autoPlay = propBoolean(block, 'autoPlay', true);
+  const showRotationControl = propBoolean(block, 'showRotationControl', false);
   const items = modelItems(block, 'highlight-slide');
   const shell = document.createElement('div');
   shell.className = 'highlight-shell';
@@ -260,7 +238,7 @@ export default function decorate(block) {
   if (slides.length > 1) {
     const controls = document.createElement('div');
     controls.className = 'highlight-controls';
-    if (autoPlay && !prefersReducedMotion()) {
+    if (showRotationControl && autoPlay && !prefersReducedMotion()) {
       rotationControl = document.createElement('button');
       rotationControl.type = 'button';
       rotationControl.className = 'highlight-rotation-control';

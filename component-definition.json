@@ -831,7 +831,11 @@
                   "showVideoControl": true,
                   "showProgress": true,
                   "headingColor": "black",
-                  "classes": "light space-small"
+                  "showRotationControl": false,
+                  "classes": [
+                    "light",
+                    "space-small"
+                  ]
                 }
               }
             }
