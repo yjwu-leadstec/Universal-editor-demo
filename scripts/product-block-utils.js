@@ -99,11 +99,11 @@ const PRODUCT_COLLECTION_MODELS = {
   'lixiang-product-intro-slider': 'highlight-slide',
   'highlight-slide': 'highlight-stat',
   'lixiang-product-intro-carousel': (row) => {
-    const hasNestedItems = [...row.children].some((child) => child.children.length > 1);
-    if (hasNestedItems) return 'lixiang-product-intro-highlight-group';
     if (row.querySelector('picture, img, video') || row.children.length > 8) {
       return 'lixiang-product-intro-slide';
     }
+    const hasNestedItems = [...row.children].some((child) => child.children.length > 1);
+    if (hasNestedItems) return 'lixiang-product-intro-highlight-group';
     return 'lixiang-product-intro-metric';
   },
   'lixiang-product-intro-highlight-group': 'lixiang-product-intro-highlight',

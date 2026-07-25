@@ -167,7 +167,38 @@ test('uses unique ARIA IDs and respects reduced motion', () => {
 });
 
 test('keeps desktop autoplay and mobile manual swipe behavior', () => {
-  assert.match(blockJs, /if \(!autoPlay \|\| mobileQuery\.matches \|\| motionQuery\.matches/);
+  assert.match(blockJs, /let pointerInside = false/);
+  assert.match(blockJs, /let focusInside = false/);
+  assert.match(blockJs, /pointerInside[\s\S]*focusInside[\s\S]*document\.hidden/);
+  assert.match(blockJs, /focusInside = block\.contains\(event\.relatedTarget\)/);
+  assert.match(
+    blockJs,
+    /Math\.min\(\s*12000,\s*Math\.max\(2000, propNumber\(block, 'interval', 4\) \* 1000\)/,
+  );
   assert.match(blockCss, /@media \(width <= 820px\)[\s\S]*overflow-x:\s*auto[\s\S]*scroll-snap-type:\s*x mandatory/);
   assert.match(blockJs, /viewport\.addEventListener\('scroll'/);
+});
+
+test('published recovery identifies media slides before nested rich text', () => {
+  const classifierStart = productUtils.indexOf(
+    "'lixiang-product-intro-carousel': (row) =>",
+  );
+  const classifierEnd = productUtils.indexOf(
+    "\n  'lixiang-product-intro-highlight-group':",
+    classifierStart,
+  );
+  const classifier = productUtils.slice(classifierStart, classifierEnd);
+  assert.ok(classifierStart >= 0 && classifierEnd > classifierStart);
+  assert.ok(
+    classifier.indexOf("row.querySelector('picture, img, video')")
+      < classifier.indexOf('hasNestedItems'),
+  );
+});
+
+test('uses canonical highlight fields and only offers meaningful expansion', () => {
+  assert.doesNotMatch(blockJs, /propText\(item, 'label'\)/);
+  assert.match(
+    blockJs,
+    /variant === 'expandable' && mediaItems\.length > 2 && content\.childElementCount/,
+  );
 });

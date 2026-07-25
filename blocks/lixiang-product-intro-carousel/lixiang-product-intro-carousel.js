@@ -156,12 +156,12 @@ function createHighlight(item, showTags) {
   highlight.className = 'product-intro-highlight';
   const valueText = propText(item, 'value');
   const unitText = propText(item, 'unit');
-  const tagText = propText(item, 'tag') || propText(item, 'label');
+  const tagText = propText(item, 'tag');
   if (showTags && tagText) {
     const tag = document.createElement('p');
     tag.className = 'product-intro-highlight-tag';
     tag.textContent = tagText;
-    instrumentProp(item, propText(item, 'tag') ? 'tag' : 'label', tag);
+    instrumentProp(item, 'tag', tag);
     highlight.append(tag);
   }
   if (valueText || unitText) {
@@ -274,11 +274,16 @@ function setupResponsiveTabs(block, buttons, panels, copies, viewport) {
   const mobileQuery = window.matchMedia('(width <= 820px)');
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   const autoPlay = propBoolean(block, 'autoPlay', true);
-  const interval = propNumber(block, 'interval', 4) * 1000;
+  const interval = Math.min(
+    12000,
+    Math.max(2000, propNumber(block, 'interval', 4) * 1000),
+  );
   const instanceId = `lixiang-product-intro-carousel-${carouselInstance += 1}`;
   let active = 0;
   let timer = null;
   let scrollFrame = null;
+  let pointerInside = false;
+  let focusInside = false;
 
   const stop = () => {
     if (timer) window.clearInterval(timer);
@@ -307,8 +312,16 @@ function setupResponsiveTabs(block, buttons, panels, copies, viewport) {
   };
   const start = () => {
     stop();
-    if (!autoPlay || mobileQuery.matches || motionQuery.matches || panels.length < 2) return;
-    timer = window.setInterval(() => activate(active + 1), Math.max(2000, interval));
+    if (
+      !autoPlay
+      || mobileQuery.matches
+      || motionQuery.matches
+      || panels.length < 2
+      || pointerInside
+      || focusInside
+      || document.hidden
+    ) return;
+    timer = window.setInterval(() => activate(active + 1), interval);
   };
   const syncFromScroll = () => {
     scrollFrame = null;
@@ -374,10 +387,22 @@ function setupResponsiveTabs(block, buttons, panels, copies, viewport) {
     if (scrollFrame !== null) return;
     scrollFrame = window.requestAnimationFrame(syncFromScroll);
   }, { passive: true });
-  block.addEventListener('mouseenter', stop);
-  block.addEventListener('mouseleave', start);
-  block.addEventListener('focusin', stop);
-  block.addEventListener('focusout', start);
+  block.addEventListener('mouseenter', () => {
+    pointerInside = true;
+    stop();
+  });
+  block.addEventListener('mouseleave', () => {
+    pointerInside = false;
+    start();
+  });
+  block.addEventListener('focusin', () => {
+    focusInside = true;
+    stop();
+  });
+  block.addEventListener('focusout', (event) => {
+    focusInside = block.contains(event.relatedTarget);
+    start();
+  });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) stop();
     else start();
@@ -504,7 +529,7 @@ export default function decorate(block) {
     if (bottomMetrics.childElementCount) content.append(bottomMetrics);
   }
 
-  if (variant === 'expandable' && content.childElementCount) {
+  if (variant === 'expandable' && mediaItems.length > 2 && content.childElementCount) {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'feature-expand-toggle';
