@@ -25,6 +25,51 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is an AEM Edge Delivery Services project configured for the Universal Editor, providing visual editing capabilities for Franklin blocks. Content is sourced from AEM Cloud Service author instance and delivered through Edge Delivery.
 
+## Git Workflow — main only
+
+**Develop, push, and test on `main`. Do not use feature branches, worktrees, or PRs.**
+
+`fstab.yaml` hardcodes the delivery mountpoint to `.../Universal-editor-demo/main`, so the
+Universal Editor only ever loads code from `main`. Anything on another branch cannot be
+verified on the environment, which makes it unverifiable per the rule below.
+
+- Sync before pushing — this repo has other active contributors:
+  ```bash
+  git fetch origin && git rebase origin/main
+  ```
+- Do not create git worktrees. Their generated branch names exceed the 63-character DNS
+  label limit, and `aem up` refuses to start.
+
+## Verification Requirement
+
+**A change is only done once it is pushed to `main` and verified on the environment.**
+
+`npm run lint` and `npm test` are entry gates, **not** acceptance criteria. Local test runs
+and local fixtures do **not** count as verified, and must never be reported as "tested",
+"verified", or "fixed".
+
+Local fixtures load a single block in isolation. A real page has many blocks, and the other
+product blocks inject `styles/product-blocks.css` at runtime — its rules share specificity
+with a block's own and load first. Cascade bugs of this shape are invisible locally and only
+appear on the environment.
+
+Workflow: edit → `npm run lint` + `npm test` → commit → push to `main` → wait for deploy →
+**verify on the environment**. Until that last step passes, say "pushed, not yet verified on
+the environment" rather than "fixed".
+
+### Verifying on the environment
+
+- Universal Editor canvas (**same-origin, works**):
+  `https://author-p80707-e1685574.adobeaemcloud.com/ui#/@leadstechltdptrsd/aem/universal-editor/canvas/author-p80707-e1685574.adobeaemcloud.com/content/demo-site/language-master/en/li-l6.html`
+- The `experience.adobe.com` entry point does **not** work: the canvas is a cross-site iframe,
+  the AEM session cookie is not sent, and it fails with `ERR_BLOCKED_BY_RESPONSE`.
+- Drive a real Chrome over CDP (the web-access skill). A standalone Playwright browser has no
+  AEM session.
+- **Open a new tab.** An already-open editor tab can render a cached view — including nodes
+  that no longer exist.
+- When checking deployed assets, use `curl --compressed`; otherwise the response is raw gzip
+  and every `grep` silently misses.
+
 ## Development Commands
 
 ```bash
@@ -112,6 +157,15 @@ Template = `blocks/feature-grid/`; reuse the shared helpers in `scripts/product-
 - `scripts/product-block-utils.js` — register the block + each item model in **both** `PRODUCT_MODEL_FIELDS` and `PRODUCT_COLLECTION_MODELS` (else doc-based aem.live delivery can't rebuild field markers / detect groups → fields render empty).
 - `.eslintrc.js` — add any model with >4 fields to `xwalk/max-cells` (else `npm run lint` / the pre-commit hook fails).
 - `models/_section.json` — add the block id to `filters[0].components` (else authors can't insert it into a section).
+
+**Exception — `blocks/lixiang-product-intro-slider/`** is deliberately self-contained. It uses
+its own `slider-utils.js` and keeps its `product-*` CSS in its own stylesheet, so it imports
+neither `scripts/product-block-utils.js` nor `styles/product-blocks.css`. Fixes to those
+shared files do **not** reach it — port them across by hand. Its `PRODUCT_MODEL_FIELDS` copy
+is positional, so any field reorder in `_lixiang-product-intro-slider.json` must be mirrored
+in `slider-utils.js`. Note it still sets `data-product-block` (its own selectors depend on the
+attribute) and still restates `min-height: 0` on `.product-media`, because other blocks on the
+same page inject the shared stylesheet whose equally-specific rule would otherwise win.
 
 
 ### Script Loading Phases
