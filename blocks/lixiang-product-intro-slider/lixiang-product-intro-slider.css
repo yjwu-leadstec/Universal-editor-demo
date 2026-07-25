@@ -433,10 +433,14 @@ main .lixiang-product-intro-slider .highlight-slide.is-instant.is-staging-hidden
 }
 
 main .lixiang-product-intro-slider .product-media {
-  /* `position/overflow/background` ported from styles/product-blocks.css. */
+  /* `position/overflow/background` ported from styles/product-blocks.css.
+   * `min-height: 0` must stay explicit: other product blocks on the same page
+   * still inject that shared stylesheet, whose `main [data-product-block]
+   * .product-media` rule has the same specificity and sets a 220px floor. */
   position: relative;
   width: 1200px;
   height: 674px;
+  min-height: 0;
   overflow: hidden;
   aspect-ratio: auto;
   background: #111;
