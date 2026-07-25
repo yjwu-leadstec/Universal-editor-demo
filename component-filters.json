@@ -227,6 +227,10 @@
     ]
   },
   {
+    "id": "media-center-feed",
+    "components": []
+  },
+  {
     "id": "media-featured-card",
     "components": [
       "media-featured-content"

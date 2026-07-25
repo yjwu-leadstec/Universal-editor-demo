@@ -1,0 +1,170 @@
+/* Content-driven Media Center feed. */
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+const MEDIA_TYPES = ['newsroom', 'photos', 'videos'];
+
+function sourceFor(rows, name, fallbackIndex) {
+  const selector = `[data-aue-prop="${name}"]`;
+  return rows.find((row) => row.matches(selector))
+    || rows.map((row) => row.querySelector(selector)).find(Boolean)
+    || rows[fallbackIndex]
+    || null;
+}
+
+function sourceText(source) {
+  return source?.textContent.trim() || '';
+}
+
+function sourceHref(source) {
+  const link = source?.matches('a') ? source : source?.querySelector('a');
+  return link?.getAttribute('href') || '';
+}
+
+function firstValue(entry, names) {
+  const value = names.map((name) => entry[name])
+    .find((item) => item !== undefined && item !== null);
+  return typeof value === 'string' ? value.trim() : value || '';
+}
+
+function isVisible(value) {
+  return !['false', '0', 'no'].includes(String(value).trim().toLowerCase());
+}
+
+function normalizePath(path) {
+  return String(path || '').replace(/^https?:\/\/[^/]+/, '').replace(/\.html$/, '').replace(/\/$/, '');
+}
+
+function titleFor(type) {
+  return type === 'newsroom' ? 'Newsroom' : `${type.charAt(0).toUpperCase()}${type.slice(1)}`;
+}
+
+function mediaEntry(entry) {
+  const path = normalizePath(firstValue(entry, ['path', '_path', 'detailPath', 'detail-path']));
+  const displayMode = String(firstValue(entry, ['displayMode', 'display-mode']) || 'grid').toLowerCase();
+  return {
+    path,
+    title: firstValue(entry, ['title', 'name']),
+    date: firstValue(entry, ['publishDate', 'publish-date', 'date']),
+    type: String(firstValue(entry, ['mediaType', 'media-type', 'type'])).toLowerCase(),
+    image: firstValue(entry, ['coverImage', 'cover-image', 'image']),
+    alt: firstValue(entry, ['imageAlt', 'image-alt']),
+    visible: isVisible(firstValue(entry, ['visible'])),
+    displayMode: displayMode === 'full-width' ? displayMode : 'grid',
+    featured: isVisible(firstValue(entry, ['featured'])) && firstValue(entry, ['featured']) !== '',
+    sortOrder: Number(firstValue(entry, ['sortOrder', 'sort-order'])) || Number.MAX_SAFE_INTEGER,
+    quantity: firstValue(entry, ['photoCount', 'photo-count', 'quantity']),
+    duration: firstValue(entry, ['videoDuration', 'video-duration', 'duration']),
+  };
+}
+
+function sortEntries(entries) {
+  return entries.sort((left, right) => {
+    if (left.featured !== right.featured) return left.featured ? -1 : 1;
+    if (left.sortOrder !== right.sortOrder) return left.sortOrder - right.sortOrder;
+    return String(right.date).localeCompare(String(left.date));
+  });
+}
+
+async function loadEntries(sourcePath) {
+  const response = await fetch('/query-index.json');
+  if (!response.ok) throw new Error(`Media index request failed (${response.status})`);
+  const payload = await response.json();
+  let items = [];
+  if (Array.isArray(payload.data)) items = payload.data;
+  if (Array.isArray(payload.items)) items = payload.items;
+  const root = normalizePath(sourcePath) || '/media-library';
+  return items
+    .map(mediaEntry)
+    .filter((entry) => entry.path === root || entry.path.startsWith(`${root}/`));
+}
+
+function createCard(entry, type) {
+  const card = document.createElement('a');
+  card.className = 'media-center-feed-card';
+  if (entry.displayMode === 'full-width') card.classList.add('is-full-width');
+  card.href = entry.path || '#';
+  card.setAttribute('aria-label', entry.title || titleFor(type));
+
+  const media = document.createElement('span');
+  media.className = 'media-center-feed-media';
+  if (entry.image) media.append(createOptimizedPicture(entry.image, entry.alt || entry.title));
+
+  const copy = document.createElement('span');
+  copy.className = 'media-center-feed-copy';
+  const title = document.createElement('span');
+  title.className = 'media-center-feed-title';
+  title.textContent = entry.title;
+  const meta = document.createElement('span');
+  meta.className = 'media-center-feed-meta';
+  let detail = '';
+  if (type === 'photos') detail = entry.quantity;
+  if (type === 'videos') detail = entry.duration;
+  meta.textContent = [detail, entry.date].filter(Boolean).join(' | ');
+  copy.append(title, meta);
+  card.append(media, copy);
+  return card;
+}
+
+function renderEmpty(container, message) {
+  const empty = document.createElement('p');
+  empty.className = 'media-center-feed-empty';
+  empty.textContent = message;
+  container.replaceChildren(empty);
+}
+
+export default async function decorate(block) {
+  const rows = [...block.children];
+  const titleSource = sourceFor(rows, 'title', 0);
+  const typeSource = sourceFor(rows, 'activeType', 1);
+  const sourcePathSource = sourceFor(rows, 'sourcePath', 2);
+  const routeBaseSource = sourceFor(rows, 'routeBase', 3);
+  const typeValue = sourceText(typeSource).toLowerCase();
+  const activeType = MEDIA_TYPES.includes(typeValue) ? typeValue : 'newsroom';
+  const routeBase = normalizePath(sourceHref(routeBaseSource) || sourceText(routeBaseSource));
+
+  const shell = document.createElement('section');
+  shell.className = 'media-center-feed-shell';
+  const header = document.createElement('header');
+  const heading = document.createElement('h1');
+  heading.textContent = sourceText(titleSource) || titleFor(activeType);
+  const navigation = document.createElement('nav');
+  navigation.className = 'media-center-feed-tabs';
+  navigation.setAttribute('aria-label', 'Media Center sections');
+  MEDIA_TYPES.forEach((type) => {
+    const tab = document.createElement('a');
+    tab.className = 'media-center-feed-tab';
+    if (type === activeType) {
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-current', 'page');
+    }
+    tab.href = routeBase || '#';
+    if (routeBase && type !== 'newsroom') tab.href = `${routeBase}/${type}`;
+    tab.textContent = titleFor(type);
+    navigation.append(tab);
+  });
+  header.append(heading, navigation);
+
+  const list = document.createElement('div');
+  list.className = 'media-center-feed-list';
+  shell.append(header, list);
+  block.classList.add('media-center-feed');
+  block.replaceChildren(shell);
+  moveInstrumentation(titleSource, heading);
+  moveInstrumentation(typeSource, navigation);
+  moveInstrumentation(sourcePathSource, list);
+  moveInstrumentation(routeBaseSource, navigation);
+
+  try {
+    const sourcePath = sourceHref(sourcePathSource) || sourceText(sourcePathSource);
+    const entries = sortEntries((await loadEntries(sourcePath))
+      .filter((entry) => entry.visible && entry.type === activeType));
+    if (!entries.length) {
+      renderEmpty(list, 'No published media entries are available yet.');
+      return;
+    }
+    list.append(...entries.map((entry) => createCard(entry, activeType)));
+  } catch {
+    renderEmpty(list, 'Media entries will appear after publication.');
+  }
+}

@@ -1,0 +1,213 @@
+main .section.media-center-feed-container {
+  margin: 0;
+  padding: 0;
+}
+
+main > .section > .media-center-feed-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+main .media-center-feed {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 max(20px, calc((100vw - 1480px) / 2)) 160px;
+  color: #000;
+  background: #f2f2f2;
+  font-family: licium-regular, "Segoe UI", arial, sans-serif;
+}
+
+main .media-center-feed-shell > header {
+  padding: 78px 0 40px;
+}
+
+main .media-center-feed h1 {
+  margin: 0;
+  font-family: licium-medium, "Segoe UI", arial, sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 56px;
+}
+
+main .media-center-feed-tabs {
+  display: flex;
+  gap: 32px;
+  margin-top: 38px;
+}
+
+main .media-center-feed-tab {
+  position: relative;
+  padding: 0 0 9px;
+  color: rgb(0 0 0 / 45%);
+  font-size: 20px;
+  line-height: 28px;
+  text-decoration: none;
+}
+
+main .media-center-feed-tab::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  content: '';
+  background: transparent;
+}
+
+main .media-center-feed-tab.is-active {
+  color: #000;
+}
+
+main .media-center-feed-tab.is-active::after {
+  background: #000;
+}
+
+main .media-center-feed-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+main .media-center-feed-card {
+  display: block;
+  overflow: hidden;
+  border-radius: 12px;
+  color: #000;
+  background: #fff;
+  text-decoration: none;
+}
+
+main .media-center-feed-media {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+main .media-center-feed-media picture,
+main .media-center-feed-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+main .media-center-feed-media img {
+  object-fit: cover;
+  transition: transform 500ms cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+main .media-center-feed-card:hover img {
+  transform: scale(1.05);
+}
+
+main .media-center-feed-copy {
+  display: flex;
+  min-height: 264px;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+main .media-center-feed-title {
+  display: -webkit-box;
+  overflow: hidden;
+  font-family: licium-medium, "Segoe UI", arial, sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 40px;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+main .media-center-feed-meta {
+  display: block;
+  margin-top: 12px;
+  color: rgb(0 0 0 / 40%);
+  font-size: 20px;
+  line-height: 28px;
+}
+
+main .media-center-feed-card.is-full-width {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.72fr);
+}
+
+main .media-center-feed-tab:focus-visible,
+main .media-center-feed-card:focus-visible {
+  outline: 3px solid #dbad76;
+  outline-offset: 4px;
+}
+
+main .media-center-feed-card.is-full-width .media-center-feed-copy {
+  min-height: 100%;
+}
+
+main .media-center-feed-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 80px 30px;
+  border-radius: 12px;
+  color: rgb(0 0 0 / 55%);
+  background: #fff;
+  font-size: 18px;
+  text-align: center;
+}
+
+@media (width < 900px) {
+  main .media-center-feed {
+    padding: 0 20px 80px;
+  }
+
+  main .media-center-feed-shell > header {
+    padding: 44px 0 24px;
+  }
+
+  main .media-center-feed h1 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  main .media-center-feed-tabs {
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  main .media-center-feed-tab {
+    padding-bottom: 8px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  main .media-center-feed-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  main .media-center-feed-card.is-full-width {
+    display: block;
+    grid-column: auto;
+  }
+
+  main .media-center-feed-copy {
+    min-height: 156px;
+    padding: 16px;
+  }
+
+  main .media-center-feed-title {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  main .media-center-feed-meta {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  main .media-center-feed-empty {
+    padding: 48px 16px;
+    font-size: 14px;
+  }
+}

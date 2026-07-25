@@ -87,6 +87,85 @@
             { "name": "Left to right", "value": "ltr" },
             { "name": "Right to left", "value": "rtl" }
           ]
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "mediaType",
+          "label": "Media Entry Type",
+          "options": [
+            { "name": "Not a media entry", "value": "" },
+            { "name": "Newsroom", "value": "newsroom" },
+            { "name": "Photos", "value": "photos" },
+            { "name": "Videos", "value": "videos" }
+          ]
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "visible",
+          "label": "Show in Media Center",
+          "options": [
+            { "name": "Visible", "value": "true" },
+            { "name": "Hidden", "value": "false" }
+          ]
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "displayMode",
+          "label": "Media Feed Layout",
+          "options": [
+            { "name": "Grid card", "value": "grid" },
+            { "name": "Full width", "value": "full-width" }
+          ]
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "featured",
+          "label": "Featured in Media Feed",
+          "options": [
+            { "name": "No", "value": "false" },
+            { "name": "Yes", "value": "true" }
+          ]
+        },
+        {
+          "component": "number",
+          "valueType": "number",
+          "name": "sortOrder",
+          "label": "Media Sort Order"
+        },
+        {
+          "component": "date",
+          "valueType": "string",
+          "name": "publishDate",
+          "label": "Media Publication Date"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "coverImage",
+          "label": "Media Cover Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Media Cover Image Alt Text"
+        },
+        {
+          "component": "number",
+          "valueType": "number",
+          "name": "photoCount",
+          "label": "Photo Count"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "videoDuration",
+          "label": "Video Duration"
         }
       ]
     }
