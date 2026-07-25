@@ -927,7 +927,10 @@
                 "template": {
                   "name": "Highlight Slide",
                   "model": "highlight-slide",
-                  "filter": "highlight-slide"
+                  "filter": "highlight-slide",
+                  "linkType": "text",
+                  "copyColor": "white",
+                  "showNote": true
                 }
               }
             }

@@ -14,7 +14,7 @@ import {
   propSource,
   propText,
   revealElements,
-} from '../../scripts/product-block-utils.js';
+} from './slider-utils.js';
 
 const MOBILE_QUERY = '(width <= 720px)';
 const carouselInstances = new WeakMap();

@@ -3094,8 +3094,8 @@
         "description": "Optional; defaults to #191919",
         "valueType": "string",
         "validation": {
-          "regExp": "^#[0-9a-fA-F]{6}$",
-          "customErrorMsg": "Enter a six-digit hex color such as #191919"
+          "regExp": "^$|^#[0-9a-fA-F]{6}$",
+          "customErrorMsg": "Enter a six-digit hex color such as #191919, or leave empty"
         }
       },
       {
@@ -3289,6 +3289,7 @@
         "name": "linkType",
         "label": "Link Type",
         "valueType": "string",
+        "value": "text",
         "options": [
           {
             "name": "Text",

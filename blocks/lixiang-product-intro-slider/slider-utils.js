@@ -1,0 +1,713 @@
+/*
+ * Self-contained utilities for the lixiang-product-intro-slider block.
+ *
+ * Ported from scripts/product-block-utils.js so this block no longer shares
+ * runtime logic with the other product blocks. Behaviour is intentionally
+ * identical to the shared version at the time of the split; only the model
+ * tables are narrowed to this block's own three models.
+ */
+import { moveInstrumentation } from '../../scripts/scripts.js';
+import { MOBILE_MEDIA_QUERY, resolveResponsiveDefault } from '../../scripts/product-media-defaults.mjs';
+
+const PRODUCT_MEDIA_FALLBACKS = {
+  '014b26dc-f3d1-493f-9f54-5d9684388b2a.jpg': '349837577446335',
+  '0690f2ab-594a-429b-90e4-1f4a0d4fdd27.jpg': '27557296358328',
+  '0b147029-c4d2-441d-bcb0-421c3b26b4af.jpg': '340225316549842',
+  '0ddb4354-1873-4147-bdb4-3c0a096be36e.jpg': '189498925982365',
+  '1027d193-23d5-4693-a0c0-a4a59aac71e1.jpg': '337085221869804',
+  '13d2e858-8d2e-4a97-b7f5-dee27abe68c5.jpg': '370628346735808',
+  '2c188aba-f9d9-4f9f-93e5-5510b57382ab.jpg': '414469797261778',
+  '31ee0183-7ba2-48fc-b32b-df2fc3be915d.png': '56057713722576',
+  '34e2753a-b7d8-40e9-8441-68620603972a.jpg': '174209117982777',
+  '3f5dcb1a-a435-4771-94d2-7ee0a887fb24.jpg': '188456611906995',
+  '42fb7d24-ec13-4cd9-8042-6f306a04df57.jpg': '175363213625470',
+  '4db195e7-4d2e-499b-afbd-69f8c944fe80.jpg': '211867994102224',
+  '633873c3-6ef7-468d-8dbe-5d71dc0502cf.jpg': '56011149537353',
+  '6f0a8aa6-725d-42a8-9293-f7de945c1cfb.jpg': '188499859777662',
+  '82847046-bac9-444c-a727-53a2f6b3d0a1.jpg': '339334402720466',
+  '87b2b562-68a2-4ef8-98ba-2f3d5c66d27d.jpg': '349758519893895',
+  '907a99a8-64aa-4699-8994-1d9441e08e92.jpg': '323841694813338',
+  '992af39c-4294-4bd0-b73b-80490b37a4b3.jpg': '54655835654723',
+  'aeca793a-74b8-4c77-9954-d3ec0c35a630.jpg': '188471756365441',
+  'b3fc1d83-3370-49aa-8e7e-479c4fc2ccc7.jpg': '317718577278355',
+  'b9bca2bd-5e52-465b-b851-b12bc338172c.jpg': '337068206887603',
+  'becbc0be-eb0c-4206-9b47-8e9688f9bec9.jpg': '176393203283642',
+  'c6b06670-f949-42b8-8d21-b983b2141480.png': '323688221162967',
+  'c8ce1ca7-85a9-4d45-9337-4b8cd62cacbf.jpg': '174418124685401',
+  'c9f89fc2-e758-4807-8478-78114510b5b1.png': '323705202208602',
+  'ce7e583a-d18f-45e5-8ae5-f292603e83c0.jpg': '560123200242081',
+  'd9f9cf93-667b-484c-af0a-4bb64007651e.jpg': '560138576536018',
+  'e153a05a-c02c-4af7-b9ef-3cd99f6e4b4f.jpg': '233826047426507',
+  'e4860d6c-d146-4734-a521-4f1814471c88.jpg': '254524691664282',
+  'efd81868-e882-4a56-91ed-2a4b1a1024cc.png': '323720808718490',
+  'fb4adca7-b8dc-42fc-888a-bd7ba4ec462d.jpg': '560149743526734',
+  'fcc7662c-a80f-4409-ad74-d203d5e9f0b6.jpg': '643248190614667',
+};
+
+// Universal Editor keeps field metadata on author, while published semantic HTML
+// only contains positional rows/cells. Keep the runtime independent of author-only
+// data-aue attributes by restoring those field/model markers before decoration.
+const PRODUCT_MODEL_FIELDS = {
+  'lixiang-product-intro-slider': [['id', 'text'], ['title', 'textarea'], ['mobileTitle', 'textarea'], ['description', 'richtext'], ['accentColor', 'text'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showProgress', 'boolean'], ['showVideoControl', 'boolean'], ['headingColor', 'select'], ['showRotationControl', 'boolean']],
+  'highlight-slide': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'aem-content'], ['mobileVideo', 'aem-content'], ['eyebrow', 'text'], ['title', 'textarea'], ['description', 'richtext'], ['note', 'textarea'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['copyColor', 'select'], ['showNote', 'boolean'], ['indicatorLabel', 'textarea']],
+  'highlight-stat': [['value', 'text'], ['unit', 'text'], ['label', 'text'], ['description', 'richtext']],
+};
+
+const PRODUCT_COLLECTION_MODELS = {
+  'lixiang-product-intro-slider': 'highlight-slide',
+  'highlight-slide': 'highlight-stat',
+};
+
+function collectionModelFor(model, row) {
+  const resolver = PRODUCT_COLLECTION_MODELS[model];
+  return typeof resolver === 'function' ? resolver(row) : resolver;
+}
+
+function restoreAltField(root, name, fieldSources) {
+  if (!name.endsWith('Alt')) return false;
+  const mediaSource = fieldSources.get(name.slice(0, -3));
+  const source = document.createElement('span');
+  source.dataset.aueProp = name;
+  source.textContent = mediaSource?.querySelector('img')?.alt || '';
+  root.append(source);
+  fieldSources.set(name, source);
+  return true;
+}
+
+function restoreLinkField(root, name, fieldSources) {
+  let suffix = '';
+  if (name.endsWith('LinkText') || name === 'linkText') suffix = 'Text';
+  if (name.endsWith('LinkType') || name === 'linkType') suffix = 'Type';
+  if (!suffix) return false;
+  const linkSource = fieldSources.get(name.slice(0, -suffix.length));
+  const source = document.createElement('span');
+  source.dataset.aueProp = name;
+  if (suffix === 'Text') source.textContent = linkSource?.querySelector('a')?.textContent.trim() || '';
+  root.append(source);
+  fieldSources.set(name, source);
+  return true;
+}
+
+function matchesPublishedField(source, component) {
+  if (!['reference', 'aem-content'].includes(component)) return true;
+  if (source.querySelector('picture, img')) return true;
+  const href = source.querySelector('a')?.getAttribute('href') || '';
+  if (component === 'aem-content') return Boolean(href) || !source.textContent.trim();
+  if (href && !/^#[\da-f]{3,8}$/i.test(href)) return true;
+  return !source.textContent.trim();
+}
+
+function restorePublishedModel(root, model) {
+  const fields = PRODUCT_MODEL_FIELDS[model];
+  if (!fields) return;
+  const sources = [...root.children];
+  const fieldSources = new Map();
+  let sourceIndex = 0;
+
+  fields.forEach(([name, component]) => {
+    const restoredCompanion = restoreAltField(root, name, fieldSources)
+      || restoreLinkField(root, name, fieldSources);
+    if (restoredCompanion) return;
+    const source = sources[sourceIndex];
+    if (!source) return;
+    if (PRODUCT_COLLECTION_MODELS[model] && source.children.length > 1) return;
+    if (!matchesPublishedField(source, component)) return;
+    source.dataset.aueProp = name;
+    fieldSources.set(name, source);
+    sourceIndex += 1;
+  });
+
+  sources.slice(sourceIndex).forEach((source) => {
+    const childModel = collectionModelFor(model, source);
+    if (!childModel) return;
+    source.dataset.aueModel = childModel;
+    restorePublishedModel(source, childModel);
+  });
+}
+
+function restorePublishedMarkup(block) {
+  if (block.querySelector('[data-aue-prop], [data-aue-model]')) return;
+  const model = block.dataset.blockName || block.classList[0];
+  restorePublishedModel(block, model);
+}
+
+export function initProductBlock(block) {
+  restorePublishedMarkup(block);
+  // Keep the data-product-block hook: this block's own stylesheet scopes its
+  // rules with `main .lixiang-product-intro-slider[data-product-block]`.
+  // The stylesheet itself is loaded by loadBlock(), so nothing is injected here.
+  block.dataset.productBlock = block.classList[0] || 'product';
+}
+
+export function directRows(root) {
+  return [...root.children];
+}
+
+export function propSource(root, name) {
+  if (root.matches?.(`[data-aue-prop="${name}"]`)) return root;
+  const match = root.querySelector?.(`[data-aue-prop="${name}"]`);
+  if (!match) return null;
+  // Never reach into a nested collection item: a parent that lacks the field would
+  // otherwise claim its first child's field and strip that child's instrumentation.
+  const owner = match.parentElement?.closest('[data-aue-model]');
+  if (owner && owner !== root && root.contains(owner)) return null;
+  return match;
+}
+
+export function textWithBreaks(source) {
+  if (!source) return '';
+  const copy = source.cloneNode(true);
+  copy.querySelectorAll('br').forEach((br) => br.replaceWith('\n'));
+  return copy.textContent.trim();
+}
+
+export function propText(root, name) {
+  return textWithBreaks(propSource(root, name));
+}
+
+export function propBoolean(root, name, fallback = false) {
+  const value = propText(root, name).toLowerCase();
+  if (!value) return fallback;
+  return ['true', '1', 'yes', 'on'].includes(value);
+}
+
+export function propNumber(root, name, fallback = 0) {
+  const value = Number.parseFloat(propText(root, name));
+  return Number.isFinite(value) ? value : fallback;
+}
+
+export function propLink(root, name) {
+  const source = propSource(root, name);
+  return source?.matches('a') ? source : source?.querySelector('a') || null;
+}
+
+export function propUrl(root, name) {
+  const source = propSource(root, name);
+  return propLink(root, name)?.getAttribute('href') || source?.textContent.trim() || '';
+}
+
+export function propPicture(root, name) {
+  const source = propSource(root, name);
+  if (!source) return null;
+  const picture = source.matches('picture') ? source : source.querySelector('picture');
+  if (picture) return picture;
+
+  const url = propLink(root, name)?.getAttribute('href') || source.textContent.trim();
+  if (!url) return null;
+  const generatedPicture = document.createElement('picture');
+  const image = document.createElement('img');
+  image.src = url;
+  generatedPicture.append(image);
+  return generatedPicture;
+}
+
+export function modelItems(root, model) {
+  const explicit = [...root.querySelectorAll(`[data-aue-model="${model}"]`)];
+  if (explicit.length) return explicit;
+  if (root.querySelector('[data-aue-model]')) return [];
+  return directRows(root).filter((row) => !row.hasAttribute('data-aue-prop'));
+}
+
+export function moveItemInstrumentation(source, target) {
+  if (source && target) moveInstrumentation(source, target);
+}
+
+export function instrumentProp(root, name, target) {
+  const source = propSource(root, name);
+  if (source && target) moveInstrumentation(source, target);
+}
+
+export function createHeading(text, level = 2, className = '') {
+  const heading = document.createElement(`h${level}`);
+  if (className) heading.className = className;
+  heading.textContent = text;
+  return heading;
+}
+
+export function createRichText(source, className = '') {
+  const wrapper = document.createElement('div');
+  if (className) wrapper.className = className;
+  if (!source) return wrapper;
+  const selectors = 'p, ul, ol, blockquote';
+  const semantic = source.matches?.(selectors)
+    ? [source]
+    : [...source.querySelectorAll(selectors)];
+  if (semantic.length) wrapper.append(...semantic.map((node) => node.cloneNode(true)));
+  else if (source.textContent.trim()) {
+    const paragraph = document.createElement('p');
+    paragraph.textContent = source.textContent.trim();
+    wrapper.append(paragraph);
+  }
+  return wrapper;
+}
+
+export function createSectionHeader(root, {
+  headingLevel = 2,
+  className = 'product-section-header',
+} = {}) {
+  const header = document.createElement('header');
+  header.className = className;
+  const eyebrow = propText(root, 'eyebrow');
+  const title = propText(root, 'title');
+  const mobileTitle = propText(root, 'mobileTitle');
+  const descriptionSource = propSource(root, 'description');
+
+  if (eyebrow) {
+    const element = document.createElement('p');
+    element.className = 'product-eyebrow';
+    element.textContent = eyebrow;
+    instrumentProp(root, 'eyebrow', element);
+    header.append(element);
+  }
+  if (title) {
+    const element = createHeading(title, headingLevel, 'product-title product-title-desktop');
+    instrumentProp(root, 'title', element);
+    header.append(element);
+  }
+  if (mobileTitle) {
+    const element = createHeading(mobileTitle, headingLevel, 'product-title product-title-mobile');
+    instrumentProp(root, 'mobileTitle', element);
+    header.append(element);
+  }
+  if (descriptionSource?.textContent.trim()) {
+    const element = createRichText(descriptionSource, 'product-description');
+    instrumentProp(root, 'description', element);
+    header.append(element);
+  }
+  return header;
+}
+
+export function addBlockAnchor(block, root = block, parent = block) {
+  const id = propText(root, 'id');
+  if (id) block.id = id;
+  const anchor = document.createElement('span');
+  anchor.className = 'product-aue-anchor';
+  anchor.setAttribute('aria-hidden', 'true');
+  instrumentProp(root, 'id', anchor);
+  parent.append(anchor);
+
+  root.querySelectorAll('[data-aue-prop], [data-aue-model]').forEach((source) => {
+    const marker = document.createElement('span');
+    marker.className = 'product-aue-anchor';
+    marker.setAttribute('aria-hidden', 'true');
+    moveInstrumentation(source, marker);
+    parent.append(marker);
+  });
+}
+
+function fallbackLinkText(root, model, href, prefix = '') {
+  if (model === 'product-hero-cta') {
+    return href.includes('/test-drive') ? 'Schedule Test Drive' : 'Learn More';
+  }
+  if (model === 'product-sticky-nav-item' && href.startsWith('#')) {
+    return href.slice(1).split('-').map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join(' ');
+  }
+  if (model === 'product-ending') {
+    return prefix ? 'Back to Top' : 'Schedule Test Drive';
+  }
+  if (model === 'product-guide-item') {
+    const title = propText(root, 'title');
+    if (href.includes('/test-drive')) return 'Start Configuration';
+    if (title.includes('Support')) return 'Find Support';
+    if (href.includes('/official-center')) return 'Official Center';
+  }
+  if (href.startsWith('#')) {
+    return href.slice(1).split('-').map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join(' ');
+  }
+  if (href.includes('/test-drive')) return 'Schedule Test Drive';
+  return propText(root, 'title');
+}
+
+export function createProductLink(root, prefix = '', className = 'product-link') {
+  const field = prefix ? `${prefix}Link` : 'link';
+  const textField = prefix ? `${prefix}LinkText` : 'linkText';
+  const typeField = prefix ? `${prefix}LinkType` : 'linkType';
+  const source = propLink(root, field);
+  const href = source?.getAttribute('href') || propUrl(root, field);
+  const model = root.dataset.aueModel || root.dataset.blockName || root.classList[0];
+  const authoredText = propText(root, textField) || source?.textContent.trim() || '';
+  const text = authoredText && authoredText !== href
+    ? authoredText
+    : fallbackLinkText(root, model, href, prefix);
+  if (!href || !text) return null;
+  const defaultTypes = {
+    'product-hero-cta': root.previousElementSibling?.dataset.aueModel === model ? 'secondary' : 'primary',
+    'lixiang-product-intro-slide': 'text',
+    'feature-grid-item': 'text',
+    'product-guide-item': 'primary',
+    'product-ending': prefix ? 'secondary' : 'primary',
+    'product-param-cta': prefix ? 'text' : 'primary',
+    'product-download': prefix === 'android' ? 'secondary' : 'primary',
+  };
+  const link = document.createElement('a');
+  link.className = `${className} ${className}-${propText(root, typeField) || defaultTypes[model] || 'text'}`;
+  link.href = href;
+  link.textContent = text;
+  instrumentProp(root, field, link);
+  return link;
+}
+
+export function appendPicture(container, picture, {
+  alt = '',
+  loading = 'lazy',
+  fallbackLabel = 'LI AUTO',
+} = {}) {
+  if (!picture) {
+    container.classList.add('is-media-fallback');
+    container.dataset.fallbackLabel = fallbackLabel;
+    return null;
+  }
+  const image = picture.querySelector('img');
+  if (image) {
+    image.alt = alt || image.alt || '';
+    image.loading = loading;
+    image.decoding = 'async';
+    let failureObserver;
+    const removeBrokenPicture = () => {
+      failureObserver?.disconnect();
+      picture.remove();
+      container.classList.add('is-media-fallback');
+      container.dataset.fallbackLabel = fallbackLabel;
+    };
+    const recoverImage = () => {
+      failureObserver?.disconnect();
+      const filename = (image.currentSrc || image.src).split('/').pop()?.split('?')[0];
+      const fallbackPath = PRODUCT_MEDIA_FALLBACKS[filename];
+      const fallbackUrl = fallbackPath
+        ? `https://lilibrary-public.liauto.com/lilibrary/${fallbackPath}/${filename}`
+        : '';
+      if (!fallbackUrl || image.src === fallbackUrl) {
+        removeBrokenPicture();
+        return;
+      }
+      image.removeEventListener('error', recoverImage);
+      picture.querySelectorAll('source').forEach((source) => source.remove());
+      image.addEventListener('error', removeBrokenPicture, { once: true });
+      image.src = fallbackUrl;
+    };
+    image.addEventListener('error', recoverImage, { once: true });
+    container.append(picture);
+    if (loading === 'lazy' && 'IntersectionObserver' in window) {
+      failureObserver = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting) return;
+        failureObserver.disconnect();
+        if (image.complete && !image.naturalWidth) recoverImage();
+      }, { rootMargin: '200px' });
+      failureObserver.observe(image);
+    } else if (loading !== 'lazy' && image.complete && !image.naturalWidth) {
+      recoverImage();
+    }
+    return image;
+  }
+  container.append(picture);
+  return image;
+}
+
+export function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function safePlay(video) {
+  const result = video.play();
+  if (result?.catch) result.catch(() => {});
+}
+
+function setupVideoPlayback(media, video, button, autoplay, {
+  hasActiveSource = () => true,
+  sourceMedia = null,
+} = {}) {
+  const eventController = new AbortController();
+  const { signal } = eventController;
+  let progressFrame = null;
+  let observer = null;
+  let isActive = true;
+  let failedSources = new WeakSet();
+  let isIntersecting = !('IntersectionObserver' in window);
+  const tracksProgress = button?.classList.contains('has-progress');
+  const canAutoplay = autoplay && !prefersReducedMotion();
+  const stopProgress = () => {
+    if (progressFrame === null) return;
+    window.cancelAnimationFrame(progressFrame);
+    progressFrame = null;
+  };
+  const updateProgress = () => {
+    if (!tracksProgress || !Number.isFinite(video.duration) || video.duration <= 0) return;
+    const progress = Math.min(1, Math.max(0, video.currentTime / video.duration));
+    button.style.setProperty('--video-progress', `${progress * 360}deg`);
+  };
+  const animateProgress = () => {
+    updateProgress();
+    if (!video.paused && !video.ended) {
+      progressFrame = window.requestAnimationFrame(animateProgress);
+    } else {
+      progressFrame = null;
+    }
+  };
+  const updateControl = () => {
+    if (!button) return;
+    const playing = !video.paused && !video.ended;
+    button.setAttribute('aria-label', playing ? 'Pause video' : 'Play video');
+    button.classList.toggle('is-playing', playing);
+    stopProgress();
+    if (playing && tracksProgress) animateProgress();
+    else updateProgress();
+  };
+  const activeSourceAvailable = () => (
+    isActive && hasActiveSource() && !media.classList.contains('is-video-error')
+  );
+  const syncAvailability = () => {
+    const available = hasActiveSource();
+    media.classList.toggle('has-active-video', available);
+    if (button) button.hidden = !available;
+    if (!available) {
+      video.pause();
+      media.classList.remove('is-video-ready');
+    }
+    return available;
+  };
+  const tryAutoplay = () => {
+    if (!canAutoplay || !isIntersecting || !activeSourceAvailable()) return;
+    if (!video.dataset.userPaused) safePlay(video);
+  };
+  const markVideoError = () => {
+    media.classList.remove('is-video-ready', 'has-active-video');
+    media.classList.add('is-video-error');
+    if (button) button.hidden = true;
+    video.pause();
+    updateControl();
+  };
+  const handleSourceError = (event) => {
+    const failedSource = event.currentTarget;
+    failedSources.add(failedSource);
+    const eligibleSources = [...video.querySelectorAll('source')].filter((source) => (
+      !source.media || window.matchMedia(source.media).matches
+    ));
+    if (eligibleSources.some((source) => !failedSources.has(source))) return;
+    markVideoError();
+  };
+  const setActive = (nextActive) => {
+    isActive = Boolean(nextActive);
+    if (!isActive) {
+      video.pause();
+      return;
+    }
+    tryAutoplay();
+  };
+  const destroy = () => {
+    observer?.disconnect();
+    observer = null;
+    eventController.abort();
+    stopProgress();
+    video.pause();
+  };
+
+  video.addEventListener('play', updateControl, { signal });
+  video.addEventListener('pause', updateControl, { signal });
+  video.addEventListener('ended', updateControl, { signal });
+  video.addEventListener('loadedmetadata', updateProgress, { signal });
+  video.addEventListener('durationchange', updateProgress, { signal });
+  video.addEventListener('seeked', updateProgress, { signal });
+  video.addEventListener('timeupdate', updateProgress, { signal });
+  video.addEventListener('loadeddata', () => {
+    failedSources = new WeakSet();
+    media.classList.remove('is-video-error');
+    media.classList.add('is-video-ready');
+    syncAvailability();
+    tryAutoplay();
+  }, { signal });
+  video.addEventListener('error', markVideoError, { signal });
+  video.querySelectorAll('source').forEach((source) => {
+    source.addEventListener('error', handleSourceError, { signal });
+  });
+  button?.addEventListener('click', () => {
+    if (!activeSourceAvailable()) return;
+    if (video.paused) {
+      delete video.dataset.userPaused;
+      safePlay(video);
+    } else {
+      video.dataset.userPaused = 'true';
+      video.pause();
+    }
+  }, { signal });
+  updateControl();
+  syncAvailability();
+
+  sourceMedia?.addEventListener('change', () => {
+    video.pause();
+    media.classList.remove('is-video-ready', 'is-video-error');
+    video.load();
+    syncAvailability();
+    tryAutoplay();
+  }, { signal });
+
+  if (!canAutoplay) return { setActive, destroy };
+  if (!('IntersectionObserver' in window)) {
+    tryAutoplay();
+    return { setActive, destroy };
+  }
+  observer = new IntersectionObserver(([entry]) => {
+    isIntersecting = entry.isIntersecting;
+    if (isIntersecting) tryAutoplay();
+    else video.pause();
+  }, { threshold: 0.25 });
+  observer.observe(media);
+  return { setActive, destroy };
+}
+
+function appendResponsiveSources(targetPicture, sourcePicture, mediaRange) {
+  if (!targetPicture || !sourcePicture) return;
+  const sources = [...sourcePicture.querySelectorAll('source')].map((source) => {
+    const clone = source.cloneNode(true);
+    const authoredMedia = source.getAttribute('media');
+    clone.setAttribute('media', authoredMedia ? `${mediaRange} and ${authoredMedia}` : mediaRange);
+    return clone;
+  });
+  if (!sources.length) {
+    const sourceImage = sourcePicture.querySelector('img');
+    const srcset = sourceImage?.getAttribute('src');
+    if (srcset) {
+      const source = document.createElement('source');
+      source.media = mediaRange;
+      source.srcset = srcset;
+      sources.push(source);
+    }
+  }
+  targetPicture.prepend(...sources);
+}
+
+function preserveResponsiveFieldInstrumentation(root, field, media) {
+  if (!propSource(root, field)) return;
+  const marker = document.createElement('span');
+  marker.className = 'product-aue-anchor';
+  marker.setAttribute('aria-hidden', 'true');
+  instrumentProp(root, field, marker);
+  media.append(marker);
+}
+
+export function createMedia(root, {
+  eager = false,
+  autoplay = true,
+  loop = true,
+  showControls = true,
+  showProgress = true,
+  fallbackLabel = 'LI AUTO',
+} = {}) {
+  const media = document.createElement('div');
+  media.className = 'product-media';
+  const image = propPicture(root, 'image') || root.querySelector('picture');
+  const mediumImage = propPicture(root, 'mediumImage');
+  const tabletImage = propPicture(root, 'tabletImage');
+  const mobileImage = propPicture(root, 'mobileImage');
+  const hasResponsivePictures = Boolean(mediumImage || tabletImage);
+  const desktopSlot = document.createElement('div');
+  desktopSlot.className = `product-picture ${hasResponsivePictures ? 'product-picture-responsive' : 'product-picture-desktop'}`;
+  if (hasResponsivePictures && image) {
+    appendResponsiveSources(image, mediumImage || image, '(min-width: 821px) and (max-width: 1024px)');
+    appendResponsiveSources(image, tabletImage || mediumImage || image, '(min-width: 721px) and (max-width: 820px)');
+    appendResponsiveSources(
+      image,
+      mobileImage || tabletImage || mediumImage || image,
+      MOBILE_MEDIA_QUERY,
+    );
+  }
+  const desktopImg = appendPicture(desktopSlot, image, {
+    alt: propText(root, 'imageAlt'),
+    loading: eager ? 'eager' : 'lazy',
+    fallbackLabel,
+  });
+  instrumentProp(root, 'image', desktopSlot);
+  media.append(desktopSlot);
+
+  if (hasResponsivePictures) {
+    media.classList.add('has-responsive-picture');
+    preserveResponsiveFieldInstrumentation(root, 'mediumImage', media);
+    preserveResponsiveFieldInstrumentation(root, 'tabletImage', media);
+    preserveResponsiveFieldInstrumentation(root, 'mobileImage', media);
+  } else if (mobileImage) {
+    const mobileSlot = document.createElement('div');
+    mobileSlot.className = 'product-picture product-picture-mobile';
+    appendPicture(mobileSlot, mobileImage, {
+      alt: resolveResponsiveDefault(
+        desktopImg?.alt || '',
+        propText(root, 'mobileImageAlt'),
+        true,
+      ),
+      loading: eager ? 'eager' : 'lazy',
+      fallbackLabel,
+    });
+    instrumentProp(root, 'mobileImage', mobileSlot);
+    media.classList.add('has-mobile-picture');
+    media.append(mobileSlot);
+  }
+
+  const videoUrl = propUrl(root, 'video');
+  const mobileVideoUrl = propUrl(root, 'mobileVideo');
+  const mobileMedia = window.matchMedia(MOBILE_MEDIA_QUERY);
+  let video = null;
+  let playback = {
+    setActive: () => {},
+    destroy: () => {},
+  };
+  if (videoUrl || mobileVideoUrl) {
+    video = document.createElement('video');
+    video.className = 'product-video';
+    video.muted = true;
+    video.playsInline = true;
+    video.loop = loop;
+    video.preload = 'metadata';
+    if (desktopImg?.currentSrc || desktopImg?.src) {
+      video.poster = desktopImg.currentSrc || desktopImg.src;
+    }
+    if (mobileVideoUrl) {
+      const source = document.createElement('source');
+      source.media = MOBILE_MEDIA_QUERY;
+      source.src = mobileVideoUrl;
+      video.append(source);
+    }
+    if (videoUrl) {
+      const source = document.createElement('source');
+      source.src = videoUrl;
+      video.append(source);
+    }
+    instrumentProp(root, 'video', video);
+    media.append(video);
+
+    let button = null;
+    if (showControls) {
+      button = document.createElement('button');
+      button.className = `product-video-control${showProgress ? ' has-progress' : ''}`;
+      button.type = 'button';
+      const icon = document.createElement('span');
+      icon.className = 'product-video-icon';
+      icon.setAttribute('aria-hidden', 'true');
+      button.append(icon);
+      media.append(button);
+    }
+    playback = setupVideoPlayback(media, video, button, autoplay, {
+      hasActiveSource: () => Boolean(resolveResponsiveDefault(
+        videoUrl,
+        mobileVideoUrl,
+        mobileMedia.matches,
+      )),
+      sourceMedia: mobileVideoUrl ? mobileMedia : null,
+    });
+  }
+  return { element: media, video, ...playback };
+}
+
+export function revealElements(block, selector, enabled = true) {
+  const elements = [...block.querySelectorAll(selector)];
+  elements.forEach((element) => element.classList.add('product-reveal'));
+  if (!enabled || prefersReducedMotion() || !('IntersectionObserver' in window)) {
+    elements.forEach((element) => element.classList.add('is-visible'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+  elements.forEach((element) => observer.observe(element));
+}

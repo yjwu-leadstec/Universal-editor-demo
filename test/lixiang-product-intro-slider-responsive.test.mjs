@@ -7,19 +7,18 @@ const [
   carouselJs,
   carouselModelSource,
   productUtils,
-  productBlockCss,
   editorSupport,
 ] = await Promise.all([
   readFile(new URL('../blocks/lixiang-product-intro-slider/lixiang-product-intro-slider.css', import.meta.url), 'utf8'),
   readFile(new URL('../blocks/lixiang-product-intro-slider/lixiang-product-intro-slider.js', import.meta.url), 'utf8'),
   readFile(new URL('../blocks/lixiang-product-intro-slider/_lixiang-product-intro-slider.json', import.meta.url), 'utf8'),
-  readFile(new URL('../scripts/product-block-utils.js', import.meta.url), 'utf8'),
-  readFile(new URL('../styles/product-blocks.css', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/lixiang-product-intro-slider/slider-utils.js', import.meta.url), 'utf8'),
   readFile(new URL('../scripts/editor-support.js', import.meta.url), 'utf8'),
 ]);
 const carouselConfig = JSON.parse(carouselModelSource);
 const carouselModel = carouselConfig.models.find(({ id }) => id === 'lixiang-product-intro-slider');
 const slideModel = carouselConfig.models.find(({ id }) => id === 'highlight-slide');
+const carouselDefinition = carouselConfig.definitions.find(({ id }) => id === 'lixiang-product-intro-slider');
 
 test('highlight carousel keeps overlay copy in media and renders notes in the reserved footer gap', () => {
   assert.match(carouselJs, /media\.append\(copy\)/);
@@ -37,8 +36,8 @@ test('highlight carousel uses the official four responsive geometry bands', () =
   assert.match(carouselCss, /@media \(width <= 720px\)/);
   assert.match(carouselCss, /\.space-large\s*\{\s*\n\s*padding-block:\s*80px/);
   assert.match(carouselCss, /\.space-small\s*\{\s*\n\s*padding-block:\s*60px/);
-  assert.match(productBlockCss, /@media \(width >= 720px\)[\s\S]*\.space-large\s*\{\s*\n\s*padding-block:\s*160px/);
-  assert.match(productBlockCss, /@media \(width >= 720px\)[\s\S]*\.space-small\s*\{\s*\n\s*padding-block:\s*80px/);
+  assert.match(carouselCss, /@media \(width >= 720px\)[\s\S]*\.space-large\s*\{\s*\n\s*padding-block:\s*160px/);
+  assert.match(carouselCss, /@media \(width >= 720px\)[\s\S]*\.space-small\s*\{\s*\n\s*padding-block:\s*80px/);
   assert.doesNotMatch(carouselCss, /padding-block:\s*11\.9048vw/);
 });
 
@@ -49,7 +48,7 @@ test('highlight carousel exposes clickable progress dots and accessible arrow co
   assert.match(carouselCss, /width:\s*46px;\s*\n\s*height:\s*46px/);
   assert.match(carouselJs, /Pause slide rotation/);
   assert.match(carouselJs, /Start slide rotation/);
-  assert.match(carouselJs, /if \(autoPlay && !prefersReducedMotion\(\)\)/);
+  assert.match(carouselJs, /if \(showRotationControl && autoPlay && !prefersReducedMotion\(\)\)/);
   assert.match(carouselJs, /if \(!pointerActivatingRotation\) pauseRotation\(\)/);
   assert.match(carouselJs, /const sectionTitle = propText\(block, 'title'\)/);
   assert.match(carouselJs, /viewport\.setAttribute\('aria-label', sectionTitle\.replaceAll/);
@@ -99,13 +98,19 @@ test('highlight carousel dialog exposes multiline titles, semantic colors, spaci
   assert.equal(fields.showVideoControl.value, true);
   assert.equal(fields.showProgress.label, 'Show Video Progress');
   assert.deepEqual(fields.headingColor.options.map(({ value }) => value), ['white', 'black']);
-  assert.equal(fields.classes.component, 'select');
-  assert.equal(fields.classes.value, 'light space-small');
-  assert.equal(fields.classes.options.length, 9);
-  fields.classes.options.forEach(({ value }) => {
-    assert.equal(value.split(' ').filter((token) => ['light', 'dark', 'gray'].includes(token)).length, 1);
-    assert.equal(value.split(' ').filter((token) => ['space-large', 'space-small', 'space-none'].includes(token)).length, 1);
-  });
+  assert.equal(fields.classes.component, 'multiselect');
+  // The default lives on the block template, as it does for the sibling carousel.
+  assert.deepEqual(carouselDefinition.plugins.xwalk.page.template.classes, ['light', 'space-small']);
+  // Two option groups (background, spacing); the author picks exactly one from each.
+  assert.equal(fields.classes.maxSize, 2);
+  assert.deepEqual(
+    fields.classes.options.map(({ name }) => name),
+    ['Background', 'Spacing'],
+  );
+  assert.deepEqual(
+    fields.classes.options.flatMap(({ children }) => children.map(({ value }) => value)),
+    ['light', 'dark', 'gray', 'space-large', 'space-small', 'space-none'],
+  );
 });
 
 test('highlight slide dialog exposes optional copy color, note toggle, and indicator label', () => {
@@ -148,9 +153,9 @@ test('highlight videos loop in place with accessible controls and a true progres
   assert.match(productUtils, /return \{ element: media, video, \.\.\.playback \}/);
   assert.match(carouselJs, /slideEntries\[index\]\.setMediaActive\(!inactive\)/);
   assert.doesNotMatch(productUtils, /icon\.textContent = playing/);
-  assert.match(productBlockCss, /\.product-video-control\s*\{[\s\S]*width:\s*52px;[\s\S]*height:\s*52px;[\s\S]*margin:\s*0/);
-  assert.match(productBlockCss, /\.product-video-control\.has-progress::before\s*\{[\s\S]*conic-gradient[\s\S]*mask:\s*radial-gradient/);
-  assert.doesNotMatch(productBlockCss, /\.product-video-control\.has-progress\s*\{[^}]*background:\s*conic-gradient/);
+  assert.match(carouselCss, /\.product-video-control\s*\{[\s\S]*width:\s*52px;[\s\S]*height:\s*52px;[\s\S]*margin:\s*0/);
+  assert.match(carouselCss, /\.product-video-control\.has-progress::before\s*\{[\s\S]*conic-gradient[\s\S]*mask:\s*radial-gradient/);
+  assert.doesNotMatch(carouselCss, /\.product-video-control\.has-progress\s*\{[^}]*background:\s*conic-gradient/);
 });
 
 test('highlight carousel cleans up editor instances and falls back when scrollend is unavailable', () => {

@@ -8,7 +8,7 @@
     {
       "title": "Highlight Slide",
       "id": "highlight-slide",
-      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Highlight Slide", "model": "highlight-slide", "filter": "highlight-slide" } } } }
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Highlight Slide", "model": "highlight-slide", "filter": "highlight-slide", "linkType": "text", "copyColor": "white", "showNote": true } } } }
     },
     {
       "title": "Highlight Statistic",
@@ -24,7 +24,7 @@
         { "component": "textarea", "name": "title", "label": "Desktop Title", "description": "Manual line breaks are preserved", "valueType": "string" },
         { "component": "textarea", "name": "mobileTitle", "label": "Mobile Title Override", "description": "Optional; leave empty to reuse the desktop title", "valueType": "string" },
         { "component": "richtext", "name": "description", "label": "Description", "valueType": "string" },
-        { "component": "text", "name": "accentColor", "label": "Indicator Color", "description": "Optional; defaults to #191919", "valueType": "string", "validation": { "regExp": "^#[0-9a-fA-F]{6}$", "customErrorMsg": "Enter a six-digit hex color such as #191919" } },
+        { "component": "text", "name": "accentColor", "label": "Indicator Color", "description": "Optional; defaults to #191919", "valueType": "string", "validation": { "regExp": "^$|^#[0-9a-fA-F]{6}$", "customErrorMsg": "Enter a six-digit hex color such as #191919, or leave empty" } },
         { "component": "boolean", "name": "autoPlay", "label": "Desktop Autoplay", "description": "Mobile is always manual", "valueType": "boolean", "value": true },
         { "component": "number", "name": "interval", "label": "Autoplay Interval (seconds)", "valueType": "number", "value": 4, "validation": { "numberMin": 2, "numberMax": 12, "customErrorMsg": "Use an interval from 2 to 12 seconds" } },
         { "component": "boolean", "name": "showProgress", "label": "Show Video Progress", "description": "Show the progress ring around the video control", "valueType": "boolean", "value": true },
@@ -74,7 +74,7 @@
         { "component": "textarea", "name": "note", "label": "Note", "description": "Displayed only when Show Note is enabled", "valueType": "string" },
         { "component": "aem-content", "name": "link", "label": "Link", "valueType": "string" },
         { "component": "text", "name": "linkText", "label": "Link Text", "valueType": "string" },
-        { "component": "select", "name": "linkType", "label": "Link Type", "valueType": "string", "options": [{ "name": "Text", "value": "text" }, { "name": "Primary", "value": "primary" }, { "name": "Secondary", "value": "secondary" }] },
+        { "component": "select", "name": "linkType", "label": "Link Type", "valueType": "string", "value": "text", "options": [{ "name": "Text", "value": "text" }, { "name": "Primary", "value": "primary" }, { "name": "Secondary", "value": "secondary" }] },
         { "component": "select", "name": "copyColor", "label": "Desktop Card Text Color", "description": "Choose for contrast against this card's media", "valueType": "string", "value": "white", "options": [{ "name": "White (#FFFFFF)", "value": "white" }, { "name": "Black (#191919)", "value": "black" }] },
         { "component": "boolean", "name": "showNote", "label": "Show Note", "description": "Existing notes remain visible unless explicitly disabled", "valueType": "boolean", "value": true },
         { "component": "textarea", "name": "indicatorLabel", "label": "Indicator Label", "description": "Optional; manual line breaks are preserved", "valueType": "string" }
