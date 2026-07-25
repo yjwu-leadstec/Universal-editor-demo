@@ -141,27 +141,27 @@ main .media-center-feed-empty {
 
 @media (width >= 1000px) {
   main .media-center-feed {
-    padding-bottom: clamp(90px, 8.333vw, 120px);
+    padding-bottom: 90px;
   }
 
   main .media-center-feed-shell > header {
     height: auto;
-    padding: clamp(45px, 4.464vw, 60px);
+    padding: 45px;
     text-align: center;
     background: transparent;
   }
 
   main .media-center-feed h1 {
     display: block;
-    font-size: clamp(48px, 4.762vw, 64px);
+    font-size: 48px;
     font-weight: 400;
-    line-height: clamp(67.5px, 6.696vw, 90px);
+    line-height: 67.5px;
   }
 
   main .media-center-feed-tabs {
     height: 66px;
     justify-content: center;
-    gap: clamp(36px, 3.571vw, 48px);
+    gap: 36px;
     margin-top: 10px;
   }
 
@@ -189,8 +189,8 @@ main .media-center-feed-empty {
 
   main .media-center-feed-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(18px, 1.786vw, 24px);
-    padding: 0 clamp(165px, 16.369vw, 220px);
+    gap: 18px;
+    padding: 0 165px;
   }
 
   main .media-center-feed-card.is-full-width {
@@ -200,7 +200,7 @@ main .media-center-feed-empty {
   }
 
   main .media-center-feed-copy {
-    padding: clamp(22.5px, 2.232vw, 30px);
+    padding: 22.5px;
   }
 
   main .media-center-feed-card.is-full-width .media-center-feed-copy {
@@ -208,24 +208,68 @@ main .media-center-feed-empty {
   }
 
   main .media-center-feed-title {
-    font-size: clamp(21px, 2.083vw, 28px);
-    line-height: clamp(30px, 2.976vw, 40px);
+    font-size: 21px;
+    line-height: 30px;
   }
 
   main .media-center-feed-card.is-full-width .media-center-feed-title {
-    font-size: clamp(27px, 2.679vw, 36px);
-    line-height: clamp(37.5px, 3.72vw, 50px);
+    font-size: 27px;
+    line-height: 37.5px;
   }
 
   main .media-center-feed-meta {
-    margin-top: clamp(12px, 1.339vw, 18px);
-    font-size: clamp(15px, 1.488vw, 20px);
-    line-height: clamp(21px, 2.083vw, 28px);
+    margin-top: 12px;
+    font-size: 15px;
+    line-height: 21px;
   }
 
   main .media-center-feed-empty {
     grid-column: 1 / -1;
     padding: 80px 30px;
     font-size: 18px;
+  }
+}
+
+@media (width >= 1441px) {
+  main .media-center-feed {
+    padding-bottom: 120px;
+  }
+
+  main .media-center-feed-shell > header {
+    padding: 60px;
+  }
+
+  main .media-center-feed h1 {
+    font-size: 64px;
+    line-height: 90px;
+  }
+
+  main .media-center-feed-tabs {
+    gap: 48px;
+  }
+
+  main .media-center-feed-list {
+    gap: 24px;
+    padding: 0 220px;
+  }
+
+  main .media-center-feed-copy {
+    padding: 30px;
+  }
+
+  main .media-center-feed-title {
+    font-size: 28px;
+    line-height: 40px;
+  }
+
+  main .media-center-feed-card.is-full-width .media-center-feed-title {
+    font-size: 36px;
+    line-height: 50px;
+  }
+
+  main .media-center-feed-meta {
+    margin-top: 16px;
+    font-size: 20px;
+    line-height: 28px;
   }
 }
