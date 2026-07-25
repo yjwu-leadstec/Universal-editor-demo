@@ -356,16 +356,22 @@ main .lixiang-product-intro-slider .highlight-shell {
 
 main .lixiang-product-intro-slider .highlight-viewport {
   position: relative;
+
+  /* Match .highlight-controls so the card and the dots/arrows share one centre
+   * line. Without a width the viewport stretches to the canvas -- which the
+   * Universal Editor does -- and the card drifts away from the controls. */
+  width: 1200px;
   height: 706px;
+  margin-inline: auto;
   overflow: hidden;
 }
 
 main .lixiang-product-intro-slider .highlight-track {
   position: relative;
-  /* 1200px card + the slide's 20px inline padding on each side. The negative
-   * margins pull those 40px back symmetrically so the card centres on the same
-   * axis as .highlight-controls; margin-inline:auto alone let the overflow
-   * push the card 20px to the right of the dots and arrows. */
+
+  /* 1200px card + the slide's 20px inline padding on each side. The symmetric
+   * negative margins pull that padding back so the card centres on the same
+   * axis as .highlight-controls. */
   width: 1240px;
   height: 706px;
   margin-inline: -20px;
@@ -543,6 +549,7 @@ main .lixiang-product-intro-slider .highlight-controls {
   z-index: 4;
   width: 1200px;
   height: 66px;
+
   /* The viewport is 32px taller than the card; the design puts the arrows 42px
    * below the card and they sit 20px into this box, so pull it up by 10px. */
   margin-block-start: -10px;
