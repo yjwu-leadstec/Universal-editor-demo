@@ -8,6 +8,39 @@ indices:
       - '/**.json'
     target: /query-index.json
     properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      mediaType:
+        select: head > meta[name="mediatype"]
+        value: attribute(el, "content")
+      visible:
+        select: head > meta[name="visible"]
+        value: attribute(el, "content")
+      displayMode:
+        select: head > meta[name="displaymode"]
+        value: attribute(el, "content")
+      featured:
+        select: head > meta[name="featured"]
+        value: attribute(el, "content")
+      sortOrder:
+        select: head > meta[name="sortorder"]
+        value: attribute(el, "content")
+      publishDate:
+        select: head > meta[name="publishdate"]
+        value: attribute(el, "content")
+      coverImage:
+        select: head > meta[name="coverimage"]
+        value: attribute(el, "content")
+      imageAlt:
+        select: head > meta[name="imagealt"]
+        value: attribute(el, "content")
+      photoCount:
+        select: head > meta[name="photocount"]
+        value: attribute(el, "content")
+      videoDuration:
+        select: head > meta[name="videoduration"]
+        value: attribute(el, "content")
       lastModified:
         select: none
         value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")

@@ -4,7 +4,7 @@
 
 本手册用于独立的 Media Center v2 页面。它不修改旧的 `/media-center` 页面，也不使用旧页面中逐张录入卡片的方式。
 
-v2 的唯一内容源是 `/media-library` 下的详情页。`media-center-feed` 在运行时读取 EDS 的 `query-index.json`，自动生成 Newsroom、Photos、Videos 三个列表。
+v2 的唯一内容源是 `/media-library` 下的详情页。`media-center-feed` 在运行时读取 EDS 的 `query-index.json`，自动生成 Newsroom、Photos、Videos 三个列表。`helix-query.yaml` 必须保留对 Media Center 元数据的索引定义；页面虽然会输出这些 meta 字段，但不会自动进入 Query Index。
 
 当前语言母版路径：
 
@@ -38,8 +38,9 @@ v2 的唯一内容源是 `/media-library` 下的详情页。`media-center-feed` 
 代码只需在 `main` 合并一次：
 
 1. 确认 `blocks/media-center-feed/`、`models/_page.json` 与根目录三个 `component-*.json` 都已提交。
-2. 在 `main` 推送后等待 GitHub Build 成功。
-3. 访问远程源码，确认 `media-center-feed.js` 包含 `query-index.json`：
+2. 确认 `helix-query.yaml` 中已配置 `mediaType`、`visible`、`displayMode`、`featured`、`sortOrder`、`publishDate`、`coverImage` 等索引字段。
+3. 在 `main` 推送后等待 GitHub Build 成功。
+4. 访问远程源码，确认 `media-center-feed.js` 包含 `query-index.json`：
 
    ```text
    https://main--universal-editor-demo--yjwu-leadstec.aem.page/blocks/media-center-feed/media-center-feed.js
