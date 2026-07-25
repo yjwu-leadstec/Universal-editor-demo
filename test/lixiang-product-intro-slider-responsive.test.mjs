@@ -46,10 +46,9 @@ test('highlight carousel exposes clickable progress dots and accessible arrow co
   assert.match(carouselJs, /dot\.setAttribute\('aria-current', 'true'\)/);
   assert.match(carouselCss, /\.highlight-dot\.is-active/);
   assert.match(carouselCss, /width:\s*46px;\s*\n\s*height:\s*46px/);
-  assert.match(carouselJs, /Pause slide rotation/);
-  assert.match(carouselJs, /Start slide rotation/);
-  assert.match(carouselJs, /if \(showRotationControl && autoPlay && !prefersReducedMotion\(\)\)/);
-  assert.match(carouselJs, /if \(!pointerActivatingRotation\) pauseRotation\(\)/);
+  assert.doesNotMatch(carouselJs, /Pause slide rotation/);
+  assert.doesNotMatch(carouselJs, /highlight-rotation-control/);
+  assert.match(carouselJs, /listen\(shell, 'focusin', \(\) => \{\s*\n\s*pauseRotation\(\);/);
   assert.match(carouselJs, /const sectionTitle = propText\(block, 'title'\)/);
   assert.match(carouselJs, /viewport\.setAttribute\('aria-label', sectionTitle\.replaceAll/);
 });

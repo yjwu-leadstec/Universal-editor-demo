@@ -55,7 +55,7 @@ const PRODUCT_MEDIA_FALLBACKS = {
 // only contains positional rows/cells. Keep the runtime independent of author-only
 // data-aue attributes by restoring those field/model markers before decoration.
 const PRODUCT_MODEL_FIELDS = {
-  'lixiang-product-intro-slider': [['id', 'text'], ['title', 'textarea'], ['mobileTitle', 'textarea'], ['description', 'richtext'], ['accentColor', 'text'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showProgress', 'boolean'], ['showVideoControl', 'boolean'], ['headingColor', 'select'], ['showRotationControl', 'boolean']],
+  'lixiang-product-intro-slider': [['id', 'text'], ['title', 'textarea'], ['mobileTitle', 'textarea'], ['description', 'richtext'], ['accentColor', 'text'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showProgress', 'boolean'], ['showVideoControl', 'boolean'], ['headingColor', 'select']],
   'highlight-slide': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'aem-content'], ['mobileVideo', 'aem-content'], ['eyebrow', 'text'], ['title', 'textarea'], ['description', 'richtext'], ['note', 'textarea'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['copyColor', 'select'], ['showNote', 'boolean'], ['indicatorLabel', 'textarea']],
   'highlight-stat': [['value', 'text'], ['unit', 'text'], ['label', 'text'], ['description', 'richtext']],
 };

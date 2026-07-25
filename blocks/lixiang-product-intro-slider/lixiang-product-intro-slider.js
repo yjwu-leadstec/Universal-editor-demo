@@ -128,7 +128,6 @@ export default function decorate(block) {
   if (['white', 'black'].includes(headingColor)) block.classList.add(`highlight-heading-${headingColor}`);
   const sectionTitle = propText(block, 'title');
   const autoPlay = propBoolean(block, 'autoPlay', true);
-  const showRotationControl = propBoolean(block, 'showRotationControl', false);
   const items = modelItems(block, 'highlight-slide');
   const shell = document.createElement('div');
   shell.className = 'highlight-shell';
@@ -157,11 +156,8 @@ export default function decorate(block) {
   let rendered = false;
   let destroyed = false;
   let rotationPaused = false;
-  let pointerActivatingRotation = false;
   let hovering = false;
-  let rotationControl = null;
   let refreshControls = () => {};
-  let refreshRotationControl = () => {};
   const interval = Math.min(12000, Math.max(2000, propNumber(block, 'interval', 4) * 1000));
   const listen = (target, type, handler, options = {}) => {
     target.addEventListener(type, handler, { ...options, signal });
@@ -228,40 +224,10 @@ export default function decorate(block) {
   const pauseRotation = () => {
     rotationPaused = true;
     stop();
-    refreshRotationControl();
-  };
-  const resumeRotation = () => {
-    rotationPaused = false;
-    refreshRotationControl();
-    start();
   };
   if (slides.length > 1) {
     const controls = document.createElement('div');
     controls.className = 'highlight-controls';
-    if (showRotationControl && autoPlay && !prefersReducedMotion()) {
-      rotationControl = document.createElement('button');
-      rotationControl.type = 'button';
-      rotationControl.className = 'highlight-rotation-control';
-      refreshRotationControl = () => {
-        rotationControl.classList.toggle('is-paused', rotationPaused);
-        rotationControl.setAttribute(
-          'aria-label',
-          rotationPaused ? 'Start slide rotation' : 'Pause slide rotation',
-        );
-      };
-      refreshRotationControl();
-      listen(rotationControl, 'pointerdown', () => {
-        pointerActivatingRotation = true;
-      });
-      listen(rotationControl, 'pointercancel', () => {
-        pointerActivatingRotation = false;
-      });
-      listen(rotationControl, 'click', () => {
-        pointerActivatingRotation = false;
-        if (rotationPaused) resumeRotation();
-        else pauseRotation();
-      });
-    }
     const dots = document.createElement('div');
     dots.className = 'highlight-dots';
     dots.setAttribute('role', 'group');
@@ -326,7 +292,6 @@ export default function decorate(block) {
       update(active + 1, true);
     });
     arrows.append(previous, next);
-    if (rotationControl) controls.append(rotationControl);
     controls.append(dots, arrows, status);
     shell.append(controls);
     refreshControls();
@@ -359,7 +324,7 @@ export default function decorate(block) {
     start();
   });
   listen(shell, 'focusin', () => {
-    if (!pointerActivatingRotation) pauseRotation();
+    pauseRotation();
   });
   const cleanup = () => {
     if (destroyed) return;
