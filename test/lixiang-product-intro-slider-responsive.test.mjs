@@ -164,6 +164,15 @@ test('highlight carousel cleans up editor instances and falls back when scrollen
   assert.match(editorSupport, /unloadBlocks\(block\);\s*\n\s*block\.remove\(\)/);
 });
 
+test('editor patches share one DOMPurify load while concurrent updates are pending', () => {
+  assert.match(editorSupport, /let domPurifyPromise/);
+  assert.match(editorSupport, /if \(!domPurifyPromise\) \{/);
+  assert.match(editorSupport, /domPurifyPromise = loadScript\(/);
+  assert.match(editorSupport, /const domPurify = await loadDOMPurify\(\)/);
+  assert.match(editorSupport, /domPurify\.sanitize\(content/);
+  assert.doesNotMatch(editorSupport, /window\.DOMPurify\.sanitize\(content/);
+});
+
 test('inactive carousel slides are removed from focus and autoplay interval is clamped', () => {
   assert.match(carouselJs, /slide\.toggleAttribute\('inert', inactive\)/);
   assert.match(carouselJs, /Math\.min\(12000, Math\.max\(2000,/);

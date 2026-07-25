@@ -11,6 +11,28 @@ import {
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
 
+let domPurifyPromise;
+
+async function loadDOMPurify() {
+  if (window.DOMPurify?.sanitize) return window.DOMPurify;
+
+  if (!domPurifyPromise) {
+    domPurifyPromise = loadScript(`${window.hlx.codeBasePath}/scripts/dompurify.min.js`)
+      .then(() => {
+        if (!window.DOMPurify?.sanitize) {
+          throw new Error('DOMPurify did not initialize after loading');
+        }
+        return window.DOMPurify;
+      })
+      .catch((error) => {
+        domPurifyPromise = null;
+        throw error;
+      });
+  }
+
+  return domPurifyPromise;
+}
+
 function unloadBlocks(root) {
   const blocks = root.matches?.('.block') ? [root] : [...root.querySelectorAll?.('.block') || []];
   blocks.forEach((block) => block.dispatchEvent(new CustomEvent('aem:block-unload')));
@@ -29,10 +51,8 @@ async function applyChanges(event) {
   const { content } = updates[0];
   if (!content) return false;
 
-  // load dompurify
-  await loadScript(`${window.hlx.codeBasePath}/scripts/dompurify.min.js`);
-
-  const sanitizedContent = window.DOMPurify.sanitize(content, { USE_PROFILES: { html: true } });
+  const domPurify = await loadDOMPurify();
+  const sanitizedContent = domPurify.sanitize(content, { USE_PROFILES: { html: true } });
   const parsedUpdate = new DOMParser().parseFromString(sanitizedContent, 'text/html');
   const element = document.querySelector(`[data-aue-resource="${resource}"]`);
 
