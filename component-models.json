@@ -360,6 +360,381 @@
     ]
   },
   {
+    "id": "about-create-together",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Section Title",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "subtitle",
+        "label": "Section Subtitle",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "about-create-together-card",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Card Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Card Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Card Description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "footnote",
+        "label": "Footnote",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "about-creativity",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Section Title",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "subtitle",
+        "label": "Section Subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "valuesTitle",
+        "label": "Values Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "valuesDescription",
+        "label": "Values Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "about-creativity-card",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Card Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Card Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Card Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "about-design-language",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Section Title",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "subtitle",
+        "label": "Section Subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "largeImage",
+        "label": "Large Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "largeImageAlt",
+        "label": "Large Image Alt Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "about-design-card",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Card Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Card Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Card Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "about-dual-panel",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Section Title",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "subtitle",
+        "label": "Section Subtitle",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "about-dual-panel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Panel Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Panel Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Panel Description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "footnote",
+        "label": "Footnote",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "about-hero",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "subtitle",
+        "label": "Subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop Background Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Background Image (Optional)",
+        "description": "Optional override for screens up to 768px",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "about-vehicle-showcase",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "subtitle",
+        "label": "Subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop Background Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Background Image (Optional)",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "about-vehicle-model",
+    "fields": [
+      {
+        "component": "text",
+        "name": "name",
+        "label": "Model Name",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Model Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "about-video",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "ctaText",
+        "label": "CTA Text",
+        "description": "e.g. Watch Full Video",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Background Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "video",
+        "label": "Video URL",
+        "description": "Full video opened in dialog when CTA clicked",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "avatar",
     "fields": [
       {

@@ -1,0 +1,111 @@
+.about-vehicle-showcase {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+.about-vehicle-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.about-vehicle-media picture,
+.about-vehicle-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-vehicle-bg-mobile { display: none; }
+
+.about-vehicle-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 878px;
+  padding: 0 40px;
+  text-align: center;
+}
+
+.about-vehicle-copy h2 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: 46px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #fff;
+}
+
+.about-vehicle-copy p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgb(255 255 255 / 85%);
+  letter-spacing: 0.01em;
+  max-width: 800px;
+}
+
+.about-vehicle-models {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 16px;
+}
+
+.about-vehicle-model {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.about-vehicle-model-name {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.about-vehicle-model-desc {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  white-space: nowrap;
+}
+
+@media (width <= 1024px) {
+  .about-vehicle-copy h2 { font-size: 36px; }
+}
+
+@media (width <= 768px) {
+  .about-vehicle-showcase { min-height: 100svh; }
+  .about-vehicle-bg-desktop { display: none; }
+  .about-vehicle-bg-mobile { display: block; }
+  .about-vehicle-copy { padding: 0 40px; }
+  .about-vehicle-copy h2 { font-size: 24px; }
+  .about-vehicle-copy p { font-size: 14px; }
+
+  .about-vehicle-models {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.adobe-ue-edit main .about-vehicle-showcase {
+  min-height: clamp(640px, 100vh, 1080px);
+}

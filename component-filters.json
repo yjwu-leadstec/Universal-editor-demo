@@ -53,6 +53,36 @@
     ]
   },
   {
+    "id": "about-create-together",
+    "components": [
+      "about-create-together-card"
+    ]
+  },
+  {
+    "id": "about-creativity",
+    "components": [
+      "about-creativity-card"
+    ]
+  },
+  {
+    "id": "about-design-language",
+    "components": [
+      "about-design-card"
+    ]
+  },
+  {
+    "id": "about-dual-panel",
+    "components": [
+      "about-dual-panel-item"
+    ]
+  },
+  {
+    "id": "about-vehicle-showcase",
+    "components": [
+      "about-vehicle-model"
+    ]
+  },
+  {
     "id": "big-small-gallery",
     "components": [
       "big-small-stat",
