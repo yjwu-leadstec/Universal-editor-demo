@@ -26,7 +26,12 @@ function sourceHref(source) {
 
 function pictureFrom(source, alt) {
   const picture = source?.querySelector('picture');
-  if (picture) return picture.cloneNode(true);
+  if (picture) {
+    const clone = picture.cloneNode(true);
+    const image = clone.querySelector('img');
+    if (image && alt) image.alt = alt;
+    return clone;
+  }
   const imageHref = sourceHref(source);
   if (!imageHref) return null;
   const image = document.createElement('img');
