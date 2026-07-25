@@ -5,6 +5,7 @@ import {
   createRichText,
   directRows,
   hasModel,
+  initServiceBlock,
   instrument,
   instrumentProp,
   isPropertyRow,
@@ -90,6 +91,7 @@ function createCard(card) {
 }
 
 export default function decorate(block) {
+  initServiceBlock(block);
   const rows = directRows(block);
   const contentStartsAt = rows.findIndex((row) => row.dataset.serviceKind
     || hasModel(row, 'support-contact-card')

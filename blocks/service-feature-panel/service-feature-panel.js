@@ -16,8 +16,6 @@ import {
   propSource,
   propText,
   revealElements,
-  semanticSource,
-  semanticSourceAfter,
 } from '../../scripts/service-block-utils.js';
 
 function featureRows(rows) {
@@ -64,16 +62,20 @@ export default function decorate(block) {
   const featureRowSet = new Set(featureRows(rows));
   const contentRows = rows.filter((row) => !featureRowSet.has(row));
   const semanticHeadings = contentRows.flatMap((row) => [...row.querySelectorAll('h1, h2, h3, h4')]);
+  // Published markup groups copy_heading/copy_leadHeading/copy_leadDescription into the first
+  // content cell as sequential <p>s (list=2, app/diagnosis=3). Read them positionally so the
+  // fallback works without author-only data-aue markers.
+  const copyParagraphs = [...(contentRows[0]?.querySelectorAll('p') || [])]
+    .filter((paragraph) => paragraph.textContent.trim());
   const headingText = propText(rows, 'copy_heading')
-    || (variant === 'list' ? '' : semanticHeadings[0]?.textContent.trim())
+    || (variant === 'list' ? '' : (semanticHeadings[0] || copyParagraphs[0])?.textContent.trim())
     || '';
   const introTitle = propText(rows, 'copy_leadHeading')
-    || semanticHeadings[variant === 'list' ? 0 : 1]?.textContent.trim()
+    || copyParagraphs[variant === 'list' ? 0 : 1]?.textContent.trim()
     || '';
-  const introHeadingSource = semanticHeadings[variant === 'list' ? 0 : 1] || semanticHeadings.at(-1);
   const introSource = propSource(rows, 'copy_leadDescription')
-    || semanticSourceAfter(contentRows, 'p', introHeadingSource)
-    || semanticSource(contentRows, 'p');
+    || copyParagraphs[variant === 'list' ? 1 : 2]
+    || null;
   const picture = propPicture(rows, 'media_image', 'media_imageAlt') || availablePictures[0] || null;
   const mobilePicture = propPicture(rows, 'media_mobileImage', 'media_mobileImageAlt')
     || availablePictures[1]

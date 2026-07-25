@@ -60,8 +60,14 @@ export default function decorate(block) {
 
   const copy = document.createElement('div');
   copy.className = 'support-bottom-copy';
-  const titleSource = propSource(rows, 'copy_title') || semanticSource(rows, 'h1, h2');
-  const title = propText(rows, 'copy_title') || semanticText(rows, 'h1, h2');
+  // Published markup groups copy_title/copy_description into one cell as <p>s (no data-aue);
+  // fall back to those so the title/description survive in delivery.
+  const copyParagraphs = rows
+    .flatMap((row) => [...row.querySelectorAll('p')])
+    .filter((paragraph) => paragraph.textContent.trim());
+  const titleSource = propSource(rows, 'copy_title') || semanticSource(rows, 'h1, h2') || copyParagraphs[0];
+  const title = propText(rows, 'copy_title') || semanticText(rows, 'h1, h2')
+    || copyParagraphs[0]?.textContent.trim() || '';
   if (title) {
     const heading = createHeading(title, 2);
     instrumentProp(rows, 'copy_title', heading);

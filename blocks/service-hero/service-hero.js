@@ -32,10 +32,15 @@ export default function decorate(block) {
     .filter((p) => p.textContent.trim());
 
   // Prefer explicit property rows (UE inline editing), fallback to semantic order.
-  const eyebrowSource = propSource(rows, 'copy_eyebrow') || textParagraphs[0] || null;
-  const titleSource = propSource(rows, 'copy_title') || textParagraphs[1] || null;
+  // In published markup eyebrow/title/description share one "copy" group cell; scope the
+  // fallback to that cell so unrelated rows (e.g. the trailing id) can't leak in.
+  const copyParagraphs = textParagraphs[0]
+    ? [...(textParagraphs[0].closest('div')?.querySelectorAll('p') || textParagraphs)]
+    : textParagraphs;
+  const eyebrowSource = propSource(rows, 'copy_eyebrow') || copyParagraphs[0] || null;
+  const titleSource = propSource(rows, 'copy_title') || copyParagraphs[1] || null;
   const descriptionSource = propSource(rows, 'copy_description')
-    || combineNodes(textParagraphs.slice(2))
+    || combineNodes(copyParagraphs.slice(2))
     || null;
 
   const image = propPicture(rows, 'media_image', 'media_imageAlt') || availablePictures[0] || null;

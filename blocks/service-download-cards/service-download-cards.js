@@ -13,7 +13,6 @@ import {
   propSource,
   propText,
   revealElements,
-  semanticSource,
   semanticSourceAfter,
   semanticText,
   slug,
@@ -200,18 +199,27 @@ export default function decorate(block) {
   shell.className = 'support-download-shell';
   const header = document.createElement('div');
   header.className = 'support-download-header';
-  const titleSource = propSource(rows, 'title') || semanticSource(rows, 'h1, h2');
-  const title = propText(rows, 'title') || semanticText(rows, 'h1, h2');
+  // Published markup has no data-aue markers; title/subtitle/id arrive as leading plain-text
+  // rows and items as picture/anchor rows. Derive header text from non-item rows, skipping the
+  // slug-like id so it can't leak into the visible header.
+  const isSlug = (text) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(text);
+  const headerTexts = rows
+    .filter((row) => !rowKind(row) && !isPropertyRow(row))
+    .map((row) => plainCellTexts(row).join(' ').trim())
+    .filter((text) => text && !isSlug(text));
+  const title = propText(rows, 'title') || semanticText(rows, 'h1, h2') || headerTexts[0] || '';
   if (title) {
     const heading = createHeading(title, 2);
     instrumentProp(rows, 'title', heading);
     header.append(heading);
   }
-  const subtitleSource = propSource(rows, 'subtitle')
-    || semanticSourceAfter(rows.filter((row) => !rowKind(row)), 'p', titleSource);
-  if (subtitleSource?.textContent.trim()) {
+  const subtitleText = propText(rows, 'subtitle')
+    || semanticSourceAfter(rows.filter((row) => !rowKind(row)), 'p', propSource(rows, 'title'))?.textContent.trim()
+    || headerTexts[1]
+    || '';
+  if (subtitleText) {
     const subtitle = document.createElement('p');
-    subtitle.textContent = subtitleSource.textContent.trim();
+    subtitle.textContent = subtitleText;
     instrumentProp(rows, 'subtitle', subtitle);
     header.append(subtitle);
   }

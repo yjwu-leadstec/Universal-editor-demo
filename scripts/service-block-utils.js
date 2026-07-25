@@ -1,5 +1,81 @@
 import { moveInstrumentation } from './scripts.js';
 
+// Universal Editor keeps field metadata on author, while published semantic HTML only
+// contains positional rows/cells. Keep the runtime independent of author-only data-aue
+// attributes by restoring those field/model markers before decoration (mirrors the
+// approach in product-block-utils.js).
+const SERVICE_MODEL_FIELDS = {
+  'service-contact-cards': [['title', 'text'], ['description', 'richtext'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['id', 'text']],
+  'support-contact-card': [['cardKey', 'text'], ['title', 'text']],
+  'support-contact-field': [['cardKey', 'text'], ['label', 'text'], ['value', 'richtext'], ['link', 'aem-content']],
+};
+
+const SERVICE_COLLECTION_MODELS = {
+  'service-contact-cards': (row) => (row.children.length <= 2 ? 'support-contact-card' : 'support-contact-field'),
+};
+
+function collectionModelFor(model, row) {
+  const resolver = SERVICE_COLLECTION_MODELS[model];
+  return typeof resolver === 'function' ? resolver(row) : resolver;
+}
+
+function restoreLinkField(root, name, fieldSources) {
+  let suffix = '';
+  if (name.endsWith('LinkText') || name === 'linkText') suffix = 'Text';
+  if (name.endsWith('LinkType') || name === 'linkType') suffix = 'Type';
+  if (!suffix) return false;
+  const linkSource = fieldSources.get(name.slice(0, -suffix.length));
+  const source = document.createElement('span');
+  source.dataset.aueProp = name;
+  if (suffix === 'Text') source.textContent = linkSource?.querySelector('a')?.textContent.trim() || '';
+  root.append(source);
+  fieldSources.set(name, source);
+  return true;
+}
+
+function matchesPublishedField(source, component) {
+  if (!['reference', 'aem-content'].includes(component)) return true;
+  if (source.querySelector('picture, img')) return true;
+  const href = source.querySelector('a')?.getAttribute('href') || '';
+  if (component === 'aem-content') return Boolean(href) || !source.textContent.trim();
+  if (href && !/^#[\da-f]{3,8}$/i.test(href)) return true;
+  return !source.textContent.trim();
+}
+
+function restorePublishedModel(root, model) {
+  const fields = SERVICE_MODEL_FIELDS[model];
+  if (!fields) return;
+  const sources = [...root.children];
+  const fieldSources = new Map();
+  let sourceIndex = 0;
+
+  fields.forEach(([name, component]) => {
+    if (restoreLinkField(root, name, fieldSources)) return;
+    const source = sources[sourceIndex];
+    if (!source) return;
+    if (SERVICE_COLLECTION_MODELS[model] && source.children.length > 1) return;
+    if (!matchesPublishedField(source, component)) return;
+    source.dataset.aueProp = name;
+    fieldSources.set(name, source);
+    sourceIndex += 1;
+  });
+
+  sources.slice(sourceIndex).forEach((source) => {
+    const childModel = collectionModelFor(model, source);
+    if (!childModel) return;
+    source.dataset.aueModel = childModel;
+    restorePublishedModel(source, childModel);
+  });
+}
+
+// Rebuild author-only data-aue markers on published markup so downstream detection
+// (hasModel / propSource / isPropertyRow) works identically in author and delivery.
+export function initServiceBlock(block) {
+  if (block.querySelector('[data-aue-prop], [data-aue-model]')) return;
+  const model = block.dataset.blockName || block.classList[0];
+  restorePublishedModel(block, model);
+}
+
 export function directRows(block) {
   return [...block.children];
 }
