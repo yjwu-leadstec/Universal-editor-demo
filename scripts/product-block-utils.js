@@ -44,51 +44,51 @@ const PRODUCT_MEDIA_FALLBACKS = {
 // only contains positional rows/cells. Keep the runtime independent of author-only
 // data-aue attributes by restoring those field/model markers before decoration.
 const PRODUCT_MODEL_FIELDS = {
-  'product-hero': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['subtitle', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['logo', 'reference'], ['logoAlt', 'text'], ['showArrow', 'boolean'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean']],
-  'product-hero-cta': [['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
-  'product-hero-responsive-media': [['mediumImage', 'reference'], ['tabletImage', 'reference']],
-  'product-sticky-nav': [['id', 'text'], ['carName', 'text']],
-  'product-sticky-nav-item': [['link', 'aem-content'], ['linkText', 'text']],
-  'lixiang-product-intro-slider': [['id', 'text'], ['title', 'textarea'], ['mobileTitle', 'textarea'], ['description', 'richtext'], ['accentColor', 'text'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showProgress', 'boolean'], ['showVideoControl', 'boolean'], ['background', 'select'], ['spacing', 'select']],
-  'highlight-slide': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'aem-content'], ['mobileVideo', 'aem-content'], ['eyebrow', 'text'], ['title', 'textarea'], ['description', 'richtext'], ['note', 'textarea'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['copyColor', 'select'], ['showNote', 'boolean'], ['indicatorLabel', 'textarea']],
-  'highlight-stat': [['value', 'text'], ['unit', 'text'], ['label', 'text'], ['description', 'richtext']],
-  'chapter-intro': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['note', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['fullVideo', 'reference'], ['playLabel', 'text'], ['loop', 'boolean'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean']],
-  'lixiang-product-intro-carousel': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['videoLink', 'aem-content'], ['videoLinkText', 'text'], ['variant', 'select'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean'], ['enableMotion', 'boolean'], ['showHighlightTags', 'boolean'], ['openLabel', 'text'], ['closeLabel', 'text'], ['accentColor', 'text'], ['highlightTagColor', 'text'], ['highlightUnitColor', 'text']],
-  'lixiang-product-intro-slide': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['eyebrow', 'text'], ['title', 'text'], ['description', 'richtext'], ['note', 'text'], ['primaryValue', 'text'], ['primaryUnit', 'text'], ['primaryLabel', 'text'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
-  'lixiang-product-intro-highlight-group': [['groupKey', 'text']],
-  'lixiang-product-intro-highlight': [['value', 'text'], ['unit', 'text'], ['tag', 'text'], ['description', 'richtext']],
-  'lixiang-product-intro-metric': [['unit', 'text'], ['title', 'text'], ['value', 'text']],
-  'image-switcher': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['accentColor', 'text'], ['autoPlay', 'boolean'], ['interval', 'number'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean']],
-  'image-switcher-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['label', 'text'], ['title', 'text'], ['description', 'richtext'], ['value', 'text'], ['unit', 'text'], ['note', 'text']],
-  'big-small-gallery': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['videoLink', 'aem-content'], ['videoLinkText', 'text'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean'], ['enableMotion', 'boolean']],
-  'big-small-stat': [['eyebrow', 'text'], ['value', 'text'], ['unit', 'text'], ['description', 'richtext']],
-  'big-small-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['mobileVideo', 'reference'], ['title', 'text'], ['description', 'richtext'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
-  'color-switcher': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext']],
-  'color-switcher-item': [['name', 'text'], ['swatch', 'reference'], ['swatchAlt', 'text'], ['colorValue', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text']],
-  'spec-table': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['variant', 'select']],
-  'spec-group': [['groupKey', 'text'], ['title', 'text'], ['description', 'richtext'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['note', 'text']],
-  'spec-row': [['label', 'text'], ['value', 'text'], ['description', 'richtext'], ['icon', 'reference'], ['iconAlt', 'text']],
-  'product-notes': [['id', 'text'], ['title', 'text']],
-  'product-note-item': [['text', 'richtext']],
-  'text-columns': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext']],
-  'text-column-item': [['title', 'text'], ['text', 'richtext']],
-  'lixiang-product-detail-picture-group': [['id', 'text'], ['title', 'text'], ['description', 'richtext'], ['showVideoControl', 'boolean'], ['showProgress', 'boolean'], ['enableMotion', 'boolean']],
-  'lixiang-product-detail-picture-group-item': [['groupKey', 'text'], ['title', 'text'], ['description', 'richtext']],
-  'lixiang-product-detail-picture-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'aem-content'], ['mobileVideo', 'aem-content'], ['title', 'text'], ['description', 'richtext']],
-  'icon-overlay-showcase': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext']],
-  'overlay-panel': [['panelKey', 'text'], ['title', 'text'], ['description', 'richtext'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['mask', 'reference'], ['mobileMask', 'reference'], ['maskAlt', 'text']],
-  'overlay-hotspot': [['label', 'text'], ['description', 'richtext'], ['icon', 'reference'], ['iconAlt', 'text'], ['x', 'number'], ['y', 'number'], ['mobileX', 'number'], ['mobileY', 'number']],
-  'feature-grid': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['note', 'text']],
-  'feature-grid-group': [['groupKey', 'text'], ['title', 'text']],
-  'feature-grid-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['title', 'text'], ['description', 'richtext'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
-  'product-feature-picture-group': [['id', 'text'], ['eyebrow', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['note', 'text']],
-  'product-feature-picture-group-group': [['groupKey', 'text'], ['title', 'text']],
-  'product-feature-picture-group-card': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],
-  'product-param-cta': [['id', 'text'], ['title', 'text'], ['mobileTitle', 'text'], ['description', 'richtext'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['secondaryLink', 'aem-content'], ['secondaryLinkText', 'text'], ['secondaryLinkType', 'select']],
-  'product-ending': [['id', 'text'], ['title', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['video', 'reference'], ['showVideoControl', 'boolean'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['secondaryLink', 'aem-content'], ['secondaryLinkText', 'text'], ['secondaryLinkType', 'select']],
-  'product-guide': [['id', 'text'], ['title', 'text']],
-  'product-guide-item': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['title', 'text'], ['description', 'richtext'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select']],
-  'product-download': [['id', 'text'], ['title', 'text'], ['description', 'richtext'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['iosLink', 'aem-content'], ['iosLinkText', 'text'], ['iosLinkType', 'select'], ['androidLink', 'aem-content'], ['androidLinkText', 'text'], ['androidLinkType', 'select']],
+  'product-hero': [['id', 'text', 'ID'], ['title', 'text', 'Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['subtitle', 'text', 'Subtitle'], ['image', 'reference', 'Desktop Poster / Background'], ['imageAlt', 'text', 'Responsive Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Background (≤720px)'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Desktop Preview Video URL'], ['mobileVideo', 'reference', 'Mobile Preview Video URL'], ['logo', 'reference', 'Vehicle Logo'], ['logoAlt', 'text', 'Vehicle Logo Alt Text'], ['showArrow', 'boolean', 'Show Scroll Cue'], ['showVideoControl', 'boolean', 'Show Video Control'], ['showProgress', 'boolean', 'Show Video Progress']],
+  'product-hero-cta': [['link', 'aem-content', 'Link'], ['linkText', 'text', 'Text'], ['linkType', 'select', 'Type']],
+  'product-hero-responsive-media': [['mediumImage', 'reference', 'Medium Poster / Background (821–1024px)'], ['tabletImage', 'reference', 'Tablet Poster / Background (721–820px)']],
+  'product-sticky-nav': [['id', 'text', 'ID'], ['carName', 'text', 'Vehicle Name']],
+  'product-sticky-nav-item': [['link', 'aem-content', 'Section Anchor'], ['linkText', 'text', 'Navigation Text']],
+  'lixiang-product-intro-slider': [['id', 'text', 'ID'], ['title', 'textarea', 'Desktop Title'], ['mobileTitle', 'textarea', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['accentColor', 'text', 'Indicator Color'], ['autoPlay', 'boolean', 'Desktop Autoplay'], ['interval', 'number', 'Autoplay Interval (seconds)'], ['showProgress', 'boolean', 'Show Video Progress'], ['showVideoControl', 'boolean', 'Show Video Play / Pause'], ['background', 'select', 'Background'], ['spacing', 'select', 'Spacing']],
+  'highlight-slide': [['image', 'reference', 'Desktop Poster / Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'aem-content', 'Desktop Video URL'], ['mobileVideo', 'aem-content', 'Mobile Video URL'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'textarea', 'Card Title'], ['description', 'richtext', 'Card Description'], ['note', 'textarea', 'Note'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type'], ['copyColor', 'select', 'Desktop Card Text Color'], ['showNote', 'boolean', 'Show Note'], ['indicatorLabel', 'textarea', 'Indicator Label']],
+  'highlight-stat': [['value', 'text', 'Value'], ['unit', 'text', 'Unit'], ['label', 'text', 'Label'], ['description', 'richtext', 'Description']],
+  'chapter-intro': [['id', 'text', 'ID'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'text', 'Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['note', 'text', 'Footnote'], ['image', 'reference', 'Desktop Poster / Background (Default)'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Background (Optional Override)'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Desktop Preview Video URL (Default)'], ['mobileVideo', 'reference', 'Mobile Preview Video URL (Optional Override)'], ['fullVideo', 'reference', 'Full Video URL'], ['playLabel', 'text', 'Full Video Button Text'], ['loop', 'boolean', 'Loop Preview Video'], ['showVideoControl', 'boolean', 'Show Video Control'], ['showProgress', 'boolean', 'Show Video Progress']],
+  'lixiang-product-intro-carousel': [['id', 'text', 'ID'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['videoLink', 'aem-content', 'Optional Header Video Link'], ['videoLinkText', 'text', 'Header Video Link Text'], ['variant', 'select', 'Layout'], ['autoPlay', 'boolean', 'Autoplay Tabs on PC / Tablet'], ['interval', 'number', 'Autoplay Interval (seconds)'], ['showVideoControl', 'boolean', 'Show Video Control'], ['showProgress', 'boolean', 'Show Video Progress'], ['enableMotion', 'boolean', 'Enable Reveal / Parallax Motion'], ['showHighlightTags', 'boolean', 'Show Highlight Tags'], ['openLabel', 'text', 'Expandable Open Label'], ['closeLabel', 'text', 'Expandable Close Label'], ['accentColor', 'text', 'Indicator Color'], ['highlightTagColor', 'text', 'Highlight Tag Color'], ['highlightUnitColor', 'text', 'Highlight Unit Color']],
+  'lixiang-product-intro-slide': [['image', 'reference', 'Desktop Poster / Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Desktop Video URL'], ['mobileVideo', 'reference', 'Mobile Video URL'], ['eyebrow', 'text', 'Eyebrow / Tab Label'], ['title', 'text', 'Title'], ['description', 'richtext', 'Description'], ['note', 'text', 'Optional Note'], ['primaryValue', 'text', 'Primary Metric Value'], ['primaryUnit', 'text', 'Primary Metric Unit'], ['primaryLabel', 'text', 'Primary Metric Label'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type']],
+  'lixiang-product-intro-highlight-group': [['groupKey', 'text', 'Group Key']],
+  'lixiang-product-intro-highlight': [['value', 'text', 'Value'], ['unit', 'text', 'Unit'], ['tag', 'text', 'Tag'], ['description', 'richtext', 'Description']],
+  'lixiang-product-intro-metric': [['unit', 'text', 'Unit'], ['title', 'text', 'Title'], ['value', 'text', 'Value']],
+  'image-switcher': [['id', 'text', 'ID'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['accentColor', 'text', 'Indicator Color'], ['autoPlay', 'boolean', 'Autoplay'], ['interval', 'number', 'Autoplay Interval (seconds)'], ['showVideoControl', 'boolean', 'Show Video Control'], ['showProgress', 'boolean', 'Show Video Progress']],
+  'image-switcher-item': [['image', 'reference', 'Desktop Poster / Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Desktop Video URL'], ['mobileVideo', 'reference', 'Mobile Video URL'], ['label', 'text', 'Switcher Label'], ['title', 'text', 'Overlay Title'], ['description', 'richtext', 'Overlay Description'], ['value', 'text', 'Metric Value'], ['unit', 'text', 'Metric Unit'], ['note', 'text', 'Note']],
+  'big-small-gallery': [['id', 'text', 'ID'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['videoLink', 'aem-content', 'Optional Video Link'], ['videoLinkText', 'text', 'Video Link Text'], ['showVideoControl', 'boolean', 'Show Video Controls'], ['showProgress', 'boolean', 'Show Video Progress'], ['enableMotion', 'boolean', 'Enable Reveal Motion']],
+  'big-small-stat': [['eyebrow', 'text', 'Small Label'], ['value', 'text', 'Value'], ['unit', 'text', 'Unit'], ['description', 'richtext', 'Description']],
+  'big-small-item': [['image', 'reference', 'Desktop Poster / Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Desktop Video URL'], ['mobileVideo', 'reference', 'Mobile Video URL'], ['title', 'text', 'Card Title'], ['description', 'richtext', 'Card Description'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type']],
+  'color-switcher': [['id', 'text', 'ID'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description']],
+  'color-switcher-item': [['name', 'text', 'Color Name'], ['swatch', 'reference', 'Swatch / Material'], ['swatchAlt', 'text', 'Swatch Alt Text'], ['colorValue', 'text', 'CSS Color'], ['image', 'reference', 'Desktop Vehicle Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Vehicle Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text']],
+  'spec-table': [['id', 'text', 'ID'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['variant', 'select', 'Layout']],
+  'spec-group': [['groupKey', 'text', 'Group Key'], ['title', 'text', 'Group / Tab Title'], ['description', 'richtext', 'Group Description'], ['image', 'reference', 'Desktop Background Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Background Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['note', 'text', 'Note']],
+  'spec-row': [['label', 'text', 'Label'], ['value', 'text', 'Value'], ['description', 'richtext', 'Description'], ['icon', 'reference', 'Icon'], ['iconAlt', 'text', 'Icon Alt Text']],
+  'product-notes': [['id', 'text', 'ID'], ['title', 'text', 'Optional Title']],
+  'product-note-item': [['text', 'richtext', 'Legal Note']],
+  'text-columns': [['id', 'text', 'ID'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description']],
+  'text-column-item': [['title', 'text', 'Column Title'], ['text', 'richtext', 'Column Text']],
+  'lixiang-product-detail-picture-group': [['id', 'text', 'ID'], ['title', 'text', 'Desktop / Tablet Title'], ['description', 'richtext', 'Desktop / Tablet Description'], ['showVideoControl', 'boolean', 'Show Video Controls'], ['showProgress', 'boolean', 'Show Video Progress'], ['enableMotion', 'boolean', 'Enable Image Parallax']],
+  'lixiang-product-detail-picture-group-item': [['groupKey', 'text', 'Picture Set Key'], ['title', 'text', 'Picture Set / Tab Label'], ['description', 'richtext', 'Optional Set Description']],
+  'lixiang-product-detail-picture-item': [['image', 'reference', 'Desktop / Tablet Image (use 1.4× source)'], ['imageAlt', 'text', 'Desktop / Tablet Image Alt Text'], ['mobileImage', 'reference', 'Mobile Image (optional crop)'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'aem-content', 'Desktop / Tablet Video'], ['mobileVideo', 'aem-content', 'Mobile Video'], ['title', 'text', 'Picture Caption'], ['description', 'richtext', 'Picture Caption Detail']],
+  'icon-overlay-showcase': [['id', 'text', 'ID'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description']],
+  'overlay-panel': [['panelKey', 'text', 'Panel Key'], ['title', 'text', 'Panel Title'], ['description', 'richtext', 'Panel Description'], ['image', 'reference', 'Desktop Background'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Background'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['mask', 'reference', 'Desktop Mask'], ['mobileMask', 'reference', 'Mobile Mask'], ['maskAlt', 'text', 'Mask Alt Text']],
+  'overlay-hotspot': [['label', 'text', 'Label'], ['description', 'richtext', 'Description'], ['icon', 'reference', 'Icon'], ['iconAlt', 'text', 'Icon Alt Text'], ['x', 'number', 'Desktop X (%)'], ['y', 'number', 'Desktop Y (%)'], ['mobileX', 'number', 'Mobile X (%)'], ['mobileY', 'number', 'Mobile Y (%)']],
+  'feature-grid': [['id', 'text', 'ID'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['note', 'text', 'Note']],
+  'feature-grid-group': [['groupKey', 'text', 'Group Key'], ['title', 'text', 'Group Title']],
+  'feature-grid-item': [['image', 'reference', 'Desktop Poster / Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Video URL'], ['title', 'text', 'Card Title'], ['description', 'richtext', 'Card Description'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type']],
+  'product-feature-picture-group': [['id', 'text', 'ID'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['note', 'text', 'Note']],
+  'product-feature-picture-group-group': [['groupKey', 'text', 'Group Key'], ['title', 'text', 'Group Title']],
+  'product-feature-picture-group-card': [['image', 'reference', 'Desktop Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['title', 'text', 'Card Title'], ['description', 'richtext', 'Card Description']],
+  'product-param-cta': [['id', 'text', 'ID'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['image', 'reference', 'Desktop Vehicle Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Vehicle Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['link', 'aem-content', 'Primary Link'], ['linkText', 'text', 'Primary Link Text'], ['linkType', 'select', 'Primary Link Type'], ['secondaryLink', 'aem-content', 'Secondary Link'], ['secondaryLinkText', 'text', 'Secondary Link Text'], ['secondaryLinkType', 'select', 'Secondary Link Type']],
+  'product-ending': [['id', 'text', 'ID'], ['title', 'text', 'Title'], ['image', 'reference', 'Desktop Poster / Background'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Background'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Preview Video URL'], ['showVideoControl', 'boolean', 'Show Video Control'], ['link', 'aem-content', 'Primary Link'], ['linkText', 'text', 'Primary Link Text'], ['linkType', 'select', 'Primary Link Type'], ['secondaryLink', 'aem-content', 'Secondary Link'], ['secondaryLinkText', 'text', 'Secondary Link Text'], ['secondaryLinkType', 'select', 'Secondary Link Type']],
+  'product-guide': [['id', 'text', 'ID'], ['title', 'text', 'Optional Title']],
+  'product-guide-item': [['image', 'reference', 'Desktop Background'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Background'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['title', 'text', 'Card Title'], ['description', 'richtext', 'Card Description'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type']],
+  'product-download': [['id', 'text', 'ID'], ['title', 'text', 'Title'], ['description', 'richtext', 'Description'], ['image', 'reference', 'Desktop Background'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Background'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['iosLink', 'aem-content', 'iOS App Store Link'], ['iosLinkText', 'text', 'iOS Link Text'], ['iosLinkType', 'select', 'iOS Link Type'], ['androidLink', 'aem-content', 'Android Download Link'], ['androidLinkText', 'text', 'Android Link Text'], ['androidLinkType', 'select', 'Android Link Type']],
 };
 
 const PRODUCT_COLLECTION_MODELS = {
@@ -145,6 +145,15 @@ function restoreAltField(root, name, fieldSources) {
   return true;
 }
 
+// The content tree labels each field from data-aue-label and picks its editor
+// from data-aue-type. Writing only data-aue-prop leaves the tree with nothing
+// to show, so it falls back to the raw field name.
+function markField(source, name, component, label) {
+  source.dataset.aueProp = name;
+  if (component) source.dataset.aueType = component;
+  if (label) source.dataset.aueLabel = label;
+}
+
 function restoreLinkField(root, name, fieldSources) {
   let suffix = '';
   if (name.endsWith('LinkText') || name === 'linkText') suffix = 'Text';
@@ -175,7 +184,7 @@ function restorePublishedModel(root, model) {
   const fieldSources = new Map();
   let sourceIndex = 0;
 
-  fields.forEach(([name, component]) => {
+  fields.forEach(([name, component, label]) => {
     const restoredCompanion = restoreAltField(root, name, fieldSources)
       || restoreLinkField(root, name, fieldSources);
     if (restoredCompanion) return;
@@ -183,7 +192,7 @@ function restorePublishedModel(root, model) {
     if (!source) return;
     if (PRODUCT_COLLECTION_MODELS[model] && source.children.length > 1) return;
     if (!matchesPublishedField(source, component)) return;
-    source.dataset.aueProp = name;
+    markField(source, name, component, label);
     fieldSources.set(name, source);
     sourceIndex += 1;
   });
@@ -216,14 +225,14 @@ function restoreBlockFields(block, model) {
   if (!bare.length) return;
   const fieldSources = new Map();
   let sourceIndex = 0;
-  fields.forEach(([name, component]) => {
+  fields.forEach(([name, component, label]) => {
     const restoredCompanion = restoreAltField(block, name, fieldSources)
       || restoreLinkField(block, name, fieldSources);
     if (restoredCompanion) return;
     const source = bare[sourceIndex];
     if (!source) return;
     if (!matchesPublishedField(source, component)) return;
-    source.dataset.aueProp = name;
+    markField(source, name, component, label);
     fieldSources.set(name, source);
     sourceIndex += 1;
   });

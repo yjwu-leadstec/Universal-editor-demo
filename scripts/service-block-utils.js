@@ -5,9 +5,9 @@ import { moveInstrumentation } from './scripts.js';
 // attributes by restoring those field/model markers before decoration (mirrors the
 // approach in product-block-utils.js).
 const SERVICE_MODEL_FIELDS = {
-  'service-contact-cards': [['title', 'text'], ['description', 'richtext'], ['link', 'aem-content'], ['linkText', 'text'], ['linkType', 'select'], ['id', 'text']],
-  'support-contact-card': [['cardKey', 'text'], ['title', 'text']],
-  'support-contact-field': [['cardKey', 'text'], ['label', 'text'], ['value', 'richtext'], ['link', 'aem-content']],
+  'service-contact-cards': [['title', 'text', 'Title'], ['description', 'richtext', 'Description'], ['link', 'aem-content', 'Overview Link'], ['linkText', 'text', 'Overview Link Text'], ['linkType', 'select', 'Overview Link Type'], ['id', 'text', 'ID']],
+  'support-contact-card': [['cardKey', 'text', 'Card Key'], ['title', 'text', 'Card Title']],
+  'support-contact-field': [['cardKey', 'text', 'Card Key'], ['label', 'text', 'Field Label'], ['value', 'richtext', 'Field Value'], ['link', 'aem-content', 'Field Link (optional)']],
 };
 
 const SERVICE_COLLECTION_MODELS = {
@@ -17,6 +17,15 @@ const SERVICE_COLLECTION_MODELS = {
 function collectionModelFor(model, row) {
   const resolver = SERVICE_COLLECTION_MODELS[model];
   return typeof resolver === 'function' ? resolver(row) : resolver;
+}
+
+// The content tree labels each field from data-aue-label and picks its editor
+// from data-aue-type. Writing only data-aue-prop leaves the tree with nothing
+// to show, so it falls back to the raw field name.
+function markField(source, name, component, label) {
+  source.dataset.aueProp = name;
+  if (component) source.dataset.aueType = component;
+  if (label) source.dataset.aueLabel = label;
 }
 
 function restoreLinkField(root, name, fieldSources) {
@@ -49,13 +58,13 @@ function restorePublishedModel(root, model) {
   const fieldSources = new Map();
   let sourceIndex = 0;
 
-  fields.forEach(([name, component]) => {
+  fields.forEach(([name, component, label]) => {
     if (restoreLinkField(root, name, fieldSources)) return;
     const source = sources[sourceIndex];
     if (!source) return;
     if (SERVICE_COLLECTION_MODELS[model] && source.children.length > 1) return;
     if (!matchesPublishedField(source, component)) return;
-    source.dataset.aueProp = name;
+    markField(source, name, component, label);
     fieldSources.set(name, source);
     sourceIndex += 1;
   });
@@ -88,12 +97,12 @@ function restoreBlockFields(block, model) {
   if (!bare.length) return;
   const fieldSources = new Map();
   let sourceIndex = 0;
-  fields.forEach(([name, component]) => {
+  fields.forEach(([name, component, label]) => {
     if (restoreLinkField(block, name, fieldSources)) return;
     const source = bare[sourceIndex];
     if (!source) return;
     if (!matchesPublishedField(source, component)) return;
-    source.dataset.aueProp = name;
+    markField(source, name, component, label);
     fieldSources.set(name, source);
     sourceIndex += 1;
   });
