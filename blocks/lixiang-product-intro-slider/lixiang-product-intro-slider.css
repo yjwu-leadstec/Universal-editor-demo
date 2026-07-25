@@ -1,3 +1,336 @@
+/* ------------------------------------------------------------------ *
+ * Ported from styles/product-blocks.css so this block owns its styles.
+ * Selectors are re-scoped to this block; the shared stylesheet is no
+ * longer injected at runtime. The mobile band is unified on this
+ * block's own `<= 720px` (the shared file used `<= 719px`, which left
+ * a one-pixel gap at exactly 720px where the mobile title/picture
+ * swaps did not apply).
+ * ------------------------------------------------------------------ */
+main:has(.lixiang-product-intro-slider[data-product-block]) {
+  overflow-x: clip;
+}
+
+main .lixiang-product-intro-slider[data-product-block].dark {
+  --product-bg: #000;
+  --product-card-bg: #141414;
+  --product-copy: #fff;
+  --product-muted: rgb(255 255 255 / 70%);
+}
+
+main .lixiang-product-intro-slider[data-product-block].gray {
+  --product-bg: #fafafa;
+  --product-card-bg: #fff;
+}
+
+main .lixiang-product-intro-slider[data-product-block].light-copy {
+  --product-copy: #fff;
+  --product-muted: rgb(255 255 255 / 70%);
+}
+
+main .lixiang-product-intro-slider[data-product-block].dark-copy {
+  --product-copy: #191919;
+  --product-muted: rgb(0 0 0 / 60%);
+}
+
+main .lixiang-product-intro-slider[data-product-block].space-large {
+  padding-block: 80px;
+}
+
+main .lixiang-product-intro-slider[data-product-block].space-small {
+  padding-block: 60px;
+}
+
+main .lixiang-product-intro-slider[data-product-block].space-none {
+  padding-block: 0;
+}
+
+main .lixiang-product-intro-slider .product-section-header {
+  height: auto;
+  box-sizing: border-box;
+  width: min(100% - 40px, 1480px);
+  margin-inline: auto;
+  margin-block-end: 40px;
+  text-align: center;
+}
+
+main .lixiang-product-intro-slider .product-eyebrow {
+  margin: 0 0 12px;
+  color: var(--product-accent);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+main .lixiang-product-intro-slider .product-title {
+  max-width: 1100px;
+  margin: 0 auto;
+  color: var(--product-copy);
+  font-family: var(--heading-font-family);
+  font-size: clamp(32px, 3vw, 46px);
+  font-weight: 500;
+  line-height: 1.12;
+  white-space: pre-line;
+}
+
+main .lixiang-product-intro-slider .product-title-mobile {
+  display: none;
+}
+
+main .lixiang-product-intro-slider .product-description {
+  max-width: 860px;
+  margin: 20px auto 0;
+  color: var(--product-muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+main .lixiang-product-intro-slider .product-description > :first-child {
+  margin-block-start: 0;
+}
+
+main .lixiang-product-intro-slider .product-description > :last-child {
+  margin-block-end: 0;
+}
+
+main .lixiang-product-intro-slider .product-picture,
+main .lixiang-product-intro-slider .product-picture picture,
+main .lixiang-product-intro-slider .product-picture img,
+main .lixiang-product-intro-slider .product-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+main .lixiang-product-intro-slider .product-picture img,
+main .lixiang-product-intro-slider .product-video {
+  object-fit: cover;
+}
+
+main .lixiang-product-intro-slider .product-picture-mobile {
+  display: none;
+}
+
+main .lixiang-product-intro-slider .product-video {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+main .lixiang-product-intro-slider .product-media.is-video-ready .product-video {
+  opacity: 1;
+}
+
+main .lixiang-product-intro-slider .product-media.is-media-fallback::before,
+main .lixiang-product-intro-slider .product-picture.is-media-fallback::before {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #141414;
+  content: attr(data-fallback-label);
+  letter-spacing: 0.12em;
+}
+
+main .lixiang-product-intro-slider .product-video-control {
+  --video-progress: 0deg;
+
+  position: absolute;
+  z-index: 3;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  margin: 0;
+  padding: 0;
+  place-items: center;
+  color: #fff;
+  background: rgb(25 25 25 / 58%);
+  border: 1px solid rgb(255 255 255 / 44%);
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+main .lixiang-product-intro-slider .product-video-control[hidden] {
+  display: none;
+}
+
+main .lixiang-product-intro-slider .product-video-control.has-progress {
+  border-color: transparent;
+}
+
+main .lixiang-product-intro-slider .product-video-control.has-progress::before {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(#fff var(--video-progress), rgb(255 255 255 / 30%) 0);
+  content: '';
+  pointer-events: none;
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+}
+
+main .lixiang-product-intro-slider .product-video-control:focus-visible,
+main .lixiang-product-intro-slider button:focus-visible,
+main .lixiang-product-intro-slider a:focus-visible {
+  outline: 3px solid var(--product-accent);
+  outline-offset: 3px;
+}
+
+main .lixiang-product-intro-slider .product-video-icon {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 18px;
+}
+
+main .lixiang-product-intro-slider .product-video-icon::before {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  width: 0;
+  height: 0;
+  border-block: 7px solid transparent;
+  border-left: 11px solid currentcolor;
+  content: '';
+}
+
+main .lixiang-product-intro-slider .product-video-control.is-playing .product-video-icon::before,
+main .lixiang-product-intro-slider .product-video-control.is-playing .product-video-icon::after {
+  position: absolute;
+  top: 2px;
+  width: 4px;
+  height: 14px;
+  background: currentcolor;
+  border: 0;
+  content: '';
+}
+
+main .lixiang-product-intro-slider .product-video-control.is-playing .product-video-icon::before {
+  left: 3px;
+}
+
+main .lixiang-product-intro-slider .product-video-control.is-playing .product-video-icon::after {
+  right: 3px;
+}
+
+main .lixiang-product-intro-slider .product-link {
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0 24px;
+  align-items: center;
+  justify-content: center;
+  color: var(--product-copy);
+  border: 1px solid currentcolor;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: color 200ms ease, background-color 200ms ease;
+}
+
+main .lixiang-product-intro-slider .product-link-primary {
+  color: #fff;
+  background: #191919;
+  border-color: #191919;
+}
+
+main .lixiang-product-intro-slider[data-product-block].dark .product-link-primary,
+main .lixiang-product-intro-slider[data-product-block].light-copy .product-link-primary {
+  color: #191919;
+  background: #fff;
+  border-color: #fff;
+}
+
+main .lixiang-product-intro-slider .product-link-text {
+  min-height: 0;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid currentcolor;
+}
+
+main .lixiang-product-intro-slider .product-aue-anchor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+main .lixiang-product-intro-slider .product-reveal {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+
+main .lixiang-product-intro-slider .product-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (width >= 720px) {
+  main .lixiang-product-intro-slider[data-product-block].space-large {
+    padding-block: 160px;
+  }
+
+  main .lixiang-product-intro-slider[data-product-block].space-small {
+    padding-block: 80px;
+  }
+
+  main .lixiang-product-intro-slider .product-section-header {
+    margin-block-end: 64px;
+  }
+}
+
+@media (width <= 720px) {
+  main > .section > div > .lixiang-product-intro-slider[data-product-block] {
+    left: auto;
+    width: calc(100% + 48px);
+    margin-inline-start: -24px;
+  }
+
+  main .lixiang-product-intro-slider .product-title {
+    font-size: clamp(20px, 6.4vw, 28px);
+  }
+
+  main .lixiang-product-intro-slider .product-title-desktop:has(+ .product-title-mobile) {
+    display: none;
+  }
+
+  main .lixiang-product-intro-slider .product-title-mobile {
+    display: block;
+  }
+
+  main .lixiang-product-intro-slider .product-picture-mobile {
+    display: block;
+  }
+
+  main .lixiang-product-intro-slider .has-mobile-picture .product-picture-desktop {
+    display: none;
+  }
+
+  main .lixiang-product-intro-slider .product-video-control {
+    top: 12px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main .lixiang-product-intro-slider *,
+  main .lixiang-product-intro-slider *::before,
+  main .lixiang-product-intro-slider *::after {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+
+  main .lixiang-product-intro-slider .product-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 main .lixiang-product-intro-slider[data-product-block] {
   /* Ported from styles/product-blocks.css (see the ported section below). */
   --product-bg: #fff;
@@ -100,10 +433,13 @@ main .lixiang-product-intro-slider .highlight-slide.is-instant.is-staging-hidden
 }
 
 main .lixiang-product-intro-slider .product-media {
+  /* `position/overflow/background` ported from styles/product-blocks.css. */
+  position: relative;
   width: 1200px;
   height: 674px;
-  min-height: 0;
+  overflow: hidden;
   aspect-ratio: auto;
+  background: #111;
   border-radius: 4px;
 }
 
@@ -653,347 +989,5 @@ main .lixiang-product-intro-slider .highlight-status {
 @media (prefers-reduced-motion: reduce) {
   main .lixiang-product-intro-slider .highlight-slide {
     transition: none;
-  }
-}
-
-
-/* ------------------------------------------------------------------ *
- * Ported from styles/product-blocks.css so this block owns its styles.
- * Selectors are re-scoped to this block; the shared stylesheet is no
- * longer injected at runtime. The mobile band is unified on this
- * block's own `<= 720px` (the shared file used `<= 719px`, which left
- * a one-pixel gap at exactly 720px where the mobile title/picture
- * swaps did not apply).
- * ------------------------------------------------------------------ */
-main:has(.lixiang-product-intro-slider[data-product-block]) {
-  overflow-x: clip;
-}
-
-main .lixiang-product-intro-slider[data-product-block].dark {
-  --product-bg: #000;
-  --product-card-bg: #141414;
-  --product-copy: #fff;
-  --product-muted: rgb(255 255 255 / 70%);
-}
-
-main .lixiang-product-intro-slider[data-product-block].gray {
-  --product-bg: #fafafa;
-  --product-card-bg: #fff;
-}
-
-main .lixiang-product-intro-slider[data-product-block].light-copy {
-  --product-copy: #fff;
-  --product-muted: rgb(255 255 255 / 70%);
-}
-
-main .lixiang-product-intro-slider[data-product-block].dark-copy {
-  --product-copy: #191919;
-  --product-muted: rgb(0 0 0 / 60%);
-}
-
-main .lixiang-product-intro-slider[data-product-block].space-large {
-  padding-block: 80px;
-}
-
-main .lixiang-product-intro-slider[data-product-block].space-small {
-  padding-block: 60px;
-}
-
-main .lixiang-product-intro-slider[data-product-block].space-none {
-  padding-block: 0;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-section-header {
-  height: auto;
-  box-sizing: border-box;
-  width: min(100% - 40px, 1480px);
-  margin-inline: auto;
-  margin-block-end: 40px;
-  text-align: center;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-eyebrow {
-  margin: 0 0 12px;
-  color: var(--product-accent);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-title {
-  max-width: 1100px;
-  margin: 0 auto;
-  color: var(--product-copy);
-  font-family: var(--heading-font-family);
-  font-size: clamp(32px, 3vw, 46px);
-  font-weight: 500;
-  line-height: 1.12;
-  white-space: pre-line;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-title-mobile {
-  display: none;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-description {
-  max-width: 860px;
-  margin: 20px auto 0;
-  color: var(--product-muted);
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-description > :first-child {
-  margin-block-start: 0;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-description > :last-child {
-  margin-block-end: 0;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-media {
-  position: relative;
-  overflow: hidden;
-  min-height: 220px;
-  background: #111;
-  border-radius: 4px;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-picture,
-main .lixiang-product-intro-slider[data-product-block] .product-picture picture,
-main .lixiang-product-intro-slider[data-product-block] .product-picture img,
-main .lixiang-product-intro-slider[data-product-block] .product-video {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-picture img,
-main .lixiang-product-intro-slider[data-product-block] .product-video {
-  object-fit: cover;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-picture-mobile {
-  display: none;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-video {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 500ms ease;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-media.is-video-ready .product-video {
-  opacity: 1;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-media.is-media-fallback::before,
-main .lixiang-product-intro-slider[data-product-block] .product-picture.is-media-fallback::before {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  background: #141414;
-  content: attr(data-fallback-label);
-  letter-spacing: 0.12em;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-video-control {
-  --video-progress: 0deg;
-
-  position: absolute;
-  z-index: 3;
-  top: 16px;
-  right: 16px;
-  display: grid;
-  width: 52px;
-  height: 52px;
-  margin: 0;
-  padding: 0;
-  place-items: center;
-  color: #fff;
-  background: rgb(25 25 25 / 58%);
-  border: 1px solid rgb(255 255 255 / 44%);
-  border-radius: 50%;
-  cursor: pointer;
-  backdrop-filter: blur(4px);
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-video-control[hidden] {
-  display: none;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-video-control.has-progress {
-  border-color: transparent;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-video-control.has-progress::before {
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: conic-gradient(#fff var(--video-progress), rgb(255 255 255 / 30%) 0);
-  content: '';
-  pointer-events: none;
-  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-video-control:focus-visible,
-main .lixiang-product-intro-slider[data-product-block] button:focus-visible,
-main .lixiang-product-intro-slider[data-product-block] a:focus-visible {
-  outline: 3px solid var(--product-accent);
-  outline-offset: 3px;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-video-icon {
-  position: relative;
-  display: block;
-  width: 16px;
-  height: 18px;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-video-icon::before {
-  position: absolute;
-  top: 2px;
-  left: 4px;
-  width: 0;
-  height: 0;
-  border-block: 7px solid transparent;
-  border-left: 11px solid currentcolor;
-  content: '';
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-video-control.is-playing .product-video-icon::before,
-main .lixiang-product-intro-slider[data-product-block] .product-video-control.is-playing .product-video-icon::after {
-  position: absolute;
-  top: 2px;
-  width: 4px;
-  height: 14px;
-  background: currentcolor;
-  border: 0;
-  content: '';
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-video-control.is-playing .product-video-icon::before {
-  left: 3px;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-video-control.is-playing .product-video-icon::after {
-  right: 3px;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-link {
-  display: inline-flex;
-  min-height: 44px;
-  padding: 0 24px;
-  align-items: center;
-  justify-content: center;
-  color: var(--product-copy);
-  border: 1px solid currentcolor;
-  border-radius: 2px;
-  text-decoration: none;
-  transition: color 200ms ease, background-color 200ms ease;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-link-primary {
-  color: #fff;
-  background: #191919;
-  border-color: #191919;
-}
-
-main .lixiang-product-intro-slider[data-product-block].dark .product-link-primary,
-main .lixiang-product-intro-slider[data-product-block].light-copy .product-link-primary {
-  color: #191919;
-  background: #fff;
-  border-color: #fff;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-link-text {
-  min-height: 0;
-  padding: 8px 0;
-  border: 0;
-  border-bottom: 1px solid currentcolor;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-aue-anchor {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-reveal {
-  opacity: 0;
-  transform: translateY(48px);
-  transition: opacity 700ms ease, transform 700ms ease;
-}
-
-main .lixiang-product-intro-slider[data-product-block] .product-reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (width >= 720px) {
-  main .lixiang-product-intro-slider[data-product-block].space-large {
-    padding-block: 160px;
-  }
-
-  main .lixiang-product-intro-slider[data-product-block].space-small {
-    padding-block: 80px;
-  }
-
-  main .lixiang-product-intro-slider[data-product-block] .product-section-header {
-    margin-block-end: 64px;
-  }
-}
-
-@media (width <= 720px) {
-  main > .section > div > .lixiang-product-intro-slider[data-product-block] {
-    left: auto;
-    width: calc(100% + 48px);
-    margin-inline-start: -24px;
-  }
-
-  main .lixiang-product-intro-slider[data-product-block] .product-title {
-    font-size: clamp(20px, 6.4vw, 28px);
-  }
-
-  main .lixiang-product-intro-slider[data-product-block] .product-title-desktop:has(+ .product-title-mobile) {
-    display: none;
-  }
-
-  main .lixiang-product-intro-slider[data-product-block] .product-title-mobile {
-    display: block;
-  }
-
-  main .lixiang-product-intro-slider[data-product-block] .product-picture-mobile {
-    display: block;
-  }
-
-  main .lixiang-product-intro-slider[data-product-block] .has-mobile-picture .product-picture-desktop {
-    display: none;
-  }
-
-  main .lixiang-product-intro-slider[data-product-block] .product-video-control {
-    top: 12px;
-    right: 12px;
-    width: 44px;
-    height: 44px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  main .lixiang-product-intro-slider[data-product-block] *,
-  main .lixiang-product-intro-slider[data-product-block] *::before,
-  main .lixiang-product-intro-slider[data-product-block] *::after {
-    scroll-behavior: auto;
-    transition-duration: 0.01ms;
-    animation-duration: 0.01ms;
-    animation-iteration-count: 1;
-  }
-
-  main .lixiang-product-intro-slider[data-product-block] .product-reveal {
-    opacity: 1;
-    transform: none;
   }
 }

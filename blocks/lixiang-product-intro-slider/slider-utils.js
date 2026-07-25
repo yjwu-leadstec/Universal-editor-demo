@@ -7,7 +7,14 @@
  * tables are narrowed to this block's own three models.
  */
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { MOBILE_MEDIA_QUERY, resolveResponsiveDefault } from '../../scripts/product-media-defaults.mjs';
+import { resolveResponsiveDefault } from '../../scripts/product-media-defaults.mjs';
+
+// This block's stylesheet switches to its mobile layout at `<= 720px`, so the
+// video source and responsive picture queries have to use the same edge. The
+// shared product-media-defaults constant is `(max-width: 719px)`, which left
+// exactly 720px showing the mobile picture while JS still resolved the desktop
+// video source.
+const MOBILE_MEDIA_QUERY = '(max-width: 720px)';
 
 const PRODUCT_MEDIA_FALLBACKS = {
   '014b26dc-f3d1-493f-9f54-5d9684388b2a.jpg': '349837577446335',
