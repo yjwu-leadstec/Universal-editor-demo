@@ -12,7 +12,7 @@ import {
   revealElements,
 } from '../../scripts/product-block-utils.js';
 
-function createCard(item) {
+function createCard(item, headingTag = 'h3') {
   const card = document.createElement('article');
   card.className = 'product-feature-picture-group-card';
   const { element: media } = createMedia(item, { fallbackLabel: '图片' });
@@ -22,7 +22,7 @@ function createCard(item) {
   copy.className = 'product-feature-picture-group-copy';
   const title = propText(item, 'title');
   if (title) {
-    const heading = document.createElement('h3');
+    const heading = document.createElement(headingTag);
     heading.textContent = title;
     instrumentProp(item, 'title', heading);
     copy.append(heading);
@@ -51,7 +51,7 @@ function createGroup(group, items) {
   }
   const grid = document.createElement('div');
   grid.className = 'product-feature-picture-group-list';
-  items.forEach((item) => grid.append(createCard(item)));
+  items.forEach((item) => grid.append(createCard(item, group ? 'h4' : 'h3')));
   section.append(grid);
   if (group) moveItemInstrumentation(group, section);
   return section;
@@ -70,6 +70,12 @@ export default function decorate(block) {
       const items = modelItems(group, 'product-feature-picture-group-card');
       if (items.length) shell.append(createGroup(group, items));
     });
+    // Cards placed directly under the block (mixed with groups) would otherwise be
+    // silently dropped. Render them as a trailing unlabelled group; filter to direct
+    // children so group-nested cards (matched recursively) are not rendered twice.
+    const looseItems = [...block.children]
+      .filter((el) => el.matches('[data-aue-model="product-feature-picture-group-card"]'));
+    if (looseItems.length) shell.append(createGroup(null, looseItems));
   } else {
     const items = modelItems(block, 'product-feature-picture-group-card');
     if (items.length) shell.append(createGroup(null, items));

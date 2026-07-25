@@ -23,8 +23,10 @@ main .product-feature-picture-group .product-description {
 }
 
 /* Design spec (Li-L6 ending section): eyebrow follows the theme copy color
-   (dark on light, light on dark), not the shared gold --product-accent. */
-main .product-feature-picture-group .product-eyebrow {
+   (dark on light, light on dark), not the shared gold --product-accent.
+   The extra [data-product-block] keeps this override above the shared rule
+   regardless of stylesheet order. */
+main [data-product-block].product-feature-picture-group .product-eyebrow {
   color: var(--product-copy);
 }
 
