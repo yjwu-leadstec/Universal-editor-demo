@@ -20,8 +20,6 @@ main .lixiang-product-intro-slider[data-product-block].dark {
 main .lixiang-product-intro-slider[data-product-block].gray {
   --product-bg: #fafafa;
   --product-card-bg: #fff;
-  --product-copy: #fff;
-  --product-muted: rgb(255 255 255 / 70%);
 }
 
 main .lixiang-product-intro-slider[data-product-block].light-copy {

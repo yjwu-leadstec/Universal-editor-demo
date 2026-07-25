@@ -3246,7 +3246,7 @@
         "component": "select",
         "name": "background",
         "label": "Background",
-        "description": "Section background. Text color follows automatically: white on black/gray, black on white.",
+        "description": "Section background. Text color follows automatically: white on black, black on white and gray.",
         "valueType": "string",
         "value": "light",
         "options": [
