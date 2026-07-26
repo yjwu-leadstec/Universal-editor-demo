@@ -14,34 +14,24 @@
   flex-direction: column;
   align-items: center;
   gap: 13px;
+  max-width: 1099px;
+  margin: 0 auto;
   text-align: center;
 }
 
 .lixiang-about-together-header h2 {
   margin: 0;
-  font-size: 34px;
-  font-weight: 400;
-  color: rgb(25 25 25);
-  text-align: center;
+  font-size: 46px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #191919;
 }
 
-.lixiang-about-together-subtitle {
-  font-size: 15px;
-  font-weight: 400;
-  color: rgb(102 102 102);
-  text-align: center;
-}
-
+.lixiang-about-together-subtitle { font-size: 20px; font-weight: 400; line-height: 1.4; color: rgb(0 0 0 / 60%); }
 .lixiang-about-together-subtitle p { margin: 0; }
 
-.lixiang-about-together-grid {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  gap: 20px;
-}
+.lixiang-about-together-grid { display: flex; align-items: stretch; justify-content: center; gap: 20px; }
 
-/* Card: image full bg + text overlay (matches live site) */
 .lixiang-about-together-card {
   position: relative;
   flex: 1;
@@ -52,14 +42,9 @@
   background: #000;
 }
 
-.lixiang-about-together-card-media {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
+.lixiang-about-together-card-media { position: absolute; inset: 0; z-index: 0; }
 
-.lixiang-about-together-card-media picture,
-.lixiang-about-together-card-media img {
+.lixiang-about-together-card-media picture, .lixiang-about-together-card-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -68,7 +53,7 @@
 .lixiang-about-together-card-content {
   position: absolute;
   z-index: 2;
-  top: 40px;
+  top: 56px;
   left: 32px;
   right: 32px;
   display: flex;
@@ -78,15 +63,16 @@
 
 .lixiang-about-together-card-content h3 {
   margin: 0;
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 24px;
+  font-weight: 500;
   color: #fff;
   text-align: center;
 }
 
 .lixiang-about-together-card-description {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 400;
+  line-height: 1.75;
   color: rgb(255 255 255 / 70%);
   text-align: center;
 }
@@ -100,41 +86,23 @@
   left: 20px;
   right: 20px;
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
-  color: rgb(255 255 255 / 70%);
+  color: #fff;
   text-align: center;
 }
 
 @media (width <= 1024px) {
   .lixiang-about-together-inner { padding: 60px 40px 20px; }
-  .lixiang-about-together-header h2 { font-size: 28px; }
-
-  .lixiang-about-together-card-content {
-    top: 30px;
-    left: 20px;
-    right: 20px;
-  }
+  .lixiang-about-together-header h2 { font-size: 36px; }
+  .lixiang-about-together-card-content { top: 30px; left: 20px; right: 20px; }
 }
 
 @media (width <= 768px) {
-  .lixiang-about-together-grid {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .lixiang-about-together-card {
-    width: 100%;
-    max-width: 335px;
-    border-radius: 8px;
-  }
-
-  .lixiang-about-together-card-content {
-    top: 20px;
-    left: 20px;
-    right: 20px;
-  }
-  .lixiang-about-together-card-content h3 { font-size: 15px; }
+  .lixiang-about-together-grid { flex-direction: column; align-items: center; }
+  .lixiang-about-together-card { width: 100%; max-width: 335px; border-radius: 8px; }
+  .lixiang-about-together-card-content { top: 20px; left: 20px; right: 20px; }
+  .lixiang-about-together-card-content h3 { font-size: 20px; }
   .lixiang-about-together-card-description { font-size: 12px; }
   .lixiang-about-together-card-media { min-height: 200px; }
   .lixiang-about-together-card-footnote { font-size: 12px; }
