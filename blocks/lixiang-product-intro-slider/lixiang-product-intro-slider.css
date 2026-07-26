@@ -366,6 +366,10 @@ main .lixiang-product-intro-slider .highlight-viewport {
   margin-inline-start: -50vw;
   height: 706px;
   overflow: hidden;
+
+  /* The track centres itself with 50cqw, so this clip box is the query
+   * container it measures against. */
+  container-type: inline-size;
 }
 
 main .lixiang-product-intro-slider .highlight-track {
@@ -391,15 +395,14 @@ main .lixiang-product-intro-slider .highlight-track {
    *
    * The strip is far wider than the viewport, so margin auto cannot centre it
    * -- it pinned the first card to the left edge and the left neighbour never
-   * peeked. `left: 50%` puts the strip's start on the viewport's centre line
-   * (a percentage of the parent, so it holds at every breakpoint), then the
-   * transform backs off half a card to centre the active one. */
+   * peeked. Centre it against the clip box instead: 50% of the viewport's own
+   * width, then back half a card. Using `left` here would compound with the
+   * viewport's own `left: 50%` full-bleed shift and push the strip off-axis. */
   --highlight-step: 1240px;
 
-  left: 50%;
   margin-inline: 0;
   transform: translateX(
-    calc(var(--highlight-step) / -2 - var(--active-slide, 0) * var(--highlight-step))
+    calc(50cqw - var(--highlight-step) / 2 - var(--active-slide, 0) * var(--highlight-step))
   );
   transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -816,9 +819,7 @@ main .lixiang-product-intro-slider .highlight-status {
 
     /* Mobile scrolls natively, so the desktop step transform must be cleared --
      * left in place it shifted the strip a full track width off-screen while
-     * scrollLeft stayed 0, leaving the carousel blank. The desktop centring
-     * offset has to go with it for the same reason. */
-    left: 0;
+     * scrollLeft stayed 0, leaving the carousel blank. */
     transform: none;
     transition: none;
   }
