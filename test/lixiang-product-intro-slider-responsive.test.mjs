@@ -98,14 +98,19 @@ test('carousel loops through edge clones so both neighbours always peek', () => 
   // the left, and wrapping swept the whole track instead of stepping one card.
   // Clone the last slide before the first and the first after the last, then
   // snap from the clone to the real slide with the transition suppressed.
-  assert.match(carouselJs, /const headClone = looped \? cloneSlide\(slides\[slides\.length - 1\]\) : null/);
-  assert.match(carouselJs, /const tailClone = looped \? cloneSlide\(slides\[0\]\) : null/);
-  assert.match(carouselJs, /track\.append\(headClone, \.\.\.slides, tailClone\)/);
+  assert.match(carouselJs, /const headClones = slides\.slice\(slides\.length - cloneDepth\)\.map\(cloneSlide\)/);
+  assert.match(carouselJs, /const tailClones = slides\.slice\(0, cloneDepth\)\.map\(cloneSlide\)/);
+  assert.match(carouselJs, /track\.append\(\.\.\.headClones, \.\.\.slides, \.\.\.tailClones\)/);
+  // Two clones per side: the slot beyond an edge clone is on screen while the
+  // track animates onto it, so a single clone left it blank for the whole
+  // transition and the next card only appeared after the snap.
+  assert.match(carouselJs, /const CLONE_DEPTH = 2/);
+  assert.match(carouselJs, /Math\.min\(CLONE_DEPTH, slides\.length\)/);
   // Clones are decorative: no editor instrumentation and no duplicate video.
   assert.match(carouselJs, /clone\.querySelectorAll\('video, \.product-video-control'\)/);
   assert.match(carouselJs, /key\.startsWith\('aue'\) \|\| key\.startsWith\('richtext'\)/);
-  // The strip is offset by one slide, so position = real index + 1.
-  assert.match(carouselJs, /const offset = looped \? 1 : 0/);
+  // The strip is offset by the clone depth, so position = real index + depth.
+  assert.match(carouselJs, /const offset = cloneDepth/);
   assert.match(carouselJs, /settleWrap\(active \+ offset\)/);
   assert.match(carouselJs, /const WRAP_SETTLE_MS = 400/);
   // Mobile scrolls natively, so clones are hidden and the step transform reset.

@@ -20,6 +20,11 @@ const MOBILE_QUERY = '(width <= 720px)';
 // Matches the .highlight-track transition duration: the wrap snap must land
 // once the animation onto the clone has finished.
 const WRAP_SETTLE_MS = 400;
+// Clones per side. The design peeks one neighbour on each edge, so the slot
+// beyond an edge clone is visible while the track animates onto it -- one clone
+// per side left that slot empty for the whole transition and the next card only
+// appeared after the snap. Keep this at visible-neighbours + 1.
+const CLONE_DEPTH = 2;
 const carouselInstances = new WeakMap();
 
 function createStat(item) {
@@ -173,10 +178,18 @@ export default function decorate(block) {
     (item, index) => createSlide(block, item, index, statsBySlide.get(item) || []),
   );
   const slides = slideEntries.map(({ element }) => element);
-  // Loop clones, the way Swiper/Slick do it: a copy of the last slide sits
-  // before the first and a copy of the first sits after the last. Without them a
-  // linear strip has nothing to show past either end -- no neighbour peeked at
-  // slide 0, and wrapping swept the whole track instead of stepping one card.
+  // Loop clones, the way Swiper/Slick do it: copies of the tail slides sit
+  // before the first and copies of the head slides after the last. Without them
+  // a linear strip has nothing to show past either end -- no neighbour peeked
+  // at slide 0, and wrapping swept the whole track instead of stepping one
+  // card.
+  //
+  // Two per side, not one. The design peeks a neighbour on each side, so while
+  // the track animates onto an edge clone the slot *beyond* that clone is
+  // on screen too; with a single clone it was empty for the whole 400ms and
+  // the next card only appeared after the snap, which read as a lagging
+  // corner. CLONE_DEPTH must stay >= visible-neighbours + 1.
+  //
   // Clones are decorative duplicates: strip editor instrumentation and any
   // video so the Universal Editor never sees a second copy of a field and the
   // browser never decodes the same clip twice.
@@ -196,10 +209,11 @@ export default function decorate(block) {
     return clone;
   };
   const looped = slides.length > 1;
-  const headClone = looped ? cloneSlide(slides[slides.length - 1]) : null;
-  const tailClone = looped ? cloneSlide(slides[0]) : null;
-  if (looped) track.append(headClone, ...slides, tailClone);
-  else track.append(...slides);
+  // Never clone more than there are slides to clone from.
+  const cloneDepth = looped ? Math.min(CLONE_DEPTH, slides.length) : 0;
+  const headClones = slides.slice(slides.length - cloneDepth).map(cloneSlide);
+  const tailClones = slides.slice(0, cloneDepth).map(cloneSlide);
+  track.append(...headClones, ...slides, ...tailClones);
   viewport.append(track);
   if (header.childElementCount) shell.append(header);
   shell.append(viewport);
@@ -253,13 +267,14 @@ export default function decorate(block) {
     // direction. The first paint jumps straight to the active slide instead of
     // animating in from slide 0.
     //
-    // With loop clones the track is offset by one slide, so index i sits at
-    // i + 1. Stepping off either end animates onto the neighbouring clone
-    // first, then snaps -- with the transition suppressed -- to the identical
-    // real slide. The jump is invisible because both show the same card.
+    // With loop clones the track is offset by cloneDepth slides, so index i
+    // sits at i + cloneDepth. Stepping off either end animates onto the
+    // neighbouring clone first, then snaps -- with the transition suppressed --
+    // to the identical real slide. The jump is invisible because both show the
+    // same card.
     const wrappedForward = looped && previous === slides.length - 1 && active === 0;
     const wrappedBack = looped && previous === 0 && active === slides.length - 1;
-    const offset = looped ? 1 : 0;
+    const offset = cloneDepth;
     let position = active + offset;
     if (wrappedForward) position = slides.length + offset;
     if (wrappedBack) position = offset - 1;
