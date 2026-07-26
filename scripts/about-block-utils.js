@@ -1,26 +1,26 @@
 import { moveInstrumentation } from './scripts.js';
 
 const ABOUT_MODEL_FIELDS = {
-  'about-hero': [['title', 'text'], ['subtitle', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text']],
-  'about-vehicle-showcase': [['title', 'text'], ['subtitle', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text']],
-  'about-vehicle-model': [['name', 'text'], ['description', 'text']],
-  'about-video': [['title', 'text'], ['ctaText', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['video', 'aem-content']],
-  'about-dual-panel': [['title', 'text'], ['subtitle', 'text']],
-  'about-dual-panel-item': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext'], ['footnote', 'text']],
-  'about-design-language': [['title', 'text'], ['subtitle', 'text'], ['largeImage', 'reference'], ['largeImageAlt', 'text']],
-  'about-design-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],
-  'about-creativity': [['title', 'text'], ['subtitle', 'text'], ['valuesTitle', 'text'], ['valuesDescription', 'richtext']],
-  'about-creativity-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],
-  'about-create-together': [['title', 'text'], ['subtitle', 'text']],
-  'about-create-together-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext'], ['footnote', 'text']],
+  'lixiang-about-hero': [['title', 'text'], ['subtitle', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text']],
+  'lixiang-about-vehicle-showcase': [['title', 'text'], ['subtitle', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text']],
+  'lixiang-about-vehicle-model': [['name', 'text'], ['description', 'text']],
+  'lixiang-about-video': [['title', 'text'], ['ctaText', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['video', 'aem-content']],
+  'lixiang-about-dual-panel': [['title', 'text'], ['subtitle', 'text']],
+  'lixiang-about-dual-panel-item': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext'], ['footnote', 'text']],
+  'lixiang-about-design-language': [['title', 'text'], ['subtitle', 'text'], ['largeImage', 'reference'], ['largeImageAlt', 'text']],
+  'lixiang-about-design-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],
+  'lixiang-about-creativity': [['title', 'text'], ['subtitle', 'text'], ['valuesTitle', 'text'], ['valuesDescription', 'richtext']],
+  'lixiang-about-creativity-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],
+  'lixiang-about-create-together': [['title', 'text'], ['subtitle', 'text']],
+  'lixiang-about-create-together-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext'], ['footnote', 'text']],
 };
 
 const ABOUT_COLLECTION_MODELS = {
-  'about-vehicle-showcase': 'about-vehicle-model',
-  'about-dual-panel': 'about-dual-panel-item',
-  'about-design-language': 'about-design-card',
-  'about-creativity': 'about-creativity-card',
-  'about-create-together': 'about-create-together-card',
+  'lixiang-about-vehicle-showcase': 'lixiang-about-vehicle-model',
+  'lixiang-about-dual-panel': 'lixiang-about-dual-panel-item',
+  'lixiang-about-design-language': 'lixiang-about-design-card',
+  'lixiang-about-creativity': 'lixiang-about-creativity-card',
+  'lixiang-about-create-together': 'lixiang-about-create-together-card',
 };
 
 function matchesPublishedField(source, component) {

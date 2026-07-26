@@ -1,0 +1,42 @@
+- generic [ref=f1e6]:
+  - complementary [ref=f1e7]:
+    - generic [ref=f1e8]: 登录以访问贵组织的CX Enterprise。
+  - main [ref=f1e16]:
+    - generic [ref=f1e18]:
+      - generic [ref=f1e21]:
+        - generic [ref=f1e22]:
+          - generic [ref=f1e23]:
+            - img "Information"
+          - generic [ref=f1e24]: 您是否经常使用 Facebook、Google 或 Apple 进行登录？在下方输入您的电子邮件，我们就会帮助您登录。
+        - button "Close" [ref=f1e26] [cursor=pointer]: ×
+      - generic [ref=f1e27]:
+        - generic [ref=f1e28]: CX企业版
+        - generic [ref=f1e32]:
+          - heading "登录" [level=1] [ref=f1e34]
+          - generic [ref=f1e36]:
+            - generic [ref=f1e37]:
+              - paragraph [ref=f1e38]:
+                - text: 新用户？
+                - link "创建帐户" [ref=f1e39] [cursor=pointer]
+              - generic [ref=f1e40]:
+                - generic [ref=f1e41]: 电子邮件地址
+                - textbox "电子邮件地址" [active] [ref=f1e46]
+            - button "继续" [ref=f1e50] [cursor=pointer]
+          - list [ref=f1e52]:
+            - listitem [ref=f1e53]:
+              - link "获取登录帮助" [ref=f1e54] [cursor=pointer]
+  - complementary:
+    - link [ref=f1e55] [cursor=pointer]:
+      - /url: https://stock.adobe.com/ro/contributor/206029493/robert-kohlhuber-addictive-stock?as_channel=adobe_com&as_source=susi&as_campclass=brand&as_campaign=stock_images&as_audience=users&as_content=contributor_page
+      - generic [ref=f1e56]:
+        - img "Stock" [ref=f1e58]
+        - text: Addictive Stock
+  - generic [ref=f1e59]:
+    - generic [ref=f1e60]: Copyright © 2026 Adobe. All rights reserved.
+    - link "使用条款" [ref=f1e61] [cursor=pointer]
+    - link "Cookie 偏好设置" [ref=f1e62] [cursor=pointer]:
+      - /url: "#CookiePreferences"
+    - link "隐私" [ref=f1e63] [cursor=pointer]:
+      - /url: https://www.adobe.com/go/privacy_policy_linkfree_cn
+    - link "不得出售或共享我的个人信息" [ref=f1e64] [cursor=pointer]:
+      - /url: https://www.adobe.com/privacy/us-rights-linkfree.html

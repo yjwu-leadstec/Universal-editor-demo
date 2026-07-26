@@ -53,36 +53,6 @@
     ]
   },
   {
-    "id": "about-create-together",
-    "components": [
-      "about-create-together-card"
-    ]
-  },
-  {
-    "id": "about-creativity",
-    "components": [
-      "about-creativity-card"
-    ]
-  },
-  {
-    "id": "about-design-language",
-    "components": [
-      "about-design-card"
-    ]
-  },
-  {
-    "id": "about-dual-panel",
-    "components": [
-      "about-dual-panel-item"
-    ]
-  },
-  {
-    "id": "about-vehicle-showcase",
-    "components": [
-      "about-vehicle-model"
-    ]
-  },
-  {
     "id": "big-small-gallery",
     "components": [
       "big-small-stat",
@@ -197,6 +167,36 @@
     "id": "live-media-header",
     "components": [
       "live-media-route"
+    ]
+  },
+  {
+    "id": "lixiang-about-create-together",
+    "components": [
+      "lixiang-about-create-together-card"
+    ]
+  },
+  {
+    "id": "lixiang-about-creativity",
+    "components": [
+      "lixiang-about-creativity-card"
+    ]
+  },
+  {
+    "id": "lixiang-about-design-language",
+    "components": [
+      "lixiang-about-design-card"
+    ]
+  },
+  {
+    "id": "lixiang-about-dual-panel",
+    "components": [
+      "lixiang-about-dual-panel-item"
+    ]
+  },
+  {
+    "id": "lixiang-about-vehicle-showcase",
+    "components": [
+      "lixiang-about-vehicle-model"
     ]
   },
   {

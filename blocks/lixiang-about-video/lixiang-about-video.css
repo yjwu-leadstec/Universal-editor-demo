@@ -1,0 +1,111 @@
+.lixiang-about-video {
+  background: #fafafa;
+}
+
+.lixiang-about-video-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  padding: 120px 100px 27px;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+.lixiang-about-video-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  max-width: 1720px;
+  margin: 0 auto;
+}
+
+.lixiang-about-video-header h2 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 1;
+  color: rgb(0 0 0 / 90%);
+  text-align: center;
+}
+
+.lixiang-about-video-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--body-font-family);
+  font-size: 20px;
+  font-weight: 400;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.lixiang-about-video-cta:hover {
+  color: #333;
+}
+
+.lixiang-about-video-cta-icon {
+  width: 20px;
+  height: 20px;
+  background: #333;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.lixiang-about-video-media {
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 1720px;
+  margin: 0 auto;
+  aspect-ratio: 1720 / 967;
+}
+
+.lixiang-about-video-media picture,
+.lixiang-about-video-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.lixiang-about-video-dialog {
+  border: none;
+  border-radius: 8px;
+  padding: 0;
+  background: #000;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.lixiang-about-video-dialog video {
+  width: 100%;
+  height: 100%;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.lixiang-about-video-dialog::backdrop {
+  background: rgb(0 0 0 / 80%);
+}
+
+@media (width <= 1024px) {
+  .lixiang-about-video-inner { padding: 80px 40px 20px; }
+  .lixiang-about-video-header h2 { font-size: 48px; }
+  .lixiang-about-video-media { aspect-ratio: 16 / 9; }
+}
+
+@media (width <= 768px) {
+  .lixiang-about-video-inner { padding: 60px 20px 20px; }
+  .lixiang-about-video-header h2 { font-size: 32px; }
+  .lixiang-about-video-cta { font-size: 16px; }
+
+  .lixiang-about-video-media {
+    border-radius: 16px;
+    aspect-ratio: 335 / 188;
+  }
+}
