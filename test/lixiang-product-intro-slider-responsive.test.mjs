@@ -55,8 +55,9 @@ test('highlight carousel exposes clickable progress dots and accessible arrow co
 
 test('highlight carousel lays slides out as one strip and keeps authored media colors intact', () => {
   // Slides sit side by side; the track moves them, so no slide is hidden or
-  // positioned on its own.
-  assert.match(carouselCss, /\.highlight-slide\s*\{[\s\S]*flex:\s*0 0 100%/);
+  // positioned on its own. Each is one step wide rather than 100% of the track,
+  // because loop clones make the track wider than a single slide.
+  assert.match(carouselCss, /\.highlight-slide\s*\{[\s\S]*flex:\s*0 0 var\(--highlight-step/);
   assert.doesNotMatch(carouselCss, /\.highlight-slide\.is-(previous|next)\s*\{/);
   assert.doesNotMatch(carouselCss, /linear-gradient\(180deg, rgb\(0 0 0 \/ 34%\)/);
   assert.doesNotMatch(carouselJs, /\.product-section-header, \.highlight-slide/);
@@ -74,14 +75,36 @@ test('tablet carousel corrects wrapper padding and centers arrow glyphs', () => 
 test('desktop carousel moves the whole track rather than repositioning each slide', () => {
   // One transform on the track drives every card, so they travel together and
   // an entering card can never appear to grow out of an edge.
-  assert.match(carouselCss, /\.highlight-track\s*\{[\s\S]*transform:\s*translateX\(calc\(var\(--active-slide, 0\) \* -100%\)\)/);
+  assert.match(carouselCss, /\.highlight-track\s*\{[\s\S]*transform:\s*translateX\(calc\(var\(--active-slide, 0\) \* var\(--highlight-step\) \* -1\)\)/);
   assert.match(carouselCss, /\.highlight-track\s*\{[\s\S]*transition:\s*transform/);
   assert.match(carouselCss, /\.highlight-track\.is-instant\s*\{\s*\n\s*transition:\s*none/);
-  assert.match(carouselJs, /track\.style\.setProperty\('--active-slide', active\)/);
+  assert.match(carouselJs, /track\.style\.setProperty\('--active-slide', position\)/);
   // Only the first paint skips the animation.
   assert.match(carouselJs, /track\.classList\.toggle\('is-instant', !rendered\)/);
   assert.match(carouselJs, /releaseFrame = window\.requestAnimationFrame/);
   assert.match(carouselCss, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.highlight-track\s*\{\s*\n\s*transition:\s*none/);
+  // Each breakpoint steps by its own card width, so the step is a variable.
+  assert.match(carouselCss, /--highlight-step:\s*940px/);
+  assert.match(carouselCss, /--highlight-step:\s*670px/);
+});
+
+test('carousel loops through edge clones so both neighbours always peek', () => {
+  // A linear strip shows nothing past either end: at slide 0 no card peeked on
+  // the left, and wrapping swept the whole track instead of stepping one card.
+  // Clone the last slide before the first and the first after the last, then
+  // snap from the clone to the real slide with the transition suppressed.
+  assert.match(carouselJs, /const headClone = looped \? cloneSlide\(slides\[slides\.length - 1\]\) : null/);
+  assert.match(carouselJs, /const tailClone = looped \? cloneSlide\(slides\[0\]\) : null/);
+  assert.match(carouselJs, /track\.append\(headClone, \.\.\.slides, tailClone\)/);
+  // Clones are decorative: no editor instrumentation and no duplicate video.
+  assert.match(carouselJs, /clone\.querySelectorAll\('video, \.product-video-control'\)/);
+  assert.match(carouselJs, /key\.startsWith\('aue'\) \|\| key\.startsWith\('richtext'\)/);
+  // The strip is offset by one slide, so position = real index + 1.
+  assert.match(carouselJs, /const offset = looped \? 1 : 0/);
+  assert.match(carouselJs, /settleWrap\(active \+ offset\)/);
+  assert.match(carouselJs, /const WRAP_SETTLE_MS = 400/);
+  // Mobile scrolls natively, so clones are hidden and the step transform reset.
+  assert.match(carouselCss, /@media \(width <= 720px\)[\s\S]*\.highlight-slide\.is-clone\s*\{\s*\n\s*display:\s*none/);
 });
 
 test('mobile carousel disables autoplay and equalizes card copy height', () => {

@@ -17,6 +17,9 @@ import {
 } from './slider-utils.js';
 
 const MOBILE_QUERY = '(width <= 720px)';
+// Matches the .highlight-track transition duration: the wrap snap must land
+// once the animation onto the clone has finished.
+const WRAP_SETTLE_MS = 400;
 const carouselInstances = new WeakMap();
 
 function createStat(item) {
@@ -170,7 +173,33 @@ export default function decorate(block) {
     (item, index) => createSlide(block, item, index, statsBySlide.get(item) || []),
   );
   const slides = slideEntries.map(({ element }) => element);
-  track.append(...slides);
+  // Loop clones, the way Swiper/Slick do it: a copy of the last slide sits
+  // before the first and a copy of the first sits after the last. Without them a
+  // linear strip has nothing to show past either end -- no neighbour peeked at
+  // slide 0, and wrapping swept the whole track instead of stepping one card.
+  // Clones are decorative duplicates: strip editor instrumentation and any
+  // video so the Universal Editor never sees a second copy of a field and the
+  // browser never decodes the same clip twice.
+  const cloneSlide = (slide) => {
+    const clone = slide.cloneNode(true);
+    clone.classList.add('is-clone');
+    clone.classList.remove('is-active');
+    clone.setAttribute('aria-hidden', 'true');
+    clone.setAttribute('inert', '');
+    clone.querySelectorAll('video, .product-video-control').forEach((node) => node.remove());
+    [clone, ...clone.querySelectorAll('*')].forEach((node) => {
+      Object.keys(node.dataset)
+        .filter((key) => key.startsWith('aue') || key.startsWith('richtext'))
+        .forEach((key) => delete node.dataset[key]);
+      node.removeAttribute('id');
+    });
+    return clone;
+  };
+  const looped = slides.length > 1;
+  const headClone = looped ? cloneSlide(slides[slides.length - 1]) : null;
+  const tailClone = looped ? cloneSlide(slides[0]) : null;
+  if (looped) track.append(headClone, ...slides, tailClone);
+  else track.append(...slides);
   viewport.append(track);
   if (header.childElementCount) shell.append(header);
   shell.append(viewport);
@@ -180,6 +209,7 @@ export default function decorate(block) {
   let active = 0;
   let timer = null;
   let releaseFrame = null;
+  let wrapTimer = null;
   let scrollSyncTimer = null;
   let rendered = false;
   let destroyed = false;
@@ -195,15 +225,46 @@ export default function decorate(block) {
     releaseFrame = null;
     track.classList.remove('is-instant');
   };
+  // After the track animates onto a clone, drop the transition and move to the
+  // matching real slide. transitionend can be missed (an interrupted transform
+  // fires nothing), so a timer bounded by the CSS duration is the reliable
+  // trigger; the visual is identical either way because clone and original show
+  // the same card.
+  const settleWrap = (position) => {
+    if (wrapTimer) window.clearTimeout(wrapTimer);
+    wrapTimer = window.setTimeout(() => {
+      wrapTimer = null;
+      if (destroyed) return;
+      track.classList.add('is-instant');
+      track.style.setProperty('--active-slide', position);
+      track.getBoundingClientRect();
+      releaseFrame = window.requestAnimationFrame(() => {
+        track.classList.remove('is-instant');
+        releaseFrame = null;
+      });
+    }, WRAP_SETTLE_MS);
+  };
   const update = (next, scrollMobile = false) => {
     if (destroyed || !slides.length) return;
+    const previous = active;
     active = (next + slides.length) % slides.length;
     // The strip moves as one: the track carries a single transform driven by
     // --active-slide, so every card travels the same distance in the same
     // direction. The first paint jumps straight to the active slide instead of
     // animating in from slide 0.
+    //
+    // With loop clones the track is offset by one slide, so index i sits at
+    // i + 1. Stepping off either end animates onto the neighbouring clone
+    // first, then snaps -- with the transition suppressed -- to the identical
+    // real slide. The jump is invisible because both show the same card.
+    const wrappedForward = looped && previous === slides.length - 1 && active === 0;
+    const wrappedBack = looped && previous === 0 && active === slides.length - 1;
+    const offset = looped ? 1 : 0;
+    let position = active + offset;
+    if (wrappedForward) position = slides.length + offset;
+    if (wrappedBack) position = offset - 1;
     track.classList.toggle('is-instant', !rendered);
-    track.style.setProperty('--active-slide', active);
+    track.style.setProperty('--active-slide', position);
     slides.forEach((slide, index) => {
       const inactive = index !== active;
       slide.classList.toggle('is-active', !inactive);
@@ -217,6 +278,8 @@ export default function decorate(block) {
         track.classList.remove('is-instant');
         releaseFrame = null;
       });
+    } else if (wrappedForward || wrappedBack) {
+      settleWrap(active + offset);
     }
     rendered = true;
     shell.style.setProperty('--active-slide', active);
@@ -354,6 +417,8 @@ export default function decorate(block) {
     clearStaging();
     if (scrollSyncTimer !== null) window.clearTimeout(scrollSyncTimer);
     scrollSyncTimer = null;
+    if (wrapTimer !== null) window.clearTimeout(wrapTimer);
+    wrapTimer = null;
     eventController.abort();
     slideEntries.forEach(({ destroyMedia }) => destroyMedia());
     if (carouselInstances.get(block) === cleanup) carouselInstances.delete(block);
