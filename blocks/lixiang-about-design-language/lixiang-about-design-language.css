@@ -12,25 +12,24 @@
 .lixiang-about-design-header {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 14px;
-  max-width: 877px;
+  text-align: center;
 }
 
 .lixiang-about-design-header h2 {
   margin: 0;
-  font-family: var(--heading-font-family);
-  font-size: 46px;
-  font-weight: 500;
-  line-height: 1.35;
-  color: rgb(0 0 0 / 90%);
+  font-size: 34px;
+  font-weight: 400;
+  color: rgb(25 25 25);
+  text-align: center;
 }
 
 .lixiang-about-design-subtitle {
-  font-family: var(--body-font-family);
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 400;
-  line-height: 1.4;
-  color: #666;
+  color: rgb(102 102 102);
+  text-align: center;
 }
 
 .lixiang-about-design-subtitle p { margin: 0; }
@@ -53,7 +52,7 @@
 
 .lixiang-about-design-hero-media .lixiang-about-design-header {
   position: absolute;
-  bottom: 80px;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
@@ -62,13 +61,13 @@
 
 .lixiang-about-design-hero-media .lixiang-about-design-header h2 {
   color: #fff;
-  font-size: 36px;
+  font-size: 27px;
   font-weight: 400;
 }
 
 .lixiang-about-design-hero-media .lixiang-about-design-subtitle {
-  color: rgb(255 255 255 / 70%);
-  font-weight: 500;
+  color: #fff;
+  font-weight: 400;
 }
 
 .lixiang-about-design-grid {
@@ -77,53 +76,20 @@
   gap: 20px;
 }
 
+/* Card: image full bg + text overlay (matches live site) */
 .lixiang-about-design-card {
+  position: relative;
   flex: 1;
   border-radius: 4px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
   aspect-ratio: 520 / 518;
+  background: #000;
 }
-
-.lixiang-about-design-card-dark { background: #000; }
-.lixiang-about-design-card-light { background: #fff; }
-
-.lixiang-about-design-card-content {
-  padding: 56px 32px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  flex-shrink: 0;
-}
-
-.lixiang-about-design-card-content h3 {
-  margin: 0;
-  font-family: var(--heading-font-family);
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 1.33;
-  text-align: center;
-}
-
-.lixiang-about-design-card-description {
-  font-family: var(--body-font-family);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.75;
-  text-align: center;
-}
-
-.lixiang-about-design-card-description p { margin: 0; }
-
-.lixiang-about-design-card-dark .lixiang-about-design-card-content h3 { color: #fff; }
-.lixiang-about-design-card-dark .lixiang-about-design-card-description { color: rgb(255 255 255 / 70%); }
-.lixiang-about-design-card-light .lixiang-about-design-card-content h3 { color: #191919; }
-.lixiang-about-design-card-light .lixiang-about-design-card-description { color: #666; }
 
 .lixiang-about-design-card-media {
-  flex: 1;
-  overflow: hidden;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
 .lixiang-about-design-card-media picture,
@@ -131,28 +97,46 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
+
+.lixiang-about-design-card-content {
+  position: absolute;
+  z-index: 2;
+  top: 40px;
+  left: 32px;
+  right: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lixiang-about-design-card-content h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+}
+
+.lixiang-about-design-card-description {
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+}
+
+.lixiang-about-design-card-description p { margin: 0; }
 
 @media (width <= 1024px) {
   .lixiang-about-design-inner { padding: 60px 40px 20px; }
-  .lixiang-about-design-header h2 { font-size: 36px; }
+  .lixiang-about-design-header h2 { font-size: 28px; }
   .lixiang-about-design-hero-media { aspect-ratio: 16 / 9; }
-  .lixiang-about-design-card-content { padding: 30px 20px 0; }
 }
 
 @media (width <= 768px) {
-  .lixiang-about-design-grid {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .lixiang-about-design-card {
-    aspect-ratio: 335 / 300;
-    border-radius: 8px;
-  }
-
-  .lixiang-about-design-card-content { padding: 20px 20px 0; }
+  .lixiang-about-design-grid { flex-direction: column; gap: 16px; }
+  .lixiang-about-design-card { aspect-ratio: 335 / 300; border-radius: 8px; }
+  .lixiang-about-design-card-content { top: 20px; left: 20px; right: 20px; }
   .lixiang-about-design-card-content h3 { font-size: 16px; }
   .lixiang-about-design-card-description { font-size: 12px; }
 }

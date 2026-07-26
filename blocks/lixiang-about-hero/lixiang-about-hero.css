@@ -22,9 +22,7 @@
   object-fit: cover;
 }
 
-.lixiang-about-hero-bg-mobile {
-  display: none;
-}
+.lixiang-about-hero-bg-mobile { display: none; }
 
 .lixiang-about-hero-copy {
   position: relative;
@@ -40,9 +38,8 @@
 
 .lixiang-about-hero-copy h1 {
   margin: 0;
-  font-family: var(--heading-font-family);
-  font-size: 72px;
-  font-weight: 500;
+  font-size: 54px;
+  font-weight: 400;
   line-height: 1.1;
   color: #fff;
   text-align: center;
@@ -50,8 +47,7 @@
 
 .lixiang-about-hero-copy p {
   margin: 0;
-  font-family: var(--body-font-family);
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1.33;
   color: #fff;
@@ -60,46 +56,17 @@
 }
 
 @media (width <= 1024px) {
-  .lixiang-about-hero-copy h1 {
-    font-size: 56px;
-  }
-
-  .lixiang-about-hero-copy p {
-    font-size: 20px;
-  }
+  .lixiang-about-hero-copy h1 { font-size: 42px; }
+  .lixiang-about-hero-copy p { font-size: 16px; }
 }
 
 @media (width <= 768px) {
-  .lixiang-about-hero {
-    min-height: 100svh;
-  }
-
-  .lixiang-about-hero-bg-desktop {
-    display: none;
-  }
-
-  .lixiang-about-hero-bg-mobile {
-    display: block;
-  }
-
-  .lixiang-about-hero-copy {
-    padding: 0 20px;
-    gap: 10px;
-  }
-
-  .lixiang-about-hero-copy h1 {
-    font-size: 36px;
-  }
-
-  .lixiang-about-hero-copy p {
-    font-size: 14px;
-  }
-}
-
-@media (width <= 390px) {
-  .lixiang-about-hero-copy h1 {
-    font-size: 28px;
-  }
+  .lixiang-about-hero { min-height: 100svh; }
+  .lixiang-about-hero-bg-desktop { display: none; }
+  .lixiang-about-hero-bg-mobile { display: block; }
+  .lixiang-about-hero-copy { padding: 0 20px; gap: 10px; }
+  .lixiang-about-hero-copy h1 { font-size: 36px; }
+  .lixiang-about-hero-copy p { font-size: 12px; }
 }
 
 .adobe-ue-edit main .lixiang-about-hero {
