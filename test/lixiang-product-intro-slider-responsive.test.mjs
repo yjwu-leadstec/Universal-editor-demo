@@ -53,9 +53,11 @@ test('highlight carousel exposes clickable progress dots and accessible arrow co
   assert.match(carouselJs, /viewport\.setAttribute\('aria-label', sectionTitle\.replaceAll/);
 });
 
-test('highlight carousel hides non-participating slides and keeps authored media colors intact', () => {
-  assert.match(carouselCss, /\.highlight-slide\s*\{[\s\S]*visibility:\s*hidden/);
-  assert.match(carouselCss, /\.highlight-slide\.is-active\s*\{[\s\S]*visibility:\s*visible/);
+test('highlight carousel lays slides out as one strip and keeps authored media colors intact', () => {
+  // Slides sit side by side; the track moves them, so no slide is hidden or
+  // positioned on its own.
+  assert.match(carouselCss, /\.highlight-slide\s*\{[\s\S]*flex:\s*0 0 100%/);
+  assert.doesNotMatch(carouselCss, /\.highlight-slide\.is-(previous|next)\s*\{/);
   assert.doesNotMatch(carouselCss, /linear-gradient\(180deg, rgb\(0 0 0 \/ 34%\)/);
   assert.doesNotMatch(carouselJs, /\.product-section-header, \.highlight-slide/);
 });
@@ -69,14 +71,17 @@ test('tablet carousel corrects wrapper padding and centers arrow glyphs', () => 
   assert.match(carouselCss, /@media \(width >= 721px\) and \(width <= 1440px\)[\s\S]*width:\s*calc\(100% - 190px\);[\s\S]*repeat\(var\(--highlight-slide-count\), minmax\(0, 1fr\)\)/);
 });
 
-test('desktop carousel hides wrap-around staging before repositioning non-participating slides', () => {
-  assert.match(carouselCss, /transition:\s*opacity 300ms ease, transform 300ms ease/);
-  assert.match(carouselCss, /\.highlight-slide\.is-instant\s*\{\s*\n\s*transition:\s*none/);
-  assert.match(carouselCss, /\.highlight-slide\.is-instant\.is-staging-hidden\s*\{[\s\S]*opacity:\s*0;[\s\S]*visibility:\s*hidden/);
-  assert.match(carouselJs, /slide\.classList\.toggle\('is-staging-hidden', rendered && stagesWithoutMotion\)/);
-  assert.match(carouselJs, /slides\.forEach\(\(slide\) => slide\.classList\.remove\('is-staging-hidden'\)\)/);
+test('desktop carousel moves the whole track rather than repositioning each slide', () => {
+  // One transform on the track drives every card, so they travel together and
+  // an entering card can never appear to grow out of an edge.
+  assert.match(carouselCss, /\.highlight-track\s*\{[\s\S]*transform:\s*translateX\(calc\(var\(--active-slide, 0\) \* -100%\)\)/);
+  assert.match(carouselCss, /\.highlight-track\s*\{[\s\S]*transition:\s*transform/);
+  assert.match(carouselCss, /\.highlight-track\.is-instant\s*\{\s*\n\s*transition:\s*none/);
+  assert.match(carouselJs, /track\.style\.setProperty\('--active-slide', active\)/);
+  // Only the first paint skips the animation.
+  assert.match(carouselJs, /track\.classList\.toggle\('is-instant', !rendered\)/);
   assert.match(carouselJs, /releaseFrame = window\.requestAnimationFrame/);
-  assert.match(carouselCss, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.highlight-slide\s*\{\s*\n\s*transition:\s*none/);
+  assert.match(carouselCss, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.highlight-track\s*\{\s*\n\s*transition:\s*none/);
 });
 
 test('mobile carousel disables autoplay and equalizes card copy height', () => {
@@ -86,7 +91,9 @@ test('mobile carousel disables autoplay and equalizes card copy height', () => {
   assert.match(carouselCss, /height:\s*100%;\s*\n\s*min-height:\s*0;\s*\n\s*flex:\s*1 1 auto/);
   assert.doesNotMatch(carouselCss, /min-height:\s*(230|270)px/);
   assert.match(carouselCss, /grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
-  assert.match(carouselCss, /@media \(width <= 720px\)[\s\S]*visibility:\s*visible/);
+  // Mobile scrolls the strip natively: slides take the viewport width and snap.
+  assert.match(carouselCss, /@media \(width <= 720px\)[\s\S]*scroll-snap-align:\s*start/);
+  assert.match(carouselCss, /@media \(width <= 720px\)[\s\S]*scroll-snap-type:\s*x mandatory/);
 });
 
 test('highlight carousel dialog exposes multiline titles, semantic colors, spacing, and video controls', () => {

@@ -179,7 +179,6 @@ export default function decorate(block) {
   const { signal } = eventController;
   let active = 0;
   let timer = null;
-  let stagingFrame = null;
   let releaseFrame = null;
   let scrollSyncTimer = null;
   let rendered = false;
@@ -192,40 +191,33 @@ export default function decorate(block) {
     target.addEventListener(type, handler, { ...options, signal });
   };
   const clearStaging = () => {
-    if (stagingFrame !== null) window.cancelAnimationFrame(stagingFrame);
     if (releaseFrame !== null) window.cancelAnimationFrame(releaseFrame);
-    stagingFrame = null;
     releaseFrame = null;
-    slides.forEach((slide) => slide.classList.remove('is-instant', 'is-staging-hidden'));
+    track.classList.remove('is-instant');
   };
   const update = (next, scrollMobile = false) => {
     if (destroyed || !slides.length) return;
-    clearStaging();
-    const previousActive = active;
     active = (next + slides.length) % slides.length;
+    // The strip moves as one: the track carries a single transform driven by
+    // --active-slide, so every card travels the same distance in the same
+    // direction. The first paint jumps straight to the active slide instead of
+    // animating in from slide 0.
+    track.classList.toggle('is-instant', !rendered);
+    track.style.setProperty('--active-slide', active);
     slides.forEach((slide, index) => {
-      const participatesInTransition = rendered && (index === previousActive || index === active);
-      const stagesWithoutMotion = !participatesInTransition;
-      slide.classList.toggle('is-instant', stagesWithoutMotion);
-      slide.classList.toggle('is-staging-hidden', rendered && stagesWithoutMotion);
-      slide.classList.toggle('is-active', index === active);
-      slide.classList.toggle('is-previous', index === (active - 1 + slides.length) % slides.length);
-      slide.classList.toggle('is-next', index === (active + 1) % slides.length);
       const inactive = index !== active;
+      slide.classList.toggle('is-active', !inactive);
       slide.setAttribute('aria-hidden', String(inactive));
       slide.toggleAttribute('inert', inactive);
       slideEntries[index].setMediaActive(!inactive);
     });
-    track.getBoundingClientRect();
-    stagingFrame = window.requestAnimationFrame(() => {
-      slides.forEach((slide) => slide.classList.remove('is-staging-hidden'));
+    if (!rendered) {
       track.getBoundingClientRect();
-      stagingFrame = null;
       releaseFrame = window.requestAnimationFrame(() => {
-        slides.forEach((slide) => slide.classList.remove('is-instant'));
+        track.classList.remove('is-instant');
         releaseFrame = null;
       });
-    });
+    }
     rendered = true;
     shell.style.setProperty('--active-slide', active);
     refreshControls();

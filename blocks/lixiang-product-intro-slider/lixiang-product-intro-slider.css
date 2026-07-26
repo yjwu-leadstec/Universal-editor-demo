@@ -371,28 +371,36 @@ main .lixiang-product-intro-slider .highlight-viewport {
 main .lixiang-product-intro-slider .highlight-track {
   position: relative;
 
-  /* 1200px card + the slide's 20px inline padding on each side. Centring the
-   * padded box inside the now full-width viewport puts the card on the same
-   * axis as .highlight-controls. */
+  /* One rigid strip: every slide sits side by side and the whole track shifts
+   * by --active-slide. Positioning each slide on its own (a previous/active/next
+   * slot) made an entering card start at a slot edge and tween outwards, so it
+   * looked like it grew sideways while the rest stood still.
+   *
+   * 1200px card + the slide's 20px inline padding on each side. Centring the
+   * padded box inside the full-width viewport puts the card on the same axis
+   * as .highlight-controls. */
+  display: flex;
   width: 1240px;
   height: 706px;
   margin-inline: auto;
+  transform: translateX(calc(var(--active-slide, 0) * -100%));
+  transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+main .lixiang-product-intro-slider .highlight-track.is-instant {
+  transition: none;
 }
 
 main .lixiang-product-intro-slider .highlight-slide {
   --highlight-copy: #fff;
   --highlight-muted: rgb(255 255 255 / 72%);
 
-  position: absolute;
-  inset: 0;
+  position: relative;
   box-sizing: border-box;
+  width: 1240px;
   padding-inline: 20px;
+  flex: 0 0 100%;
   overflow: visible;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(0);
-  transition: opacity 300ms ease, transform 300ms ease;
-  pointer-events: none;
 }
 
 main .lixiang-product-intro-slider .highlight-slide.highlight-copy-black {
@@ -403,35 +411,6 @@ main .lixiang-product-intro-slider .highlight-slide.highlight-copy-black {
 main .lixiang-product-intro-slider .highlight-slide.highlight-copy-white {
   --highlight-copy: #fff;
   --highlight-muted: rgb(255 255 255 / 72%);
-}
-
-main .lixiang-product-intro-slider .highlight-slide.is-instant {
-  transition: none;
-}
-
-main .lixiang-product-intro-slider .highlight-slide.is-active {
-  z-index: 2;
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0);
-  pointer-events: auto;
-}
-
-main .lixiang-product-intro-slider .highlight-slide.is-previous {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-100%);
-}
-
-main .lixiang-product-intro-slider .highlight-slide.is-next {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(100%);
-}
-
-main .lixiang-product-intro-slider .highlight-slide.is-instant.is-staging-hidden {
-  opacity: 0;
-  visibility: hidden;
 }
 
 main .lixiang-product-intro-slider .product-media {
@@ -812,24 +791,15 @@ main .lixiang-product-intro-slider .highlight-status {
     gap: 0;
   }
 
-  main .lixiang-product-intro-slider .highlight-slide,
-  main .lixiang-product-intro-slider .highlight-slide.is-active,
-  main .lixiang-product-intro-slider .highlight-slide.is-previous,
-  main .lixiang-product-intro-slider .highlight-slide.is-next {
-    position: relative;
-    inset: auto;
+  /* Mobile scrolls the strip natively instead of stepping it, so the slides
+   * take the viewport width and snap. The desktop slot resets this rule used
+   * to carry are gone -- slides are plain flex items now. */
+  main .lixiang-product-intro-slider .highlight-slide {
     display: flex;
     width: 100vw;
-    box-sizing: border-box;
-    padding-inline: 20px;
     flex: 0 0 auto;
     flex-direction: column;
-    overflow: visible;
     background: transparent;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    pointer-events: auto;
     scroll-snap-align: start;
   }
 
@@ -968,7 +938,7 @@ main .lixiang-product-intro-slider .highlight-status {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  main .lixiang-product-intro-slider .highlight-slide {
+  main .lixiang-product-intro-slider .highlight-track {
     transition: none;
   }
 }
