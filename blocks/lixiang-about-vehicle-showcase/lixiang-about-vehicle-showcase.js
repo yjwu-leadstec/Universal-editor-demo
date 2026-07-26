@@ -5,6 +5,7 @@ import {
   instrumentProp,
   modelItems,
   moveItemInstrumentation,
+  animateAboutBlock,
 } from '../../scripts/about-block-utils.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
@@ -85,4 +86,5 @@ export default function decorate(block) {
 
   block.textContent = '';
   block.append(media, copy);
+  animateAboutBlock(block, { items: [...copy.children] });
 }

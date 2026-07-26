@@ -2,8 +2,8 @@
   width: 100vw;
   margin-left: calc(50% - 50vw);
   position: relative;
-  height: 56.25vw;
-  max-height: 1080px;
+  height: 100vh;
+  min-height: 56.25vw;
   overflow: hidden;
   background: #000;
 }

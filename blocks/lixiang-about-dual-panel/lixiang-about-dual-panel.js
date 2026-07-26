@@ -7,6 +7,7 @@ import {
   modelItems,
   moveItemInstrumentation,
   createRichText,
+  animateAboutBlock,
 } from '../../scripts/about-block-utils.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
@@ -86,4 +87,5 @@ export default function decorate(block) {
   inner.append(header, grid);
   block.textContent = '';
   block.append(inner);
+  animateAboutBlock(block, { containers: [header, ...grid.children] });
 }

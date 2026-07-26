@@ -165,6 +165,21 @@ export function moveItemInstrumentation(source, target) {
   if (source && target) moveInstrumentation(source, target);
 }
 
+const aboutMotionObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('about-inview');
+      aboutMotionObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+export function animateAboutBlock(block, { items = [], containers = [] } = {}) {
+  items.forEach((el) => el?.classList?.add('about-anim-item'));
+  containers.forEach((el) => el?.classList?.add('about-anim'));
+  aboutMotionObserver.observe(block);
+}
+
 export function createRichText(source, className = '') {
   const wrapper = document.createElement('div');
   if (className) wrapper.className = className;

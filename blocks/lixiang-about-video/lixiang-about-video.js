@@ -4,6 +4,7 @@ import {
   propPicture,
   propUrl,
   instrumentProp,
+  animateAboutBlock,
 } from '../../scripts/about-block-utils.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
@@ -68,4 +69,5 @@ export default function decorate(block) {
   inner.append(header, media);
   block.textContent = '';
   block.append(inner);
+  animateAboutBlock(block, { items: [...header.children], containers: [media] });
 }
