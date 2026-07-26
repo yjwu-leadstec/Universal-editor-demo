@@ -75,7 +75,10 @@ test('tablet carousel corrects wrapper padding and centers arrow glyphs', () => 
 test('desktop carousel moves the whole track rather than repositioning each slide', () => {
   // One transform on the track drives every card, so they travel together and
   // an entering card can never appear to grow out of an edge.
-  assert.match(carouselCss, /\.highlight-track\s*\{[\s\S]*transform:\s*translateX\(calc\(var\(--active-slide, 0\) \* var\(--highlight-step\) \* -1\)\)/);
+  assert.match(carouselCss, /\.highlight-track\s*\{[\s\S]*var\(--highlight-step\) \/ -2 - var\(--active-slide, 0\) \* var\(--highlight-step\)/);
+  // The strip is wider than the viewport, so it is centred by left+transform
+  // rather than margin auto, which would pin the first card to the left edge.
+  assert.match(carouselCss, /\.highlight-track\s*\{[\s\S]*left:\s*50%/);
   assert.match(carouselCss, /\.highlight-track\s*\{[\s\S]*transition:\s*transform/);
   assert.match(carouselCss, /\.highlight-track\.is-instant\s*\{\s*\n\s*transition:\s*none/);
   assert.match(carouselJs, /track\.style\.setProperty\('--active-slide', position\)/);

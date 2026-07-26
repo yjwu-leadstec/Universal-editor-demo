@@ -382,16 +382,25 @@ main .lixiang-product-intro-slider .highlight-track {
   display: flex;
   width: max-content;
   height: 706px;
-  margin-inline: auto;
 
   /* Loop clones bracket the real slides, so the strip starts one slide early.
    * --active-slide is the position in the padded strip (real index + 1), and
    * each step moves exactly one slide width. --highlight-step carries that
    * width because each breakpoint sizes the card differently; a percentage
-   * would be a share of the whole multi-slide strip instead. */
+   * would be a share of the whole multi-slide strip instead.
+   *
+   * The strip is far wider than the viewport, so margin auto cannot centre it
+   * -- it pinned the first card to the left edge and the left neighbour never
+   * peeked. `left: 50%` puts the strip's start on the viewport's centre line
+   * (a percentage of the parent, so it holds at every breakpoint), then the
+   * transform backs off half a card to centre the active one. */
   --highlight-step: 1240px;
 
-  transform: translateX(calc(var(--active-slide, 0) * var(--highlight-step) * -1));
+  left: 50%;
+  margin-inline: 0;
+  transform: translateX(
+    calc(var(--highlight-step) / -2 - var(--active-slide, 0) * var(--highlight-step))
+  );
   transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -807,7 +816,9 @@ main .lixiang-product-intro-slider .highlight-status {
 
     /* Mobile scrolls natively, so the desktop step transform must be cleared --
      * left in place it shifted the strip a full track width off-screen while
-     * scrollLeft stayed 0, leaving the carousel blank. */
+     * scrollLeft stayed 0, leaving the carousel blank. The desktop centring
+     * offset has to go with it for the same reason. */
+    left: 0;
     transform: none;
     transition: none;
   }
