@@ -22,7 +22,7 @@
 .lixiang-about-create-together-header h2 {
   margin: 0;
   font-size: 46px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.3478;
   color: #191919;
 }
@@ -81,7 +81,7 @@
 .lixiang-about-create-together-card-content {
   position: absolute;
   z-index: 2;
-  top: 80px;
+  top: 56px;
   left: 80px;
   right: 80px;
   display: flex;
@@ -93,16 +93,16 @@
 
 .lixiang-about-create-together-card-content h3 {
   margin: 0;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 1.3333;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.4;
   color: #fff;
   text-align: center;
 }
 
 .lixiang-about-create-together-card-description {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.75;
   color: rgb(255 255 255 / 70%);
   text-align: center;

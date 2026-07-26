@@ -4,8 +4,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
-  padding: 120px 100px 27px;
+  gap: 40px;
+  padding: 160px 100px 27px;
   max-width: 1920px;
   margin: 0 auto;
 }
@@ -14,15 +14,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
   width: 100%;
 }
 
 .lixiang-about-video-header h2 {
   margin: 0;
   font-size: 64px;
-  font-weight: 500;
-  line-height: 1.1;
+  font-weight: 400;
+  line-height: 1.40625;
   color: rgb(0 0 0 / 90%);
   text-align: center;
 }
@@ -35,17 +35,17 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.1;
-  color: #666;
+  line-height: 1.5;
+  color: #191919;
 }
 
-.lixiang-about-video-cta:hover { color: #333; }
+.lixiang-about-video-cta:hover { opacity: 0.6; }
 
 .lixiang-about-video-cta-icon {
-  width: 20px;
-  height: 18px;
+  width: 14px;
+  height: 12px;
   background: #333;
   clip-path: polygon(0 0, 100% 50%, 0 100%);
 }

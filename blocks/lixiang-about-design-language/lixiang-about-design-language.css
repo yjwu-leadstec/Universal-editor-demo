@@ -22,7 +22,7 @@
 .lixiang-about-design-language-header h2 {
   margin: 0;
   font-size: 46px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.3478;
   color: rgb(0 0 0 / 90%);
 }
@@ -107,9 +107,9 @@
 
 .lixiang-about-design-card-content h3 {
   margin: 0;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 1.3333;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.4;
   color: #fff;
   text-align: center;
 }
