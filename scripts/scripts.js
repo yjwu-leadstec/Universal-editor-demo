@@ -11,6 +11,7 @@ import {
   loadSections,
   loadCSS,
   getMetadata,
+  buildBlock,
 } from './aem.js';
 import { getDocumentLocale } from './site-shell.mjs';
 
@@ -64,9 +65,20 @@ async function loadFonts() {
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
-function buildAutoBlocks() {
+function buildMediaCenterDetail(main) {
+  if (!window.location.pathname.includes('/media-library/')) return;
+  if (main.textContent.trim() || main.querySelector('[class]')) return;
+  const section = document.createElement('div');
+  section.append(buildBlock('media-center-detail', [
+    ['Content Fragment Root', '/content/dam/li-auto/media-center-v2'],
+    ['Newsroom Route', '/language-master/en/media-center-v2'],
+  ]));
+  main.replaceChildren(section);
+}
+
+function buildAutoBlocks(main) {
   try {
-    // TODO: add auto block, if needed
+    buildMediaCenterDetail(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
