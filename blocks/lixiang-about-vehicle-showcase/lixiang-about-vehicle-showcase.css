@@ -9,22 +9,22 @@
   background: #fafafa;
 }
 
-.about-vehicle-media {
+.lixiang-about-vehicle-media {
   position: absolute;
   inset: 0;
   z-index: 0;
 }
 
-.about-vehicle-media picture,
-.about-vehicle-media img {
+.lixiang-about-vehicle-media picture,
+.lixiang-about-vehicle-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.about-vehicle-bg-mobile { display: none; }
+.lixiang-about-vehicle-bg-mobile { display: none; }
 
-.about-vehicle-copy {
+.lixiang-about-vehicle-copy {
   position: relative;
   z-index: 1;
   display: flex;
@@ -36,16 +36,16 @@
   text-align: center;
 }
 
-.about-vehicle-copy h2 {
+.lixiang-about-vehicle-copy h2 {
   margin: 0;
   font-family: var(--heading-font-family);
   font-size: 46px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.35;
   color: #fff;
 }
 
-.about-vehicle-copy p {
+.lixiang-about-vehicle-copy p {
   margin: 0;
   font-family: var(--body-font-family);
   font-size: 16px;
@@ -75,7 +75,7 @@
   margin: 0;
   font-family: var(--heading-font-family);
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 500;
   color: #fff;
 }
 
@@ -89,16 +89,16 @@
 }
 
 @media (width <= 1024px) {
-  .about-vehicle-copy h2 { font-size: 36px; }
+  .lixiang-about-vehicle-copy h2 { font-size: 36px; }
 }
 
 @media (width <= 768px) {
   .lixiang-about-vehicle-showcase { min-height: 100svh; }
-  .about-vehicle-bg-desktop { display: none; }
-  .about-vehicle-bg-mobile { display: block; }
-  .about-vehicle-copy { padding: 0 40px; }
-  .about-vehicle-copy h2 { font-size: 24px; }
-  .about-vehicle-copy p { font-size: 14px; }
+  .lixiang-about-vehicle-bg-desktop { display: none; }
+  .lixiang-about-vehicle-bg-mobile { display: block; }
+  .lixiang-about-vehicle-copy { padding: 0 40px; }
+  .lixiang-about-vehicle-copy h2 { font-size: 24px; }
+  .lixiang-about-vehicle-copy p { font-size: 14px; }
 
   .lixiang-about-vehicle-models {
     flex-direction: column;
