@@ -137,7 +137,11 @@
   .lixiang-about-design-inner { padding: 60px 40px 20px; }
   .lixiang-about-design-header h2 { font-size: 36px; }
   .lixiang-about-design-hero-media { aspect-ratio: 16 / 9; }
-  .lixiang-about-design-card-content { top: 30px; left: 20px; right: 20px; }
+  .lixiang-about-design-card-content {
+    top: 30px;
+    left: 20px;
+    right: 20px;
+  }
 }
 
 @media (width <= 768px) {
@@ -151,7 +155,11 @@
     border-radius: 8px;
   }
 
-  .lixiang-about-design-card-content { top: 20px; left: 20px; right: 20px; }
+  .lixiang-about-design-card-content {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+  }
   .lixiang-about-design-card-content h3 { font-size: 16px; }
   .lixiang-about-design-card-description { font-size: 12px; }
 }
