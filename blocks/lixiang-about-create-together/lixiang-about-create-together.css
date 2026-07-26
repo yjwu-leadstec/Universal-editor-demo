@@ -109,13 +109,31 @@
 @media (width <= 1024px) {
   .lixiang-about-together-inner { padding: 60px 40px 20px; }
   .lixiang-about-together-header h2 { font-size: 28px; }
-  .lixiang-about-together-card-content { top: 30px; left: 20px; right: 20px; }
+
+  .lixiang-about-together-card-content {
+    top: 30px;
+    left: 20px;
+    right: 20px;
+  }
 }
 
 @media (width <= 768px) {
-  .lixiang-about-together-grid { flex-direction: column; align-items: center; }
-  .lixiang-about-together-card { width: 100%; max-width: 335px; border-radius: 8px; }
-  .lixiang-about-together-card-content { top: 20px; left: 20px; right: 20px; }
+  .lixiang-about-together-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lixiang-about-together-card {
+    width: 100%;
+    max-width: 335px;
+    border-radius: 8px;
+  }
+
+  .lixiang-about-together-card-content {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+  }
   .lixiang-about-together-card-content h3 { font-size: 15px; }
   .lixiang-about-together-card-description { font-size: 12px; }
   .lixiang-about-together-card-media { min-height: 200px; }

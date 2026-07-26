@@ -108,8 +108,15 @@
 }
 
 @media (width <= 768px) {
-  .lixiang-about-dual-panel-grid { flex-direction: column; gap: 16px; }
-  .lixiang-about-dual-panel-card { min-height: 350px; border-radius: 8px; }
+  .lixiang-about-dual-panel-grid {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .lixiang-about-dual-panel-card {
+    min-height: 350px;
+    border-radius: 8px;
+  }
   .lixiang-about-dual-panel-card-content { padding: 20px; }
   .lixiang-about-dual-panel-card-content h3 { font-size: 20px; }
   .lixiang-about-dual-panel-card-description { font-size: 12px; }

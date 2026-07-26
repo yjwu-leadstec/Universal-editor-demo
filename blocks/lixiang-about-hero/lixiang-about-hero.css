@@ -64,7 +64,11 @@
   .lixiang-about-hero { min-height: 100svh; }
   .lixiang-about-hero-bg-desktop { display: none; }
   .lixiang-about-hero-bg-mobile { display: block; }
-  .lixiang-about-hero-copy { padding: 0 20px; gap: 10px; }
+
+  .lixiang-about-hero-copy {
+    padding: 0 20px;
+    gap: 10px;
+  }
   .lixiang-about-hero-copy h1 { font-size: 36px; }
   .lixiang-about-hero-copy p { font-size: 12px; }
 }

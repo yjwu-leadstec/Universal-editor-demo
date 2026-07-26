@@ -87,5 +87,9 @@
   .lixiang-about-video-inner { padding: 60px 20px 20px; }
   .lixiang-about-video-header h2 { font-size: 28px; }
   .lixiang-about-video-cta { font-size: 14px; }
-  .lixiang-about-video-media { border-radius: 16px; aspect-ratio: 335 / 188; }
+
+  .lixiang-about-video-media {
+    border-radius: 16px;
+    aspect-ratio: 335 / 188;
+  }
 }

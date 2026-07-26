@@ -92,7 +92,11 @@
   .lixiang-about-vehicle-bg-mobile { display: block; }
   .lixiang-about-vehicle-copy h2 { font-size: 24px; }
   .lixiang-about-vehicle-copy p { font-size: 12px; }
-  .lixiang-about-vehicle-models { flex-direction: column; gap: 20px; }
+
+  .lixiang-about-vehicle-models {
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 
 .adobe-ue-edit main .lixiang-about-vehicle-showcase {

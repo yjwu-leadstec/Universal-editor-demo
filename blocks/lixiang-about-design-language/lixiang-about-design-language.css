@@ -134,9 +134,21 @@
 }
 
 @media (width <= 768px) {
-  .lixiang-about-design-grid { flex-direction: column; gap: 16px; }
-  .lixiang-about-design-card { aspect-ratio: 335 / 300; border-radius: 8px; }
-  .lixiang-about-design-card-content { top: 20px; left: 20px; right: 20px; }
+  .lixiang-about-design-grid {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .lixiang-about-design-card {
+    aspect-ratio: 335 / 300;
+    border-radius: 8px;
+  }
+
+  .lixiang-about-design-card-content {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+  }
   .lixiang-about-design-card-content h3 { font-size: 16px; }
   .lixiang-about-design-card-description { font-size: 12px; }
 }
