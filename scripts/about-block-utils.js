@@ -3,7 +3,7 @@ import { moveInstrumentation } from './scripts.js';
 const ABOUT_MODEL_FIELDS = {
   'lixiang-about-hero': [['title', 'text'], ['subtitle', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text']],
   'lixiang-about-vehicle-showcase': [['title', 'text'], ['subtitle', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text']],
-  'lixiang-about-vehicle-model': [['name', 'text'], ['description', 'text']],
+  'lixiang-about-vehicle-model': [['modelName', 'text'], ['description', 'text']],
   'lixiang-about-video': [['title', 'text'], ['ctaText', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['video', 'aem-content']],
   'lixiang-about-dual-panel': [['title', 'text'], ['subtitle', 'text']],
   'lixiang-about-dual-panel-item': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext'], ['footnote', 'text']],

@@ -2880,7 +2880,7 @@
     "fields": [
       {
         "component": "text",
-        "name": "name",
+        "name": "modelName",
         "label": "Model Name",
         "valueType": "string",
         "required": true

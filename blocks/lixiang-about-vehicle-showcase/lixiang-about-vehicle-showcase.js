@@ -58,7 +58,7 @@ export default function decorate(block) {
     const list = document.createElement('div');
     list.className = 'lixiang-about-vehicle-models';
     models.forEach((item) => {
-      const name = propText(item, 'name');
+      const name = propText(item, 'modelName');
       const description = propText(item, 'description');
       if (!name && !description) return;
       const card = document.createElement('div');
@@ -67,7 +67,7 @@ export default function decorate(block) {
         const nameEl = document.createElement('p');
         nameEl.className = 'lixiang-about-vehicle-model-name';
         nameEl.textContent = name;
-        instrumentProp(item, 'name', nameEl);
+        instrumentProp(item, 'modelName', nameEl);
         card.append(nameEl);
       }
       if (description) {
