@@ -20,7 +20,7 @@
 | hardcoded locale catalog and English UI strings | code release required for every market/language | authored header-settings + locale-directory | resolved in spec |
 | `html.lang` fixed to `en` | incorrect accessibility/SEO for new languages | dynamic language/direction contract | resolved in spec |
 | language-master nav/footer exist but `cq:isDelivered=false` and Preview fragment 404 | pages cannot consume them yet | explicit independent publish gate and order | resolved in migration plan |
-| `/content/demo-site/global` does not exist | proposed public path cannot be tested today | blueprint-first `/global/en` Live Copy phase | explicitly gated |
+| `/content/demo-site/global` does not exist | proposed public path cannot be tested while the path is absent | blueprint-first `/global/en` Live Copy phase | explicitly gated |
 | source links are root-relative | cross-locale navigation after rollout | AEM content reference migration + link rewrite audit | release blocker defined |
 | `/metadata.json` is 404 and page model lacks shell fields | metadata rollback assumption is false | default path resolver independent of metadata; add optional page fields | corrected after review |
 

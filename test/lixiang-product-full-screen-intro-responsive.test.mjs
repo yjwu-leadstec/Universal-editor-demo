@@ -31,8 +31,8 @@ test('product full-screen intro matches the official split Licium copy geometry'
   assert.match(fullScreenIntroCss, /\.lixiang-product-full-screen-intro-title\s*\{[\s\S]*font-family:\s*licium-medium[\s\S]*font-size:\s*46px[\s\S]*line-height:\s*62px/);
   assert.match(fullScreenIntroCss, /@media \(width >= 720px\) and \(width <= 1024px\)[\s\S]*bottom:\s*11\.9048vw[\s\S]*width:\s*44\.6429vw/);
   assert.match(fullScreenIntroCss, /@media \(width >= 1025px\) and \(width <= 1440px\)[\s\S]*bottom:\s*120px[\s\S]*width:\s*450px/);
-  assert.match(fullScreenIntroJs, /const LEGACY_CHAPTER_PREFIXES = \[[\s\S]*'Spatial Arrangement'[\s\S]*'AI Intelligence'[\s\S]*'Advanced Assisted Driving'[\s\S]*'Extended Range, 4WD\.'[\s\S]*'Ultimate Safety'/);
-  assert.match(fullScreenIntroJs, /\(\{ eyebrow, title \} = splitLegacyChapterTitle\(eyebrow, title\)\)/);
+  assert.doesNotMatch(fullScreenIntroJs, /LEGACY_CHAPTER_PREFIXES|splitLegacyChapterTitle/);
+  assert.match(fullScreenIntroJs, /const eyebrow = propText\(block, 'eyebrow'\);[\s\S]*const title = propText\(block, 'title'\);/);
 });
 
 test('product full-screen intro keeps the official full-height mobile composition', () => {

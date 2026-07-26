@@ -38,23 +38,6 @@ The canvas explicitly numbers and describes eight visual component families.
 | 7 | 多图 | `lixiang-product-detail-picture-group` | 1 | Rebuilt as the fixed desktop/tablet/mobile mosaic with scroll-linked image movement. |
 | 8 | 结尾总结 | `feature-grid` | 1 | Rebuilt with nested groups, three columns on desktop, and two-row horizontal groups on mobile. |
 
-The previous local Li L6 fixture contained 21 visual block instances across 11 block
-types:
-
-| Current block | Instances |
-| --- | ---: |
-| `product-hero` | 2 |
-| `product-sticky-nav` | 1 |
-| `lixiang-product-intro-slider` | 1 |
-| `lixiang-product-full-screen-intro` | 5 |
-| `lixiang-product-intro-carousel` | 5 |
-| `lixiang-product-detail-picture-group` | 1 |
-| `spec-table` | 2 |
-| `product-ending` | 1 |
-| `product-guide` | 1 |
-| `product-download` | 1 |
-| `product-notes` | 1 |
-
 The Figma descriptions do not define `product-sticky-nav`, the second product hero,
 the two specification tables, product ending CTA, guide, download, or notes as Li L6
 visual component families. These blocks may remain reusable elsewhere in the project,

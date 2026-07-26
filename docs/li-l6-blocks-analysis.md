@@ -118,7 +118,7 @@ The Pencil document contains eight reusable design families: hero, highlight car
 - Large desktop (`1441px+`): use the 1920px Pencil proportions and a content width near 1480–1600px.
 - Medium (`720–1440px`): preserve desktop information hierarchy while reducing columns and spacing; do not simply scale the desktop canvas.
 - Mobile (`719px-`): use mobile-specific media when supplied, single-column or horizontal-snap layouts, and 60/80px spacing presets.
-- Required validation viewports are 1920, 1440, 1024, and 390px.
+- Required Preview validation viewports are 1920, 1440, 1024, 768, and 390px. Universal Editor Author validation additionally covers the editable iframe near 1006px.
 - Every viewport has zero horizontal page overflow, overlapping text, inaccessible controls, or clipped focus rings.
 
 ## Block-specific acceptance criteria
@@ -243,4 +243,4 @@ Temporary local `.plain.html` content is allowed for development, but final vali
 - Lint and JSON build pass; any existing test command passes or its absence is recorded.
 - Browser validation proves all four viewports, all interactive flows, zero console errors, and zero horizontal overflow.
 - The two `leadstec-dev` pages contain the expected block/item JCR structure and render correctly in preview/Universal Editor.
-- The feature branch is committed and pushed; a PR contains both preview links; GitHub build and preview checks are green.
+- Local `main` is rebased onto remote `main`, pushed, and verified on the real Universal Editor Author plus EDS Preview surfaces.
