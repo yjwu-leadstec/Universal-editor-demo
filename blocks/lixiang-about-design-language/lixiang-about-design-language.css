@@ -1,38 +1,49 @@
 .lixiang-about-design-language { background: #fafafa; }
 
 .lixiang-about-design-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 80px 160px 20px;
-  max-width: 1920px;
-  margin: 0 auto;
+display: flex;
+flex-direction: column;
+gap: 20px;
+padding: 80px 160px 20px;
+max-width: 1920px;
+margin: 0 auto;
+
 }
 
 .lixiang-about-design-header {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  max-width: 877px;
+display: flex;
+flex-direction: column;
+gap: 14px;
+max-width: 877px;
+
 }
 
 .lixiang-about-design-header h2 {
-  margin: 0;
-  font-size: 46px;
-  font-weight: 500;
-  line-height: 1.35;
-  color: rgb(0 0 0 / 90%);
+margin: 0;
+font-size: 46px;
+font-weight: 500;
+line-height: 1.35;
+color: rgb(0 0 0 / 90%);
+
 }
 
-.lixiang-about-design-subtitle { font-size: 20px; font-weight: 400; line-height: 1.4; color: #666; }
+.lixiang-about-design-subtitle {
+font-size: 20px;
+font-weight: 400;
+line-height: 1.4;
+color: #666;
+
+}
+
 .lixiang-about-design-subtitle p { margin: 0; }
 
 .lixiang-about-design-hero-media {
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-  width: 100%;
-  aspect-ratio: 1600 / 780;
+position: relative;
+border-radius: 4px;
+overflow: hidden;
+width: 100%;
+aspect-ratio: 1600 / 780;
+
 }
 
 .lixiang-about-design-hero-media picture, .lixiang-about-design-hero-media img {
@@ -63,15 +74,21 @@
   font-weight: 500;
 }
 
-.lixiang-about-design-grid { display: flex; align-items: stretch; gap: 20px; }
+.lixiang-about-design-grid {
+display: flex;
+align-items: stretch;
+gap: 20px;
+
+}
 
 .lixiang-about-design-card {
-  position: relative;
-  flex: 1;
-  border-radius: 4px;
-  overflow: hidden;
-  aspect-ratio: 520 / 518;
-  background: #000;
+position: relative;
+flex: 1;
+border-radius: 4px;
+overflow: hidden;
+aspect-ratio: 520 / 518;
+background: #000;
+
 }
 
 .lixiang-about-design-card-dark { background: #000; }
@@ -85,14 +102,15 @@
 }
 
 .lixiang-about-design-card-content {
-  position: absolute;
-  z-index: 2;
-  top: 56px;
-  left: 32px;
-  right: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+position: absolute;
+z-index: 2;
+top: 56px;
+left: 32px;
+right: 32px;
+display: flex;
+flex-direction: column;
+gap: 16px;
+
 }
 
 .lixiang-about-design-card-dark .lixiang-about-design-card-content h3 { color: #fff; }
@@ -102,21 +120,28 @@
 .lixiang-about-design-card-light .lixiang-about-design-card-description { color: #666; }
 
 .lixiang-about-design-card-content h3 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 1.33;
-  text-align: center;
+margin: 0;
+font-size: 24px;
+font-weight: 500;
+line-height: 1.33;
+text-align: center;
+
 }
 
 .lixiang-about-design-card-description {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.75;
-  text-align: center;
+font-size: 16px;
+font-weight: 400;
+line-height: 1.75;
+text-align: center;
+
 }
 
 .lixiang-about-design-card-description p { margin: 0; }
+
+.lixiang-about-design-card-dark .lixiang-about-design-card-content h3 { color: #fff; }
+.lixiang-about-design-card-dark .lixiang-about-design-card-description { color: rgb(255 255 255 / 70%); }
+.lixiang-about-design-card-light .lixiang-about-design-card-content h3 { color: #191919; }
+.lixiang-about-design-card-light .lixiang-about-design-card-description { color: #666; }
 
 @media (width <= 1024px) {
   .lixiang-about-design-inner { padding: 60px 40px 20px; }
@@ -124,10 +149,12 @@
   .lixiang-about-design-hero-media { aspect-ratio: 16 / 9; }
 
   .lixiang-about-design-card-content {
-    top: 30px;
-    left: 20px;
-    right: 20px;
+  top: 30px;
+  left: 20px;
+  right: 20px;
+
   }
+
 }
 
 @media (width <= 768px) {
@@ -137,15 +164,18 @@
   }
 
   .lixiang-about-design-card {
-    aspect-ratio: 335 / 300;
-    border-radius: 8px;
+  aspect-ratio: 335 / 300;
+  border-radius: 8px;
+
   }
 
   .lixiang-about-design-card-content {
-    top: 20px;
-    left: 20px;
-    right: 20px;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+
   }
+
   .lixiang-about-design-card-content h3 { font-size: 16px; }
   .lixiang-about-design-card-description { font-size: 12px; }
 }

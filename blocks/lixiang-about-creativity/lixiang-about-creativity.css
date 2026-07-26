@@ -1,72 +1,95 @@
 .lixiang-about-creativity { background: #fafafa; }
 
 .lixiang-about-creativity-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 85px 160px 20px;
-  max-width: 1920px;
-  margin: 0 auto;
+display: flex;
+flex-direction: column;
+gap: 20px;
+padding: 85px 160px 20px;
+max-width: 1920px;
+margin: 0 auto;
+
 }
 
 .lixiang-about-creativity-header {
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
-  max-width: 1254px;
+display: flex;
+flex-direction: column;
+gap: 13px;
+max-width: 1254px;
+
 }
 
 .lixiang-about-creativity-header h2 {
-  margin: 0;
-  font-size: 46px;
-  font-weight: 500;
-  line-height: 1.35;
-  color: #191919;
+margin: 0;
+font-size: 46px;
+font-weight: 500;
+line-height: 1.35;
+color: #191919;
+
 }
 
-.lixiang-about-creativity-subtitle { font-size: 20px; font-weight: 400; line-height: 1.4; color: #666; }
+.lixiang-about-creativity-subtitle {
+font-size: 20px;
+font-weight: 400;
+line-height: 1.4;
+color: #666;
+
+}
+
 .lixiang-about-creativity-subtitle p { margin: 0; }
 
-.lixiang-about-creativity-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.lixiang-about-creativity-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 20px;
+
+}
 
 .lixiang-about-creativity-card {
-  border-radius: 4px;
-  overflow: hidden;
-  background: #fafafa;
-  display: flex;
-  flex-direction: column;
-  min-height: 780px;
+border-radius: 4px;
+overflow: hidden;
+background: #fafafa;
+display: flex;
+flex-direction: column;
+min-height: 780px;
+
 }
 
 .lixiang-about-creativity-card-content {
-  background: #fff;
-  padding: 80px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  flex-shrink: 0;
+background: #fff;
+padding: 80px;
+display: flex;
+flex-direction: column;
+gap: 16px;
+flex-shrink: 0;
+
 }
 
 .lixiang-about-creativity-card-content h3 {
-  margin: 0;
-  font-size: 36px;
-  font-weight: 500;
-  line-height: 1.33;
-  color: rgb(0 0 0 / 90%);
-  text-align: center;
+margin: 0;
+font-size: 36px;
+font-weight: 500;
+line-height: 1.33;
+color: rgb(0 0 0 / 90%);
+text-align: center;
+
 }
 
 .lixiang-about-creativity-card-description {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.75;
-  color: rgb(0 0 0 / 60%);
-  text-align: center;
+font-size: 16px;
+font-weight: 500;
+line-height: 1.75;
+color: rgb(0 0 0 / 60%);
+text-align: center;
+
 }
 
 .lixiang-about-creativity-card-description p { margin: 0; }
 
-.lixiang-about-creativity-card-media { flex: 1; overflow: hidden; }
+.lixiang-about-creativity-card-media {
+flex: 1;
+overflow: hidden;
+
+}
 
 .lixiang-about-creativity-card-media picture, .lixiang-about-creativity-card-media img {
   width: 100%;
@@ -76,29 +99,32 @@
 }
 
 .lixiang-about-creativity-values {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 66px 321px 53px;
-  text-align: center;
-  background: #fff;
-  border-radius: 4px;
-  margin-top: 20px;
+display: flex;
+flex-direction: column;
+gap: 16px;
+padding: 66px 321px 53px;
+text-align: center;
+background: #fff;
+border-radius: 4px;
+margin-top: 20px;
+
 }
 
 .lixiang-about-creativity-values h3 {
-  margin: 0;
-  font-size: 36px;
-  font-weight: 500;
-  color: rgb(0 0 0 / 90%);
+margin: 0;
+font-size: 36px;
+font-weight: 500;
+color: rgb(0 0 0 / 90%);
+
 }
 
 .lixiang-about-creativity-values p {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.75;
-  color: rgb(0 0 0 / 60%);
+margin: 0;
+font-size: 16px;
+font-weight: 500;
+line-height: 1.75;
+color: rgb(0 0 0 / 60%);
+
 }
 
 @media (width <= 1024px) {
@@ -114,9 +140,11 @@
   .lixiang-about-creativity-grid { grid-template-columns: 1fr; }
 
   .lixiang-about-creativity-card {
-    min-height: auto;
-    border-radius: 8px;
+  min-height: auto;
+  border-radius: 8px;
+
   }
+
   .lixiang-about-creativity-card-content { padding: 20px; }
   .lixiang-about-creativity-card-content h3 { font-size: 20px; }
   .lixiang-about-creativity-card-description { font-size: 12px; }

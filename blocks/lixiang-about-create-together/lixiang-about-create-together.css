@@ -1,48 +1,70 @@
 .lixiang-about-create-together { background: #fafafa; }
 
 .lixiang-about-together-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  padding: 85px 160px 20px;
-  max-width: 1920px;
-  margin: 0 auto;
+display: flex;
+flex-direction: column;
+gap: 40px;
+padding: 85px 160px 20px;
+max-width: 1920px;
+margin: 0 auto;
+
 }
 
 .lixiang-about-together-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 13px;
-  max-width: 1099px;
-  margin: 0 auto;
-  text-align: center;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 13px;
+max-width: 1099px;
+margin: 0 auto;
+text-align: center;
+
 }
 
 .lixiang-about-together-header h2 {
-  margin: 0;
-  font-size: 46px;
-  font-weight: 500;
-  line-height: 1.35;
-  color: #191919;
+margin: 0;
+font-size: 46px;
+font-weight: 500;
+line-height: 1.35;
+color: #191919;
+
 }
 
-.lixiang-about-together-subtitle { font-size: 20px; font-weight: 400; line-height: 1.4; color: rgb(0 0 0 / 60%); }
+.lixiang-about-together-subtitle {
+font-size: 20px;
+font-weight: 400;
+line-height: 1.4;
+color: rgb(0 0 0 / 60%);
+
+}
+
 .lixiang-about-together-subtitle p { margin: 0; }
 
-.lixiang-about-together-grid { display: flex; align-items: stretch; justify-content: center; gap: 20px; }
+.lixiang-about-together-grid {
+display: flex;
+align-items: stretch;
+justify-content: center;
+gap: 20px;
 
-.lixiang-about-together-card {
-  position: relative;
-  flex: 1;
-  max-width: 520px;
-  border-radius: 4px;
-  overflow: hidden;
-  aspect-ratio: 520 / 518;
-  background: #000;
 }
 
-.lixiang-about-together-card-media { position: absolute; inset: 0; z-index: 0; }
+.lixiang-about-together-card {
+position: relative;
+flex: 1;
+max-width: 520px;
+border-radius: 4px;
+overflow: hidden;
+aspect-ratio: 520 / 518;
+background: #000;
+
+}
+
+.lixiang-about-together-card-media {
+position: absolute;
+inset: 0;
+z-index: 0;
+
+}
 
 .lixiang-about-together-card-media picture, .lixiang-about-together-card-media img {
   width: 100%;
@@ -51,45 +73,49 @@
 }
 
 .lixiang-about-together-card-content {
-  position: absolute;
-  z-index: 2;
-  top: 56px;
-  left: 32px;
-  right: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+position: absolute;
+z-index: 2;
+top: 56px;
+left: 32px;
+right: 32px;
+display: flex;
+flex-direction: column;
+gap: 8px;
+
 }
 
 .lixiang-about-together-card-content h3 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 500;
-  color: #fff;
-  text-align: center;
+margin: 0;
+font-size: 24px;
+font-weight: 500;
+color: #fff;
+text-align: center;
+
 }
 
 .lixiang-about-together-card-description {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.75;
-  color: rgb(255 255 255 / 70%);
-  text-align: center;
+font-size: 16px;
+font-weight: 400;
+line-height: 1.75;
+color: rgb(255 255 255 / 70%);
+text-align: center;
+
 }
 
 .lixiang-about-together-card-description p { margin: 0; }
 
 .lixiang-about-together-card-footnote {
-  position: absolute;
-  z-index: 2;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  margin: 0;
-  font-size: 14px;
-  font-weight: 400;
-  color: #fff;
-  text-align: center;
+position: absolute;
+z-index: 2;
+bottom: 20px;
+left: 20px;
+right: 20px;
+margin: 0;
+font-size: 14px;
+font-weight: 400;
+color: #fff;
+text-align: center;
+
 }
 
 @media (width <= 1024px) {
@@ -97,10 +123,12 @@
   .lixiang-about-together-header h2 { font-size: 36px; }
 
   .lixiang-about-together-card-content {
-    top: 30px;
-    left: 20px;
-    right: 20px;
+  top: 30px;
+  left: 20px;
+  right: 20px;
+
   }
+
 }
 
 @media (width <= 768px) {
@@ -110,16 +138,19 @@
   }
 
   .lixiang-about-together-card {
-    width: 100%;
-    max-width: 335px;
-    border-radius: 8px;
+  width: 100%;
+  max-width: 335px;
+  border-radius: 8px;
+
   }
 
   .lixiang-about-together-card-content {
-    top: 20px;
-    left: 20px;
-    right: 20px;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+
   }
+
   .lixiang-about-together-card-content h3 { font-size: 20px; }
   .lixiang-about-together-card-description { font-size: 12px; }
   .lixiang-about-together-card-media { min-height: 200px; }
