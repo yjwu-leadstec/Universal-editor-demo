@@ -1,11 +1,10 @@
 /* Content-driven Media Center feed. */
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import {
+  formatDate, loadMediaEntries, MEDIA_TYPES, normalizePath, sortMediaEntries,
+  titleFor, toEdsAssetPath,
+} from '../../scripts/media-center-data.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-
-const MEDIA_TYPES = ['newsroom', 'photos', 'videos'];
-const CONTENT_FRAGMENT_ROOT = '/content/dam/li-auto/media-center-v2';
-const GRAPHQL_QUERY_URL = 'https://publish-p80707-e1685574.adobeaemcloud.com/graphql/execute.json/global/media-center-feed';
-const GRAPHQL_CACHE_WINDOW_MS = 5 * 60 * 1000;
 
 function sourceFor(rows, name, fallbackIndex) {
   const selector = `[data-aue-prop="${name}"]`;
@@ -22,115 +21,6 @@ function sourceText(source) {
 function sourceHref(source) {
   const link = source?.matches('a') ? source : source?.querySelector('a');
   return link?.getAttribute('href') || '';
-}
-
-function firstValue(entry, names) {
-  const value = names.map((name) => entry[name])
-    .find((item) => item !== undefined && item !== null);
-  return typeof value === 'string' ? value.trim() : value || '';
-}
-
-function isVisible(value) {
-  return !['false', '0', 'no'].includes(String(value).trim().toLowerCase());
-}
-
-function normalizePath(path) {
-  return String(path || '').replace(/^https?:\/\/[^/]+/, '').replace(/\.html$/, '').replace(/\/$/, '');
-}
-
-function localizeDetailPath(path) {
-  const normalizedPath = normalizePath(path);
-  if (!normalizedPath.startsWith('/media-library/')) return normalizedPath;
-  const currentPath = normalizePath(window.location.pathname);
-  const pageIndex = currentPath.indexOf('/media-center-v2');
-  return pageIndex === -1 ? normalizedPath : `${currentPath.slice(0, pageIndex)}${normalizedPath}`;
-}
-
-function toEdsAssetPath(path) {
-  return normalizePath(path).replace(/^\/content\/dam\/li-auto\//, '/assets/');
-}
-
-function titleFor(type) {
-  return type === 'newsroom' ? 'Newsroom' : `${type.charAt(0).toUpperCase()}${type.slice(1)}`;
-}
-
-function formatDate(value) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
-  const date = new Date(`${value}T00:00:00Z`);
-  if (Number.isNaN(date.getTime())) return value;
-  return new Intl.DateTimeFormat('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-    timeZone: 'UTC',
-  }).format(date);
-}
-
-function mediaEntry(entry) {
-  const path = localizeDetailPath(firstValue(entry, ['detailPath', 'detail-path', 'path']));
-  const displayMode = String(firstValue(entry, ['displayMode', 'display-mode']) || 'grid').toLowerCase();
-  return {
-    path,
-    contentFragmentPath: normalizePath(firstValue(entry, ['_path', 'contentFragmentPath'])),
-    title: firstValue(entry, ['title', 'name']),
-    date: firstValue(entry, ['publishDate', 'publish-date', 'date']),
-    type: String(firstValue(entry, ['mediaType', 'media-type', 'type'])).toLowerCase(),
-    image: firstValue(entry, ['coverImage', 'cover-image', 'image']),
-    alt: firstValue(entry, ['imageAlt', 'image-alt']),
-    visible: isVisible(firstValue(entry, ['visible'])),
-    displayMode: displayMode === 'full-width' ? displayMode : 'grid',
-    featured: isVisible(firstValue(entry, ['featured'])) && firstValue(entry, ['featured']) !== '',
-    sortOrder: Number(firstValue(entry, ['sortOrder', 'sort-order'])) || Number.MAX_SAFE_INTEGER,
-    quantity: firstValue(entry, ['photoCount', 'photo-count', 'quantity']),
-    duration: firstValue(entry, ['videoDuration', 'video-duration', 'duration']),
-  };
-}
-
-function sortEntries(entries) {
-  return entries.sort((left, right) => {
-    if (left.featured !== right.featured) return left.featured ? -1 : 1;
-    if (left.sortOrder !== right.sortOrder) return left.sortOrder - right.sortOrder;
-    return String(right.date).localeCompare(String(left.date));
-  });
-}
-
-function parseJsonEntry(entry) {
-  const jsonEntry = firstValue(entry, ['jsonEntry']);
-  const value = Array.isArray(jsonEntry) ? jsonEntry[0] : jsonEntry;
-  if (typeof value === 'object' && value) return value;
-  if (typeof value !== 'string') return {};
-  try {
-    return JSON.parse(value);
-  } catch {
-    return {};
-  }
-}
-
-function fragmentEntry(entry) {
-  const fragmentPath = Object.getOwnPropertyDescriptor(entry, '_path')?.value;
-  return mediaEntry({ ...parseJsonEntry(entry), _path: fragmentPath });
-}
-
-function contentFragmentRoot(sourcePath) {
-  const configuredRoot = normalizePath(sourcePath);
-  return configuredRoot.startsWith('/content/dam/') ? configuredRoot : CONTENT_FRAGMENT_ROOT;
-}
-
-async function loadEntries(sourcePath) {
-  const queryUrl = new URL(GRAPHQL_QUERY_URL);
-  queryUrl.searchParams.set('cache', Math.floor(Date.now() / GRAPHQL_CACHE_WINDOW_MS));
-  const response = await fetch(queryUrl, {
-    headers: { Accept: 'application/json' },
-  });
-  if (!response.ok) throw new Error(`Media content request failed (${response.status})`);
-  const payload = await response.json();
-  const items = payload?.data?.simpleJsonObjectList?.items;
-  const root = contentFragmentRoot(sourcePath);
-  if (!Array.isArray(items)) return [];
-  return items
-    .map(fragmentEntry)
-    .filter((entry) => entry.contentFragmentPath === root
-      || entry.contentFragmentPath.startsWith(`${root}/`));
 }
 
 function createCard(entry, type) {
@@ -224,7 +114,7 @@ export default async function decorate(block) {
 
   try {
     const sourcePath = sourceHref(sourcePathSource) || sourceText(sourcePathSource);
-    const entries = sortEntries((await loadEntries(sourcePath))
+    const entries = sortMediaEntries((await loadMediaEntries(sourcePath))
       .filter((entry) => entry.visible && entry.type === activeType));
     if (!entries.length) {
       renderEmpty(list, 'No published media entries are available yet.');

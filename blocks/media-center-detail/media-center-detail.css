@@ -1,0 +1,69 @@
+@import url('../../styles/media-center.css');
+
+main .section.media-center-detail-container {
+  margin: 0;
+  padding: 0;
+}
+
+main > .section > .media-center-detail-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+main .media-center-detail {
+  width: 100%;
+  min-height: calc(100vh - var(--nav-height));
+  color: #111;
+  background: #f2f2f2;
+  font-family: licium-regular, "Segoe UI", arial, sans-serif;
+}
+
+main .media-center-detail-backbar {
+  display: flex;
+  align-items: center;
+  width: min(1480px, calc(100vw - 40px));
+  height: 66px;
+  margin: 0 auto;
+  border-bottom: 1px solid rgb(0 0 0 / 8%);
+}
+
+main .media-center-detail-backbar a {
+  color: #111;
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none;
+}
+
+main .media-center-detail-backbar a::before {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 9px 1px 2px;
+  border-bottom: 1px solid currentcolor;
+  border-left: 1px solid currentcolor;
+  content: '';
+  transform: rotate(45deg);
+}
+
+main .media-center-detail .media-detail {
+  min-height: 0;
+}
+
+main .media-center-detail-empty {
+  width: min(960px, calc(100vw - 40px));
+  margin: 0 auto;
+  padding: 80px 0;
+  color: rgb(0 0 0 / 60%);
+  font-size: 16px;
+  text-align: center;
+}
+
+@media (width < 720px) {
+  main .media-center-detail-backbar {
+    height: 56px;
+  }
+
+  main .media-center-detail-backbar a {
+    font-size: 13px;
+  }
+}

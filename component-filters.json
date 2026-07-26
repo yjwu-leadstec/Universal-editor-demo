@@ -257,6 +257,10 @@
     ]
   },
   {
+    "id": "media-center-detail",
+    "components": []
+  },
+  {
     "id": "media-center-feed",
     "components": []
   },

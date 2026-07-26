@@ -4120,6 +4120,24 @@
     ]
   },
   {
+    "id": "media-center-detail",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "sourcePath",
+        "label": "Content Fragment Root",
+        "value": "/content/dam/li-auto/media-center-v2",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "routeBase",
+        "label": "Newsroom Route",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "media-center-feed",
     "fields": [
       {
