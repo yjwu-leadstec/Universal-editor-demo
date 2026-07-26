@@ -7,7 +7,7 @@ const ABOUT_MODEL_FIELDS = {
   'lixiang-about-video': [['title', 'text'], ['ctaText', 'text'], ['image', 'reference'], ['imageAlt', 'text'], ['video', 'aem-content']],
   'lixiang-about-dual-panel': [['title', 'text'], ['subtitle', 'text']],
   'lixiang-about-dual-panel-item': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext'], ['footnote', 'text']],
-  'lixiang-about-design-language': [['title', 'text'], ['subtitle', 'text'], ['largeImage', 'reference'], ['largeImageAlt', 'text']],
+  'lixiang-about-design-language': [['title', 'text'], ['subtitle', 'text'], ['largeImage', 'reference'], ['largeImageAlt', 'text'], ['big', 'group']],
   'lixiang-about-design-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],
   'lixiang-about-creativity': [['title', 'text'], ['subtitle', 'richtext'], ['values', 'group']],
   'lixiang-about-creativity-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],

@@ -30,7 +30,36 @@ export default function decorate(block) {
 
   const media = document.createElement('div');
   media.className = 'lixiang-about-video-media';
-  if (picture) {
+  const posterUrl = picture?.querySelector('img')?.src || '';
+  if (videoUrl) {
+    const player = document.createElement('video');
+    player.className = 'lixiang-about-video-player';
+    player.src = videoUrl;
+    player.autoplay = true;
+    player.muted = true;
+    player.loop = true;
+    player.playsInline = true;
+    player.preload = 'metadata';
+    if (posterUrl) player.poster = posterUrl;
+    media.append(player);
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lixiang-about-video-toggle';
+    toggle.setAttribute('aria-label', 'Pause video');
+    toggle.addEventListener('click', () => {
+      if (player.paused) {
+        player.play();
+        toggle.classList.remove('is-paused');
+        toggle.setAttribute('aria-label', 'Pause video');
+      } else {
+        player.pause();
+        toggle.classList.add('is-paused');
+        toggle.setAttribute('aria-label', 'Play video');
+      }
+    });
+    media.append(toggle);
+  } else if (picture) {
     const img = picture.querySelector('img');
     if (img) {
       const optimized = createOptimizedPicture(img.src, imageAlt || '', false, [

@@ -261,8 +261,7 @@ main [class*='lixiang-about-'] h3 {
   font-family: licium-regular, roboto, roboto-fallback, sans-serif;
 }
 
-main .lixiang-about-vehicle-model-name,
-main .lixiang-about-creativity-values-band h3 {
+main .lixiang-about-vehicle-model-name {
   font-family: licium-medium, roboto, roboto-fallback, sans-serif;
 }
 
@@ -460,7 +459,7 @@ main .section.full-width > div {
 
 /* about us page: single full-bleed section stacking lixiang-about blocks */
 main > .section:has(> .lixiang-about-hero-wrapper) {
-  margin: 0;
+  margin: -50px 0 0;
 }
 
 main > .section > [class*='lixiang-about-'][class$='-wrapper'] {

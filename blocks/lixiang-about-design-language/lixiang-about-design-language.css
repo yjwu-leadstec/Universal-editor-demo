@@ -37,11 +37,42 @@
 .lixiang-about-design-language-subtitle p { margin: 0; }
 
 .lixiang-about-design-language-hero-media {
+  position: relative;
   width: 100%;
   border-radius: 4px;
   overflow: hidden;
   aspect-ratio: 1600 / 780;
 }
+
+.lixiang-about-design-language-hero-overlay {
+  position: absolute;
+  z-index: 2;
+  top: 80px;
+  left: 224px;
+  right: 224px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.lixiang-about-design-language-hero-overlay h3 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.3333;
+  color: #fff;
+}
+
+.lixiang-about-design-language-hero-description {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgb(255 255 255 / 70%);
+}
+
+.lixiang-about-design-language-hero-description p { margin: 0; }
 
 .lixiang-about-design-language-hero-media picture,
 .lixiang-about-design-language-hero-media img {
@@ -128,6 +159,12 @@
   .lixiang-about-design-language-inner { padding: 60px 40px 20px; }
   .lixiang-about-design-language-header h2 { font-size: 36px; }
 
+  .lixiang-about-design-language-hero-overlay {
+    top: 40px;
+    left: 80px;
+    right: 80px;
+  }
+
   .lixiang-about-design-card-content {
     top: 30px;
     left: 20px;
@@ -148,6 +185,24 @@
   .lixiang-about-design-language-hero-media {
     border-radius: 8px;
     aspect-ratio: 1 / 1;
+  }
+
+  .lixiang-about-design-language-hero-overlay {
+    top: 32px;
+    left: 20px;
+    right: 20px;
+    gap: 8px;
+  }
+
+  .lixiang-about-design-language-hero-overlay h3 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .lixiang-about-design-language-hero-description {
+    font-size: 12px;
+    line-height: 1.6667;
   }
 
   .lixiang-about-design-language-grid {

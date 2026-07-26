@@ -2699,6 +2699,18 @@
         "name": "largeImageAlt",
         "label": "Large Image Alt Text",
         "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "big_title",
+        "label": "Hero Overlay Title (Optional)",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "big_description",
+        "label": "Hero Overlay Description (Optional)",
+        "valueType": "string"
       }
     ]
   },

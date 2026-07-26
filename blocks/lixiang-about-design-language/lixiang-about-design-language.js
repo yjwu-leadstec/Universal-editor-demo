@@ -50,6 +50,41 @@ export default function decorate(block) {
     }
   }
 
+  let bigTitle = propText(block, 'big_title');
+  let bigDescSource = propSource(block, 'big_description');
+  if (!bigTitle && !bigDescSource) {
+    const bigGroup = propSource(block, 'big');
+    if (bigGroup) {
+      const cell = bigGroup.querySelector('div') || bigGroup;
+      const texts = [...cell.children].filter((el) => el.textContent.trim());
+      const [first, ...rest] = texts;
+      if (first) bigTitle = first.textContent.trim();
+      if (rest.length) {
+        bigDescSource = document.createElement('div');
+        bigDescSource.append(...rest.map((el) => el.cloneNode(true)));
+      }
+    }
+  }
+  if (bigTitle || bigDescSource) {
+    const overlay = document.createElement('div');
+    overlay.className = 'lixiang-about-design-language-hero-overlay';
+    if (bigTitle) {
+      const heading = document.createElement('h3');
+      heading.textContent = bigTitle;
+      instrumentProp(block, 'big_title', heading);
+      overlay.append(heading);
+    }
+    if (bigDescSource) {
+      const desc = createRichText(
+        bigDescSource,
+        'lixiang-about-design-language-hero-description',
+      );
+      instrumentProp(block, 'big_description', desc);
+      overlay.append(desc);
+    }
+    heroMedia.append(overlay);
+  }
+
   const items = modelItems(block, 'lixiang-about-design-card');
   const grid = document.createElement('div');
   grid.className = 'lixiang-about-design-language-grid';

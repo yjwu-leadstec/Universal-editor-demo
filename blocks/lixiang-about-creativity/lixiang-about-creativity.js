@@ -86,7 +86,7 @@ export default function decorate(block) {
       content.append(desc);
     }
 
-    card.append(media, content);
+    card.append(content, media);
     moveItemInstrumentation(item, card);
     grid.append(card);
   });
