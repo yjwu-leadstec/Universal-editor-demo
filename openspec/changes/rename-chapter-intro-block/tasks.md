@@ -17,8 +17,17 @@
 ## 3. Validation and Delivery
 
 - [x] 3.1 Run `npm run build:json`, lint, and the relevant test suite.
-- [ ] 3.2 Rebase onto and push remote `main`.
-- [ ] 3.3 Replace the six Li L6 authored instances with clean new-model nodes.
-- [ ] 3.4 Publish and verify Author plus Preview at all required widths with no
+- [x] 3.2 Rebase onto and push remote `main`.
+- [x] 3.3 Replace the six Li L6 authored instances with clean new-model nodes.
+- [x] 3.4 Publish and verify Author plus Preview at all required widths with no
       block or console errors.
-- [ ] 3.5 Update this checklist and record final evidence.
+- [x] 3.5 Update this checklist and record final evidence.
+
+## Final Evidence
+
+- Remote implementation commit: `8f5e53fca49fb3018bd4aea29bb8e5628ddb763a`.
+- AEM Author: six clean `lixiang-product-full-screen-intro` instances, zero
+  `chapter-intro` instances, all six loaded at a bounded 16:9 authoring ratio.
+- EDS Preview: verified at 1920, 1440, 1024, 768, and 390 px with six loaded
+  instances, zero legacy instances, zero block errors, zero horizontal
+  overflow, and zero console errors.
