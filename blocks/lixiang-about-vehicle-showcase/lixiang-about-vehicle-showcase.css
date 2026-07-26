@@ -1,6 +1,10 @@
 .lixiang-about-vehicle-showcase {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+.lixiang-about-vehicle-showcase {
   position: relative;
-  width: 100%;
   height: 56.25vw;
   max-height: 1080px;
   overflow: hidden;

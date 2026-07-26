@@ -1,3 +1,8 @@
+.lixiang-about-create-together {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
 .lixiang-about-create-together { background: #fafafa; }
 
 .lixiang-about-create-together-inner {
@@ -5,7 +10,7 @@
   flex-direction: column;
   align-items: center;
   gap: 40px;
-  padding: 85px 160px 20px;
+  padding: 85px 160px 80px;
   max-width: 1920px;
   margin: 0 auto;
 }

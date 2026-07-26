@@ -1,3 +1,8 @@
+.lixiang-about-dual-panel {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
 .lixiang-about-dual-panel { background: #fafafa; }
 
 .lixiang-about-dual-panel-inner {

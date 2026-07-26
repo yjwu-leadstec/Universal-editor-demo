@@ -406,3 +406,13 @@ main .section.full-width > div {
   max-width: unset;
   padding: 0;
 }
+
+/* about us page: single full-bleed section stacking lixiang-about blocks */
+main > .section:has(> .lixiang-about-hero-wrapper) {
+  margin: 0;
+}
+
+main > .section > [class*='lixiang-about-'][class$='-wrapper'] {
+  max-width: unset;
+  padding: 0;
+}
