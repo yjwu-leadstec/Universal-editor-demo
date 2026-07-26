@@ -69,3 +69,5 @@ Local screenshots or `aem up` checks are useful during development, but they are
 - [Media Center v2 manual](./docs/component-manual/Media%20Center%20v2-使用配置手册.md)
 - [Navigation manual](./docs/component-manual/导航-使用配置手册.md)
 - [Homepage manual](./docs/component-manual/首页-使用配置手册.md)
+- [Product intro slider carousel architecture](./docs/lixiang-product-intro-slider-carousel-architecture.md) — read before changing that block's animation, sizing, or breakpoints
+- [L6 content models](./docs/li-l6-content-models.md)

@@ -16,7 +16,8 @@ circular carousel behavior. Existing L6 content at
 - Card titles use multiline author inputs; descriptions remain rich text.
 - Authors choose the section background from White `#FFFFFF`, Black `#000000`, or Gray `#FAFAFA`.
 - Authors choose desktop card copy from White `#FFFFFF` or Black `#191919` per card.
-- Authors can optionally override the section heading color with the same white/black choices.
+- ~~Authors can optionally override the section heading color with the same white/black choices.~~
+  **已作废 (2026-07-26)**：`headingColor` 字段已移除，标题颜色改为跟随 `background` 自动推导（深色/灰底白字，浅底黑字）。
 - Spacing remains a semantic Large/Small/None choice and resolves to PC `160/80/0px` and mobile `80/60/0px`; Small is the default.
 - Notes have an explicit visibility checkbox while existing authored notes remain visible until explicitly disabled.
 - Each card can provide an optional multiline indicator label and the indicator color remains configurable.
@@ -35,7 +36,7 @@ circular carousel behavior. Existing L6 content at
 
 - New scalar fields are appended after existing published fields so legacy positional markup is not shifted.
 - Missing `showNote` falls back to showing an existing non-empty note.
-- Missing copy/heading color fields preserve the existing theme behavior.
+- Missing copy color fields preserve the existing theme behavior.
 - Universal Editor instrumentation remains available for all rendered fields.
 
 ## Content model
@@ -46,8 +47,15 @@ Existing fields remain. `title` and `mobileTitle` become multiline inputs.
 New optional fields are `headingColor` and `showVideoControl`; the existing
 `showProgress` field is clarified as video progress.
 
+> **后续变更 (2026-07-26)**：`headingColor` 已删除（颜色跟随背景推导），且原先合并的
+> `classes` 多选拆成了 `background` + `spacing` 两个独立 select。当前字段以
+> `docs/li-l6-content-models.md` 为准。
+
 ### `highlight-slide`
 
 Existing media, copy, metrics, and link fields remain. `title` and `note`
 become multiline inputs. New optional fields are `copyColor`, `showNote`, and
 `indicatorLabel`.
+
+> **后续变更 (2026-07-26)**：统计数字已从卡片字段独立成 `highlight-stat` 集合模型
+> （`value` / `unit` / `label` / `description`）。

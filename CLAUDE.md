@@ -69,6 +69,13 @@ the environment" rather than "fixed".
   that no longer exist.
 - When checking deployed assets, use `curl --compressed`; otherwise the response is raw gzip
   and every `grep` silently misses.
+- **Reload with cache bypass.** A plain reload can re-serve CSS/JS from Chrome's disk cache even
+  after a correct deploy, so the page renders the old build while `curl` shows the new one —
+  which reads as "my fix didn't work". Verify the computed style actually changed before
+  concluding anything about the code.
+- **Measure the settled state.** Sampling mid-transition, or reusing an element index captured
+  before a click, produces numbers that look like bugs but are measurement artifacts. When a
+  reading looks wrong, re-measure after the animation settles before changing code.
 - **Close every tab you opened** once the check is done. Leave the tabs the user already had
   open alone.
 
@@ -180,6 +187,18 @@ because of an explicit guard; before that guard, a parent lacking the field woul
 first child's field and strip that child's instrumentation, so the value rendered in the
 wrong place and the child became uneditable.
 
+**Nested collection items ship as siblings, not children.** Delivery flattens a nested
+collection so each child follows its parent in document order. `modelItems(parent, 'child')`
+searches inside the parent and finds nothing — authored items then never render. Use
+`groupChildItems(block, parents, childModel)` (in `scripts/product-block-utils.js`, used by
+`spec-table` and `icon-overlay-showcase`; the slider keeps its own copy) to walk block children
+and attach each child to the preceding parent.
+
+**Field entries are `[name, component, label]` triples.** The content tree names a field from
+`data-aue-label` and picks its editor from `data-aue-type`; writing only `data-aue-prop` leaves
+the tree showing the raw key (an authored "Title" appears as `Property`). `markField` writes all
+three — keep the label in the field table in sync with the model's `label`.
+
 **Exception — `blocks/lixiang-product-intro-slider/`** is deliberately self-contained. It uses
 its own `slider-utils.js` and keeps its `product-*` CSS in its own stylesheet, so it imports
 neither `scripts/product-block-utils.js` nor `styles/product-blocks.css`. Fixes to those
@@ -188,6 +207,10 @@ is positional, so any field reorder in `_lixiang-product-intro-slider.json` must
 in `slider-utils.js`. Note it still sets `data-product-block` (its own selectors depend on the
 attribute) and still restates `min-height: 0` on `.product-media`, because other blocks on the
 same page inject the shared stylesheet whose equally-specific rule would otherwise win.
+Its carousel moves one flex track with loop clones — before touching the animation, sizing, or
+breakpoints, read `docs/lixiang-product-intro-slider-carousel-architecture.md`; changing a card
+width without its matching `--highlight-step` breaks the step, and `CLONE_DEPTH` must stay
+≥ visible neighbours + 1.
 
 
 ### Script Loading Phases
@@ -222,3 +245,9 @@ Content is delivered from AEM Cloud Service via the `fstab.yaml` mountpoint conf
 ## Environment URLs
 - Preview: `https://main--{repo}--{owner}.aem.page/`
 - Live: `https://main--{repo}--{owner}.aem.live/`
+
+Content paths drop the `/content/demo-site/` prefix the author instance uses: the L6 page authored
+at `/content/demo-site/language-master/en/li-l6` is delivered at
+`https://main--universal-editor-demo--yjwu-leadstec.aem.page/language-master/en/li-l6`. Passing the
+full author path returns 404. This delivery URL is the fastest way to verify a rendered page — it
+needs no AEM session, unlike the Universal Editor canvas.

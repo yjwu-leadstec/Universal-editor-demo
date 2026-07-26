@@ -208,3 +208,4 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 1. **原子开发，独立优先。** 能复用的公共逻辑可以复用；不能复用或与公共逻辑冲突时，为组件重新写独立一份，不得强行改公共逻辑导致别的组件出错。
 2. **任务完成的判定标准是环境验证，不是本地验证。** 任务必须经过 `main` 分支的代码合并和推送后，在环境上测了成功才能告知用户任务完成。本地测试不算完成。
 3. **每次完成后清理测试痕迹。** 每次任务完成后都清理掉打开的 Chrome 测试页面，不得遗留。
+4. **只在 `main` 上开发、推送、测试。** 不使用 feature 分支、worktree 或 PR。`fstab.yaml` 把交付挂载点写死为 `.../Universal-editor-demo/main`，Universal Editor 只加载 `main` 的代码，其他分支无法在环境上验证，因而违反第 2 条。推送前先 `git fetch origin && git rebase origin/main`（本仓库有其他活跃贡献者）。不要创建 worktree：其生成的分支名超出 DNS 63 字符上限，`aem up` 会拒绝启动。

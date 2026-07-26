@@ -75,16 +75,26 @@ Block fields:
 | `autoPlay` | boolean | `true` |
 | `interval` | number | `4`, validated 2–12 seconds |
 | `showVideoControl`, `showProgress` | boolean | `true`; play/pause and its progress ring are independently configurable |
-| `headingColor` | select | `black`; white/black semantic choices |
-| `classes` | multiselect | `light`, `space-small` |
+| `accentColor` | text | indicator colour |
+| `background` | select | `light`; `light` / `dark` / `gray` |
+| `spacing` | select | `space-small`; `space-large` / `space-small` / `space-none` |
+
+Background and spacing are two independent selects, not one combined `classes`
+multiselect. AEM only turns a field literally named `classes` into block classes,
+so the block applies these two by hand. Heading colour follows the background
+(white on dark/gray, black on light) and has no field of its own.
 
 Child `highlight-slide` fields:
 
 - responsive media group plus optional video;
 - `eyebrow`, multiline `title`, `description`, multiline `note`;
 - optional `copyColor`, `showNote`, and multiline `indicatorLabel`;
-- `metricValue`, `metricUnit`, `metricLabel`;
 - optional standard link group.
+
+Statistics are a separate `highlight-stat` collection model (`value`, `unit`,
+`label`, `description`), not fields on the slide. Delivery ships nested
+collection items as **siblings** of their parent rather than children, so the
+block groups each stat onto the slide that precedes it.
 
 The dialog recommends three to four cards but the runtime accepts one or more, including the captured five-card L6 collection.
 
