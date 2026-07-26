@@ -133,6 +133,7 @@
 
 @media (width <= 768px) {
   .lixiang-about-creativity-grid { grid-template-columns: 1fr; }
+
   .lixiang-about-creativity-card {
     min-height: auto;
     border-radius: 8px;
