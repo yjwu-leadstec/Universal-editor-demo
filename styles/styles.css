@@ -253,6 +253,19 @@ main > .section:first-of-type {
   }
 }
 
+/* about us blocks render in LiciumFont like the live site */
+main [class*='lixiang-about-'],
+main [class*='lixiang-about-'] h1,
+main [class*='lixiang-about-'] h2,
+main [class*='lixiang-about-'] h3 {
+  font-family: licium-regular, roboto, roboto-fallback, sans-serif;
+}
+
+main .lixiang-about-vehicle-model-name,
+main .lixiang-about-creativity-values-band h3 {
+  font-family: licium-medium, roboto, roboto-fallback, sans-serif;
+}
+
 /* section metadata */
 main .section.light,
 main .section.highlight {
@@ -415,17 +428,4 @@ main > .section:has(> .lixiang-about-hero-wrapper) {
 main > .section > [class*='lixiang-about-'][class$='-wrapper'] {
   max-width: unset;
   padding: 0;
-}
-
-/* about us blocks render in LiciumFont like the live site */
-main [class*='lixiang-about-'],
-main [class*='lixiang-about-'] h1,
-main [class*='lixiang-about-'] h2,
-main [class*='lixiang-about-'] h3 {
-  font-family: licium-regular, roboto, roboto-fallback, sans-serif;
-}
-
-main .lixiang-about-vehicle-model-name,
-main .lixiang-about-creativity-values-band h3 {
-  font-family: licium-medium, roboto, roboto-fallback, sans-serif;
 }
