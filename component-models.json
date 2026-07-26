@@ -2625,19 +2625,6 @@
         "name": "valuesDescription",
         "label": "Values Description",
         "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "largeImage",
-        "label": "Values Background Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "largeImageAlt",
-        "label": "Values Image Alt Text",
-        "valueType": "string"
       }
     ]
   },
