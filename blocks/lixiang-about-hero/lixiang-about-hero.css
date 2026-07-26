@@ -1,9 +1,6 @@
 .lixiang-about-hero {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-}
-
-.lixiang-about-hero {
   position: relative;
   height: 56.25vw;
   max-height: 1080px;
