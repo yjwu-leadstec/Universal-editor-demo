@@ -31,7 +31,7 @@ The captured Li L6 `pmsData` contains 37 component instances:
 | --- | ---: | --- |
 | `product-first` | 2 | `product-hero` |
 | `SceneTableHorizontal` | 1 | `lixiang-product-intro-slider` |
-| `SceneBeginning` | 6 | `chapter-intro` |
+| `SceneBeginning` | 6 | `lixiang-product-full-screen-intro` |
 | `SceneMegaContentTableX` | 18 | `lixiang-product-intro-carousel` |
 | `SceneMegaContentMultipleImage` | 1 | `lixiang-product-intro-carousel` (`image-grid`) |
 | `ScenePictureGroup` | 1 | `lixiang-product-detail-picture-group` |
@@ -53,7 +53,7 @@ The Pencil document contains eight reusable design families: hero, highlight car
 1. `product-hero`
 2. `product-sticky-nav`
 3. `lixiang-product-intro-slider`
-4. `chapter-intro`
+4. `lixiang-product-full-screen-intro`
 5. `lixiang-product-intro-carousel`
 6. `color-switcher`
 7. `spec-table`
@@ -150,7 +150,7 @@ The Pencil document contains eight reusable design families: hero, highlight car
 - Cards support desktop/mobile media, title, description, metrics, label, and optional note; card copy heights align to the longest item.
 - The current Li L6 five-card data works even though the authoring guidance recommends three to four cards.
 
-### Chapter Intro
+### Lixiang Product Full-Screen Intro
 
 - Full-screen preview media supports top/bottom and left/center copy positions through finite variants.
 - Desktop and mobile titles/media can be authored independently, with graceful fallback.

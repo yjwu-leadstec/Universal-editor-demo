@@ -1,9 +1,9 @@
-# L6 Chapter Intro 官网对齐验收
+# L6 Lixiang Product Full-Screen Intro 官网对齐验收
 
 ## 事实来源
 
 - 官网：`https://www.liauto.com/l6` 的 `Exterior Design` 章节首屏。
-- 实际测试内容：`/content/demo-site/language-master/en/li-l6/jcr:content/root/section/block-03-chapter-intro`。
+- 实际测试内容：`/content/demo-site/language-master/en/li-l6/jcr:content/root/section/block-03-lixiang-product-full-screen-intro`。
 
 ## 内容结构
 

@@ -98,7 +98,7 @@ block groups each stat onto the slide that precedes it.
 
 The dialog recommends three to four cards but the runtime accepts one or more, including the captured five-card L6 collection.
 
-## Chapter Intro — standalone
+## Lixiang Product Full-Screen Intro — standalone
 
 | Field group | Fields |
 | --- | --- |

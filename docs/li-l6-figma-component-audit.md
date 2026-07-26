@@ -34,7 +34,7 @@ The canvas explicitly numbers and describes eight visual component families.
 | 3 | 内容展示 | `lixiang-product-intro-carousel` | 10 | Reused for one gray, one large, and eight compact content-display sections. Single-item sections no longer render an empty tab strip. |
 | 4 | 图上切换 | `image-switcher` | 6 | Split into a first-class block with image/video panels, manual switching, four-second autoplay, accent/indicator settings, and mobile tabs. |
 | 5 | 大小图 | `big-small-gallery` | 2 | Split into a first-class block with one large plus two small desktop cards and a mobile stack. |
-| 6 | 单图－图上字 | `chapter-intro` | 6 | Reused for the six full-bleed chapter media sections in the composed page. |
+| 6 | 单图－图上字 | `lixiang-product-full-screen-intro` | 6 | Reused for the six full-bleed chapter media sections in the composed page. |
 | 7 | 多图 | `lixiang-product-detail-picture-group` | 1 | Rebuilt as the fixed desktop/tablet/mobile mosaic with scroll-linked image movement. |
 | 8 | 结尾总结 | `feature-grid` | 1 | Rebuilt with nested groups, three columns on desktop, and two-row horizontal groups on mobile. |
 
@@ -46,7 +46,7 @@ types:
 | `product-hero` | 2 |
 | `product-sticky-nav` | 1 |
 | `lixiang-product-intro-slider` | 1 |
-| `chapter-intro` | 5 |
+| `lixiang-product-full-screen-intro` | 5 |
 | `lixiang-product-intro-carousel` | 5 |
 | `lixiang-product-detail-picture-group` | 1 |
 | `spec-table` | 2 |

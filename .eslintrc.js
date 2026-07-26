@@ -28,7 +28,7 @@ module.exports = {
       'home-carousel': 6,
       'header-navigation-card': 5,
       'header-settings': 8,
-      'chapter-intro': 16,
+      'lixiang-product-full-screen-intro': 16,
       'color-switcher': 5,
       'color-switcher-item': 7,
       'feature-grid': 7,

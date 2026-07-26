@@ -11,8 +11,8 @@ const productMediaSource = await readFile(
   new URL('../scripts/product-block-utils.js', import.meta.url),
   'utf8',
 );
-const chapterModel = JSON.parse(await readFile(
-  new URL('../blocks/chapter-intro/_chapter-intro.json', import.meta.url),
+const fullScreenIntroModel = JSON.parse(await readFile(
+  new URL('../blocks/lixiang-product-full-screen-intro/_lixiang-product-full-screen-intro.json', import.meta.url),
   'utf8',
 ));
 
@@ -41,8 +41,8 @@ test('shared video controls follow the active breakpoint source', () => {
   assert.match(productMediaSource, /source\.media = MOBILE_MEDIA_QUERY/);
 });
 
-test('chapter intro dialog identifies desktop defaults and optional mobile overrides', () => {
-  const fields = new Map(chapterModel.models[0].fields.map((field) => [field.name, field]));
+test('product full-screen intro dialog identifies desktop defaults and optional mobile overrides', () => {
+  const fields = new Map(fullScreenIntroModel.models[0].fields.map((field) => [field.name, field]));
 
   assert.match(fields.get('image').label, /\(Default\)$/);
   assert.match(fields.get('video').label, /\(Default\)$/);
