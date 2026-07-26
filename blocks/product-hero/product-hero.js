@@ -34,7 +34,7 @@ export default function decorate(block) {
     eager: true,
     showControls: propBoolean(block, 'showVideoControl', true),
     showProgress: propBoolean(block, 'showProgress', true),
-    fallbackLabel: 'LI L6',
+    fallbackLabel: title || mobileTitle || propText(block, 'logoAlt') || 'Vehicle',
   });
 
   const copy = document.createElement('div');
@@ -47,7 +47,7 @@ export default function decorate(block) {
     appendPicture(logo, logoPicture, {
       alt: propText(block, 'logoAlt'),
       loading: 'eager',
-      fallbackLabel: 'LI L6',
+      fallbackLabel: title || mobileTitle || propText(block, 'logoAlt') || 'Vehicle',
     });
     instrumentProp(block, 'logo', logo);
     copy.append(logo);

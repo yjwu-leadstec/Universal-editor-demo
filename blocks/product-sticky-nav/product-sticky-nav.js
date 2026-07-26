@@ -30,13 +30,14 @@ function observeTargets(links) {
 
 export default function decorate(block) {
   initProductBlock(block);
+  const vehicleName = propText(block, 'carName') || 'Vehicle';
   const shell = document.createElement('nav');
   shell.className = 'product-sticky-shell';
-  shell.setAttribute('aria-label', 'Li L6 sections');
+  shell.setAttribute('aria-label', `${vehicleName} sections`);
   const carName = document.createElement('a');
   carName.className = 'product-sticky-name';
-  carName.href = '#l6-top';
-  carName.textContent = propText(block, 'carName') || 'Li L6';
+  carName.href = `#${document.querySelector('main .product-hero[id]')?.id || 'top'}`;
+  carName.textContent = vehicleName;
   instrumentProp(block, 'carName', carName);
   const list = document.createElement('div');
   list.className = 'product-sticky-links';

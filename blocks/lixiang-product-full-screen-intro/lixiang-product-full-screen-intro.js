@@ -21,7 +21,7 @@ export default function decorate(block) {
     loop: propBoolean(block, 'loop', true),
     showControls: propBoolean(block, 'showVideoControl', true),
     showProgress: propBoolean(block, 'showProgress', true),
-    fallbackLabel: 'LI L6',
+    fallbackLabel: propText(block, 'title') || propText(block, 'mobileTitle') || propText(block, 'eyebrow') || 'Vehicle',
   });
   const copy = document.createElement('div');
   copy.className = 'lixiang-product-full-screen-intro-copy';
@@ -62,7 +62,11 @@ export default function decorate(block) {
     play.type = 'button';
     play.className = 'lixiang-product-full-screen-intro-play';
     play.textContent = playLabel;
-    play.addEventListener('click', () => openVideoDialog(fullVideo, play, title || 'Li L6 video'));
+    play.addEventListener('click', () => openVideoDialog(
+      fullVideo,
+      play,
+      `${title || mobileTitle || eyebrow || 'Vehicle'} video`,
+    ));
     instrumentProp(block, 'fullVideo', play);
     copy.append(play);
   }
