@@ -14,8 +14,8 @@ export default function decorate(block) {
   initAboutBlock(block);
   const title = propText(block, 'title');
   const subtitle = propText(block, 'subtitle');
-  const valuesTitle = propText(block, 'valuesTitle');
-  const valuesDescSource = propSource(block, 'valuesDescription');
+  const valuesTitle = propText(block, 'values_title');
+  const valuesDescSource = propSource(block, 'values_description');
 
   const inner = document.createElement('div');
   inner.className = 'lixiang-about-creativity-inner';
@@ -46,6 +46,16 @@ export default function decorate(block) {
     const card = document.createElement('div');
     card.className = 'lixiang-about-creativity-card';
 
+    const media = document.createElement('div');
+    media.className = 'lixiang-about-creativity-card-media';
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimized = createOptimizedPicture(img.src, imageAlt || '', false, [{ width: '1200' }]);
+        media.append(optimized);
+      }
+    }
+
     const content = document.createElement('div');
     content.className = 'lixiang-about-creativity-card-content';
     if (cardTitle) {
@@ -60,33 +70,40 @@ export default function decorate(block) {
       content.append(desc);
     }
 
-    const media = document.createElement('div');
-    media.className = 'lixiang-about-creativity-card-media';
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimized = createOptimizedPicture(img.src, imageAlt || '', false, [{ width: '1200' }]);
-        media.append(optimized);
-      }
-    }
-
-    card.append(content, media);
+    card.append(media, content);
     moveItemInstrumentation(item, card);
     grid.append(card);
   });
 
+  const valuesPicture = propPicture(block, 'values_image');
+  const valuesAlt = propText(block, 'values_imageAlt');
   const values = document.createElement('div');
   values.className = 'lixiang-about-creativity-values';
+  const valuesBand = document.createElement('div');
+  valuesBand.className = 'lixiang-about-creativity-values-band';
   if (valuesTitle) {
     const heading = document.createElement('h3');
     heading.textContent = valuesTitle;
-    instrumentProp(block, 'valuesTitle', heading);
-    values.append(heading);
+    instrumentProp(block, 'values_title', heading);
+    valuesBand.append(heading);
   }
   if (valuesDescSource?.textContent.trim()) {
-    const desc = createRichText(valuesDescSource);
-    instrumentProp(block, 'valuesDescription', desc);
-    values.append(desc);
+    const desc = createRichText(valuesDescSource, 'lixiang-about-creativity-values-description');
+    instrumentProp(block, 'values_description', desc);
+    valuesBand.append(desc);
+  }
+  values.append(valuesBand);
+  if (valuesPicture) {
+    const valuesMedia = document.createElement('div');
+    valuesMedia.className = 'lixiang-about-creativity-values-media';
+    const img = valuesPicture.querySelector('img');
+    if (img) {
+      const optimized = createOptimizedPicture(img.src, valuesAlt || '', false, [
+        { width: '1920' }, { width: '1200' }, { width: '768' },
+      ]);
+      valuesMedia.append(optimized);
+    }
+    values.append(valuesMedia);
   }
 
   inner.append(header, grid, values);

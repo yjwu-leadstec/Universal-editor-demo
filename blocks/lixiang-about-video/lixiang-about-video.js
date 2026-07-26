@@ -18,11 +18,13 @@ export default function decorate(block) {
   const inner = document.createElement('div');
   inner.className = 'lixiang-about-video-inner';
 
+  const header = document.createElement('div');
+  header.className = 'lixiang-about-video-header';
   if (title) {
     const heading = document.createElement('h2');
     heading.textContent = title;
     instrumentProp(block, 'title', heading);
-    inner.append(heading);
+    header.append(heading);
   }
 
   const media = document.createElement('div');
@@ -60,10 +62,10 @@ export default function decorate(block) {
       dialog.addEventListener('close', () => dialog.remove());
     });
     instrumentProp(block, 'ctaText', cta);
-    media.append(cta);
+    header.append(cta);
   }
 
-  inner.append(media);
+  inner.append(header, media);
   block.textContent = '';
   block.append(inner);
 }

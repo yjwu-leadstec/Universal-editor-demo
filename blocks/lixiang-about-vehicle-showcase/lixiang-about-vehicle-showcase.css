@@ -1,83 +1,85 @@
 .lixiang-about-vehicle-showcase {
   position: relative;
   width: 100%;
-  height: 1080px;
-  max-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 56.25vw;
+  max-height: 1080px;
   overflow: hidden;
   background: #000;
 }
 
-.lixiang-about-vehicle-media {
+.lixiang-about-vehicle-showcase-media {
   position: absolute;
   inset: 0;
   z-index: 0;
 }
 
-.lixiang-about-vehicle-media picture,
-.lixiang-about-vehicle-media img {
+.lixiang-about-vehicle-showcase-media picture,
+.lixiang-about-vehicle-showcase-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.lixiang-about-vehicle-bg-mobile { display: none; }
+.lixiang-about-vehicle-showcase-bg-mobile { display: none; }
 
-.lixiang-about-vehicle-copy {
-  position: relative;
+.lixiang-about-vehicle-showcase-copy {
+  position: absolute;
   z-index: 1;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  width: 1152px;
+  gap: 8px;
+  width: 878px;
   max-width: calc(100% - 80px);
   text-align: center;
 }
 
-.lixiang-about-vehicle-copy h2 {
+.lixiang-about-vehicle-showcase-copy h2 {
   margin: 0;
   font-size: 46px;
   font-weight: 500;
-  line-height: 1.35;
-  color: #191919;
+  line-height: 1.3478;
+  color: #fff;
   text-align: center;
 }
 
-.lixiang-about-vehicle-copy > p {
+.lixiang-about-vehicle-showcase-copy > p {
   margin: 0;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.75;
-  color: #191919;
+  letter-spacing: 0.16px;
+  color: #fff;
   text-align: center;
 }
 
 .lixiang-about-vehicle-models {
   display: flex;
   align-items: flex-start;
-  gap: 0;
-  margin-top: 16px;
+  justify-content: center;
+  margin-top: 12px;
 }
 
 .lixiang-about-vehicle-model {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 50px;
-  position: relative;
+  padding: 0 49px;
 }
 
 .lixiang-about-vehicle-model:not(:last-child)::after {
   content: '';
   position: absolute;
   right: 0;
-  top: 9px;
+  top: 8px;
   width: 1px;
-  height: 40px;
-  background: #191919;
+  height: 42px;
+  background: #fff;
   opacity: 0.5;
 }
 
@@ -85,36 +87,77 @@
   margin: 0;
   font-size: 22px;
   font-weight: 500;
-  line-height: 1.36;
-  color: #191919;
+  line-height: 1.3636;
+  color: #fff;
   text-align: center;
 }
 
 .lixiang-about-vehicle-model-desc {
-  margin: 0;
+  margin: 4px 0 0;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
-  color: #191919;
+  color: #fff;
   text-align: center;
-  margin-top: 4px;
 }
 
-@media (width <= 1024px) {
-  .lixiang-about-vehicle-copy h2 { font-size: 36px; }
+@media (width <= 1440px) {
+  .lixiang-about-vehicle-showcase-copy { top: 96px; }
+  .lixiang-about-vehicle-showcase-copy h2 { font-size: 36px; }
+  .lixiang-about-vehicle-model { padding: 0 32px; }
 }
 
-@media (width <= 768px) {
-  .lixiang-about-vehicle-showcase { min-height: 100svh; }
-  .lixiang-about-vehicle-bg-desktop { display: none; }
-  .lixiang-about-vehicle-bg-mobile { display: block; }
-  .lixiang-about-vehicle-copy h2 { font-size: 24px; }
-  .lixiang-about-vehicle-copy > p { font-size: 14px; }
+@media (width <= 719px) {
+  .lixiang-about-vehicle-showcase {
+    height: auto;
+    max-height: none;
+    aspect-ratio: 375 / 812;
+    background: #f6f6f6;
+  }
+
+  .lixiang-about-vehicle-showcase-bg-desktop { display: none; }
+  .lixiang-about-vehicle-showcase-bg-mobile { display: block; }
+
+  .lixiang-about-vehicle-showcase-copy {
+    top: 160px;
+    gap: 8px;
+  }
+
+  .lixiang-about-vehicle-showcase-copy h2 {
+    font-size: 24px;
+    line-height: 1.3333;
+    color: rgb(0 0 0 / 90%);
+  }
+
+  .lixiang-about-vehicle-showcase-copy > p {
+    font-size: 14px;
+    line-height: 1.5714;
+    letter-spacing: 0;
+    color: rgb(0 0 0 / 60%);
+  }
 
   .lixiang-about-vehicle-models {
     flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .lixiang-about-vehicle-model { padding: 0; }
+  .lixiang-about-vehicle-model:not(:last-child)::after { content: none; }
+
+  .lixiang-about-vehicle-model-name {
+    font-size: 16px;
+    line-height: 1.75;
+    color: rgb(0 0 0 / 90%);
+  }
+
+  .lixiang-about-vehicle-model-desc {
+    margin-top: 0;
+    font-size: 12px;
+    line-height: 1.6667;
+    color: rgb(0 0 0 / 90%);
   }
 }
 
-.adobe-ue-edit main .lixiang-about-vehicle-showcase { min-height: clamp(640px, 100vh, 1080px); }
+.adobe-ue-edit main .lixiang-about-vehicle-showcase { max-height: 1080px; }

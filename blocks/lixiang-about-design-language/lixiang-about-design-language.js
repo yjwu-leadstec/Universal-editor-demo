@@ -48,12 +48,11 @@ export default function decorate(block) {
       heroMedia.append(optimized);
     }
   }
-  heroMedia.append(header);
 
   const items = modelItems(block, 'lixiang-about-design-card');
   const grid = document.createElement('div');
   grid.className = 'lixiang-about-design-language-grid';
-  items.forEach((item, index) => {
+  items.forEach((item) => {
     const picture = propPicture(item, 'image');
     const imageAlt = propText(item, 'imageAlt');
     const cardTitle = propText(item, 'title');
@@ -61,7 +60,6 @@ export default function decorate(block) {
 
     const card = document.createElement('div');
     card.className = 'lixiang-about-design-card';
-    card.classList.add(index === 1 ? 'lixiang-about-design-card-light' : 'lixiang-about-design-card-dark');
 
     const content = document.createElement('div');
     content.className = 'lixiang-about-design-card-content';
@@ -87,12 +85,12 @@ export default function decorate(block) {
       }
     }
 
-    card.append(content, media);
+    card.append(media, content);
     moveItemInstrumentation(item, card);
     grid.append(card);
   });
 
-  inner.append(heroMedia, grid);
+  inner.append(header, heroMedia, grid);
   block.textContent = '';
   block.append(inner);
 }

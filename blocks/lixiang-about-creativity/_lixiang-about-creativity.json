@@ -51,14 +51,27 @@
         },
         {
           "component": "text",
-          "name": "valuesTitle",
+          "name": "values_title",
           "label": "Values Title",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "name": "valuesDescription",
+          "name": "values_description",
           "label": "Values Description",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "values_image",
+          "label": "Values Background Image (Optional)",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "values_imageAlt",
+          "label": "Values Image Alt Text",
           "valueType": "string"
         }
       ]

@@ -45,6 +45,18 @@ export default function decorate(block) {
     const card = document.createElement('div');
     card.className = 'lixiang-about-dual-panel-card';
 
+    const media = document.createElement('div');
+    media.className = 'lixiang-about-dual-panel-card-media';
+    if (picture) {
+      const img = picture.querySelector('img');
+      if (img) {
+        const optimized = createOptimizedPicture(img.src, imageAlt || '', false, [
+          { width: '1200' }, { width: '768' },
+        ]);
+        media.append(optimized);
+      }
+    }
+
     const content = document.createElement('div');
     content.className = 'lixiang-about-dual-panel-card-content';
     if (itemTitle) {
@@ -58,27 +70,15 @@ export default function decorate(block) {
       instrumentProp(item, 'description', desc);
       content.append(desc);
     }
+
+    card.append(media, content);
     if (footnote) {
       const note = document.createElement('p');
       note.className = 'lixiang-about-dual-panel-card-footnote';
       note.textContent = footnote;
       instrumentProp(item, 'footnote', note);
-      content.append(note);
+      card.append(note);
     }
-
-    const media = document.createElement('div');
-    media.className = 'lixiang-about-dual-panel-card-media';
-    if (picture) {
-      const img = picture.querySelector('img');
-      if (img) {
-        const optimized = createOptimizedPicture(img.src, imageAlt || '', false, [
-          { width: '1200' }, { width: '768' },
-        ]);
-        media.append(optimized);
-      }
-    }
-
-    card.append(content, media);
     moveItemInstrumentation(item, card);
     grid.append(card);
   });
