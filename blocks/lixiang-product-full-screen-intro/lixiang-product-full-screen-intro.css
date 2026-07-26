@@ -170,7 +170,7 @@ main .lixiang-product-full-screen-intro .lixiang-product-full-screen-intro-note 
   }
 }
 
-.adobe-ue-edit main .lixiang-product-full-screen-intro {
+.adobe-ue-edit main > .section.lixiang-product-full-screen-intro-container > .lixiang-product-full-screen-intro-wrapper > .lixiang-product-full-screen-intro {
   height: auto;
   min-height: 0;
   max-height: 1080px;

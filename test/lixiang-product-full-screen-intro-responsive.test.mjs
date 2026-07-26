@@ -43,7 +43,7 @@ test('product full-screen intro keeps the official full-height mobile compositio
 
 test('product full-screen intro keeps the Universal Editor canvas bounded', () => {
   const authorRule = fullScreenIntroCss.lastIndexOf(
-    '.adobe-ue-edit main .lixiang-product-full-screen-intro',
+    '.adobe-ue-edit main > .section.lixiang-product-full-screen-intro-container > .lixiang-product-full-screen-intro-wrapper > .lixiang-product-full-screen-intro',
   );
   const lastResponsiveRule = fullScreenIntroCss.lastIndexOf('@media');
 
