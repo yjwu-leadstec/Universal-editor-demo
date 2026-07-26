@@ -1,53 +1,109 @@
+/*
+ * Breakpoints mirror the live site (liauto.com/support/service):
+ * a single 720px desktop/mobile switch, and above it a fluid root unit that
+ * matches the production `html { font-size }` ladder — 112px above 1440,
+ * 84px from 1025 to 1440, 8.3333vw at or below 1024. Every desktop length is
+ * `calc(<px-at-1920> * var(--service-unit))`, so the literals below read as the
+ * production pixel values at the 1920 breakpoint.
+ *
+ * The `list` variant maps to production `.sceneserviceservice2`;
+ * `app` / `diagnosis` map to `.sceneserviceservice1`.
+ */
+/* The section wrapper caps content at 1200px and adds a gutter; these blocks are
+   full-bleed on the live site, so neutralise it here rather than with a 100vw
+   pull-out — 100vw counts the scrollbar and shifts the block left by its width. */
+main .section > .service-feature-panel-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
 main .service-feature-panel {
   --service-font-regular: licium-regular, "Segoe UI", arial, sans-serif;
   --service-font-medium: licium-medium, "Segoe UI", arial, sans-serif;
+  --service-rem: 112px;
+  --service-unit: calc(var(--service-rem) / 112);
 
   position: relative;
-  width: 100vw;
-  margin-inline: calc(50% - 50vw);
-  padding-block: 64px;
   color: rgb(0 0 0 / 90%);
   font-family: var(--service-font-regular);
   background: #fff;
 }
 
+/* Production caps the scene at 1920 and hangs the horizontal gutter off that
+   container, so the gutter has to live on the shell, not on the full-bleed block. */
 main .service-feature-panel .support-feature-shell {
-  width: calc(100% - 40px);
-  max-width: 1600px;
+  box-sizing: border-box;
+  max-width: 1920px;
   margin-inline: auto;
+  padding-inline: calc(160 * var(--service-unit));
+}
+
+main .service-feature-panel:not(.list) .support-feature-shell {
+  padding-bottom: calc(20 * var(--service-unit));
+}
+
+main .service-feature-panel.list .support-feature-shell {
+  padding-top: calc(80 * var(--service-unit));
 }
 
 main .service-feature-panel .support-feature-section-heading {
-  margin: 0 0 40px;
+  margin: 0;
+  padding: calc(120 * var(--service-unit)) 0 calc(56 * var(--service-unit));
   font-family: var(--service-font-medium);
-  font-size: 32px;
+  font-size: calc(48 * var(--service-unit));
   font-weight: 500;
-  line-height: 1.25;
+  line-height: calc(60 * var(--service-unit));
   text-align: center;
 }
 
 main .service-feature-panel .support-feature-panel-inner {
   display: grid;
-  gap: 48px;
-  padding: 40px 24px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   border-radius: 4px;
-  background: #f8f8f8;
+  background: #fafafa;
+}
+
+main .service-feature-panel.list .support-feature-panel-inner {
+  align-items: center;
+}
+
+main .service-feature-panel .support-feature-lead {
+  display: flex;
+  flex-direction: column;
+  padding:
+    calc(80 * var(--service-unit))
+    calc(114 * var(--service-unit))
+    0
+    calc(124 * var(--service-unit));
+}
+
+main .service-feature-panel.list .support-feature-lead {
+  padding-block: 0;
+}
+
+main .service-feature-panel .support-feature-intro {
+  margin-bottom: calc(24 * var(--service-unit));
+}
+
+main .service-feature-panel.list .support-feature-intro {
+  margin-bottom: 0;
 }
 
 main .service-feature-panel .support-feature-intro h2,
 main .service-feature-panel .support-feature-intro h3 {
   margin: 0;
+  padding-bottom: calc(16 * var(--service-unit));
   font-family: var(--service-font-medium);
-  font-size: 28px;
+  font-size: calc(36 * var(--service-unit));
   font-weight: 500;
-  line-height: 1.3;
+  line-height: calc(48 * var(--service-unit));
 }
 
 main .service-feature-panel .support-feature-intro-description {
-  margin-top: 10px;
+  margin: 0;
   color: rgb(0 0 0 / 60%);
-  font-size: 15px;
-  line-height: 1.65;
+  font-size: calc(16 * var(--service-unit));
+  line-height: calc(28 * var(--service-unit));
 }
 
 main .service-feature-panel .support-feature-intro-description p,
@@ -56,31 +112,59 @@ main .service-feature-panel .support-feature-item-description p {
 }
 
 main .service-feature-panel .support-feature-items {
-  display: grid;
-  gap: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding:
+    calc(120 * var(--service-unit))
+    calc(124 * var(--service-unit))
+    calc(120 * var(--service-unit))
+    calc(10 * var(--service-unit));
+}
+
+main .service-feature-panel:not(.list) .support-feature-items {
+  align-self: center;
+  justify-content: flex-start;
+  gap: calc(56 * var(--service-unit));
 }
 
 main .service-feature-panel .support-feature-item h3 {
-  margin: 0;
+  margin: 0 0 calc(8 * var(--service-unit));
   color: #191919;
   font-family: var(--service-font-medium);
-  font-size: 20px;
+  font-size: calc(24 * var(--service-unit));
   font-weight: 500;
-  line-height: 1.35;
+  line-height: calc(32 * var(--service-unit));
 }
 
 main .service-feature-panel .support-feature-item-description {
-  margin-top: 8px;
+  margin: 0;
   color: rgb(0 0 0 / 60%);
-  font-size: 15px;
-  line-height: 1.65;
+  font-size: calc(16 * var(--service-unit));
+  line-height: calc(28 * var(--service-unit));
 }
 
+main .service-feature-panel.list .support-feature-intro h2,
+main .service-feature-panel.list .support-feature-intro h3 {
+  padding-bottom: calc(7 * var(--service-unit));
+}
+
+/* Production pins the media to the bottom of the copy column with absolute
+   positioning and reserves its box with an equally sized placeholder; keeping it
+   in flow and pushing it down with auto margin lands on the same geometry. */
 main .service-feature-panel .support-feature-media {
   position: relative;
-  min-height: 260px;
-  margin-top: 36px;
+  width: 28.22vw;
+  max-width: 562px;
+  height: 19.79vw;
+  max-height: 380px;
+  margin-top: auto;
+  border-radius: 4px;
   overflow: hidden;
+}
+
+main .service-feature-panel.list .support-feature-media {
+  display: none;
 }
 
 main .service-feature-panel .support-feature-picture,
@@ -92,11 +176,6 @@ main .service-feature-panel .support-feature-picture img {
 }
 
 main .service-feature-panel .support-feature-picture img {
-  object-fit: contain;
-  object-position: left bottom;
-}
-
-main .support-feature-panel-diagnosis .support-feature-picture img {
   object-fit: cover;
   object-position: center;
 }
@@ -105,18 +184,10 @@ main .service-feature-panel .support-feature-picture-mobile {
   display: none;
 }
 
-main .service-feature-panel .support-feature-media.has-mobile-media .support-feature-picture-desktop {
-  display: none;
-}
-
-main .service-feature-panel .support-feature-media.has-mobile-media .support-feature-picture-mobile {
-  display: block;
-}
-
 main .service-feature-panel .is-media-fallback {
   display: grid;
   place-items: center;
-  min-height: 260px;
+  height: 100%;
   color: rgb(0 0 0 / 35%);
   background: #eee;
   font-family: var(--service-font-medium);
@@ -157,80 +228,130 @@ main .service-feature-panel .service-reveal.is-visible {
   transform: none;
 }
 
-@media (width >= 600px) {
-  main .service-feature-panel .support-feature-media.has-mobile-media .support-feature-picture-desktop {
-    display: block;
-  }
-
-  main .service-feature-panel .support-feature-media.has-mobile-media .support-feature-picture-mobile {
-    display: none;
+@media (width <= 1440px) {
+  main .service-feature-panel {
+    --service-rem: 84px;
   }
 }
 
-@media (width >= 900px) {
+@media (width <= 1024px) {
   main .service-feature-panel {
-    padding-block: 96px;
-  }
-
-  main .service-feature-panel .support-feature-panel-inner {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr);
-    gap: 60px;
-    padding: 80px 60px;
-  }
-
-  main .service-feature-panel .support-feature-media {
-    min-height: 330px;
+    --service-rem: 8.3333vw;
   }
 }
 
-@media (width >= 1200px) {
+@media (width <= 720px) {
   main .service-feature-panel {
-    padding-block: 118px;
+    background: #fafafa;
+  }
+
+  main .service-feature-panel .support-feature-shell {
+    max-width: none;
+    padding: 0 20px 20px;
+  }
+
+  main .service-feature-panel.list .support-feature-shell {
+    padding-top: 80px;
+  }
+
+  main .service-feature-panel:not(.list) .support-feature-shell {
+    padding-bottom: 20px;
   }
 
   main .service-feature-panel .support-feature-section-heading {
-    margin-bottom: 64px;
-    font-size: 48px;
+    padding: 60px 0 32px;
+    font-size: 32px;
+    line-height: 44px;
   }
 
   main .service-feature-panel .support-feature-panel-inner {
-    grid-template-columns: minmax(0, 562px) minmax(0, 666px);
-    justify-content: space-between;
-    gap: 124px;
-    padding: 134px 124px;
+    display: block;
+    background: #fff;
   }
 
-  main .support-feature-panel-app .support-feature-panel-inner {
-    padding-block: 120px;
+  main .service-feature-panel.list .support-feature-panel-inner {
+    padding-bottom: 40px;
   }
 
-  main .support-feature-panel-diagnosis .support-feature-panel-inner {
-    padding-block: 110px;
+  main .service-feature-panel .support-feature-lead {
+    padding: 0;
+  }
+
+  /* Production paints the media above the copy on mobile (it is absolutely
+     positioned at the top of the column); reorder instead of re-positioning.
+     It sizes the app variant with `calc(100vw - 40px)`, which counts the
+     scrollbar and overhangs the gutter by its width — `100%` is the same
+     intended box and is what the list variant already resolves to. */
+  main .service-feature-panel .support-feature-media {
+    order: -1;
+    width: 100%;
+    max-width: none;
+    height: calc(56.12vw - 22.448px);
+    max-height: none;
+    margin-top: 0;
+    border-radius: 4px 4px 0 0;
+  }
+  main .service-feature-panel.list .support-feature-media {
+    display: block;
+    height: 50.13vw;
+    margin-bottom: 40px;
+  }
+
+  main .service-feature-panel .support-feature-media.has-mobile-media .support-feature-picture-desktop {
+    display: none;
+  }
+
+  main .service-feature-panel .support-feature-media.has-mobile-media .support-feature-picture-mobile {
+    display: block;
+  }
+
+  main .service-feature-panel .support-feature-intro {
+    margin-bottom: 0;
+    text-align: center;
   }
 
   main .service-feature-panel .support-feature-intro h2,
   main .service-feature-panel .support-feature-intro h3 {
-    font-size: 36px;
+    padding: 0 20px 8px;
+    font-size: 20px;
+    line-height: 28px;
   }
 
-  main .service-feature-panel .support-feature-intro-description,
-  main .service-feature-panel .support-feature-item-description {
-    font-size: 16px;
-    line-height: 1.75;
+  main .service-feature-panel .support-feature-intro-description {
+    padding-inline: 20px;
+    font-size: 12px;
+    line-height: 20px;
   }
 
   main .service-feature-panel .support-feature-items {
-    align-content: center;
-    gap: 56px;
+    gap: 32px;
+    margin-top: 40px;
+    padding: 0 20px 68px;
+    text-align: center;
+  }
+
+  main .service-feature-panel.list .support-feature-items {
+    padding-bottom: 0;
   }
 
   main .service-feature-panel .support-feature-item h3 {
-    font-size: 24px;
+    margin-bottom: 4px;
+    font-size: 16px;
+    line-height: 24px;
   }
 
-  main .service-feature-panel .support-feature-media {
-    min-height: 380px;
-    margin-top: 64px;
+  main .service-feature-panel .support-feature-item-description {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  main .service-feature-panel.list .support-feature-intro h2,
+  main .service-feature-panel.list .support-feature-intro h3 {
+    padding-bottom: 4px;
+    line-height: 32px;
+  }
+  main .service-feature-panel.list .support-feature-item h3 {
+    margin-bottom: 2px;
   }
 }
 
