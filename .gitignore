@@ -10,3 +10,5 @@ helix-importer-ui
 *.bak
 .idea
 .env
+.omo/
+.playwright-mcp/

@@ -16,10 +16,10 @@ export default function decorate(block) {
   const subtitle = propText(block, 'subtitle');
 
   const inner = document.createElement('div');
-  inner.className = 'about-together-inner';
+  inner.className = 'lixiang-about-create-together-inner';
 
   const header = document.createElement('div');
-  header.className = 'about-together-header';
+  header.className = 'lixiang-about-create-together-header';
   if (title) {
     const heading = document.createElement('h2');
     heading.textContent = title;
@@ -27,14 +27,17 @@ export default function decorate(block) {
     header.append(heading);
   }
   if (subtitle) {
-    const desc = createRichText(propSource(block, 'subtitle'), 'about-together-subtitle');
+    const desc = createRichText(
+      propSource(block, 'subtitle'),
+      'lixiang-about-create-together-subtitle',
+    );
     instrumentProp(block, 'subtitle', desc);
     header.append(desc);
   }
 
-  const items = modelItems(block, 'lixiang-lixiang-about-create-together-card');
+  const items = modelItems(block, 'lixiang-about-create-together-card');
   const grid = document.createElement('div');
-  grid.className = 'about-together-grid';
+  grid.className = 'lixiang-about-create-together-grid';
   items.forEach((item) => {
     const picture = propPicture(item, 'image');
     const imageAlt = propText(item, 'imageAlt');
@@ -43,10 +46,24 @@ export default function decorate(block) {
     const footnote = propText(item, 'footnote');
 
     const card = document.createElement('div');
-    card.className = 'about-together-card';
+    card.className = 'lixiang-about-create-together-card';
+
+    const content = document.createElement('div');
+    content.className = 'lixiang-about-create-together-card-content';
+    if (cardTitle) {
+      const heading = document.createElement('h3');
+      heading.textContent = cardTitle;
+      instrumentProp(item, 'title', heading);
+      content.append(heading);
+    }
+    if (descSource) {
+      const desc = createRichText(descSource, 'lixiang-about-create-together-card-description');
+      instrumentProp(item, 'description', desc);
+      content.append(desc);
+    }
 
     const media = document.createElement('div');
-    media.className = 'about-together-card-media';
+    media.className = 'lixiang-about-create-together-card-media';
     if (picture) {
       const img = picture.querySelector('img');
       if (img) {
@@ -55,28 +72,15 @@ export default function decorate(block) {
       }
     }
 
-    const overlay = document.createElement('div');
-    overlay.className = 'about-together-card-overlay';
-
-    const content = document.createElement('div');
-    content.className = 'about-together-card-content';
-    if (cardTitle) {
-      const heading = document.createElement('h3');
-      heading.textContent = cardTitle;
-      content.append(heading);
-    }
-    if (descSource) {
-      const desc = createRichText(descSource);
-      content.append(desc);
-    }
-
     const footnoteEl = document.createElement('p');
-    footnoteEl.className = 'about-together-card-footnote';
+    footnoteEl.className = 'lixiang-about-create-together-card-footnote';
     if (footnote) {
       footnoteEl.textContent = footnote;
+      instrumentProp(item, 'footnote', footnoteEl);
     }
 
-    card.append(media, overlay, content, footnoteEl);
+    media.append(footnoteEl);
+    card.append(content, media);
     moveItemInstrumentation(item, card);
     grid.append(card);
   });

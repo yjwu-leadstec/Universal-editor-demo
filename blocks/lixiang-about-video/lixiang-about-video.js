@@ -18,41 +18,11 @@ export default function decorate(block) {
   const inner = document.createElement('div');
   inner.className = 'lixiang-about-video-inner';
 
-  const header = document.createElement('div');
-  header.className = 'lixiang-about-video-header';
   if (title) {
     const heading = document.createElement('h2');
     heading.textContent = title;
     instrumentProp(block, 'title', heading);
-    header.append(heading);
-  }
-  if (ctaText) {
-    const cta = document.createElement('button');
-    cta.type = 'button';
-    cta.className = 'lixiang-about-video-cta';
-    const label = document.createElement('span');
-    label.textContent = ctaText;
-    cta.append(label);
-    if (videoUrl) {
-      const icon = document.createElement('span');
-      icon.className = 'lixiang-about-video-cta-icon';
-      icon.setAttribute('aria-hidden', 'true');
-      cta.append(icon);
-      cta.addEventListener('click', () => {
-        const dialog = document.createElement('dialog');
-        dialog.className = 'lixiang-about-video-dialog';
-        const video = document.createElement('video');
-        video.src = videoUrl;
-        video.controls = true;
-        video.autoplay = true;
-        dialog.append(video);
-        document.body.append(dialog);
-        dialog.showModal();
-        dialog.addEventListener('close', () => dialog.remove());
-      });
-    }
-    instrumentProp(block, 'ctaText', cta);
-    header.append(cta);
+    inner.append(heading);
   }
 
   const media = document.createElement('div');
@@ -66,8 +36,34 @@ export default function decorate(block) {
       media.append(optimized);
     }
   }
+  if (ctaText && videoUrl) {
+    const cta = document.createElement('button');
+    cta.type = 'button';
+    cta.className = 'lixiang-about-video-cta';
+    const label = document.createElement('span');
+    label.textContent = ctaText;
+    cta.append(label);
+    const icon = document.createElement('span');
+    icon.className = 'lixiang-about-video-cta-icon';
+    icon.setAttribute('aria-hidden', 'true');
+    cta.append(icon);
+    cta.addEventListener('click', () => {
+      const dialog = document.createElement('dialog');
+      dialog.className = 'lixiang-about-video-dialog';
+      const video = document.createElement('video');
+      video.src = videoUrl;
+      video.controls = true;
+      video.autoplay = true;
+      dialog.append(video);
+      document.body.append(dialog);
+      dialog.showModal();
+      dialog.addEventListener('close', () => dialog.remove());
+    });
+    instrumentProp(block, 'ctaText', cta);
+    media.append(cta);
+  }
 
-  inner.append(header, media);
+  inner.append(media);
   block.textContent = '';
   block.append(inner);
 }

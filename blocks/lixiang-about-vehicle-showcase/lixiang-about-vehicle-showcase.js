@@ -18,14 +18,14 @@ export default function decorate(block) {
   const mobileAlt = propText(block, 'mobileImageAlt');
 
   const media = document.createElement('div');
-  media.className = 'about-vehicle-media';
+  media.className = 'lixiang-about-vehicle-showcase-media';
   if (desktopPicture) {
     const img = desktopPicture.querySelector('img');
     if (img) {
       const optimized = createOptimizedPicture(img.src, desktopAlt || '', true, [
         { width: '1920' }, { width: '1200' }, { width: '768' },
       ]);
-      optimized.classList.add('about-vehicle-bg-desktop');
+      optimized.classList.add('lixiang-about-vehicle-showcase-bg-desktop');
       media.append(optimized);
     }
   }
@@ -33,13 +33,13 @@ export default function decorate(block) {
     const img = mobilePicture.querySelector('img');
     if (img) {
       const optimized = createOptimizedPicture(img.src, mobileAlt || '', false, [{ width: '750' }]);
-      optimized.classList.add('about-vehicle-bg-mobile');
+      optimized.classList.add('lixiang-about-vehicle-showcase-bg-mobile');
       media.append(optimized);
     }
   }
 
   const copy = document.createElement('div');
-  copy.className = 'about-vehicle-copy';
+  copy.className = 'lixiang-about-vehicle-showcase-copy';
   if (title) {
     const heading = document.createElement('h2');
     heading.textContent = title;

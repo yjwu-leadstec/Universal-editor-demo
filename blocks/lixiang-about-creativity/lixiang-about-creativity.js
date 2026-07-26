@@ -34,7 +34,7 @@ export default function decorate(block) {
     header.append(desc);
   }
 
-  const items = modelItems(block, 'lixiang-lixiang-about-creativity-card');
+  const items = modelItems(block, 'lixiang-about-creativity-card');
   const grid = document.createElement('div');
   grid.className = 'lixiang-about-creativity-grid';
   items.forEach((item) => {
@@ -44,10 +44,24 @@ export default function decorate(block) {
     const descSource = propSource(item, 'description');
 
     const card = document.createElement('div');
-    card.className = 'lixiang-lixiang-about-creativity-card';
+    card.className = 'lixiang-about-creativity-card';
+
+    const content = document.createElement('div');
+    content.className = 'lixiang-about-creativity-card-content';
+    if (cardTitle) {
+      const heading = document.createElement('h3');
+      heading.textContent = cardTitle;
+      instrumentProp(item, 'title', heading);
+      content.append(heading);
+    }
+    if (descSource) {
+      const desc = createRichText(descSource, 'lixiang-about-creativity-card-description');
+      instrumentProp(item, 'description', desc);
+      content.append(desc);
+    }
 
     const media = document.createElement('div');
-    media.className = 'lixiang-lixiang-about-creativity-card-media';
+    media.className = 'lixiang-about-creativity-card-media';
     if (picture) {
       const img = picture.querySelector('img');
       if (img) {
@@ -56,22 +70,7 @@ export default function decorate(block) {
       }
     }
 
-    const overlay = document.createElement('div');
-    overlay.className = 'lixiang-lixiang-about-creativity-card-overlay';
-
-    const content = document.createElement('div');
-    content.className = 'lixiang-lixiang-about-creativity-card-content';
-    if (cardTitle) {
-      const heading = document.createElement('h3');
-      heading.textContent = cardTitle;
-      content.append(heading);
-    }
-    if (descSource) {
-      const desc = createRichText(descSource);
-      content.append(desc);
-    }
-
-    card.append(media, overlay, content);
+    card.append(content, media);
     moveItemInstrumentation(item, card);
     grid.append(card);
   });
