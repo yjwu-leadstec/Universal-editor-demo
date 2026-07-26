@@ -87,12 +87,7 @@
 }
 
 .lixiang-about-design-card-dark { background: #000; }
-.lixiang-about-design-card-dark .lixiang-about-design-card-content h3 { color: #fff; }
-.lixiang-about-design-card-dark .lixiang-about-design-card-description { color: rgb(255 255 255 / 70%); }
-
 .lixiang-about-design-card-light { background: #fff; }
-.lixiang-about-design-card-light .lixiang-about-design-card-content h3 { color: #191919; }
-.lixiang-about-design-card-light .lixiang-about-design-card-description { color: #666; }
 
 .lixiang-about-design-card-content {
   padding: 56px 32px 0;
@@ -120,6 +115,11 @@
 }
 
 .lixiang-about-design-card-description p { margin: 0; }
+
+.lixiang-about-design-card-dark .lixiang-about-design-card-content h3 { color: #fff; }
+.lixiang-about-design-card-dark .lixiang-about-design-card-description { color: rgb(255 255 255 / 70%); }
+.lixiang-about-design-card-light .lixiang-about-design-card-content h3 { color: #191919; }
+.lixiang-about-design-card-light .lixiang-about-design-card-description { color: #666; }
 
 .lixiang-about-design-card-media {
   flex: 1;
