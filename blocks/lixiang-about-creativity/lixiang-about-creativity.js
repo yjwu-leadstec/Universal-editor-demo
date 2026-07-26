@@ -25,8 +25,9 @@ export default function decorate(block) {
         (el) => !el.querySelector('picture') && el.textContent.trim(),
       );
       const pic = cell.querySelector('picture');
-      if (texts[0]) valuesTitle = texts[0].textContent.trim();
-      if (texts[1]) valuesDescSource = texts[1];
+      const [first, second] = texts;
+      if (first) valuesTitle = first.textContent.trim();
+      if (second) valuesDescSource = second;
       if (pic) valuesPicture = pic;
     }
   }
