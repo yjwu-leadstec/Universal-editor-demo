@@ -145,15 +145,10 @@ function createCard(entry, type) {
   if (entry.image) {
     media.append(createOptimizedPicture(toEdsAssetPath(entry.image), entry.alt || entry.title));
   }
-  if (type === 'photos' || type === 'videos') {
+  if (type === 'videos') {
     const marker = document.createElement('span');
     marker.className = `media-center-feed-marker is-${type}`;
-    if (type === 'photos') {
-      marker.textContent = entry.quantity;
-      marker.setAttribute('aria-label', `${entry.quantity || '0'} photos`);
-    } else {
-      marker.setAttribute('aria-hidden', 'true');
-    }
+    marker.setAttribute('aria-hidden', 'true');
     media.append(marker);
   }
 
@@ -164,10 +159,15 @@ function createCard(entry, type) {
   title.textContent = entry.title;
   const meta = document.createElement('span');
   meta.className = 'media-center-feed-meta';
-  let detail = '';
-  if (type === 'photos') detail = entry.quantity;
-  if (type === 'videos') detail = entry.duration;
-  meta.textContent = [detail, formatDate(entry.date)].filter(Boolean).join(' | ');
+  if (type === 'photos') {
+    const countIcon = document.createElement('span');
+    countIcon.className = 'media-center-feed-count-icon';
+    countIcon.setAttribute('aria-hidden', 'true');
+    meta.append(countIcon, document.createTextNode(` ${entry.quantity || '0'} | ${formatDate(entry.date)}`));
+  } else {
+    const detail = type === 'videos' ? entry.duration : '';
+    meta.textContent = [detail, formatDate(entry.date)].filter(Boolean).join(' | ');
+  }
   copy.append(title, meta);
   card.append(media, copy);
   return card;
