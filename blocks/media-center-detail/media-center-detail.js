@@ -32,27 +32,23 @@ function safeDamPath(path) {
   return normalizePath(path).startsWith('/content/dam/li-auto/') ? toEdsAssetPath(path) : '';
 }
 
-function routeFor(type, routeBase) {
-  const base = normalizePath(routeBase).replace(/^\/content\/demo-site/, '');
-  return type === 'newsroom' ? base : `${base}/${type}`;
-}
-
-function createBackLink(entry, routeBase) {
-  const nav = document.createElement('nav');
-  nav.className = 'media-center-detail-backbar';
-  nav.setAttribute('aria-label', 'Media Center navigation');
-  const link = document.createElement('a');
-  link.href = routeFor(entry.type, routeBase);
-  link.textContent = `Back to ${titleFor(entry.type)}`;
-  nav.append(link);
-  return nav;
+function createSectionBar(entry) {
+  const bar = document.createElement('div');
+  bar.className = 'media-center-detail-backbar';
+  const label = document.createElement('p');
+  label.className = 'media-center-detail-backbar-label';
+  label.textContent = titleFor(entry.type);
+  bar.append(label);
+  return bar;
 }
 
 function createBodySource(text) {
   const source = document.createElement('div');
-  const paragraph = document.createElement('p');
-  paragraph.textContent = text;
-  source.append(paragraph);
+  String(text).split(/\n\s*\n/).filter(Boolean).forEach((copy) => {
+    const paragraph = document.createElement('p');
+    paragraph.textContent = copy.trim();
+    source.append(paragraph);
+  });
   return source;
 }
 
@@ -90,6 +86,7 @@ function createDetail(entry) {
       poster: safeDamPath(entry.image),
       alt: entry.alt || entry.title,
       video: safeDamPath(entry.video),
+      download: safeDamPath(entry.download),
     });
     return { detail, setup: () => setupVideo(detail) };
   }
@@ -115,7 +112,6 @@ export default async function decorate(block) {
   const sourcePathSource = sourceFor(rows, 'sourcePath', 0);
   const routeBaseSource = sourceFor(rows, 'routeBase', 1);
   const sourcePath = sourceHref(sourcePathSource) || sourceText(sourcePathSource);
-  const routeBase = normalizePath(sourceHref(routeBaseSource) || sourceText(routeBaseSource));
 
   try {
     const currentPath = normalizePath(window.location.pathname);
@@ -127,7 +123,7 @@ export default async function decorate(block) {
     }
     const shell = document.createElement('section');
     shell.className = `media-center-detail-shell is-${entry.type}`;
-    const back = createBackLink(entry, routeBase);
+    const back = createSectionBar(entry);
     const { detail, setup } = createDetail(entry);
     shell.append(back, detail);
     block.classList.add('media-center-detail');

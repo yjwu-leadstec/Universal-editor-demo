@@ -230,6 +230,14 @@ export function createVideoDetail(detail) {
   const article = document.createElement('article');
   article.className = 'media-detail media-detail-video';
   const header = createDetailHeader(detail, 'media-detail-header-video');
+  if (detail.download) {
+    const download = document.createElement('a');
+    download.className = 'media-download';
+    download.href = detail.download;
+    download.download = '';
+    download.textContent = 'Download';
+    header.append(download);
+  }
   const player = document.createElement('div');
   player.className = 'media-video-player media-detail-media';
   const video = document.createElement('video');
