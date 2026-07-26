@@ -9,7 +9,7 @@ const ABOUT_MODEL_FIELDS = {
   'lixiang-about-dual-panel-item': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext'], ['footnote', 'text']],
   'lixiang-about-design-language': [['title', 'text'], ['subtitle', 'text'], ['largeImage', 'reference'], ['largeImageAlt', 'text']],
   'lixiang-about-design-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],
-  'lixiang-about-creativity': [['title', 'text'], ['subtitle', 'richtext'], ['values_title', 'text'], ['values_description', 'richtext'], ['values_image', 'reference'], ['values_imageAlt', 'text']],
+  'lixiang-about-creativity': [['title', 'text'], ['subtitle', 'richtext'], ['values', 'group']],
   'lixiang-about-creativity-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],
   'lixiang-about-create-together': [['title', 'text'], ['subtitle', 'text']],
   'lixiang-about-create-together-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext'], ['footnote', 'text']],

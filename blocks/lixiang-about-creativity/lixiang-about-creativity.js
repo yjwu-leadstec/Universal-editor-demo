@@ -14,8 +14,22 @@ export default function decorate(block) {
   initAboutBlock(block);
   const title = propText(block, 'title');
   const subtitle = propText(block, 'subtitle');
-  const valuesTitle = propText(block, 'values_title');
-  const valuesDescSource = propSource(block, 'values_description');
+  let valuesTitle = propText(block, 'values_title');
+  let valuesDescSource = propSource(block, 'values_description');
+  let valuesPicture = propPicture(block, 'values_image');
+  if (!valuesTitle && !valuesDescSource && !valuesPicture) {
+    const valuesGroup = propSource(block, 'values');
+    if (valuesGroup) {
+      const cell = valuesGroup.querySelector('div') || valuesGroup;
+      const texts = [...cell.children].filter(
+        (el) => !el.querySelector('picture') && el.textContent.trim(),
+      );
+      const pic = cell.querySelector('picture');
+      if (texts[0]) valuesTitle = texts[0].textContent.trim();
+      if (texts[1]) valuesDescSource = texts[1];
+      if (pic) valuesPicture = pic;
+    }
+  }
 
   const inner = document.createElement('div');
   inner.className = 'lixiang-about-creativity-inner';
@@ -75,7 +89,6 @@ export default function decorate(block) {
     grid.append(card);
   });
 
-  const valuesPicture = propPicture(block, 'values_image');
   const valuesAlt = propText(block, 'values_imageAlt');
   const values = document.createElement('div');
   values.className = 'lixiang-about-creativity-values';
