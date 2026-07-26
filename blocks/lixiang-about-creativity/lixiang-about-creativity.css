@@ -41,36 +41,23 @@
   gap: 20px;
 }
 
+/* Card: white text area on top + image on bottom (per Pencil M2AMP) */
 .lixiang-about-creativity-card {
-  position: relative;
   border-radius: 4px;
   overflow: hidden;
-  background: #000;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
   min-height: 780px;
 }
 
-.lixiang-about-creativity-card-media {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.lixiang-about-creativity-card-media picture,
-.lixiang-about-creativity-card-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .lixiang-about-creativity-card-content {
-  position: absolute;
-  z-index: 2;
-  top: 80px;
-  left: 80px;
-  right: 80px;
+  background: #fff;
+  padding: 80px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  flex-shrink: 0;
 }
 
 .lixiang-about-creativity-card-content h3 {
@@ -80,15 +67,31 @@
   font-weight: 500;
   line-height: 1.33;
   color: rgb(0 0 0 / 90%);
+  text-align: center;
 }
 
-.lixiang-about-creativity-card-content p {
-  margin: 0;
+.lixiang-about-creativity-card-description {
   font-family: var(--body-font-family);
   font-size: 16px;
   font-weight: 500;
   line-height: 1.75;
   color: rgb(0 0 0 / 60%);
+  text-align: center;
+}
+
+.lixiang-about-creativity-card-description p { margin: 0; }
+
+.lixiang-about-creativity-card-media {
+  flex: 1;
+  overflow: hidden;
+}
+
+.lixiang-about-creativity-card-media picture,
+.lixiang-about-creativity-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .lixiang-about-creativity-values {
@@ -123,31 +126,21 @@
   .lixiang-about-creativity-inner { padding: 60px 40px 20px; }
   .lixiang-about-creativity-header h2 { font-size: 36px; }
   .lixiang-about-creativity-card { min-height: 600px; }
-
-  .lixiang-about-creativity-card-content {
-    top: 40px;
-    left: 40px;
-    right: 40px;
-  }
+  .lixiang-about-creativity-card-content { padding: 40px; }
   .lixiang-about-creativity-card-content h3 { font-size: 28px; }
   .lixiang-about-creativity-values { padding: 40px 20px; }
 }
 
 @media (width <= 768px) {
   .lixiang-about-creativity-grid { grid-template-columns: 1fr; }
-
   .lixiang-about-creativity-card {
-    min-height: 400px;
+    min-height: auto;
     border-radius: 8px;
   }
-
-  .lixiang-about-creativity-card-content {
-    top: 20px;
-    left: 20px;
-    right: 20px;
-  }
+  .lixiang-about-creativity-card-content { padding: 20px; }
   .lixiang-about-creativity-card-content h3 { font-size: 20px; }
-  .lixiang-about-creativity-card-content p { font-size: 12px; }
+  .lixiang-about-creativity-card-description { font-size: 12px; }
+  .lixiang-about-creativity-card-media { min-height: 200px; }
   .lixiang-about-creativity-values h3 { font-size: 24px; }
   .lixiang-about-creativity-values p { font-size: 12px; }
 }
