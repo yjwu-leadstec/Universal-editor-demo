@@ -32,7 +32,7 @@ export default function decorate(block) {
     header.append(desc);
   }
 
-  const items = modelItems(block, 'lixiang-lixiang-about-dual-panel-item');
+  const items = modelItems(block, 'lixiang-about-dual-panel-item');
   const grid = document.createElement('div');
   grid.className = 'lixiang-about-dual-panel-grid';
   items.forEach((item) => {
