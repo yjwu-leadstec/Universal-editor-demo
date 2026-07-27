@@ -94,7 +94,7 @@
 @media (width <= 719px) {
   .lixiang-about-video-inner {
     gap: 24px;
-    padding: 80px 20px 0;
+    padding: 80px 20px 30px;
   }
 
   .lixiang-about-video-header { gap: 16px; }
@@ -105,7 +105,10 @@
     line-height: 1.25;
   }
 
-  .lixiang-about-video-cta { font-size: 14px; }
+  .lixiang-about-video-cta {
+    font-size: 14.56px;
+    line-height: 1.5714;
+  }
 
   .lixiang-about-video-cta-icon {
     width: 14px;
