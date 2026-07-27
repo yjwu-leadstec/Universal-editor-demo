@@ -8,7 +8,7 @@
  * - 官方 Logo 素材已包含车型副标题；仅无 Logo 的文本回退卡另行渲染 subtitle。
  * - 移动端：竖向堆叠，文案左下对齐。
  *
- * 稳健取值（product-showcase 式按类型查询，兼容可选字段缺省 + EDS 字段折叠）：
+ * 稳健取值（按字段类型查询，兼容可选字段缺省 + EDS 字段折叠）：
  *   pictures[0]=桌面背景图；可选 mobileImage 优先通过 instrumentation 识别，三图行回退为 pictures[1]；
  *   logo 优先通过 instrumentation 识别，三图行回退为 pictures[2]，旧两图内容回退为 pictures[1]。
  *   text cells 依模型顺序 = 车名/副标题/尺寸/kind；anchor=link。

@@ -28,8 +28,6 @@
       "columns",
       "fragment",
       "avatar",
-      "product-table",
-      "product-showcase",
       "lixiang-product-hero",
       "lixiang-product-sticky-nav",
       "lixiang-product-intro-slider",
@@ -369,15 +367,5 @@
       "official-center-card",
       "official-center-field"
     ]
-  },
-  {
-    "id": "product-showcase",
-    "components": [
-      "product-card"
-    ]
-  },
-  {
-    "id": "product-table",
-    "components": []
   }
 ]

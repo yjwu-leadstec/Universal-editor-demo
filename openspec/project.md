@@ -80,7 +80,7 @@ export default function decorate(block) {
 - `fragment` - 内容片段
 - `header` - 页头
 - `hero` - Hero 横幅
-- `product-table` - 产品表格
+- `lixiang-product-spec-table` - 产品规格与配置表
 - `quote` - 引用块
 
 ## Important Constraints
