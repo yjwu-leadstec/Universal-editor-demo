@@ -59,7 +59,7 @@
   font-size: calc(16px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.75;
-  letter-spacing: 0.16px;
+  letter-spacing: 0;
   color: #fff;
   text-align: center;
 }
@@ -112,6 +112,8 @@
   .lixiang-about-vehicle-showcase-copy { width: calc(100vw / 7 * 6); }
 
   .lixiang-about-vehicle-showcase-copy h2 { font-size: calc(42px * var(--about-scale, 1)); }
+
+  .lixiang-about-vehicle-showcase-copy > p { font-size: 1.5625vw; }
 }
 
 
