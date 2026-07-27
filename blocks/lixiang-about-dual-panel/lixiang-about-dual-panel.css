@@ -173,6 +173,7 @@
 
   .lixiang-about-dual-panel-card {
     display: flex;
+    flex: none;
     flex-direction: column;
     height: 350px;
     border-radius: 8px;
