@@ -1,6 +1,7 @@
 import { getMetadata } from '../../scripts/aem.js';
 
 const SCROLL_THRESHOLD = 100;
+const EXIT_DURATION = 1000;
 const DESKTOP_MEDIA_QUERY = '(min-width: 720px)';
 
 function createIcon() {
@@ -25,6 +26,7 @@ export default function decorate(block) {
   const desktop = window.matchMedia(DESKTOP_MEDIA_QUERY);
   const footer = document.querySelector('footer');
   let animationFrame = 0;
+  let exitTimer = 0;
 
   button.className = 'lixiang-back-to-top-button';
   button.type = 'button';
@@ -37,18 +39,33 @@ export default function decorate(block) {
     const footerTop = footer?.getBoundingClientRect().top ?? Number.POSITIVE_INFINITY;
     const bottom = Math.max(baseBottom, window.innerHeight - footerTop + baseBottom);
     const visible = window.scrollY >= SCROLL_THRESHOLD;
+    const interactive = visible && !button.classList.contains('is-exiting');
 
     button.style.bottom = `${bottom}px`;
-    button.classList.toggle('is-visible', visible);
-    button.tabIndex = visible ? 0 : -1;
-    button.setAttribute('aria-hidden', String(!visible));
+    button.classList.toggle('is-visible', interactive);
+    button.tabIndex = interactive ? 0 : -1;
+    button.setAttribute('aria-hidden', String(!interactive));
   }
 
   function scheduleUpdate() {
     if (!animationFrame) animationFrame = window.requestAnimationFrame(update);
   }
 
-  button.addEventListener('click', () => window.scrollTo(0, 0));
+  function exitToTop() {
+    window.clearTimeout(exitTimer);
+    button.classList.remove('is-visible');
+    button.classList.add('is-exiting');
+    button.tabIndex = -1;
+    button.setAttribute('aria-hidden', 'true');
+    window.scrollTo(0, 0);
+
+    exitTimer = window.setTimeout(() => {
+      button.classList.remove('is-exiting');
+      update();
+    }, EXIT_DURATION);
+  }
+
+  button.addEventListener('click', exitToTop);
   window.addEventListener('scroll', scheduleUpdate, { passive: true });
   window.addEventListener('resize', scheduleUpdate);
 

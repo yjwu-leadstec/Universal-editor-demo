@@ -19,9 +19,20 @@ test('the site shell loads one independent back-to-top block', () => {
 
 test('the control follows the live-site visibility and click behavior', () => {
   assert.match(componentJs, /const SCROLL_THRESHOLD = 100;/);
+  assert.match(componentJs, /const EXIT_DURATION = 1000;/);
   assert.match(componentJs, /window\.scrollY >= SCROLL_THRESHOLD/);
+  assert.match(componentJs, /button\.classList\.add\('is-exiting'\)/);
   assert.match(componentJs, /window\.scrollTo\(0, 0\)/);
-  assert.match(componentJs, /tabIndex = visible \? 0 : -1/);
+  assert.match(componentJs, /window\.setTimeout\([\s\S]*EXIT_DURATION\)/);
+  assert.match(componentJs, /tabIndex = interactive \? 0 : -1/);
+  assert.match(
+    componentCss,
+    /\.lixiang-back-to-top-button\.is-exiting\s*\{[^}]*translateY\(calc\(100% \+ 40px\)\)[^}]*opacity 1s[^}]*transform 1s/s,
+  );
+  assert.match(
+    componentCss,
+    /\.lixiang-back-to-top-button:hover,[\s\S]*background:\s*rgb\(236 236 236 \/ 60%\);/,
+  );
 });
 
 test('desktop and mobile dimensions match the live site', () => {
