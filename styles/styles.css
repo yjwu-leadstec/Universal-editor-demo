@@ -281,6 +281,12 @@ main .lixiang-about-vehicle-model-name {
   font-family: licium-medium, roboto, roboto-fallback, sans-serif;
 }
 
+/* production renders the design-language hero description in licium-medium at all widths */
+main .lixiang-about-design-language-hero-description,
+main .lixiang-about-design-language-hero-description p {
+  font-family: licium-medium, roboto, roboto-fallback, sans-serif;
+}
+
 /* about us scroll/load motion matching the live site */
 @media (prefers-reduced-motion: no-preference) {
   main [class*='lixiang-about-'] .about-anim {

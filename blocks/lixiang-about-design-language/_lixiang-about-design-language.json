@@ -63,6 +63,19 @@
           "valueType": "string"
         },
         {
+          "component": "reference",
+          "name": "largeImage_mobileImage",
+          "label": "Large Mobile Image (Optional)",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "largeImage_mobileImageAlt",
+          "label": "Large Mobile Image Alt Text",
+          "valueType": "string"
+        },
+        {
           "component": "text",
           "name": "big_title",
           "label": "Hero Overlay Title (Optional)",
@@ -90,6 +103,19 @@
           "component": "text",
           "name": "imageAlt",
           "label": "Image Alt Text",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "mobileImage",
+          "label": "Card Mobile Image (Optional)",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "mobileImageAlt",
+          "label": "Mobile Image Alt Text",
           "valueType": "string"
         },
         {

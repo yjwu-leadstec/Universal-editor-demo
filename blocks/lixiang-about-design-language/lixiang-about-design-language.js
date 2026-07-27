@@ -17,6 +17,9 @@ export default function decorate(block) {
   const subtitle = propText(block, 'subtitle');
   const largePicture = propPicture(block, 'largeImage');
   const largeAlt = propText(block, 'largeImageAlt');
+  const largeCell = propSource(block, 'largeImage');
+  const largeCellPics = largeCell ? [...largeCell.querySelectorAll('picture')] : [];
+  const largeMobilePicture = propPicture(block, 'largeImage_mobileImage') || largeCellPics[1];
 
   const inner = document.createElement('div');
   inner.className = 'lixiang-about-design-language-inner';
@@ -46,6 +49,15 @@ export default function decorate(block) {
       const optimized = createOptimizedPicture(img.src, largeAlt || '', false, [
         { width: '1920' }, { width: '1200' }, { width: '768' },
       ]);
+      optimized.classList.add('tier-desktop');
+      heroMedia.append(optimized);
+    }
+  }
+  if (largeMobilePicture) {
+    const img = largeMobilePicture.querySelector('img');
+    if (img) {
+      const optimized = createOptimizedPicture(img.src, largeAlt || '', false, [{ width: '750' }]);
+      optimized.classList.add('tier-mobile');
       heroMedia.append(optimized);
     }
   }
@@ -91,6 +103,7 @@ export default function decorate(block) {
   items.forEach((item) => {
     const picture = propPicture(item, 'image');
     const imageAlt = propText(item, 'imageAlt');
+    const mobilePicture = propPicture(item, 'mobileImage');
     const cardTitle = propText(item, 'title');
     const descSource = propSource(item, 'description');
 
@@ -117,6 +130,15 @@ export default function decorate(block) {
       const img = picture.querySelector('img');
       if (img) {
         const optimized = createOptimizedPicture(img.src, imageAlt || '', false, [{ width: '768' }]);
+        optimized.classList.add('tier-desktop');
+        media.append(optimized);
+      }
+    }
+    if (mobilePicture) {
+      const img = mobilePicture.querySelector('img');
+      if (img) {
+        const optimized = createOptimizedPicture(img.src, imageAlt || '', false, [{ width: '750' }]);
+        optimized.classList.add('tier-mobile');
         media.append(optimized);
       }
     }
