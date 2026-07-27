@@ -6249,5 +6249,154 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "test-drive-booking",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "value": "Schedule a Drive",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "intro",
+        "label": "Contact Notice",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "privacyText",
+        "label": "Privacy Consent Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "privacyLink",
+        "label": "Privacy Notice Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "privacyLinkText",
+        "label": "Privacy Link Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "submitLabel",
+        "label": "Submit Label",
+        "value": "Submit",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "successTitle",
+        "label": "Success Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "successDescription",
+        "label": "Success Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "test-drive-model",
+    "fields": [
+      {
+        "component": "text",
+        "name": "modelKey",
+        "label": "Model Key",
+        "description": "Stable value used by deep links and store availability",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "modelName",
+        "label": "Model Name",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "subtitle",
+        "label": "Subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "price",
+        "label": "Price Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "desktopImage",
+        "label": "Desktop Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "desktopImageAlt",
+        "label": "Desktop Image Alt",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Image",
+        "description": "Falls back to the desktop image when empty",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "test-drive-store",
+    "fields": [
+      {
+        "component": "text",
+        "name": "storeKey",
+        "label": "Store Key",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "city",
+        "label": "City",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "storeName",
+        "label": "Store Name",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "availableModelKeys",
+        "label": "Available Model Keys",
+        "description": "Comma-separated model keys; leave empty for all models",
+        "valueType": "string"
+      }
+    ]
   }
 ]
