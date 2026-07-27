@@ -75,7 +75,8 @@
     max-height: none;
   }
 
-  .lixiang-about-hero-bg-desktop, .lixiang-about-hero-media .lixiang-about-hero-bg-pad { display: none; }
+  .lixiang-about-hero-media .lixiang-about-hero-bg-desktop,
+  .lixiang-about-hero-media .lixiang-about-hero-bg-pad { display: none; }
   .lixiang-about-hero-media .lixiang-about-hero-bg-mobile { display: block; }
 
   .lixiang-about-hero-copy {

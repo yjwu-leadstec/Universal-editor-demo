@@ -120,7 +120,8 @@
     max-height: none;
   }
 
-  .lixiang-about-vehicle-showcase-bg-desktop, .lixiang-about-vehicle-showcase-media .lixiang-about-vehicle-showcase-bg-pad { display: none; }
+  .lixiang-about-vehicle-showcase-media .lixiang-about-vehicle-showcase-bg-desktop,
+  .lixiang-about-vehicle-showcase-media .lixiang-about-vehicle-showcase-bg-pad { display: none; }
   .lixiang-about-vehicle-showcase-media .lixiang-about-vehicle-showcase-bg-mobile { display: block; }
 
   .lixiang-about-vehicle-showcase-copy {
