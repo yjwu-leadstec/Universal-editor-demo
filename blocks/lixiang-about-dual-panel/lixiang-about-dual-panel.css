@@ -4,36 +4,37 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
-  padding: 125px 160px 20px;
-  max-width: 1920px;
+  gap: calc(40px * var(--about-scale, 1));
+  width: 83.3333vw;
+  max-width: 1600px;
   margin: 0 auto;
+  padding: calc(125px * var(--about-scale, 1)) 0 calc(20px * var(--about-scale, 1));
 }
 
 /* 连续的第二个 dual-panel section 顶部间距按设计稿收敛 */
 .section:has(> .lixiang-about-dual-panel-wrapper)
   + .section:has(> .lixiang-about-dual-panel-wrapper)
-  .lixiang-about-dual-panel-inner { padding-top: 91px; }
+  .lixiang-about-dual-panel-inner { padding-top: calc(91px * var(--about-scale, 1)); }
 
 .lixiang-about-dual-panel-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 13px;
+  gap: calc(13px * var(--about-scale, 1));
   max-width: 1092px;
   text-align: center;
 }
 
 .lixiang-about-dual-panel-header h2 {
   margin: 0;
-  font-size: 46px;
+  font-size: calc(46px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.3478;
   color: #191919;
 }
 
 .lixiang-about-dual-panel-subtitle {
-  font-size: 20px;
+  font-size: calc(20px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.4;
   color: #666;
@@ -44,7 +45,7 @@
 .lixiang-about-dual-panel-grid {
   display: flex;
   align-items: stretch;
-  gap: 20px;
+  gap: calc(20px * var(--about-scale, 1));
   width: 100%;
 }
 
@@ -84,19 +85,19 @@
 .lixiang-about-dual-panel-card-content {
   position: absolute;
   z-index: 2;
-  top: 80px;
-  left: 80px;
-  right: 80px;
+  top: calc(80px * var(--about-scale, 1));
+  left: calc(80px * var(--about-scale, 1));
+  right: calc(80px * var(--about-scale, 1));
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: calc(16px * var(--about-scale, 1));
   text-align: center;
 }
 
 .lixiang-about-dual-panel-card-content h3 {
   margin: 0;
-  font-size: 36px;
+  font-size: calc(36px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.3333;
   color: #fff;
@@ -104,7 +105,7 @@
 }
 
 .lixiang-about-dual-panel-card-description {
-  font-size: 16px;
+  font-size: calc(16px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.75;
   color: rgb(255 255 255 / 70%);
@@ -116,39 +117,15 @@
 .lixiang-about-dual-panel-card-footnote {
   position: absolute;
   z-index: 2;
-  left: 80px;
-  right: 80px;
-  bottom: 40px;
+  left: calc(80px * var(--about-scale, 1));
+  right: calc(80px * var(--about-scale, 1));
+  bottom: calc(40px * var(--about-scale, 1));
   margin: 0;
-  font-size: 14px;
+  font-size: calc(14px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.5714;
   color: rgb(255 255 255 / 70%);
   text-align: center;
-}
-
-@media (width <= 1440px) {
-  .lixiang-about-dual-panel-inner { padding: 80px 40px 20px; }
-
-  .section:has(> .lixiang-about-dual-panel-wrapper)
-    + .section:has(> .lixiang-about-dual-panel-wrapper)
-    .lixiang-about-dual-panel-inner { padding-top: 60px; }
-
-  .lixiang-about-dual-panel-header h2 { font-size: 36px; }
-
-  .lixiang-about-dual-panel-card-content {
-    top: 40px;
-    left: 40px;
-    right: 40px;
-  }
-
-  .lixiang-about-dual-panel-card-content h3 { font-size: 28px; }
-
-  .lixiang-about-dual-panel-card-footnote {
-    left: 40px;
-    right: 40px;
-    bottom: 24px;
-  }
 }
 
 @media (width <= 719px) {

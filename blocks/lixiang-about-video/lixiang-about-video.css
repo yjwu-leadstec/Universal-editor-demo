@@ -4,8 +4,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
-  padding: 160px 100px 27px;
+  gap: calc(40px * var(--about-scale, 1));
+  padding: calc(160px * var(--about-scale, 1)) calc(100px * var(--about-scale, 1)) calc(27px * var(--about-scale, 1));
   max-width: 1920px;
   margin: 0 auto;
 }
@@ -14,13 +14,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: calc(24px * var(--about-scale, 1));
   width: 100%;
 }
 
 .lixiang-about-video-header h2 {
   margin: 0;
-  font-size: 64px;
+  font-size: calc(64px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.4063;
   color: rgb(0 0 0 / 90%);
@@ -35,7 +35,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: calc(16px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.5;
   color: #191919;
@@ -54,8 +54,8 @@
   position: relative;
   border-radius: 4px;
   overflow: hidden;
-  width: 1720px;
-  max-width: 100%;
+  width: 100%;
+  max-width: calc(1720px * var(--about-scale, 1));
   aspect-ratio: 1720 / 967;
 }
 
@@ -72,7 +72,7 @@
   position: absolute;
   z-index: 3;
   left: 50%;
-  bottom: 40px;
+  bottom: calc(40px * var(--about-scale, 1));
   transform: translateX(-50%);
   width: 48px;
   height: 48px;
@@ -129,11 +129,6 @@
 }
 
 .lixiang-about-video-dialog::backdrop { background: rgb(0 0 0 / 80%); }
-
-@media (width <= 1440px) {
-  .lixiang-about-video-inner { padding: 80px 40px 20px; }
-  .lixiang-about-video-header h2 { font-size: 48px; }
-}
 
 @media (width <= 719px) {
   .lixiang-about-video-inner {

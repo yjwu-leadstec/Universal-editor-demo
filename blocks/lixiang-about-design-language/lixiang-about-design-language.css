@@ -4,31 +4,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
-  padding: 80px 160px 20px;
-  max-width: 1920px;
+  gap: calc(40px * var(--about-scale, 1));
+  width: 83.3333vw;
+  max-width: 1600px;
   margin: 0 auto;
+  padding: calc(80px * var(--about-scale, 1)) 0 calc(20px * var(--about-scale, 1));
 }
 
 .lixiang-about-design-language-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: calc(14px * var(--about-scale, 1));
   max-width: 877px;
   text-align: center;
 }
 
 .lixiang-about-design-language-header h2 {
   margin: 0;
-  font-size: 46px;
+  font-size: calc(46px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.3478;
   color: rgb(0 0 0 / 90%);
 }
 
 .lixiang-about-design-language-subtitle {
-  font-size: 20px;
+  font-size: calc(20px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.4;
   color: #666;
@@ -47,26 +48,26 @@
 .lixiang-about-design-language-hero-overlay {
   position: absolute;
   z-index: 2;
-  top: 80px;
-  left: 224px;
-  right: 224px;
+  top: calc(80px * var(--about-scale, 1));
+  left: calc(224px * var(--about-scale, 1));
+  right: calc(224px * var(--about-scale, 1));
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: calc(16px * var(--about-scale, 1));
   text-align: center;
 }
 
 .lixiang-about-design-language-hero-overlay h3 {
   margin: 0;
-  font-size: 36px;
+  font-size: calc(36px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.3333;
   color: #fff;
 }
 
 .lixiang-about-design-language-hero-description {
-  font-size: 16px;
+  font-size: calc(16px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.75;
   color: rgb(255 255 255 / 70%);
@@ -85,9 +86,9 @@
 .lixiang-about-design-language-grid {
   display: flex;
   align-items: stretch;
-  gap: 20px;
+  gap: calc(20px * var(--about-scale, 1));
   width: 100%;
-  margin-top: 0;
+  margin-top: calc(-20px * var(--about-scale, 1));
 }
 
 .lixiang-about-design-card {
@@ -126,19 +127,19 @@
 .lixiang-about-design-card-content {
   position: absolute;
   z-index: 2;
-  top: 56px;
-  left: 60px;
-  right: 60px;
+  top: calc(56px * var(--about-scale, 1));
+  left: calc(60px * var(--about-scale, 1));
+  right: calc(60px * var(--about-scale, 1));
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: calc(16px * var(--about-scale, 1));
   text-align: center;
 }
 
 .lixiang-about-design-card-content h3 {
   margin: 0;
-  font-size: 20px;
+  font-size: calc(20px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.4;
   color: #fff;
@@ -154,23 +155,6 @@
 }
 
 .lixiang-about-design-card-description p { margin: 0; }
-
-@media (width <= 1440px) {
-  .lixiang-about-design-language-inner { padding: 60px 40px 20px; }
-  .lixiang-about-design-language-header h2 { font-size: 36px; }
-
-  .lixiang-about-design-language-hero-overlay {
-    top: 40px;
-    left: 80px;
-    right: 80px;
-  }
-
-  .lixiang-about-design-card-content {
-    top: 30px;
-    left: 20px;
-    right: 20px;
-  }
-}
 
 @media (width <= 719px) {
   .lixiang-about-design-language-inner {

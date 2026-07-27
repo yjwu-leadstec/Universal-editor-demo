@@ -4,31 +4,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
-  padding: 85px 160px 20px;
-  max-width: 1920px;
+  gap: calc(40px * var(--about-scale, 1));
+  width: 83.3333vw;
+  max-width: 1600px;
   margin: 0 auto;
+  padding: calc(85px * var(--about-scale, 1)) 0 calc(20px * var(--about-scale, 1));
 }
 
 .lixiang-about-creativity-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 13px;
+  gap: calc(13px * var(--about-scale, 1));
   max-width: 1254px;
   text-align: center;
 }
 
 .lixiang-about-creativity-header h2 {
   margin: 0;
-  font-size: 46px;
+  font-size: calc(46px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.3478;
   color: #191919;
 }
 
 .lixiang-about-creativity-subtitle {
-  font-size: 20px;
+  font-size: calc(20px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.4;
   color: #666;
@@ -39,7 +40,7 @@
 .lixiang-about-creativity-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: calc(20px * var(--about-scale, 1));
   width: 100%;
 }
 
@@ -56,15 +57,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 80px 80px 60px;
+  gap: calc(16px * var(--about-scale, 1));
+  padding: calc(80px * var(--about-scale, 1)) calc(80px * var(--about-scale, 1)) calc(60px * var(--about-scale, 1));
   text-align: center;
   flex-shrink: 0;
 }
 
 .lixiang-about-creativity-card-content h3 {
   margin: 0;
-  font-size: 36px;
+  font-size: calc(36px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.3333;
   color: #191919;
@@ -72,7 +73,7 @@
 }
 
 .lixiang-about-creativity-card-description {
-  font-size: 16px;
+  font-size: calc(16px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.75;
   color: #666;
@@ -105,16 +106,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: calc(16px * var(--about-scale, 1));
   max-width: 960px;
   margin: 0 auto;
-  padding: 80px 20px 60px;
+  padding: calc(80px * var(--about-scale, 1)) 20px calc(60px * var(--about-scale, 1));
   text-align: center;
 }
 
 .lixiang-about-creativity-values-band h3 {
   margin: 0;
-  font-size: 36px;
+  font-size: calc(36px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.3333;
   color: #191919;
@@ -137,14 +138,6 @@
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-@media (width <= 1440px) {
-  .lixiang-about-creativity-inner { padding: 60px 40px 20px; }
-  .lixiang-about-creativity-header h2 { font-size: 36px; }
-
-  .lixiang-about-creativity-card-content { padding: 40px; }
-  .lixiang-about-creativity-card-content h3 { font-size: 28px; }
 }
 
 @media (width <= 719px) {

@@ -27,21 +27,21 @@
 .lixiang-about-vehicle-showcase-copy {
   position: absolute;
   z-index: 1;
-  top: 120px;
+  top: calc(120px * var(--about-scale, 1));
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  width: 878px;
+  gap: calc(8px * var(--about-scale, 1));
+  width: calc(878px * var(--about-scale, 1));
   max-width: calc(100% - 80px);
   text-align: center;
 }
 
 .lixiang-about-vehicle-showcase-copy h2 {
   margin: 0;
-  font-size: 46px;
+  font-size: calc(46px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.5652;
   color: #fff;
@@ -50,7 +50,7 @@
 
 .lixiang-about-vehicle-showcase-copy > p {
   margin: 0;
-  font-size: 16px;
+  font-size: calc(16px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.75;
   letter-spacing: 0.16px;
@@ -62,7 +62,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  margin-top: 12px;
+  margin-top: calc(12px * var(--about-scale, 1));
 }
 
 .lixiang-about-vehicle-model {
@@ -70,23 +70,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 49px;
+  padding: 0 calc(49px * var(--about-scale, 1));
 }
 
 .lixiang-about-vehicle-model:not(:last-child)::after {
   content: '';
   position: absolute;
   right: 0;
-  top: 8px;
+  top: calc(8px * var(--about-scale, 1));
   width: 1px;
-  height: 42px;
+  height: calc(42px * var(--about-scale, 1));
   background: #fff;
   opacity: 0.5;
 }
 
 .lixiang-about-vehicle-model-name {
   margin: 0;
-  font-size: 22px;
+  font-size: calc(22px * var(--about-scale, 1));
   font-weight: 500;
   line-height: 1.3636;
   color: #fff;
@@ -95,17 +95,11 @@
 
 .lixiang-about-vehicle-model-desc {
   margin: 4px 0 0;
-  font-size: 16px;
+  font-size: calc(16px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.5;
   color: #fff;
   text-align: center;
-}
-
-@media (width <= 1440px) {
-  .lixiang-about-vehicle-showcase-copy { top: 96px; }
-  .lixiang-about-vehicle-showcase-copy h2 { font-size: 36px; }
-  .lixiang-about-vehicle-model { padding: 0 32px; }
 }
 
 @media (width <= 719px) {

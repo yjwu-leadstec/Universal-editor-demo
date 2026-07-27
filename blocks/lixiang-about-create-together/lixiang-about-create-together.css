@@ -4,31 +4,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
-  padding: 85px 160px 80px;
-  max-width: 1920px;
+  gap: calc(40px * var(--about-scale, 1));
+  width: 83.3333vw;
+  max-width: 1600px;
   margin: 0 auto;
+  padding: calc(85px * var(--about-scale, 1)) 0 calc(80px * var(--about-scale, 1));
 }
 
 .lixiang-about-create-together-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 13px;
+  gap: calc(13px * var(--about-scale, 1));
   max-width: 1099px;
   text-align: center;
 }
 
 .lixiang-about-create-together-header h2 {
   margin: 0;
-  font-size: 46px;
+  font-size: calc(46px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.3478;
   color: #191919;
 }
 
 .lixiang-about-create-together-subtitle {
-  font-size: 20px;
+  font-size: calc(20px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.4;
   color: rgb(0 0 0 / 60%);
@@ -40,7 +41,7 @@
   display: flex;
   align-items: stretch;
   justify-content: center;
-  gap: 20px;
+  gap: calc(20px * var(--about-scale, 1));
   width: 100%;
 }
 
@@ -81,19 +82,19 @@
 .lixiang-about-create-together-card-content {
   position: absolute;
   z-index: 2;
-  top: 56px;
-  left: 80px;
-  right: 80px;
+  top: calc(56px * var(--about-scale, 1));
+  left: calc(80px * var(--about-scale, 1));
+  right: calc(80px * var(--about-scale, 1));
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: calc(8px * var(--about-scale, 1));
   text-align: center;
 }
 
 .lixiang-about-create-together-card-content h3 {
   margin: 0;
-  font-size: 20px;
+  font-size: calc(20px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.4;
   color: #fff;
@@ -101,7 +102,7 @@
 }
 
 .lixiang-about-create-together-card-description {
-  font-size: 16px;
+  font-size: calc(16px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.75;
   color: rgb(255 255 255 / 70%);
@@ -113,32 +114,15 @@
 .lixiang-about-create-together-card-footnote {
   position: absolute;
   z-index: 2;
-  left: 80px;
-  right: 80px;
-  bottom: 40px;
+  left: calc(80px * var(--about-scale, 1));
+  right: calc(80px * var(--about-scale, 1));
+  bottom: calc(40px * var(--about-scale, 1));
   margin: 0;
-  font-size: 14px;
+  font-size: calc(14px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.5714;
   color: #fff;
   text-align: center;
-}
-
-@media (width <= 1440px) {
-  .lixiang-about-create-together-inner { padding: 60px 40px 20px; }
-  .lixiang-about-create-together-header h2 { font-size: 36px; }
-
-  .lixiang-about-create-together-card-content {
-    top: 30px;
-    left: 20px;
-    right: 20px;
-  }
-
-  .lixiang-about-create-together-card-footnote {
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-  }
 }
 
 @media (width <= 719px) {
