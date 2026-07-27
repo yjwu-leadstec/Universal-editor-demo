@@ -98,7 +98,10 @@
 }
 
 .lixiang-about-creativity-values {
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: calc(780px * var(--about-scale, 1));
   border-radius: 4px;
   overflow: hidden;
 }
@@ -107,6 +110,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-shrink: 0;
   gap: calc(16px * var(--about-scale, 1));
   padding: calc(80px * var(--about-scale, 1)) calc(224px * var(--about-scale, 1)) calc(60px * var(--about-scale, 1));
   text-align: center;
@@ -131,7 +135,8 @@
 .lixiang-about-creativity-values-description p { margin: 0; }
 
 .lixiang-about-creativity-values-media {
-  height: calc(508px * var(--about-scale, 1));
+  flex: 1;
+  min-height: 0;
   margin: 0 calc(224px * var(--about-scale, 1)) calc(40px * var(--about-scale, 1));
 }
 
@@ -143,6 +148,14 @@
   display: block;
 }
 
+@media (width >= 860px) and (width <= 1024px) {
+  .lixiang-about-creativity-values { height: calc(499px * var(--about-scale, 1)); }
+}
+
+@media (width >= 721px) and (width <= 859px) {
+  .lixiang-about-creativity-values { height: 420px; }
+}
+
 @media (width >= 721px) and (width <= 1024px) {
   .lixiang-about-creativity-card { height: calc(501.5px * var(--about-scale, 1)); }
 
@@ -151,12 +164,11 @@
   .lixiang-about-creativity-card-media {
     margin: 0 24px calc(40px * var(--about-scale, 1));
   }
-
-  .lixiang-about-creativity-values-media { height: calc(199px * var(--about-scale, 1)); }
 }
 
 @media (width <= 719px) {
   .lixiang-about-creativity-inner {
+    box-sizing: border-box;
     width: 100%;
     max-width: 375px;
     padding: 24px 20px 0;
@@ -214,7 +226,10 @@
     margin: 0 20px 18px;
   }
 
-  .lixiang-about-creativity-values { border-radius: 8px; }
+  .lixiang-about-creativity-values {
+    height: auto;
+    border-radius: 8px;
+  }
 
   .lixiang-about-creativity-values-band {
     gap: 4px;
