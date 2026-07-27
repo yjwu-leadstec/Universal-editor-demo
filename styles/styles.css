@@ -269,6 +269,8 @@ main [class*='lixiang-about-'] h3 {
 @media (width >= 720px) {
   main .lixiang-about-dual-panel-card-description,
   main .lixiang-about-dual-panel-card-description p,
+  main .lixiang-about-dual-panel-card-footnote,
+  main .lixiang-about-dual-panel-card-footnote p,
   main .lixiang-about-creativity-card-description,
   main .lixiang-about-creativity-card-description p,
   main .lixiang-about-creativity-values-description,

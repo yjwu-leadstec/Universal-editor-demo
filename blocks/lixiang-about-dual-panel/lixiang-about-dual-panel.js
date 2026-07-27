@@ -39,6 +39,9 @@ export default function decorate(block) {
   items.forEach((item) => {
     const picture = propPicture(item, 'image');
     const imageAlt = propText(item, 'imageAlt');
+    const imageCell = propSource(item, 'image');
+    const imageCellPics = imageCell ? [...imageCell.querySelectorAll('picture')] : [];
+    const mobilePicture = propPicture(item, 'image_mobileImage') || imageCellPics[1];
     const itemTitle = propText(item, 'title');
     const descSource = propSource(item, 'description');
     const footnote = propText(item, 'footnote');
@@ -54,6 +57,15 @@ export default function decorate(block) {
         const optimized = createOptimizedPicture(img.src, imageAlt || '', false, [
           { width: '1200' }, { width: '768' },
         ]);
+        optimized.classList.add('tier-desktop');
+        media.append(optimized);
+      }
+    }
+    if (mobilePicture) {
+      const img = mobilePicture.querySelector('img');
+      if (img) {
+        const optimized = createOptimizedPicture(img.src, imageAlt || '', false, [{ width: '750' }]);
+        optimized.classList.add('tier-mobile');
         media.append(optimized);
       }
     }

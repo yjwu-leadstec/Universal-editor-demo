@@ -1633,6 +1633,19 @@
         "valueType": "string"
       },
       {
+        "component": "reference",
+        "name": "image_mobileImage",
+        "label": "Panel Mobile Image (Optional)",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "image_mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
         "component": "text",
         "name": "title",
         "label": "Panel Title",

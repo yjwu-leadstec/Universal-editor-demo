@@ -4,24 +4,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: calc(40px * var(--about-scale, 1));
   width: 83.3333vw;
   max-width: 1600px;
   margin: 0 auto;
-  padding: calc(125px * var(--about-scale, 1)) 0 calc(20px * var(--about-scale, 1));
+  padding: calc(80px * var(--about-scale, 1)) 0 0;
 }
-
-/* 连续的第二个 dual-panel section 顶部间距按设计稿收敛 */
-.section:has(> .lixiang-about-dual-panel-wrapper)
-  + .section:has(> .lixiang-about-dual-panel-wrapper)
-  .lixiang-about-dual-panel-inner { padding-top: calc(91px * var(--about-scale, 1)); }
 
 .lixiang-about-dual-panel-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: calc(13px * var(--about-scale, 1));
-  max-width: 1092px;
+  gap: calc(8px * var(--about-scale, 1));
+  max-width: calc((100vw - 15px) * 0.6);
+  margin-bottom: calc(120px * var(--about-scale, 1));
   text-align: center;
 }
 
@@ -29,7 +24,7 @@
   margin: 0;
   font-size: calc(46px * var(--about-scale, 1));
   font-weight: 400;
-  line-height: 1.3478;
+  line-height: 1.5652;
   color: #191919;
 }
 
@@ -53,9 +48,9 @@
   position: relative;
   flex: 1;
   min-width: 0;
+  height: calc(790px * var(--about-scale, 1));
   border-radius: 4px;
   overflow: hidden;
-  aspect-ratio: 790 / 780;
   background: #191919;
 }
 
@@ -81,6 +76,8 @@
   object-fit: cover;
   display: block;
 }
+
+.lixiang-about-dual-panel .tier-mobile { display: none; }
 
 .lixiang-about-dual-panel-card-content {
   position: absolute;
@@ -121,25 +118,41 @@
   right: calc(80px * var(--about-scale, 1));
   bottom: calc(40px * var(--about-scale, 1));
   margin: 0;
-  font-size: calc(14px * var(--about-scale, 1));
+  font-size: calc(16px * var(--about-scale, 1));
   font-weight: 400;
-  line-height: 1.5714;
-  color: rgb(255 255 255 / 70%);
+  line-height: 1.75;
+  color: rgb(255 255 255 / 50%);
   text-align: center;
 }
 
 @media (width >= 721px) and (width <= 1024px) {
-  .lixiang-about-dual-panel-card { aspect-ratio: 790 / 713; }
-}
+  .lixiang-about-dual-panel-card { height: calc(501.5px * var(--about-scale, 1)); }
 
+  .lixiang-about-dual-panel-card-content {
+    top: 24px;
+    left: 24px;
+    right: 24px;
+  }
+
+  .lixiang-about-dual-panel-card-footnote {
+    left: 24px;
+    right: 24px;
+  }
+}
 
 @media (width <= 719px) {
   .lixiang-about-dual-panel-inner {
-    gap: 24px;
-    padding: 60px 20px 20px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 375px;
+    padding: 24px 20px 0;
   }
 
-  .lixiang-about-dual-panel-header { gap: 8px; }
+  .lixiang-about-dual-panel-header {
+    gap: 4px;
+    max-width: none;
+    margin-bottom: 80px;
+  }
 
   .lixiang-about-dual-panel-header h2 {
     font-size: 20px;
@@ -148,8 +161,9 @@
   }
 
   .lixiang-about-dual-panel-subtitle {
+    font-family: licium-regular, roboto, roboto-fallback, sans-serif;
     font-size: 14px;
-    line-height: 1.7143;
+    line-height: 1.5714;
   }
 
   .lixiang-about-dual-panel-grid {
@@ -160,16 +174,14 @@
   .lixiang-about-dual-panel-card {
     display: flex;
     flex-direction: column;
-    aspect-ratio: 1 / 1;
+    height: 350px;
     border-radius: 8px;
   }
 
   .lixiang-about-dual-panel-card-content {
-    position: relative;
-    top: auto;
-    left: auto;
-    right: auto;
-    padding: 32px 20px 16px;
+    top: 32px;
+    left: 20px;
+    right: 20px;
     gap: 4px;
   }
 
@@ -185,12 +197,15 @@
   }
 
   .lixiang-about-dual-panel-card-footnote {
-    position: relative;
-    left: auto;
-    right: auto;
-    bottom: auto;
-    margin-top: auto;
-    padding: 0 20px 16px;
+    left: 20px;
+    right: 20px;
+    bottom: 18px;
     font-size: 12px;
+    line-height: 1.6667;
+    color: rgb(255 255 255 / 50%);
   }
+
+  .lixiang-about-dual-panel .tier-desktop { display: none; }
+
+  .lixiang-about-dual-panel .tier-mobile { display: block; }
 }
