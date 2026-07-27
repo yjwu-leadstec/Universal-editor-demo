@@ -102,6 +102,11 @@
   text-align: center;
 }
 
+@media (width >= 721px) and (width <= 1024px) {
+  .lixiang-about-vehicle-showcase-copy h2 { font-size: calc(42px * var(--about-scale, 1)); }
+}
+
+
 @media (width <= 719px) {
   .lixiang-about-vehicle-showcase {
     height: 100vh;

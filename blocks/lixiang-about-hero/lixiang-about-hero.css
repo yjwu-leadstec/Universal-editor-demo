@@ -57,6 +57,11 @@
   text-align: center;
 }
 
+@media (width >= 721px) and (width <= 850px) {
+  .lixiang-about-hero-copy { top: 189px; }
+}
+
+
 @media (width <= 719px) {
   .lixiang-about-hero {
     height: 100vh;

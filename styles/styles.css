@@ -487,8 +487,8 @@ main > .section:has(> .lixiang-about-hero-wrapper) {
   --about-scale: 1;
 }
 
-/* production fluid tiers: 1025-1680 = 0.75x, 721-1024 = vw/1344 */
-@media (width > 1024px) and (width <= 1680px) {
+/* production fluid tiers: 1025-1440 = 0.75x, 721-1024 = vw/1344 */
+@media (width > 1024px) and (width <= 1440px) {
   main > .section:has(> .lixiang-about-hero-wrapper) { --about-scale: 0.75; }
 }
 
