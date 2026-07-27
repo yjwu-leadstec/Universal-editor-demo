@@ -48,7 +48,7 @@
 
 - [x] 5.1 使用 shared resolver 替换固定 `/footer` fallback。
 - [x] 5.2 保留 heading + list 列模型和现有简单 footer 兼容。
-- [x] 5.3 将回到顶部 label/link 改为作者内容，JS 只做增强；缺失时不渲染。
+- [x] 5.3 将回到顶部迁移为全站独立 `lixiang-back-to-top` block，并移除 footer 运行时依赖。
 - [x] 5.4 保持 desktop/mobile 双视图 instrumentation 和 accordion ARIA。
 - [ ] 5.5 处理缺失 fragment、空列、长标签、RTL、legal/social 可选内容。
 

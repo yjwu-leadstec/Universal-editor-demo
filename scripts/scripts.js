@@ -12,6 +12,8 @@ import {
   loadCSS,
   getMetadata,
   buildBlock,
+  decorateBlock,
+  loadBlock,
 } from './aem.js';
 import { getDocumentLocale } from './site-shell.mjs';
 
@@ -145,6 +147,13 @@ async function loadLazy(doc) {
 
   loadHeader(doc.querySelector('header'));
   loadFooter(doc.querySelector('footer'));
+
+  const backToTop = buildBlock('lixiang-back-to-top', '');
+  const backToTopWrapper = doc.createElement('div');
+  backToTopWrapper.append(backToTop);
+  doc.body.append(backToTopWrapper);
+  decorateBlock(backToTop);
+  loadBlock(backToTop);
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();

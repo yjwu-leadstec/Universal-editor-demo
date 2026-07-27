@@ -27,10 +27,12 @@
   - `localized-shell-resolution`（新增）
   - `global-navigation`（新增）
   - `global-footer`（新增）
+  - `global-back-to-top`（新增）
   - `locale-directory`（新增）
 - Expected implementation areas after approval:
   - `blocks/header/header.js` / `header.css`
   - `blocks/footer/footer.js` / `footer.css`
+  - `blocks/lixiang-back-to-top/lixiang-back-to-top.js` / `lixiang-back-to-top.css`
   - `blocks/fragment/fragment.js`
   - `scripts/scripts.js` 与新的 shell/locale 纯函数模块
   - `blocks/header-settings/_header-settings.json`、`blocks/header-navigation/_header-navigation.json`、`blocks/locale-directory/_locale-directory.json` 及其 source-preserving 装饰逻辑

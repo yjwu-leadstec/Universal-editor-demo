@@ -54,28 +54,6 @@ footer navigation、policy、social 与市场法律链接 SHALL 来自当前 loc
 - **WHEN** `/global/en/footer` 的 About Us link 指向其 Live Copy page
 - **THEN** 用户跳转到 `/global/en/about-us`
 
-### Requirement: Authored Back-to-Top Control
-
-回到顶部 control SHALL 由 footer 中真实 anchor 和本地化 label 提供，JavaScript 只增强显示和滚动行为。
-
-#### Scenario: Enhance a configured control
-
-- **WHEN** footer bottom section 含指向 `#top` 的 authored link
-- **THEN** 系统把它增强为 back-to-top control
-- **AND** accessible name 使用 authored link text
-
-#### Scenario: No configured control
-
-- **WHEN** footer 未提供 back-to-top link
-- **THEN** 系统不渲染 back-to-top button
-- **AND** 不使用固定英文 label
-
-#### Scenario: Reduced motion
-
-- **WHEN** 用户启用 reduced motion
-- **AND** 激活 back-to-top control
-- **THEN** 页面立即滚动到顶部而不使用平滑动画
-
 ### Requirement: Progressive Footer Enhancement
 
 footer SHALL 在 fragment 取得且最小契约通过后才增强 source DOM，并在失败时保留主体页面可用。
@@ -154,4 +132,3 @@ footer SHALL 将每个 authored column 和 bottom content 的 instrumentation �
 - **WHEN** `/kz/ru/footer` 返回 404
 - **THEN** `/global/en/footer` 仍按其自身 path 正常加载
 - **AND** 系统不把 Global English footer 当作永久 Russian fallback
-

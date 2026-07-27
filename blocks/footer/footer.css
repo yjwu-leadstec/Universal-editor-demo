@@ -16,52 +16,6 @@ footer .footer .footer-inner {
   font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-footer .footer-back-to-top {
-  position: fixed;
-  right: 16px;
-  z-index: 100;
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: rgb(247 247 247 / 92%);
-  color: #111;
-  box-shadow: 0 1px 6px rgb(0 0 0 / 8%);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(10px);
-  transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms;
-}
-
-footer .footer-back-to-top.visible {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateY(0);
-  transition-delay: 0s;
-}
-
-footer .footer-back-to-top:hover,
-footer .footer-back-to-top:focus {
-  background: #fff;
-  color: #111;
-}
-
-footer .footer-back-to-top:focus-visible {
-  outline: 2px solid #fff;
-  outline-offset: 3px;
-}
-
-footer .footer-back-to-top svg {
-  width: 16px;
-  height: 16px;
-}
-
 footer .footer-nav {
   display: none;
 }
@@ -263,9 +217,6 @@ footer .footer-bottom-link:focus-visible {
     padding-top: 0;
   }
 
-  footer .footer-back-to-top {
-    right: 40px;
-  }
 }
 
 @media (width >= 1441px) {
@@ -276,7 +227,6 @@ footer .footer-bottom-link:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  footer .footer-back-to-top,
   footer .footer-accordion-chevron {
     transition: none;
   }

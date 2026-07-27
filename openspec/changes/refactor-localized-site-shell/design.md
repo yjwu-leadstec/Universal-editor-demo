@@ -95,7 +95,8 @@
 | Header navigation block | 用扁平、可排序的结构化条目交付一级导航、分组和卡片 | 嵌套 Rich Text、运行时业务 URL |
 | Header settings block | 在 nav 内交付本地化交互文案和 locale directory 引用 | 市场选项、视觉状态 |
 | Header block | 加载 nav，解析 settings，增强主导航/移动菜单/mega panel，加载 locale directory | 硬编码国家与语言 |
-| Footer block | 加载 footer，增强桌面列/移动 accordion/回到顶部 | 固定英文无障碍文案 |
+| Footer block | 加载 footer，增强桌面列/移动 accordion | 全站悬浮控件 |
+| Back-to-top block | 全站滚动阈值、回顶交互及避让 footer | footer authored content |
 | Locale directory block/page | 暴露作者配置的地区、语言、目标和本地化 UI 文案 | 页面布局与交互状态 |
 | AEM MSM | 从语言母版向市场语言分支同步结构和共享内容 | 翻译本身、自动发布 |
 | EDS delivery | 提供页面和 `.plain.html` fragment，独立缓存 | Author-side content mutation |
@@ -184,11 +185,18 @@ settings 缺失或无效时，header 不使用固定英文替代值：保留 sou
 保留现有语义内容模型：
 
 1. Navigation section：重复的 heading + 紧随其后的 `ul`，顺序即列顺序。
-2. Bottom section：版权、政策、社交链接和可选回到顶部链接。
+2. Bottom section：版权、政策和社交链接。
 
-回到顶部必须来自真实 `#top`（或约定 anchor）链接，作者提供本地化文本；JS 只增强滚动行为和显示时机。若未配置，不显示按钮，不使用固定英文占位。
+迁移期 footer 中遗留的 `#top` link 只作为待清理的旧内容忽略，不再控制全站回到顶部组件。
 
-### 6.3 Locale directory page and model
+### 6.3 Global back-to-top
+
+`lixiang-back-to-top` 由页面 shell 自动加载，不依赖任一 footer fragment。组件在页面滚动到
+100px 后显示，点击后立即回到页面顶部；桌面与移动端的尺寸、固定间距以及接近 footer 时的
+上移行为均与现网保持一致。accessible name 优先读取页面 `back-to-top-label` metadata，
+Global English 页面缺失 metadata 时使用 `Back to top`。
+
+### 6.4 Locale directory page and model
 
 每个语言根有一个 `locale-directory` 专用页面。页面包含一个 container block 和扁平 `locale-option` 子项；container 本身不承载 header 文案。不使用嵌套 multifield，避免 Universal Editor container nesting 限制并符合 EDS 单层内容模型。
 

@@ -13,7 +13,6 @@ import {
   resolveLocaleContext,
 } from '../../scripts/site-shell.mjs';
 
-const SCROLL_THRESHOLD = 300;
 const MIGRATION_ROOT_FALLBACK = false;
 const HEADING_SELECTOR = 'h2, h3, h4, h5, h6';
 const INSTRUMENTATION_PREFIXES = ['data-aue-', 'data-richtext-'];
@@ -110,30 +109,9 @@ function extractFooterData(fragment, localeRoot) {
   return {
     columns: extractColumns(navSection, localeRoot),
     bottomItems: items.filter((item) => item.type !== 'back-to-top'),
-    backToTop: items.find((item) => item.type === 'back-to-top') || null,
     bottomSection,
     bottomInstrumentation: captureInstrumentation(bottomSection),
   };
-}
-
-function backToTopTemplate(item, buttonRef) {
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  return html`
-    <button
-      class="footer-back-to-top"
-      type="button"
-      aria-label="${item.text}"
-      ${ref(buttonRef)}
-      @click=${() => window.scrollTo({
-    top: 0,
-    behavior: reducedMotion.matches ? 'auto' : 'smooth',
-  })}
-    >
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M8 3L2 9l1.4 1.4L8 5.8l4.6 4.6L14 9z" fill="currentColor"></path>
-      </svg>
-    </button>
-  `;
 }
 
 function footerLinkTemplate(link) {
@@ -224,7 +202,6 @@ function bottomBarTemplate(items, bottomRef) {
 function footerTemplate(data, refs) {
   return html`
     <div class="footer-inner">
-      ${data.backToTop ? backToTopTemplate(data.backToTop, refs.backToTop) : nothing}
       <div class="footer-nav">
         ${repeat(
     data.columns,
@@ -242,24 +219,6 @@ function footerTemplate(data, refs) {
       ${data.bottomItems.length ? bottomBarTemplate(data.bottomItems, refs.bottom) : nothing}
     </div>
   `;
-}
-
-function initBackToTop(buttonRef) {
-  const button = buttonRef.value;
-  if (!button) return;
-  const footer = button.closest('footer');
-
-  function update() {
-    button.classList.toggle('visible', window.scrollY > SCROLL_THRESHOLD);
-    const baseBottom = window.innerWidth >= 720 ? 48 : 24;
-    const footerTop = footer?.getBoundingClientRect().top ?? Number.POSITIVE_INFINITY;
-    const clampedBottom = Math.max(baseBottom, window.innerHeight - footerTop + 12);
-    button.style.bottom = `${clampedBottom}px`;
-  }
-
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update);
-  update();
 }
 
 function applyEditorInstrumentation(data, refs) {
@@ -296,12 +255,11 @@ export default async function decorate(block) {
   if (!fragment) return;
 
   const data = extractFooterData(fragment, localeContext?.root || '');
-  if (!data.columns.length && !data.bottomItems.length && !data.backToTop) {
+  if (!data.columns.length && !data.bottomItems.length) {
     block.replaceChildren(...fragment.childNodes);
     return;
   }
   const refs = {
-    backToTop: createRef(),
     columns: data.columns.map(() => createRef()),
     mobileColumns: data.columns.map(() => createRef()),
     bottom: createRef(),
@@ -310,5 +268,4 @@ export default async function decorate(block) {
   block.textContent = '';
   render(footerTemplate(data, refs), block);
   applyEditorInstrumentation(data, refs);
-  initBackToTop(refs.backToTop);
 }
