@@ -200,6 +200,12 @@
     ]
   },
   {
+    "id": "lixiang-product-color-full-screen-slider",
+    "components": [
+      "color-switcher-item"
+    ]
+  },
+  {
     "id": "lixiang-product-detail-picture-group",
     "components": [
       "lixiang-product-detail-picture-group-item",

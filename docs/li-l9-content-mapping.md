@@ -15,7 +15,7 @@
 | `product-first` | 1 | `product-hero` |
 | `SceneTableHorizontal` | 1 | `lixiang-product-intro-slider` |
 | `SceneMegaOverview2` / `SceneBeginning` | 7 | `lixiang-product-full-screen-intro` |
-| `SceneColorSwitch` | 1 | `color-switcher` |
+| `SceneColorSwitch` | 1 | `lixiang-product-color-full-screen-slider` |
 | `SceneMegaContentTableX` | 17 | `lixiang-product-intro-carousel` |
 | `SceneMegaContentTableXImage` | 1 | `product-feature-picture-group` |
 | `SceneMegaContentMultipleImage` | 1 | `feature-grid` |

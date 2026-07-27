@@ -2761,6 +2761,58 @@
     ]
   },
   {
+    "id": "lixiang-product-color-full-screen-slider",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Desktop Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "mobileTitle",
+        "label": "Mobile Title Override",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Copy Color",
+        "valueType": "string",
+        "maxSize": 1,
+        "options": [
+          {
+            "name": "Copy",
+            "children": [
+              {
+                "name": "Light",
+                "value": "light-copy"
+              },
+              {
+                "name": "Dark",
+                "value": "dark-copy"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "lixiang-product-detail-picture-group",
     "fields": [
       {

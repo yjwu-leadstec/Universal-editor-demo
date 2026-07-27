@@ -1,0 +1,312 @@
+main .section.lixiang-product-color-full-screen-slider-container
+  > .lixiang-product-color-full-screen-slider-wrapper {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+
+main .lixiang-product-color-full-screen-slider {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  color: #fff;
+  background: #141414;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-shell,
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 500ms ease-in-out;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-panel[data-active="true"] {
+  z-index: 1;
+  opacity: 1;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-picture,
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-picture picture,
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-picture img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-picture img {
+  object-fit: cover;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-picture.mobile {
+  display: none;
+}
+
+main .lixiang-product-color-full-screen-slider .product-section-header {
+  position: absolute;
+  top: 14.8148%;
+  left: 20%;
+  z-index: 2;
+  width: 43.75%;
+  max-width: none;
+  margin: 0;
+  color: #fff;
+  text-align: left;
+}
+
+main .lixiang-product-color-full-screen-slider .product-title {
+  max-width: none;
+  margin: 0;
+  color: inherit;
+  font-family: licium-medium, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 46px;
+  font-weight: 500;
+  line-height: 62px;
+}
+
+main .lixiang-product-color-full-screen-slider .product-description {
+  max-width: none;
+  margin: 16px 0 0;
+  color: rgb(255 255 255 / 70%);
+  font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-controls {
+  position: absolute;
+  bottom: 13.3333%;
+  left: calc(20% - 6px);
+  z-index: 3;
+  display: flex;
+  gap: 20px;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-control {
+  position: relative;
+  display: grid;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  appearance: none;
+  place-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-control:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-swatch {
+  display: block;
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-swatch picture,
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-swatch img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-control[aria-selected="true"]
+  .lixiang-product-color-full-screen-slider-swatch {
+  outline: 1px solid #fff;
+  outline-offset: 5px;
+}
+
+main .lixiang-product-color-full-screen-slider
+  .lixiang-product-color-full-screen-slider-panel figcaption {
+  position: absolute;
+  bottom: 9.2593%;
+  left: 20%;
+  z-index: 2;
+  margin: 0;
+  color: #fff;
+  font-family: licium-regular, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+@media (width >= 1025px) and (width <= 1440px) {
+  main .lixiang-product-color-full-screen-slider .product-title {
+    font-size: 34.5px;
+    line-height: 46.5px;
+  }
+
+  main .lixiang-product-color-full-screen-slider .product-description {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  main .lixiang-product-color-full-screen-slider
+    .lixiang-product-color-full-screen-slider-swatch {
+    width: 24px;
+    height: 24px;
+  }
+
+  main .lixiang-product-color-full-screen-slider
+    .lixiang-product-color-full-screen-slider-control {
+    width: 34px;
+    min-width: 34px;
+    height: 34px;
+    min-height: 34px;
+  }
+
+  main .lixiang-product-color-full-screen-slider
+    .lixiang-product-color-full-screen-slider-controls {
+    left: calc(20% - 5px);
+    gap: 14px;
+  }
+
+  main .lixiang-product-color-full-screen-slider
+    .lixiang-product-color-full-screen-slider-panel figcaption {
+    font-size: 15px;
+    line-height: 21px;
+  }
+}
+
+@media (width <= 719px) {
+  main > .section.lixiang-product-color-full-screen-slider-container
+    > .lixiang-product-color-full-screen-slider-wrapper
+    > .lixiang-product-color-full-screen-slider {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+  }
+
+  main .lixiang-product-color-full-screen-slider
+    .lixiang-product-color-full-screen-slider-picture.desktop {
+    display: none;
+  }
+
+  main .lixiang-product-color-full-screen-slider
+    .lixiang-product-color-full-screen-slider-picture.mobile {
+    display: block;
+  }
+
+  main .lixiang-product-color-full-screen-slider::after {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 2;
+    height: 39.2%;
+    background: linear-gradient(180deg, transparent, rgb(0 0 0 / 40%));
+    content: "";
+    pointer-events: none;
+  }
+
+  main .lixiang-product-color-full-screen-slider .product-section-header {
+    top: 16%;
+    left: 40px;
+    width: calc(100% - 80px);
+  }
+
+  main .lixiang-product-color-full-screen-slider .product-title {
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  main .lixiang-product-color-full-screen-slider .product-description {
+    margin-block-start: 8px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  main .lixiang-product-color-full-screen-slider
+    .lixiang-product-color-full-screen-slider-controls {
+    right: auto;
+    bottom: 74px;
+    left: 50%;
+    width: max-content;
+    max-width: calc(100% - 24px);
+    gap: min(23px, calc((100vw - 230px) / 8));
+    transform: translateX(-50%);
+  }
+
+  main .lixiang-product-color-full-screen-slider
+    .lixiang-product-color-full-screen-slider-control {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    min-height: 30px;
+  }
+
+  main .lixiang-product-color-full-screen-slider
+    .lixiang-product-color-full-screen-slider-swatch {
+    width: 22px;
+    height: 22px;
+  }
+
+  main .lixiang-product-color-full-screen-slider
+    .lixiang-product-color-full-screen-slider-control[aria-selected="true"]
+    .lixiang-product-color-full-screen-slider-swatch {
+    outline-offset: 3px;
+  }
+
+  main .lixiang-product-color-full-screen-slider
+    .lixiang-product-color-full-screen-slider-panel figcaption {
+    right: 40px;
+    bottom: 40px;
+    left: 40px;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main .lixiang-product-color-full-screen-slider
+    .lixiang-product-color-full-screen-slider-panel {
+    transition: none;
+  }
+}
+
+.adobe-ue-edit main > .section.lixiang-product-color-full-screen-slider-container
+  > .lixiang-product-color-full-screen-slider-wrapper
+  > .lixiang-product-color-full-screen-slider {
+  height: auto;
+  min-height: 0;
+  max-height: 1080px;
+  aspect-ratio: 16 / 9;
+}

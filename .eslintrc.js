@@ -31,6 +31,7 @@ module.exports = {
       'lixiang-product-full-screen-intro': 16,
       'color-switcher': 5,
       'color-switcher-item': 7,
+      'lixiang-product-color-full-screen-slider': 5,
       'feature-grid': 7,
       'feature-grid-item': 6,
       'product-feature-picture-group': 7,
