@@ -150,14 +150,12 @@
   .lixiang-about-create-together-header { gap: 8px; }
 
   .lixiang-about-create-together-header h2 {
-    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 20px;
     font-weight: 400;
     line-height: 1.4;
   }
 
   .lixiang-about-create-together-subtitle {
-    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 14px;
     line-height: 1.7143;
   }
@@ -193,7 +191,6 @@
   }
 
   .lixiang-about-create-together-card-content h3 {
-    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 16px;
     font-weight: 400;
     line-height: 1.75;

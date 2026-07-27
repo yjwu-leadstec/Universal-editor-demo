@@ -181,14 +181,12 @@
   .lixiang-about-design-language-header { gap: 8px; }
 
   .lixiang-about-design-language-header h2 {
-    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 20px;
     font-weight: 400;
     line-height: 1.4;
   }
 
   .lixiang-about-design-language-subtitle {
-    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 14px;
     line-height: 1.7143;
   }
@@ -206,7 +204,6 @@
   }
 
   .lixiang-about-design-language-hero-overlay h3 {
-    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 20px;
     font-weight: 400;
     line-height: 1.4;
@@ -247,7 +244,6 @@
   }
 
   .lixiang-about-design-card-content h3 {
-    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 16px;
     font-weight: 400;
     line-height: 1.75;

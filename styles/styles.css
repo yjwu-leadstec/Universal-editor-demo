@@ -255,14 +255,37 @@ main > .section:first-of-type {
 
 /* about us blocks render in LiciumFont like the live site */
 main [class*='lixiang-about-'],
+main [class*='lixiang-about-'] p {
+  font-family: licium-regular, roboto, roboto-fallback, sans-serif;
+}
+
 main [class*='lixiang-about-'] h1,
 main [class*='lixiang-about-'] h2,
 main [class*='lixiang-about-'] h3 {
-  font-family: licium-regular, roboto, roboto-fallback, sans-serif;
+  font-family: licium-medium, roboto, roboto-fallback, sans-serif;
+}
+
+/* production renders operating captions in licium-medium on desktop */
+main .lixiang-about-dual-panel-card-description,
+main .lixiang-about-creativity-card-description,
+main .lixiang-about-creativity-values-description {
+  font-family: licium-medium, roboto, roboto-fallback, sans-serif;
 }
 
 main .lixiang-about-vehicle-model-name {
   font-family: licium-medium, roboto, roboto-fallback, sans-serif;
+}
+
+@media (width <= 719px) {
+  main [class*='lixiang-about-'] [class*='-subtitle'] {
+    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
+  }
+
+  main .lixiang-about-dual-panel-card-description,
+  main .lixiang-about-creativity-card-description,
+  main .lixiang-about-creativity-values-description {
+    font-family: licium-regular, roboto, roboto-fallback, sans-serif;
+  }
 }
 
 /* about us scroll/load motion matching the live site */

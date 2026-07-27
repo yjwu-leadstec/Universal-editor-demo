@@ -156,14 +156,12 @@
   .lixiang-about-creativity-header { gap: 8px; }
 
   .lixiang-about-creativity-header h2 {
-    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 20px;
     font-weight: 400;
     line-height: 1.4;
   }
 
   .lixiang-about-creativity-subtitle {
-    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 14px;
     line-height: 1.7143;
   }
@@ -184,7 +182,6 @@
   }
 
   .lixiang-about-creativity-card-content h3 {
-    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 20px;
     font-weight: 400;
     line-height: 1.4;
@@ -206,7 +203,6 @@
   }
 
   .lixiang-about-creativity-values-band h3 {
-    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 20px;
     font-weight: 400;
     line-height: 1.4;
