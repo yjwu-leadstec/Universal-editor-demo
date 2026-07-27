@@ -212,8 +212,10 @@ main .lixiang-product-color-full-screen-slider
   main > .section.lixiang-product-color-full-screen-slider-container
     > .lixiang-product-color-full-screen-slider-wrapper
     > .lixiang-product-color-full-screen-slider {
+    left: auto;
     width: 100%;
     aspect-ratio: 3 / 4;
+    margin-inline-start: 0;
   }
 
   main .lixiang-product-color-full-screen-slider

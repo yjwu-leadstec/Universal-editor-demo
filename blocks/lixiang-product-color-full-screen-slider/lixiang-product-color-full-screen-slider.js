@@ -104,8 +104,11 @@ function createColorButton(item, pictures, name) {
 
   const swatch = document.createElement('span');
   swatch.className = 'lixiang-product-color-full-screen-slider-swatch';
+  swatch.setAttribute('aria-hidden', 'true');
   if (pictures.swatch) {
     appendPicture(swatch, pictures.swatch, { alt: '', fallbackLabel: '' });
+    const swatchImage = swatch.querySelector('img');
+    if (swatchImage) swatchImage.alt = '';
     instrumentProp(item, 'swatch', swatch);
   } else {
     swatch.style.backgroundColor = propText(item, 'colorValue') || '#ccc';
