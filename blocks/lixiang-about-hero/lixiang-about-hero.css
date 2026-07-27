@@ -63,15 +63,10 @@
   text-align: center;
 }
 
-@media (width >= 721px) and (width <= 850px) {
-  .lixiang-about-hero-copy { top: 189px; }
-}
-
-
 @media (width <= 719px) {
   .lixiang-about-hero {
-    height: 100vh;
-    min-height: 200vw;
+    height: calc(min(100vw, 375px) * 2.25);
+    min-height: 0;
     max-height: none;
   }
 
@@ -82,7 +77,8 @@
   .lixiang-about-hero-copy {
     top: 160px;
     gap: 16px;
-    max-width: calc(100% - 80px);
+    width: min(100vw, 375px);
+    max-width: none;
   }
 
   .lixiang-about-hero-copy h1 {
@@ -92,6 +88,7 @@
   }
 
   .lixiang-about-hero-copy p {
+    padding: 0 40px;
     font-size: 14px;
     line-height: 1.4286;
   }
