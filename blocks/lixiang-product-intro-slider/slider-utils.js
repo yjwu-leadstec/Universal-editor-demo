@@ -357,16 +357,16 @@ export function addBlockAnchor(block, root = block, parent = block) {
 }
 
 function fallbackLinkText(root, model, href, prefix = '') {
-  if (model === 'product-hero-cta') {
+  if (model === 'lixiang-product-hero-cta') {
     return href.includes('/test-drive') ? 'Schedule Test Drive' : 'Learn More';
   }
-  if (model === 'product-sticky-nav-item' && href.startsWith('#')) {
+  if (model === 'lixiang-product-sticky-nav-item' && href.startsWith('#')) {
     return href.slice(1).split('-').map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join(' ');
   }
-  if (model === 'product-ending') {
+  if (model === 'lixiang-product-ending') {
     return prefix ? 'Back to Top' : 'Schedule Test Drive';
   }
-  if (model === 'product-guide-item') {
+  if (model === 'lixiang-product-guide-item') {
     const title = propText(root, 'title');
     if (href.includes('/test-drive')) return 'Start Configuration';
     if (title.includes('Support')) return 'Find Support';
@@ -392,11 +392,11 @@ export function createProductLink(root, prefix = '', className = 'product-link')
     : fallbackLinkText(root, model, href, prefix);
   if (!href || !text) return null;
   const defaultTypes = {
-    'product-hero-cta': root.previousElementSibling?.dataset.aueModel === model ? 'secondary' : 'primary',
+    'lixiang-product-hero-cta': root.previousElementSibling?.dataset.aueModel === model ? 'secondary' : 'primary',
     'lixiang-product-intro-slide': 'text',
-    'feature-grid-item': 'text',
-    'product-guide-item': 'primary',
-    'product-ending': prefix ? 'secondary' : 'primary',
+    'lixiang-product-feature-grid-item': 'text',
+    'lixiang-product-guide-item': 'primary',
+    'lixiang-product-ending': prefix ? 'secondary' : 'primary',
     'product-param-cta': prefix ? 'text' : 'primary',
     'product-download': prefix === 'android' ? 'secondary' : 'primary',
   };

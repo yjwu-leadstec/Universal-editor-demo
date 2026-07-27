@@ -44,11 +44,11 @@ const PRODUCT_MEDIA_FALLBACKS = {
 // only contains positional rows/cells. Keep the runtime independent of author-only
 // data-aue attributes by restoring those field/model markers before decoration.
 const PRODUCT_MODEL_FIELDS = {
-  'product-hero': [['id', 'text', 'ID'], ['title', 'text', 'Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['subtitle', 'text', 'Subtitle'], ['image', 'reference', 'Desktop Poster / Background'], ['imageAlt', 'text', 'Responsive Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Background (≤720px)'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Desktop Preview Video URL'], ['mobileVideo', 'reference', 'Mobile Preview Video URL'], ['logo', 'reference', 'Vehicle Logo'], ['logoAlt', 'text', 'Vehicle Logo Alt Text'], ['showArrow', 'boolean', 'Show Scroll Cue'], ['showVideoControl', 'boolean', 'Show Video Control'], ['showProgress', 'boolean', 'Show Video Progress']],
-  'product-hero-cta': [['link', 'aem-content', 'Link'], ['linkText', 'text', 'Text'], ['linkType', 'select', 'Type']],
-  'product-hero-responsive-media': [['mediumImage', 'reference', 'Medium Poster / Background (821–1024px)'], ['tabletImage', 'reference', 'Tablet Poster / Background (721–820px)']],
-  'product-sticky-nav': [['id', 'text', 'ID'], ['carName', 'text', 'Vehicle Name']],
-  'product-sticky-nav-item': [['link', 'aem-content', 'Section Anchor'], ['linkText', 'text', 'Navigation Text']],
+  'lixiang-product-hero': [['id', 'text', 'ID'], ['title', 'text', 'Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['subtitle', 'text', 'Subtitle'], ['image', 'reference', 'Desktop Poster / Background'], ['imageAlt', 'text', 'Responsive Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Background (≤720px)'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Desktop Preview Video URL'], ['mobileVideo', 'reference', 'Mobile Preview Video URL'], ['logo', 'reference', 'Vehicle Logo'], ['logoAlt', 'text', 'Vehicle Logo Alt Text'], ['showArrow', 'boolean', 'Show Scroll Cue'], ['showVideoControl', 'boolean', 'Show Video Control'], ['showProgress', 'boolean', 'Show Video Progress']],
+  'lixiang-product-hero-cta': [['link', 'aem-content', 'Link'], ['linkText', 'text', 'Text'], ['linkType', 'select', 'Type']],
+  'lixiang-product-hero-responsive-media': [['mediumImage', 'reference', 'Medium Poster / Background (821–1024px)'], ['tabletImage', 'reference', 'Tablet Poster / Background (721–820px)']],
+  'lixiang-product-sticky-nav': [['id', 'text', 'ID'], ['carName', 'text', 'Vehicle Name']],
+  'lixiang-product-sticky-nav-item': [['link', 'aem-content', 'Section Anchor'], ['linkText', 'text', 'Navigation Text']],
   'lixiang-product-intro-slider': [['id', 'text', 'ID'], ['title', 'textarea', 'Desktop Title'], ['mobileTitle', 'textarea', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['accentColor', 'text', 'Indicator Color'], ['autoPlay', 'boolean', 'Desktop Autoplay'], ['interval', 'number', 'Autoplay Interval (seconds)'], ['showProgress', 'boolean', 'Show Video Progress'], ['showVideoControl', 'boolean', 'Show Video Play / Pause'], ['background', 'select', 'Background'], ['spacing', 'select', 'Spacing']],
   'highlight-slide': [['image', 'reference', 'Desktop Poster / Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'aem-content', 'Desktop Video URL'], ['mobileVideo', 'aem-content', 'Mobile Video URL'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'textarea', 'Card Title'], ['description', 'richtext', 'Card Description'], ['note', 'textarea', 'Note'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type'], ['copyColor', 'select', 'Desktop Card Text Color'], ['showNote', 'boolean', 'Show Note'], ['indicatorLabel', 'textarea', 'Indicator Label']],
   'highlight-stat': [['value', 'text', 'Value'], ['unit', 'text', 'Unit'], ['label', 'text', 'Label'], ['description', 'richtext', 'Description']],
@@ -66,11 +66,11 @@ const PRODUCT_MODEL_FIELDS = {
   'color-switcher': [['id', 'text', 'ID'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description']],
   'lixiang-product-color-full-screen-slider': [['id', 'text', 'ID'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description']],
   'color-switcher-item': [['name', 'text', 'Color Name'], ['swatch', 'reference', 'Swatch / Material'], ['swatchAlt', 'text', 'Swatch Alt Text'], ['colorValue', 'text', 'CSS Color'], ['image', 'reference', 'Desktop Vehicle Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Vehicle Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text']],
-  'spec-table': [['id', 'text', 'ID'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['variant', 'select', 'Layout']],
-  'spec-group': [['groupKey', 'text', 'Group Key'], ['title', 'text', 'Group / Tab Title'], ['description', 'richtext', 'Group Description'], ['image', 'reference', 'Desktop Background Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Background Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['note', 'text', 'Note']],
-  'spec-row': [['label', 'text', 'Label'], ['value', 'text', 'Value'], ['description', 'richtext', 'Description'], ['icon', 'reference', 'Icon'], ['iconAlt', 'text', 'Icon Alt Text']],
-  'product-notes': [['id', 'text', 'ID'], ['title', 'text', 'Optional Title']],
-  'product-note-item': [['text', 'richtext', 'Legal Note']],
+  'lixiang-product-spec-table': [['id', 'text', 'ID'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['variant', 'select', 'Layout']],
+  'lixiang-product-spec-table-group': [['groupKey', 'text', 'Group Key'], ['title', 'text', 'Group / Tab Title'], ['description', 'richtext', 'Group Description'], ['image', 'reference', 'Desktop Background Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Background Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['note', 'text', 'Note']],
+  'lixiang-product-spec-table-row': [['label', 'text', 'Label'], ['value', 'text', 'Value'], ['description', 'richtext', 'Description'], ['icon', 'reference', 'Icon'], ['iconAlt', 'text', 'Icon Alt Text']],
+  'lixiang-product-notes': [['id', 'text', 'ID'], ['title', 'text', 'Optional Title']],
+  'lixiang-product-note-item': [['text', 'richtext', 'Legal Note']],
   'text-columns': [['id', 'text', 'ID'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description']],
   'text-column-item': [['title', 'text', 'Column Title'], ['text', 'richtext', 'Column Text']],
   'lixiang-product-detail-picture-group': [['id', 'text', 'ID'], ['title', 'text', 'Desktop / Tablet Title'], ['description', 'richtext', 'Desktop / Tablet Description'], ['showVideoControl', 'boolean', 'Show Video Controls'], ['showProgress', 'boolean', 'Show Video Progress'], ['enableMotion', 'boolean', 'Enable Image Parallax']],
@@ -79,24 +79,24 @@ const PRODUCT_MODEL_FIELDS = {
   'icon-overlay-showcase': [['id', 'text', 'ID'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description']],
   'overlay-panel': [['panelKey', 'text', 'Panel Key'], ['title', 'text', 'Panel Title'], ['description', 'richtext', 'Panel Description'], ['image', 'reference', 'Desktop Background'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Background'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['mask', 'reference', 'Desktop Mask'], ['mobileMask', 'reference', 'Mobile Mask'], ['maskAlt', 'text', 'Mask Alt Text']],
   'overlay-hotspot': [['label', 'text', 'Label'], ['description', 'richtext', 'Description'], ['icon', 'reference', 'Icon'], ['iconAlt', 'text', 'Icon Alt Text'], ['x', 'number', 'Desktop X (%)'], ['y', 'number', 'Desktop Y (%)'], ['mobileX', 'number', 'Mobile X (%)'], ['mobileY', 'number', 'Mobile Y (%)']],
-  'feature-grid': [['id', 'text', 'ID'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['note', 'text', 'Note']],
-  'feature-grid-group': [['groupKey', 'text', 'Group Key'], ['title', 'text', 'Group Title']],
-  'feature-grid-item': [['image', 'reference', 'Desktop Poster / Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Video URL'], ['title', 'text', 'Card Title'], ['description', 'richtext', 'Card Description'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type']],
-  'product-feature-picture-group': [['id', 'text', 'ID'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['note', 'text', 'Note']],
-  'product-feature-picture-group-group': [['groupKey', 'text', 'Group Key'], ['title', 'text', 'Group Title']],
-  'product-feature-picture-group-card': [['image', 'reference', 'Desktop Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['title', 'text', 'Card Title'], ['description', 'richtext', 'Card Description']],
+  'lixiang-product-feature-grid': [['id', 'text', 'ID'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['note', 'text', 'Note']],
+  'lixiang-product-feature-grid-group': [['groupKey', 'text', 'Group Key'], ['title', 'text', 'Group Title']],
+  'lixiang-product-feature-grid-item': [['image', 'reference', 'Desktop Poster / Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Video URL'], ['title', 'text', 'Card Title'], ['description', 'richtext', 'Card Description'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type']],
+  'lixiang-product-feature-picture-group': [['id', 'text', 'ID'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['note', 'text', 'Note']],
+  'lixiang-product-feature-picture-group-group': [['groupKey', 'text', 'Group Key'], ['title', 'text', 'Group Title']],
+  'lixiang-product-feature-picture-group-card': [['image', 'reference', 'Desktop Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['title', 'text', 'Card Title'], ['description', 'richtext', 'Card Description']],
   'product-param-cta': [['id', 'text', 'ID'], ['title', 'text', 'Desktop Title'], ['mobileTitle', 'text', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['image', 'reference', 'Desktop Vehicle Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Vehicle Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['link', 'aem-content', 'Primary Link'], ['linkText', 'text', 'Primary Link Text'], ['linkType', 'select', 'Primary Link Type'], ['secondaryLink', 'aem-content', 'Secondary Link'], ['secondaryLinkText', 'text', 'Secondary Link Text'], ['secondaryLinkType', 'select', 'Secondary Link Type']],
-  'product-ending': [['id', 'text', 'ID'], ['title', 'text', 'Title'], ['image', 'reference', 'Desktop Poster / Background'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Background'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Preview Video URL'], ['showVideoControl', 'boolean', 'Show Video Control'], ['link', 'aem-content', 'Primary Link'], ['linkText', 'text', 'Primary Link Text'], ['linkType', 'select', 'Primary Link Type'], ['secondaryLink', 'aem-content', 'Secondary Link'], ['secondaryLinkText', 'text', 'Secondary Link Text'], ['secondaryLinkType', 'select', 'Secondary Link Type']],
-  'product-guide': [['id', 'text', 'ID'], ['title', 'text', 'Optional Title']],
-  'product-guide-item': [['image', 'reference', 'Desktop Background'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Background'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['title', 'text', 'Card Title'], ['description', 'richtext', 'Card Description'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type']],
+  'lixiang-product-ending': [['id', 'text', 'ID'], ['title', 'text', 'Title'], ['image', 'reference', 'Desktop Poster / Background'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Background'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'reference', 'Preview Video URL'], ['showVideoControl', 'boolean', 'Show Video Control'], ['link', 'aem-content', 'Primary Link'], ['linkText', 'text', 'Primary Link Text'], ['linkType', 'select', 'Primary Link Type'], ['secondaryLink', 'aem-content', 'Secondary Link'], ['secondaryLinkText', 'text', 'Secondary Link Text'], ['secondaryLinkType', 'select', 'Secondary Link Type']],
+  'lixiang-product-guide': [['id', 'text', 'ID'], ['title', 'text', 'Optional Title']],
+  'lixiang-product-guide-item': [['image', 'reference', 'Desktop Background'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Background'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['title', 'text', 'Card Title'], ['description', 'richtext', 'Card Description'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type']],
   'product-download': [['id', 'text', 'ID'], ['title', 'text', 'Title'], ['description', 'richtext', 'Description'], ['image', 'reference', 'Desktop Background'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Background'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['iosLink', 'aem-content', 'iOS App Store Link'], ['iosLinkText', 'text', 'iOS Link Text'], ['iosLinkType', 'select', 'iOS Link Type'], ['androidLink', 'aem-content', 'Android Download Link'], ['androidLinkText', 'text', 'Android Link Text'], ['androidLinkType', 'select', 'Android Link Type']],
 };
 
 const PRODUCT_COLLECTION_MODELS = {
-  'product-hero': (row) => (row.querySelector('picture, img')
-    ? 'product-hero-responsive-media'
-    : 'product-hero-cta'),
-  'product-sticky-nav': 'product-sticky-nav-item',
+  'lixiang-product-hero': (row) => (row.querySelector('picture, img')
+    ? 'lixiang-product-hero-responsive-media'
+    : 'lixiang-product-hero-cta'),
+  'lixiang-product-sticky-nav': 'lixiang-product-sticky-nav-item',
   'lixiang-product-intro-slider': 'highlight-slide',
   'highlight-slide': 'highlight-stat',
   'lixiang-product-intro-carousel': (row) => {
@@ -112,9 +112,9 @@ const PRODUCT_COLLECTION_MODELS = {
   'big-small-gallery': (row) => (row.children.length <= 4 ? 'big-small-stat' : 'big-small-item'),
   'color-switcher': 'color-switcher-item',
   'lixiang-product-color-full-screen-slider': 'color-switcher-item',
-  'spec-table': 'spec-group',
-  'spec-group': 'spec-row',
-  'product-notes': 'product-note-item',
+  'lixiang-product-spec-table': 'lixiang-product-spec-table-group',
+  'lixiang-product-spec-table-group': 'lixiang-product-spec-table-row',
+  'lixiang-product-notes': 'lixiang-product-note-item',
   'text-columns': 'text-column-item',
   'lixiang-product-detail-picture-group': (row) => (
     row.querySelector('picture, img, video') || row.children.length > 3
@@ -124,11 +124,11 @@ const PRODUCT_COLLECTION_MODELS = {
   'lixiang-product-detail-picture-group-item': 'lixiang-product-detail-picture-item',
   'icon-overlay-showcase': 'overlay-panel',
   'overlay-panel': 'overlay-hotspot',
-  'feature-grid': (row) => (row.children.length <= 2 ? 'feature-grid-group' : 'feature-grid-item'),
-  'feature-grid-group': 'feature-grid-item',
-  'product-feature-picture-group': (row) => (row.children.length <= 2 ? 'product-feature-picture-group-group' : 'product-feature-picture-group-card'),
-  'product-feature-picture-group-group': 'product-feature-picture-group-card',
-  'product-guide': 'product-guide-item',
+  'lixiang-product-feature-grid': (row) => (row.children.length <= 2 ? 'lixiang-product-feature-grid-group' : 'lixiang-product-feature-grid-item'),
+  'lixiang-product-feature-grid-group': 'lixiang-product-feature-grid-item',
+  'lixiang-product-feature-picture-group': (row) => (row.children.length <= 2 ? 'lixiang-product-feature-picture-group-group' : 'lixiang-product-feature-picture-group-card'),
+  'lixiang-product-feature-picture-group-group': 'lixiang-product-feature-picture-group-card',
+  'lixiang-product-guide': 'lixiang-product-guide-item',
 };
 
 function collectionModelFor(model, row) {
@@ -437,16 +437,16 @@ export function addBlockAnchor(block, root = block, parent = block) {
 }
 
 function fallbackLinkText(root, model, href, prefix = '') {
-  if (model === 'product-hero-cta') {
+  if (model === 'lixiang-product-hero-cta') {
     return href.includes('/test-drive') ? 'Schedule Test Drive' : 'Learn More';
   }
-  if (model === 'product-sticky-nav-item' && href.startsWith('#')) {
+  if (model === 'lixiang-product-sticky-nav-item' && href.startsWith('#')) {
     return href.slice(1).split('-').map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join(' ');
   }
-  if (model === 'product-ending') {
+  if (model === 'lixiang-product-ending') {
     return prefix ? 'Back to Top' : 'Schedule Test Drive';
   }
-  if (model === 'product-guide-item') {
+  if (model === 'lixiang-product-guide-item') {
     const title = propText(root, 'title');
     if (href.includes('/test-drive')) return 'Start Configuration';
     if (title.includes('Support')) return 'Find Support';
@@ -472,11 +472,11 @@ export function createProductLink(root, prefix = '', className = 'product-link')
     : fallbackLinkText(root, model, href, prefix);
   if (!href || !text) return null;
   const defaultTypes = {
-    'product-hero-cta': root.previousElementSibling?.dataset.aueModel === model ? 'secondary' : 'primary',
+    'lixiang-product-hero-cta': root.previousElementSibling?.dataset.aueModel === model ? 'secondary' : 'primary',
     'lixiang-product-intro-slide': 'text',
-    'feature-grid-item': 'text',
-    'product-guide-item': 'primary',
-    'product-ending': prefix ? 'secondary' : 'primary',
+    'lixiang-product-feature-grid-item': 'text',
+    'lixiang-product-guide-item': 'primary',
+    'lixiang-product-ending': prefix ? 'secondary' : 'primary',
     'product-param-cta': prefix ? 'text' : 'primary',
     'product-download': prefix === 'android' ? 'secondary' : 'primary',
   };

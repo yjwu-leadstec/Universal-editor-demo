@@ -12,15 +12,15 @@
 
 | Production scene | Count | EDS block |
 | --- | ---: | --- |
-| `product-first` | 1 | `product-hero` |
+| `product-first` | 1 | `lixiang-product-hero` |
 | `SceneTableHorizontal` | 1 | `lixiang-product-intro-slider` |
 | `SceneMegaOverview2` / `SceneBeginning` | 7 | `lixiang-product-full-screen-intro` |
 | `SceneColorSwitch` | 1 | `lixiang-product-color-full-screen-slider` |
 | `SceneMegaContentTableX` | 17 | `lixiang-product-intro-carousel` |
-| `SceneMegaContentTableXImage` | 1 | `product-feature-picture-group` |
-| `SceneMegaContentMultipleImage` | 1 | `feature-grid` |
+| `SceneMegaContentTableXImage` | 1 | `lixiang-product-feature-picture-group` |
+| `SceneMegaContentMultipleImage` | 1 | `lixiang-product-feature-grid` |
 | `ScenePictureGroup` | 1 | `lixiang-product-detail-picture-group` |
-| `SceneMegaContentNote` | 1 | `product-notes` |
+| `SceneMegaContentNote` | 1 | `lixiang-product-notes` |
 
 The authored page contains 31 parent blocks and 138 ordered child items. Scene order matches production exactly.
 

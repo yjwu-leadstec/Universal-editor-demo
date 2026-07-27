@@ -1,0 +1,159 @@
+main .lixiang-product-spec-table {
+  left: 50%;
+  width: 100vw;
+  margin-inline-start: -50vw;
+}
+
+main .lixiang-product-spec-table .lixiang-product-spec-table-shell {
+  width: min(100% - 40px, 1240px);
+  margin-inline: auto;
+}
+
+main .lixiang-product-spec-table .spec-tabs {
+  display: flex;
+  margin-block-end: 32px;
+  overflow-x: auto;
+  border-bottom: 1px solid rgb(127 127 127 / 24%);
+}
+
+main .lixiang-product-spec-table .spec-tabs button {
+  position: relative;
+  min-width: 150px;
+  min-height: 56px;
+  padding: 12px 20px;
+  flex: 1 0 auto;
+  color: var(--product-muted);
+  background: transparent;
+  border: 0;
+}
+
+main .lixiang-product-spec-table .spec-tabs button::after {
+  position: absolute;
+  right: 50%;
+  bottom: -1px;
+  left: 50%;
+  height: 2px;
+  background: var(--product-accent);
+  content: '';
+  transition: right 200ms ease, left 200ms ease;
+}
+
+main .lixiang-product-spec-table .spec-tabs button[aria-selected="true"] {
+  color: var(--product-copy);
+}
+
+main .lixiang-product-spec-table .spec-tabs button[aria-selected="true"]::after {
+  right: max(16px, calc(50% - 49px));
+  left: max(16px, calc(50% - 49px));
+}
+
+main .lixiang-product-spec-table .lixiang-product-spec-table-group[hidden] {
+  display: none;
+}
+
+main .lixiang-product-spec-table .lixiang-product-spec-table-group {
+  overflow: hidden;
+  background: var(--product-card-bg);
+  border-radius: 4px;
+}
+
+main .lixiang-product-spec-table.variant-sections .spec-panels {
+  display: grid;
+  gap: 24px;
+}
+
+main .lixiang-product-spec-table .lixiang-product-spec-table-group-title,
+main .lixiang-product-spec-table .lixiang-product-spec-table-group-description,
+main .lixiang-product-spec-table .lixiang-product-spec-table-group-note {
+  margin-inline: 28px;
+}
+
+main .lixiang-product-spec-table .lixiang-product-spec-table-group-title {
+  margin-block: 28px 12px;
+  font-family: var(--heading-font-family);
+  font-size: 28px;
+  font-weight: 500;
+}
+
+main .lixiang-product-spec-table .lixiang-product-spec-table-group-description,
+main .lixiang-product-spec-table .lixiang-product-spec-table-group-note {
+  color: var(--product-muted);
+}
+
+main .lixiang-product-spec-table .lixiang-product-spec-table-rows {
+  display: grid;
+  margin: 0;
+  padding: 12px 28px 28px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+}
+
+main .lixiang-product-spec-table .lixiang-product-spec-table-row {
+  display: grid;
+  padding: 20px;
+  background: var(--product-bg);
+  grid-template-columns: minmax(120px, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: 16px;
+}
+
+main .lixiang-product-spec-table .lixiang-product-spec-table-row dt {
+  color: var(--product-muted);
+}
+
+main .lixiang-product-spec-table .lixiang-product-spec-table-row dd {
+  margin: 0;
+  color: var(--product-copy);
+  font-weight: 500;
+}
+
+main .lixiang-product-spec-table.variant-icon-grid .lixiang-product-spec-table-rows {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+main .lixiang-product-spec-table.variant-icon-grid .lixiang-product-spec-table-row {
+  display: flex;
+  min-height: 180px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+main .lixiang-product-spec-table.variant-icon-grid .lixiang-product-spec-table-row .product-media {
+  width: 64px;
+  min-height: 64px;
+  aspect-ratio: 1;
+}
+
+@media (width <= 1024px) {
+  main .lixiang-product-spec-table .lixiang-product-spec-table-rows,
+  main .lixiang-product-spec-table.variant-icon-grid .lixiang-product-spec-table-rows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width <= 719px) {
+  main .lixiang-product-spec-table .lixiang-product-spec-table-shell {
+    width: 100%;
+  }
+
+  main .lixiang-product-spec-table .product-section-header,
+  main .lixiang-product-spec-table .spec-panels {
+    width: auto;
+    margin-inline: 20px;
+  }
+
+  main .lixiang-product-spec-table .spec-tabs {
+    padding-inline: 20px;
+  }
+
+  main .lixiang-product-spec-table .lixiang-product-spec-table-rows,
+  main .lixiang-product-spec-table.variant-icon-grid .lixiang-product-spec-table-rows {
+    padding: 8px 16px 20px;
+    grid-template-columns: 1fr;
+  }
+
+  main .lixiang-product-spec-table .lixiang-product-spec-table-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

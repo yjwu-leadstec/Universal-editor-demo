@@ -270,58 +270,6 @@
           }
         },
         {
-          "title": "Product Feature Grid",
-          "id": "feature-grid",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Feature Grid",
-                  "model": "feature-grid",
-                  "filter": "feature-grid",
-                  "classes": [
-                    "light",
-                    "space-small"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Product Feature Group",
-          "id": "feature-grid-group",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Product Feature Group",
-                  "model": "feature-grid-group",
-                  "filter": "feature-grid-group"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Product Feature Card",
-          "id": "feature-grid-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Product Feature Card",
-                  "model": "feature-grid-item",
-                  "linkType": "text"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Fragment",
           "id": "fragment",
           "plugins": {
@@ -1027,6 +975,131 @@
           }
         },
         {
+          "title": "Product Ending",
+          "id": "lixiang-product-ending",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Product Ending",
+                  "model": "lixiang-product-ending",
+                  "linkType": "primary",
+                  "secondaryLinkType": "secondary",
+                  "showVideoControl": true,
+                  "classes": [
+                    "dark",
+                    "light-copy"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Feature Grid",
+          "id": "lixiang-product-feature-grid",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Feature Grid",
+                  "model": "lixiang-product-feature-grid",
+                  "filter": "lixiang-product-feature-grid",
+                  "classes": [
+                    "light",
+                    "space-small"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Feature Group",
+          "id": "lixiang-product-feature-grid-group",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Product Feature Group",
+                  "model": "lixiang-product-feature-grid-group",
+                  "filter": "lixiang-product-feature-grid-group"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Feature Card",
+          "id": "lixiang-product-feature-grid-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Product Feature Card",
+                  "model": "lixiang-product-feature-grid-item",
+                  "linkType": "text"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Feature Picture Group",
+          "id": "lixiang-product-feature-picture-group",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Product Feature Picture Group",
+                  "model": "lixiang-product-feature-picture-group",
+                  "filter": "lixiang-product-feature-picture-group",
+                  "classes": [
+                    "light",
+                    "space-small"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Picture Group",
+          "id": "lixiang-product-feature-picture-group-group",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Picture Group",
+                  "model": "lixiang-product-feature-picture-group-group",
+                  "filter": "lixiang-product-feature-picture-group-group"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Picture Card",
+          "id": "lixiang-product-feature-picture-group-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Picture Card",
+                  "model": "lixiang-product-feature-picture-group-card"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Lixiang Product Full-Screen Intro",
           "id": "lixiang-product-full-screen-intro",
           "plugins": {
@@ -1045,6 +1118,95 @@
                     "bottom-copy",
                     "left-copy"
                   ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Guide",
+          "id": "lixiang-product-guide",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Product Guide",
+                  "model": "lixiang-product-guide",
+                  "filter": "lixiang-product-guide",
+                  "classes": [
+                    "mobile-visible"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Guide Card",
+          "id": "lixiang-product-guide-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Product Guide Card",
+                  "model": "lixiang-product-guide-item",
+                  "linkType": "primary"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Hero",
+          "id": "lixiang-product-hero",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Product Hero",
+                  "model": "lixiang-product-hero",
+                  "filter": "lixiang-product-hero",
+                  "showArrow": true,
+                  "showVideoControl": true,
+                  "showProgress": true,
+                  "classes": [
+                    "light-copy",
+                    "top-copy"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Hero CTA",
+          "id": "lixiang-product-hero-cta",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Product Hero CTA",
+                  "model": "lixiang-product-hero-cta",
+                  "linkType": "primary"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Hero Responsive Posters",
+          "id": "lixiang-product-hero-responsive-media",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Product Hero Responsive Posters",
+                  "model": "lixiang-product-hero-responsive-media"
                 }
               }
             }
@@ -1192,6 +1354,120 @@
                 "template": {
                   "name": "Highlight Statistic",
                   "model": "highlight-stat"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Notes",
+          "id": "lixiang-product-notes",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Product Notes",
+                  "model": "lixiang-product-notes",
+                  "filter": "lixiang-product-notes"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Note",
+          "id": "lixiang-product-note-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Product Note",
+                  "model": "lixiang-product-note-item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Specification Table",
+          "id": "lixiang-product-spec-table",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Spec Table",
+                  "model": "lixiang-product-spec-table",
+                  "filter": "lixiang-product-spec-table",
+                  "variant": "tabbed",
+                  "classes": [
+                    "light",
+                    "space-small"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Specification Group",
+          "id": "lixiang-product-spec-table-group",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Specification Group",
+                  "model": "lixiang-product-spec-table-group",
+                  "filter": "lixiang-product-spec-table-group"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Specification Row",
+          "id": "lixiang-product-spec-table-row",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Specification Row",
+                  "model": "lixiang-product-spec-table-row"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Sticky Nav",
+          "id": "lixiang-product-sticky-nav",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Product Sticky Nav",
+                  "model": "lixiang-product-sticky-nav",
+                  "filter": "lixiang-product-sticky-nav"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Product Nav Item",
+          "id": "lixiang-product-sticky-nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Product Nav Item",
+                  "model": "lixiang-product-sticky-nav-item"
                 }
               }
             }
@@ -1664,199 +1940,6 @@
           }
         },
         {
-          "title": "Product Ending",
-          "id": "product-ending",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Product Ending",
-                  "model": "product-ending",
-                  "linkType": "primary",
-                  "secondaryLinkType": "secondary",
-                  "showVideoControl": true,
-                  "classes": [
-                    "dark",
-                    "light-copy"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Product Feature Picture Group",
-          "id": "product-feature-picture-group",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Product Feature Picture Group",
-                  "model": "product-feature-picture-group",
-                  "filter": "product-feature-picture-group",
-                  "classes": [
-                    "light",
-                    "space-small"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Picture Group",
-          "id": "product-feature-picture-group-group",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Picture Group",
-                  "model": "product-feature-picture-group-group",
-                  "filter": "product-feature-picture-group-group"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Picture Card",
-          "id": "product-feature-picture-group-card",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Picture Card",
-                  "model": "product-feature-picture-group-card"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Product Guide",
-          "id": "product-guide",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Product Guide",
-                  "model": "product-guide",
-                  "filter": "product-guide",
-                  "classes": [
-                    "mobile-visible"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Product Guide Card",
-          "id": "product-guide-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Product Guide Card",
-                  "model": "product-guide-item",
-                  "linkType": "primary"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Product Hero",
-          "id": "product-hero",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Product Hero",
-                  "model": "product-hero",
-                  "filter": "product-hero",
-                  "showArrow": true,
-                  "showVideoControl": true,
-                  "showProgress": true,
-                  "classes": [
-                    "light-copy",
-                    "top-copy"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Product Hero CTA",
-          "id": "product-hero-cta",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Product Hero CTA",
-                  "model": "product-hero-cta",
-                  "linkType": "primary"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Product Hero Responsive Posters",
-          "id": "product-hero-responsive-media",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Product Hero Responsive Posters",
-                  "model": "product-hero-responsive-media"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Product Notes",
-          "id": "product-notes",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Product Notes",
-                  "model": "product-notes",
-                  "filter": "product-notes"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Product Note",
-          "id": "product-note-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Product Note",
-                  "model": "product-note-item"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Product Parameter CTA",
           "id": "product-param-cta",
           "plugins": {
@@ -1909,37 +1992,6 @@
           }
         },
         {
-          "title": "Product Sticky Nav",
-          "id": "product-sticky-nav",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Product Sticky Nav",
-                  "model": "product-sticky-nav",
-                  "filter": "product-sticky-nav"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Product Nav Item",
-          "id": "product-sticky-nav-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Product Nav Item",
-                  "model": "product-sticky-nav-item"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Product Table",
           "id": "product-table",
           "plugins": {
@@ -1951,58 +2003,6 @@
                   "model": "product-table",
                   "source": "/dummy-data/rt5760_series.json",
                   "title": "RT5760 Series Comparison"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Specification Table",
-          "id": "spec-table",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Spec Table",
-                  "model": "spec-table",
-                  "filter": "spec-table",
-                  "variant": "tabbed",
-                  "classes": [
-                    "light",
-                    "space-small"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Specification Group",
-          "id": "spec-group",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Specification Group",
-                  "model": "spec-group",
-                  "filter": "spec-group"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Specification Row",
-          "id": "spec-row",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Specification Row",
-                  "model": "spec-row"
                 }
               }
             }

@@ -30,24 +30,24 @@
       "avatar",
       "product-table",
       "product-showcase",
-      "product-hero",
-      "product-sticky-nav",
+      "lixiang-product-hero",
+      "lixiang-product-sticky-nav",
       "lixiang-product-intro-slider",
       "lixiang-product-full-screen-intro",
       "lixiang-product-intro-carousel",
       "image-switcher",
       "big-small-gallery",
       "color-switcher",
-      "spec-table",
-      "product-notes",
+      "lixiang-product-spec-table",
+      "lixiang-product-notes",
       "text-columns",
       "lixiang-product-detail-picture-group",
       "icon-overlay-showcase",
-      "feature-grid",
-      "product-feature-picture-group",
+      "lixiang-product-feature-grid",
+      "lixiang-product-feature-picture-group",
       "product-param-cta",
-      "product-ending",
-      "product-guide",
+      "lixiang-product-ending",
+      "lixiang-product-guide",
       "product-download",
       "header-navigation"
     ]
@@ -91,19 +91,6 @@
       "button",
       "title",
       "avatar"
-    ]
-  },
-  {
-    "id": "feature-grid",
-    "components": [
-      "feature-grid-group",
-      "feature-grid-item"
-    ]
-  },
-  {
-    "id": "feature-grid-group",
-    "components": [
-      "feature-grid-item"
     ]
   },
   {
@@ -220,6 +207,45 @@
     ]
   },
   {
+    "id": "lixiang-product-feature-grid",
+    "components": [
+      "lixiang-product-feature-grid-group",
+      "lixiang-product-feature-grid-item"
+    ]
+  },
+  {
+    "id": "lixiang-product-feature-grid-group",
+    "components": [
+      "lixiang-product-feature-grid-item"
+    ]
+  },
+  {
+    "id": "lixiang-product-feature-picture-group",
+    "components": [
+      "lixiang-product-feature-picture-group-group",
+      "lixiang-product-feature-picture-group-card"
+    ]
+  },
+  {
+    "id": "lixiang-product-feature-picture-group-group",
+    "components": [
+      "lixiang-product-feature-picture-group-card"
+    ]
+  },
+  {
+    "id": "lixiang-product-guide",
+    "components": [
+      "lixiang-product-guide-item"
+    ]
+  },
+  {
+    "id": "lixiang-product-hero",
+    "components": [
+      "lixiang-product-hero-cta",
+      "lixiang-product-hero-responsive-media"
+    ]
+  },
+  {
     "id": "lixiang-product-intro-carousel",
     "components": [
       "lixiang-product-intro-slide",
@@ -243,6 +269,30 @@
     "id": "highlight-slide",
     "components": [
       "highlight-stat"
+    ]
+  },
+  {
+    "id": "lixiang-product-notes",
+    "components": [
+      "lixiang-product-note-item"
+    ]
+  },
+  {
+    "id": "lixiang-product-spec-table",
+    "components": [
+      "lixiang-product-spec-table-group"
+    ]
+  },
+  {
+    "id": "lixiang-product-spec-table-group",
+    "components": [
+      "lixiang-product-spec-table-row"
+    ]
+  },
+  {
+    "id": "lixiang-product-sticky-nav",
+    "components": [
+      "lixiang-product-sticky-nav-item"
     ]
   },
   {
@@ -322,64 +372,14 @@
     ]
   },
   {
-    "id": "product-feature-picture-group",
-    "components": [
-      "product-feature-picture-group-group",
-      "product-feature-picture-group-card"
-    ]
-  },
-  {
-    "id": "product-feature-picture-group-group",
-    "components": [
-      "product-feature-picture-group-card"
-    ]
-  },
-  {
-    "id": "product-guide",
-    "components": [
-      "product-guide-item"
-    ]
-  },
-  {
-    "id": "product-hero",
-    "components": [
-      "product-hero-cta",
-      "product-hero-responsive-media"
-    ]
-  },
-  {
-    "id": "product-notes",
-    "components": [
-      "product-note-item"
-    ]
-  },
-  {
     "id": "product-showcase",
     "components": [
       "product-card"
     ]
   },
   {
-    "id": "product-sticky-nav",
-    "components": [
-      "product-sticky-nav-item"
-    ]
-  },
-  {
     "id": "product-table",
     "components": []
-  },
-  {
-    "id": "spec-table",
-    "components": [
-      "spec-group"
-    ]
-  },
-  {
-    "id": "spec-group",
-    "components": [
-      "spec-row"
-    ]
   },
   {
     "id": "text-columns",

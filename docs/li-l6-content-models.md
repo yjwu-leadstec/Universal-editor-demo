@@ -53,9 +53,9 @@ Where relevant, `classes` is a grouped `multiselect` with finite values:
 | `showArrow`, `showVideoControl`, `showProgress` | Runtime controls |
 | `classes` | light/dark copy and top/center/bottom alignment |
 
-Child `product-hero-responsive-media` fields: optional `mediumImage` for `821–1024px` and `tabletImage` for `721–820px`. One child item carries both responsive compositions without exceeding the Universal Editor parent block cell limit.
+Child `lixiang-product-hero-responsive-media` fields: optional `mediumImage` for `821–1024px` and `tabletImage` for `721–820px`. One child item carries both responsive compositions without exceeding the Universal Editor parent block cell limit.
 
-Child `product-hero-cta` fields: standard link group. The filter permits responsive-poster and CTA items. The same model covers both captured `product-first` instances.
+Child `lixiang-product-hero-cta` fields: standard link group. The filter permits responsive-poster and CTA items. The same model covers both captured `product-first` instances.
 
 The four poster fields remain one semantic scene and therefore share one alt description. Runtime decoration merges their generated sources into one native responsive `picture`, so the browser downloads only the active breakpoint asset while Universal Editor retains each authored reference field.
 
@@ -63,7 +63,7 @@ The four poster fields remain one semantic scene and therefore share one alt des
 
 Block fields: `id`, `carName`.
 
-Child `product-sticky-nav-item` fields: `link`, `linkText`. One item list is used at all breakpoints; CSS owns wrapping/horizontal scrolling. The dialog description requires unique anchor targets.
+Child `lixiang-product-sticky-nav-item` fields: `link`, `linkText`. One item list is used at all breakpoints; CSS owns wrapping/horizontal scrolling. The dialog description requires unique anchor targets.
 
 ## Highlight Carousel — collection
 
@@ -157,9 +157,9 @@ The dialog describes a maximum of seven items. Runtime remains safe with additio
 
 Block fields: `id`, `title`, `mobileTitle`, `description`, `variant` (`sections`, `tabbed`, `icon-grid`), `classes`.
 
-Child `spec-group` fields: `groupKey`, `title`, `description`, responsive background image group, `note`. Its filter accepts `spec-row` children.
+Child `lixiang-product-spec-table-group` fields: `groupKey`, `title`, `description`, responsive background image group, `note`. Its filter accepts `lixiang-product-spec-table-row` children.
 
-Child `spec-row` fields: `label`, `value`, `description`, `icon`, `iconAlt`.
+Child `lixiang-product-spec-table-row` fields: `label`, `value`, `description`, `icon`, `iconAlt`.
 
 The model is intentionally three-level because groups are independently selectable tabs/sections and rows must remain repeatable, semantic label/value data.
 
@@ -167,7 +167,7 @@ The model is intentionally three-level because groups are independently selectab
 
 Block fields: `id`, optional `title`.
 
-Child `product-note-item` field: one required `richtext` field named `text`. A repeated item is one legal note; authors do not maintain numbering fields.
+Child `lixiang-product-note-item` field: one required `richtext` field named `text`. A repeated item is one legal note; authors do not maintain numbering fields.
 
 ## Text Columns — collection
 
@@ -203,7 +203,7 @@ Child `overlay-hotspot` fields:
 
 Block fields: `id`, `eyebrow`, `title`, `mobileTitle`, `description`, `note`, `classes`.
 
-Child `feature-grid-item` fields: responsive media group, `title`, `description`, optional standard link group. This replaces all numbered `imageUrlN` source fields.
+Child `lixiang-product-feature-grid-item` fields: responsive media group, `title`, `description`, optional standard link group. This replaces all numbered `imageUrlN` source fields.
 
 ## Product Feature Picture Group — nested collection
 
@@ -211,9 +211,9 @@ Li L6 ending "flagship configuration" image-card grid (Pencil segment 8 「结�
 
 Block fields: `id`, `eyebrow`, `title`, `mobileTitle`, `description`, `note`, `classes`.
 
-Child `product-feature-picture-group-group` (optional label group) fields: `groupKey`, `title`.
+Child `lixiang-product-feature-picture-group-group` (optional label group) fields: `groupKey`, `title`.
 
-Child `product-feature-picture-group-card` fields: responsive image group (`image`/`imageAlt`/`mobileImage`/`mobileImageAlt`), `title`, `description`.
+Child `lixiang-product-feature-picture-group-card` fields: responsive image group (`image`/`imageAlt`/`mobileImage`/`mobileImageAlt`), `title`, `description`.
 
 Filters: block → `[group, card]`; group → `[card]`. `classes` groups background (`light`/`dark`/`gray`), text (`light-copy`/`dark-copy`), and spacing (`space-large`/`space-small`/`space-none`); default `light space-small`. The block CSS overrides the shared gold eyebrow accent to the theme copy color (`--product-copy`) to match the design.
 
@@ -229,7 +229,7 @@ Fields: `id`, `title`, responsive media group, optional preview video, primary l
 
 Block fields: `id`, optional `title`, `classes` with `desktop-visible`/`mobile-visible` choices.
 
-Child `product-guide-item` fields: responsive image group, `title`, `description`, standard link group.
+Child `lixiang-product-guide-item` fields: responsive image group, `title`, `description`, standard link group.
 
 ## Product Download — standalone
 

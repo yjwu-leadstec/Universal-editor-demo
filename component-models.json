@@ -1016,192 +1016,6 @@
     ]
   },
   {
-    "id": "feature-grid",
-    "fields": [
-      {
-        "component": "text",
-        "name": "id",
-        "label": "ID",
-        "description": "Optional page anchor",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "eyebrow",
-        "label": "Eyebrow",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Desktop Title",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "mobileTitle",
-        "label": "Mobile Title Override",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Description",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "note",
-        "label": "Note",
-        "valueType": "string"
-      },
-      {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Style",
-        "valueType": "string",
-        "maxSize": 2,
-        "options": [
-          {
-            "name": "Theme",
-            "children": [
-              {
-                "name": "Light",
-                "value": "light"
-              },
-              {
-                "name": "Dark",
-                "value": "dark"
-              },
-              {
-                "name": "Gray",
-                "value": "gray"
-              }
-            ]
-          },
-          {
-            "name": "Spacing",
-            "children": [
-              {
-                "name": "Large",
-                "value": "space-large"
-              },
-              {
-                "name": "Small",
-                "value": "space-small"
-              },
-              {
-                "name": "None",
-                "value": "space-none"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "feature-grid-group",
-    "fields": [
-      {
-        "component": "text",
-        "name": "groupKey",
-        "label": "Group Key",
-        "description": "Unique stable key",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Group Title",
-        "valueType": "string",
-        "required": true
-      }
-    ]
-  },
-  {
-    "id": "feature-grid-item",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Desktop Poster / Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "imageAlt",
-        "label": "Desktop Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "mobileImage",
-        "label": "Mobile Poster / Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "mobileImageAlt",
-        "label": "Mobile Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "video",
-        "label": "Video URL",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Card Title",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Card Description",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "linkText",
-        "label": "Link Text",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "name": "linkType",
-        "label": "Link Type",
-        "valueType": "string",
-        "value": "text",
-        "options": [
-          {
-            "name": "Text",
-            "value": "text"
-          },
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "fragment",
     "fields": [
       {
@@ -3096,6 +2910,514 @@
     ]
   },
   {
+    "id": "lixiang-product-ending",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop Poster / Background",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Poster / Background",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "video",
+        "label": "Preview Video URL",
+        "valueType": "string"
+      },
+      {
+        "component": "boolean",
+        "name": "showVideoControl",
+        "label": "Show Video Control",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Primary Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "Primary Link Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "linkType",
+        "label": "Primary Link Type",
+        "valueType": "string",
+        "value": "primary",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          },
+          {
+            "name": "Text",
+            "value": "text"
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "secondaryLink",
+        "label": "Secondary Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "secondaryLinkText",
+        "label": "Secondary Link Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "secondaryLinkType",
+        "label": "Secondary Link Type",
+        "valueType": "string",
+        "value": "secondary",
+        "options": [
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          },
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Text",
+            "value": "text"
+          }
+        ]
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "maxSize": 2,
+        "options": [
+          {
+            "name": "Theme",
+            "children": [
+              {
+                "name": "Light",
+                "value": "light"
+              },
+              {
+                "name": "Dark",
+                "value": "dark"
+              },
+              {
+                "name": "Gray",
+                "value": "gray"
+              }
+            ]
+          },
+          {
+            "name": "Copy",
+            "children": [
+              {
+                "name": "Light",
+                "value": "light-copy"
+              },
+              {
+                "name": "Dark",
+                "value": "dark-copy"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-feature-grid",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "eyebrow",
+        "label": "Eyebrow",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Desktop Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "mobileTitle",
+        "label": "Mobile Title Override",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "note",
+        "label": "Note",
+        "valueType": "string"
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "maxSize": 2,
+        "options": [
+          {
+            "name": "Theme",
+            "children": [
+              {
+                "name": "Light",
+                "value": "light"
+              },
+              {
+                "name": "Dark",
+                "value": "dark"
+              },
+              {
+                "name": "Gray",
+                "value": "gray"
+              }
+            ]
+          },
+          {
+            "name": "Spacing",
+            "children": [
+              {
+                "name": "Large",
+                "value": "space-large"
+              },
+              {
+                "name": "Small",
+                "value": "space-small"
+              },
+              {
+                "name": "None",
+                "value": "space-none"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-feature-grid-group",
+    "fields": [
+      {
+        "component": "text",
+        "name": "groupKey",
+        "label": "Group Key",
+        "description": "Unique stable key",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Group Title",
+        "valueType": "string",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-feature-grid-item",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop Poster / Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Poster / Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "video",
+        "label": "Video URL",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Card Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Card Description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "Link Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "linkType",
+        "label": "Link Type",
+        "valueType": "string",
+        "value": "text",
+        "options": [
+          {
+            "name": "Text",
+            "value": "text"
+          },
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-feature-picture-group",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "eyebrow",
+        "label": "Eyebrow",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Desktop Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "mobileTitle",
+        "label": "Mobile Title Override",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "note",
+        "label": "Note",
+        "valueType": "string"
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "maxSize": 3,
+        "options": [
+          {
+            "name": "Background",
+            "children": [
+              {
+                "name": "White",
+                "value": "light"
+              },
+              {
+                "name": "Black",
+                "value": "dark"
+              },
+              {
+                "name": "Gray",
+                "value": "gray"
+              }
+            ]
+          },
+          {
+            "name": "Text Color",
+            "children": [
+              {
+                "name": "Light",
+                "value": "light-copy"
+              },
+              {
+                "name": "Dark",
+                "value": "dark-copy"
+              }
+            ]
+          },
+          {
+            "name": "Spacing",
+            "children": [
+              {
+                "name": "Large",
+                "value": "space-large"
+              },
+              {
+                "name": "Small",
+                "value": "space-small"
+              },
+              {
+                "name": "None",
+                "value": "space-none"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-feature-picture-group-group",
+    "fields": [
+      {
+        "component": "text",
+        "name": "groupKey",
+        "label": "Group Key",
+        "description": "Unique stable key",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Group Title",
+        "valueType": "string",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-feature-picture-group-card",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Card Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Card Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "lixiang-product-full-screen-intro",
     "fields": [
       {
@@ -3276,6 +3598,322 @@
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-guide",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Optional Title",
+        "valueType": "string"
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Visibility",
+        "description": "Select one or both web viewports",
+        "valueType": "string",
+        "maxSize": 2,
+        "options": [
+          {
+            "name": "Desktop",
+            "value": "desktop-visible"
+          },
+          {
+            "name": "Mobile",
+            "value": "mobile-visible"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-guide-item",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop Background",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Background",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Card Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Card Description",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "Link Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "linkType",
+        "label": "Link Type",
+        "valueType": "string",
+        "value": "primary",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          },
+          {
+            "name": "Text",
+            "value": "text"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-hero",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "mobileTitle",
+        "label": "Mobile Title Override",
+        "description": "Optional; use line breaks to control wrapping",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "subtitle",
+        "label": "Subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop Poster / Background",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Responsive Image Alt Text",
+        "description": "Shared by the desktop, medium, and tablet compositions of the same scene",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Poster / Background (≤720px)",
+        "description": "Optional; falls back through the broader poster fields",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "video",
+        "label": "Desktop Preview Video URL",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "mobileVideo",
+        "label": "Mobile Preview Video URL",
+        "description": "Falls back to desktop video",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "logo",
+        "label": "Vehicle Logo",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "logoAlt",
+        "label": "Vehicle Logo Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "boolean",
+        "name": "showArrow",
+        "label": "Show Scroll Cue",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "boolean",
+        "name": "showVideoControl",
+        "label": "Show Video Control",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "boolean",
+        "name": "showProgress",
+        "label": "Show Video Progress",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "maxSize": 2,
+        "options": [
+          {
+            "name": "Copy",
+            "children": [
+              {
+                "name": "Light",
+                "value": "light-copy"
+              },
+              {
+                "name": "Dark",
+                "value": "dark-copy"
+              }
+            ]
+          },
+          {
+            "name": "Alignment",
+            "children": [
+              {
+                "name": "Top",
+                "value": "top-copy"
+              },
+              {
+                "name": "Center",
+                "value": "center-copy"
+              },
+              {
+                "name": "Bottom",
+                "value": "bottom-copy"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-hero-cta",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "linkType",
+        "label": "Type",
+        "valueType": "string",
+        "value": "primary",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          },
+          {
+            "name": "Text",
+            "value": "text"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-hero-responsive-media",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "mediumImage",
+        "label": "Medium Poster / Background (821–1024px)",
+        "description": "Optional; falls back to desktop media",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "name": "tabletImage",
+        "label": "Tablet Poster / Background (721–820px)",
+        "description": "Optional; falls back to medium, then desktop media",
+        "valueType": "string",
+        "multi": false
       }
     ]
   },
@@ -4005,6 +4643,263 @@
         "name": "description",
         "label": "Description",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-notes",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Optional Title",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-note-item",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Legal Note",
+        "valueType": "string",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-spec-table",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Desktop Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "mobileTitle",
+        "label": "Mobile Title Override",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "variant",
+        "label": "Layout",
+        "valueType": "string",
+        "value": "tabbed",
+        "options": [
+          {
+            "name": "Sections",
+            "value": "sections"
+          },
+          {
+            "name": "Tabbed",
+            "value": "tabbed"
+          },
+          {
+            "name": "Icon Grid",
+            "value": "icon-grid"
+          }
+        ]
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "maxSize": 2,
+        "options": [
+          {
+            "name": "Theme",
+            "children": [
+              {
+                "name": "Light",
+                "value": "light"
+              },
+              {
+                "name": "Dark",
+                "value": "dark"
+              },
+              {
+                "name": "Gray",
+                "value": "gray"
+              }
+            ]
+          },
+          {
+            "name": "Spacing",
+            "children": [
+              {
+                "name": "Large",
+                "value": "space-large"
+              },
+              {
+                "name": "Small",
+                "value": "space-small"
+              },
+              {
+                "name": "None",
+                "value": "space-none"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-spec-table-group",
+    "fields": [
+      {
+        "component": "text",
+        "name": "groupKey",
+        "label": "Group Key",
+        "description": "Unique stable key",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Group / Tab Title",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Group Description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop Background Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Background Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "note",
+        "label": "Note",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-spec-table-row",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Label",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "value",
+        "label": "Value",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "icon",
+        "label": "Icon",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "iconAlt",
+        "label": "Icon Alt Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-sticky-nav",
+    "fields": [
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Optional page anchor",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "carName",
+        "label": "Vehicle Name",
+        "valueType": "string",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "lixiang-product-sticky-nav-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Section Anchor",
+        "description": "Use a unique #section-id target",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "Navigation Text",
+        "valueType": "string",
+        "required": true
       }
     ]
   },
@@ -5160,674 +6055,6 @@
     ]
   },
   {
-    "id": "product-ending",
-    "fields": [
-      {
-        "component": "text",
-        "name": "id",
-        "label": "ID",
-        "description": "Optional page anchor",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Title",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Desktop Poster / Background",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "imageAlt",
-        "label": "Desktop Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "mobileImage",
-        "label": "Mobile Poster / Background",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "mobileImageAlt",
-        "label": "Mobile Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "video",
-        "label": "Preview Video URL",
-        "valueType": "string"
-      },
-      {
-        "component": "boolean",
-        "name": "showVideoControl",
-        "label": "Show Video Control",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Primary Link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "linkText",
-        "label": "Primary Link Text",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "name": "linkType",
-        "label": "Primary Link Type",
-        "valueType": "string",
-        "value": "primary",
-        "options": [
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          },
-          {
-            "name": "Text",
-            "value": "text"
-          }
-        ]
-      },
-      {
-        "component": "aem-content",
-        "name": "secondaryLink",
-        "label": "Secondary Link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "secondaryLinkText",
-        "label": "Secondary Link Text",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "name": "secondaryLinkType",
-        "label": "Secondary Link Type",
-        "valueType": "string",
-        "value": "secondary",
-        "options": [
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          },
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Text",
-            "value": "text"
-          }
-        ]
-      },
-      {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Style",
-        "valueType": "string",
-        "maxSize": 2,
-        "options": [
-          {
-            "name": "Theme",
-            "children": [
-              {
-                "name": "Light",
-                "value": "light"
-              },
-              {
-                "name": "Dark",
-                "value": "dark"
-              },
-              {
-                "name": "Gray",
-                "value": "gray"
-              }
-            ]
-          },
-          {
-            "name": "Copy",
-            "children": [
-              {
-                "name": "Light",
-                "value": "light-copy"
-              },
-              {
-                "name": "Dark",
-                "value": "dark-copy"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "product-feature-picture-group",
-    "fields": [
-      {
-        "component": "text",
-        "name": "id",
-        "label": "ID",
-        "description": "Optional page anchor",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "eyebrow",
-        "label": "Eyebrow",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Desktop Title",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "mobileTitle",
-        "label": "Mobile Title Override",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Description",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "note",
-        "label": "Note",
-        "valueType": "string"
-      },
-      {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Style",
-        "valueType": "string",
-        "maxSize": 3,
-        "options": [
-          {
-            "name": "Background",
-            "children": [
-              {
-                "name": "White",
-                "value": "light"
-              },
-              {
-                "name": "Black",
-                "value": "dark"
-              },
-              {
-                "name": "Gray",
-                "value": "gray"
-              }
-            ]
-          },
-          {
-            "name": "Text Color",
-            "children": [
-              {
-                "name": "Light",
-                "value": "light-copy"
-              },
-              {
-                "name": "Dark",
-                "value": "dark-copy"
-              }
-            ]
-          },
-          {
-            "name": "Spacing",
-            "children": [
-              {
-                "name": "Large",
-                "value": "space-large"
-              },
-              {
-                "name": "Small",
-                "value": "space-small"
-              },
-              {
-                "name": "None",
-                "value": "space-none"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "product-feature-picture-group-group",
-    "fields": [
-      {
-        "component": "text",
-        "name": "groupKey",
-        "label": "Group Key",
-        "description": "Unique stable key",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Group Title",
-        "valueType": "string",
-        "required": true
-      }
-    ]
-  },
-  {
-    "id": "product-feature-picture-group-card",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Desktop Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "imageAlt",
-        "label": "Desktop Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "mobileImage",
-        "label": "Mobile Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "mobileImageAlt",
-        "label": "Mobile Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Card Title",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Card Description",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "product-guide",
-    "fields": [
-      {
-        "component": "text",
-        "name": "id",
-        "label": "ID",
-        "description": "Optional page anchor",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Optional Title",
-        "valueType": "string"
-      },
-      {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Visibility",
-        "description": "Select one or both web viewports",
-        "valueType": "string",
-        "maxSize": 2,
-        "options": [
-          {
-            "name": "Desktop",
-            "value": "desktop-visible"
-          },
-          {
-            "name": "Mobile",
-            "value": "mobile-visible"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "product-guide-item",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Desktop Background",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "imageAlt",
-        "label": "Desktop Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "mobileImage",
-        "label": "Mobile Background",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "mobileImageAlt",
-        "label": "Mobile Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Card Title",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Card Description",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "linkText",
-        "label": "Link Text",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "name": "linkType",
-        "label": "Link Type",
-        "valueType": "string",
-        "value": "primary",
-        "options": [
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          },
-          {
-            "name": "Text",
-            "value": "text"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "product-hero",
-    "fields": [
-      {
-        "component": "text",
-        "name": "id",
-        "label": "ID",
-        "description": "Optional page anchor",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Title",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "mobileTitle",
-        "label": "Mobile Title Override",
-        "description": "Optional; use line breaks to control wrapping",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "subtitle",
-        "label": "Subtitle",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Desktop Poster / Background",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "imageAlt",
-        "label": "Responsive Image Alt Text",
-        "description": "Shared by the desktop, medium, and tablet compositions of the same scene",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "mobileImage",
-        "label": "Mobile Poster / Background (≤720px)",
-        "description": "Optional; falls back through the broader poster fields",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "mobileImageAlt",
-        "label": "Mobile Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "video",
-        "label": "Desktop Preview Video URL",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "mobileVideo",
-        "label": "Mobile Preview Video URL",
-        "description": "Falls back to desktop video",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "logo",
-        "label": "Vehicle Logo",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "logoAlt",
-        "label": "Vehicle Logo Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "boolean",
-        "name": "showArrow",
-        "label": "Show Scroll Cue",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "boolean",
-        "name": "showVideoControl",
-        "label": "Show Video Control",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "boolean",
-        "name": "showProgress",
-        "label": "Show Video Progress",
-        "valueType": "boolean",
-        "value": true
-      },
-      {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Style",
-        "valueType": "string",
-        "maxSize": 2,
-        "options": [
-          {
-            "name": "Copy",
-            "children": [
-              {
-                "name": "Light",
-                "value": "light-copy"
-              },
-              {
-                "name": "Dark",
-                "value": "dark-copy"
-              }
-            ]
-          },
-          {
-            "name": "Alignment",
-            "children": [
-              {
-                "name": "Top",
-                "value": "top-copy"
-              },
-              {
-                "name": "Center",
-                "value": "center-copy"
-              },
-              {
-                "name": "Bottom",
-                "value": "bottom-copy"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "product-hero-cta",
-    "fields": [
-      {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "linkText",
-        "label": "Text",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "name": "linkType",
-        "label": "Type",
-        "valueType": "string",
-        "value": "primary",
-        "options": [
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          },
-          {
-            "name": "Text",
-            "value": "text"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "product-hero-responsive-media",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "mediumImage",
-        "label": "Medium Poster / Background (821–1024px)",
-        "description": "Optional; falls back to desktop media",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "reference",
-        "name": "tabletImage",
-        "label": "Tablet Poster / Background (721–820px)",
-        "description": "Optional; falls back to medium, then desktop media",
-        "valueType": "string",
-        "multi": false
-      }
-    ]
-  },
-  {
-    "id": "product-notes",
-    "fields": [
-      {
-        "component": "text",
-        "name": "id",
-        "label": "ID",
-        "description": "Optional page anchor",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Optional Title",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "product-note-item",
-    "fields": [
-      {
-        "component": "richtext",
-        "name": "text",
-        "label": "Legal Note",
-        "valueType": "string",
-        "required": true
-      }
-    ]
-  },
-  {
     "id": "product-param-cta",
     "fields": [
       {
@@ -6093,44 +6320,6 @@
     ]
   },
   {
-    "id": "product-sticky-nav",
-    "fields": [
-      {
-        "component": "text",
-        "name": "id",
-        "label": "ID",
-        "description": "Optional page anchor",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "carName",
-        "label": "Vehicle Name",
-        "valueType": "string",
-        "required": true
-      }
-    ]
-  },
-  {
-    "id": "product-sticky-nav-item",
-    "fields": [
-      {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Section Anchor",
-        "description": "Use a unique #section-id target",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "linkText",
-        "label": "Navigation Text",
-        "valueType": "string",
-        "required": true
-      }
-    ]
-  },
-  {
     "id": "product-table",
     "fields": [
       {
@@ -6148,195 +6337,6 @@
         "required": false,
         "description": "Path to JSON file (e.g. /dummy-data/rt5760_series.json)",
         "value": "/dummy-data/rt5760_series.json"
-      }
-    ]
-  },
-  {
-    "id": "spec-table",
-    "fields": [
-      {
-        "component": "text",
-        "name": "id",
-        "label": "ID",
-        "description": "Optional page anchor",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Desktop Title",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "mobileTitle",
-        "label": "Mobile Title Override",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Description",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "name": "variant",
-        "label": "Layout",
-        "valueType": "string",
-        "value": "tabbed",
-        "options": [
-          {
-            "name": "Sections",
-            "value": "sections"
-          },
-          {
-            "name": "Tabbed",
-            "value": "tabbed"
-          },
-          {
-            "name": "Icon Grid",
-            "value": "icon-grid"
-          }
-        ]
-      },
-      {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Style",
-        "valueType": "string",
-        "maxSize": 2,
-        "options": [
-          {
-            "name": "Theme",
-            "children": [
-              {
-                "name": "Light",
-                "value": "light"
-              },
-              {
-                "name": "Dark",
-                "value": "dark"
-              },
-              {
-                "name": "Gray",
-                "value": "gray"
-              }
-            ]
-          },
-          {
-            "name": "Spacing",
-            "children": [
-              {
-                "name": "Large",
-                "value": "space-large"
-              },
-              {
-                "name": "Small",
-                "value": "space-small"
-              },
-              {
-                "name": "None",
-                "value": "space-none"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "spec-group",
-    "fields": [
-      {
-        "component": "text",
-        "name": "groupKey",
-        "label": "Group Key",
-        "description": "Unique stable key",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Group / Tab Title",
-        "valueType": "string",
-        "required": true
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Group Description",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Desktop Background Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "imageAlt",
-        "label": "Desktop Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "mobileImage",
-        "label": "Mobile Background Image",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "mobileImageAlt",
-        "label": "Mobile Image Alt Text",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "note",
-        "label": "Note",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "spec-row",
-    "fields": [
-      {
-        "component": "text",
-        "name": "label",
-        "label": "Label",
-        "valueType": "string",
-        "required": true
-      },
-      {
-        "component": "text",
-        "name": "value",
-        "label": "Value",
-        "valueType": "string",
-        "required": true
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Description",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "icon",
-        "label": "Icon",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "iconAlt",
-        "label": "Icon Alt Text",
-        "valueType": "string"
       }
     ]
   },
