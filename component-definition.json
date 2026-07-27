@@ -1637,6 +1637,52 @@
           }
         },
         {
+          "id": "lixiang-test-drive-booking",
+          "title": "Lixiang Test Drive Booking",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "model": "lixiang-test-drive-booking",
+                  "name": "Lixiang Test Drive Booking",
+                  "filter": "lixiang-test-drive-booking"
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "test-drive-model",
+          "title": "Test Drive Model",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "test-drive-model",
+                  "name": "Test Drive Model"
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "test-drive-store",
+          "title": "Test Drive Store",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "model": "test-drive-store",
+                  "name": "Test Drive Store"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Locale Directory",
           "id": "locale-directory",
           "plugins": {
@@ -1969,52 +2015,6 @@
                 "template": {
                   "name": "Official Center Field",
                   "model": "official-center-field"
-                }
-              }
-            }
-          }
-        },
-        {
-          "id": "test-drive-booking",
-          "title": "Test Drive Booking",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "model": "test-drive-booking",
-                  "name": "Test Drive Booking",
-                  "filter": "test-drive-booking"
-                }
-              }
-            }
-          }
-        },
-        {
-          "id": "test-drive-model",
-          "title": "Test Drive Model",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "test-drive-model",
-                  "name": "Test Drive Model"
-                }
-              }
-            }
-          }
-        },
-        {
-          "id": "test-drive-store",
-          "title": "Test Drive Store",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "model": "test-drive-store",
-                  "name": "Test Drive Store"
                 }
               }
             }

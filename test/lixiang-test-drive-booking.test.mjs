@@ -3,18 +3,18 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const [blockJs, blockCss, modelRaw, sectionRaw] = await Promise.all([
-  readFile(new URL('../blocks/test-drive-booking/test-drive-booking.js', import.meta.url), 'utf8'),
-  readFile(new URL('../blocks/test-drive-booking/test-drive-booking.css', import.meta.url), 'utf8'),
-  readFile(new URL('../blocks/test-drive-booking/_test-drive-booking.json', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/lixiang-test-drive-booking/lixiang-test-drive-booking.js', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/lixiang-test-drive-booking/lixiang-test-drive-booking.css', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/lixiang-test-drive-booking/_lixiang-test-drive-booking.json', import.meta.url), 'utf8'),
   readFile(new URL('../models/_section.json', import.meta.url), 'utf8'),
 ]);
 
 const config = JSON.parse(modelRaw);
 const model = (id) => config.models.find((entry) => entry.id === id);
 
-test('test drive booking exposes one container with repeatable models and stores', () => {
+test('lixiang test drive booking exposes one container with repeatable models and stores', () => {
   assert.deepEqual(config.definitions.map(({ id }) => id), [
-    'test-drive-booking',
+    'lixiang-test-drive-booking',
     'test-drive-model',
     'test-drive-store',
   ]);
@@ -24,10 +24,10 @@ test('test drive booking exposes one container with repeatable models and stores
     'modelName',
     'subtitle',
     'price',
-    'desktopImage',
-    'desktopImageAlt',
-    'mobileImage',
-    'mobileImageAlt',
+    'pcImage',
+    'pcImageAlt',
+    'padImage',
+    'padImageAlt',
   ]);
   assert.deepEqual(model('test-drive-store').fields.map(({ name }) => name), [
     'storeKey',
@@ -37,10 +37,13 @@ test('test drive booking exposes one container with repeatable models and stores
   ]);
   assert.match(blockJs, /row\.children\.length === 6/);
   assert.match(blockJs, /privacyLinkText:\s*-1/);
-  assert.match(sectionRaw, /"test-drive-booking"/);
+  assert.match(sectionRaw, /"lixiang-test-drive-booking"/);
+  assert.match(blockJs, /source\[type="image\/jpeg"\]\[media\]/);
+  assert.match(blockJs, /pad\.media = '\(width <= 1440px\)'/);
+  assert.doesNotMatch(blockJs, /currentSrc/);
 });
 
-test('test drive booking keeps Universal Editor instrumentation and PII ephemeral', () => {
+test('lixiang test drive booking keeps Universal Editor instrumentation and PII ephemeral', () => {
   assert.match(blockJs, /moveSource\(item\.row, card\)/);
   assert.match(blockJs, /moveSource\(content\.sources\.title, title\)/);
   assert.match(blockJs, /if \(source\) moveInstrumentation\(source, target\)/);
@@ -51,7 +54,7 @@ test('test drive booking keeps Universal Editor instrumentation and PII ephemera
   assert.doesNotMatch(blockJs, /console\.(?:log|info|warn|error)/);
 });
 
-test('test drive booking has the approved responsive and author geometry', () => {
+test('lixiang test drive booking has the approved responsive and author geometry', () => {
   assert.match(blockCss, /grid-template-columns:\s*clamp\(416px, 28vw, 520px\)/);
   assert.match(blockCss, /@media \(width >= 720px\) and \(width <= 1440px\)/);
   assert.match(blockCss, /@media \(width <= 719px\)/);

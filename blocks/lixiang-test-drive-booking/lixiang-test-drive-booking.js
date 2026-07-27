@@ -7,10 +7,10 @@ const MODEL_FIELDS = [
   'modelName',
   'subtitle',
   'price',
-  'desktopImage',
-  'desktopImageAlt',
-  'mobileImage',
-  'mobileImageAlt',
+  'pcImage',
+  'pcImageAlt',
+  'padImage',
+  'padImageAlt',
 ];
 const STORE_FIELDS = ['storeKey', 'city', 'storeName', 'availableModelKeys'];
 const MODEL_FIELD_INDEXES = {
@@ -18,10 +18,10 @@ const MODEL_FIELD_INDEXES = {
   modelName: 1,
   subtitle: 2,
   price: 3,
-  desktopImage: 4,
-  desktopImageAlt: -1,
-  mobileImage: 5,
-  mobileImageAlt: -1,
+  pcImage: 4,
+  pcImageAlt: -1,
+  padImage: 5,
+  padImageAlt: -1,
 };
 const COPY_FIELDS = [
   'id',
@@ -78,9 +78,18 @@ function propText(row, name, index) {
 function propImage(row, name, index) {
   const source = propSource(row, name, index);
   const image = source?.matches('img') ? source : source?.querySelector('img');
+  const picture = source?.matches('picture') ? source : source?.querySelector('picture');
+  const responsiveSource = picture?.querySelector(
+    'source[type="image/jpeg"][media], source[type="image/png"][media], source[media]',
+  );
+  const largestSource = responsiveSource?.srcset
+    ?.split(',')
+    .at(-1)
+    .trim()
+    .split(/\s+/)[0];
   return {
     source,
-    src: image?.currentSrc || image?.src || '',
+    src: largestSource ? new URL(largestSource, document.baseURI).href : image?.src || '',
     alt: image?.alt || '',
   };
 }
@@ -115,21 +124,21 @@ function readModel(row) {
     sources[name]?.textContent.trim() || '',
   ]));
   const item = { row, sources, values };
-  const desktop = propImage(row, 'desktopImage', 4);
-  const mobile = propImage(row, 'mobileImage', 5);
+  const pc = propImage(row, 'pcImage', 4);
+  const pad = propImage(row, 'padImage', 5);
   return {
     ...item,
     key: item.values.modelKey,
     name: item.values.modelName,
     subtitle: item.values.subtitle,
     price: item.values.price,
-    desktopImage: desktop.src,
-    mobileImage: mobile.src || desktop.src,
-    imageAlt: item.values.desktopImageAlt || desktop.alt || item.values.modelName,
-    mobileImageAlt: item.values.mobileImageAlt
-      || mobile.alt
-      || item.values.desktopImageAlt
-      || desktop.alt,
+    pcImage: pc.src,
+    padImage: pad.src || pc.src,
+    imageAlt: item.values.pcImageAlt || pc.alt || item.values.modelName,
+    padImageAlt: item.values.padImageAlt
+      || pad.alt
+      || item.values.pcImageAlt
+      || pc.alt,
   };
 }
 
@@ -187,7 +196,7 @@ function readContent(block) {
     models: itemRows
       .filter((row) => rowModel(row) === 'test-drive-model')
       .map(readModel)
-      .filter((model) => model.key && model.name && model.desktopImage),
+      .filter((model) => model.key && model.name && model.pcImage),
     stores: itemRows
       .filter((row) => rowModel(row) === 'test-drive-store')
       .map(readStore)
@@ -337,14 +346,14 @@ function createHero(content) {
   const hero = element('aside', 'test-drive-booking-hero');
   hero.setAttribute('aria-live', 'polite');
   const picture = element('picture', 'test-drive-booking-hero-media');
-  const mobile = element('source');
-  mobile.media = '(width <= 719px)';
-  mobile.dataset.heroMobile = '';
+  const pad = element('source');
+  pad.media = '(width <= 1440px)';
+  pad.dataset.heroPad = '';
   const image = element('img');
   image.dataset.heroImage = '';
   image.loading = 'eager';
   image.decoding = 'async';
-  picture.append(mobile, image);
+  picture.append(pad, image);
   const copy = element('div', 'test-drive-booking-hero-copy');
   copy.append(
     element('h2', '', ''),
@@ -423,7 +432,7 @@ function setupBooking(block, content, elements, controller) {
   const chooserTitle = chooser.querySelector('[data-chooser-title]');
   const chooserOptions = chooser.querySelector('[data-chooser-options]');
   const heroImage = hero.querySelector('[data-hero-image]');
-  const heroMobile = hero.querySelector('[data-hero-mobile]');
+  const heroPad = hero.querySelector('[data-hero-pad]');
   const heroName = hero.querySelector('h2');
   const heroSubtitle = hero.querySelector('.test-drive-booking-hero-subtitle');
   const heroPrice = hero.querySelector('.test-drive-booking-hero-price');
@@ -448,9 +457,9 @@ function setupBooking(block, content, elements, controller) {
     if (!target) return;
     hero.classList.remove('has-media-error');
     heroImage.hidden = false;
-    heroImage.src = target.desktopImage;
+    heroImage.src = target.pcImage;
     heroImage.alt = target.imageAlt;
-    heroMobile.srcset = target.mobileImage || target.desktopImage;
+    heroPad.srcset = target.padImage || target.pcImage;
     heroName.textContent = target.name;
     heroSubtitle.textContent = target.subtitle;
     heroPrice.textContent = target.price;
@@ -514,7 +523,7 @@ function setupBooking(block, content, elements, controller) {
     option.setAttribute('role', 'option');
     option.setAttribute('aria-selected', String(selectedModelKey === model.key));
     const image = element('img');
-    image.src = model.desktopImage;
+    image.src = model.pcImage;
     image.alt = '';
     image.loading = 'lazy';
     option.append(image);
@@ -759,7 +768,7 @@ export default function decorate(block) {
   const controller = new AbortController();
   bookingControllers.set(block, controller);
   const content = readContent(block);
-  document.body.classList.add('has-test-drive-booking');
+  document.body.classList.add('has-lixiang-test-drive-booking');
 
   if (!content.models.length) {
     const warning = element('p', 'test-drive-booking-empty', 'Add at least one Test Drive Model item.');
@@ -796,6 +805,10 @@ export default function decorate(block) {
   }, controller);
   block.addEventListener('aem:block-unload', () => {
     controller.abort();
-    document.body.classList.remove('has-test-drive-booking', 'test-drive-success', 'test-drive-chooser-open');
+    document.body.classList.remove(
+      'has-lixiang-test-drive-booking',
+      'test-drive-success',
+      'test-drive-chooser-open',
+    );
   }, { once: true });
 }

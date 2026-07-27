@@ -1,11 +1,11 @@
-body.has-test-drive-booking {
+body.has-lixiang-test-drive-booking {
   overflow-x: clip;
   background: #fff;
 }
 
-body.has-test-drive-booking footer,
-body.has-test-drive-booking .floating-service,
-body.has-test-drive-booking .back-top {
+body.has-lixiang-test-drive-booking footer,
+body.has-lixiang-test-drive-booking .floating-service,
+body.has-lixiang-test-drive-booking .back-top {
   display: none;
 }
 
@@ -13,15 +13,15 @@ body.test-drive-chooser-open {
   overflow: hidden;
 }
 
-main > .section.test-drive-booking-container,
-main > .section.test-drive-booking-container > .test-drive-booking-wrapper {
+main > .section.lixiang-test-drive-booking-container,
+main > .section.lixiang-test-drive-booking-container > .lixiang-test-drive-booking-wrapper {
   width: 100%;
   max-width: none;
   margin: 0;
   padding: 0;
 }
 
-main .test-drive-booking {
+main .lixiang-test-drive-booking {
   position: relative;
   display: grid;
   min-height: calc(100svh - 50px);
@@ -589,7 +589,7 @@ main .test-drive-aue-anchor {
 }
 
 @media (width >= 720px) and (width <= 1440px) {
-  main .test-drive-booking {
+  main .lixiang-test-drive-booking {
     grid-template-columns: 400px minmax(0, 1fr);
   }
 
@@ -627,29 +627,29 @@ main .test-drive-aue-anchor {
     height: 45px;
   }
 
-  body.has-test-drive-booking:not(.test-drive-success) header {
+  body.has-lixiang-test-drive-booking:not(.test-drive-success) header {
     height: 0;
   }
 
-  body.has-test-drive-booking:not(.test-drive-success) header
+  body.has-lixiang-test-drive-booking:not(.test-drive-success) header
     .header-nav:not(.is-scrolled, .is-panel-open, .is-locale-open, [aria-expanded="true"]) {
     color: #fff;
   }
 
-  body.has-test-drive-booking:not(.test-drive-success) header
+  body.has-lixiang-test-drive-booking:not(.test-drive-success) header
     .header-nav:not(.is-scrolled, .is-panel-open, .is-locale-open, [aria-expanded="true"])
     .header-nav-inner {
     background: transparent;
     backdrop-filter: none;
   }
 
-  body.has-test-drive-booking:not(.test-drive-success) header
+  body.has-lixiang-test-drive-booking:not(.test-drive-success) header
     .header-nav:not(.is-scrolled, .is-panel-open, .is-locale-open, [aria-expanded="true"])
     .header-logo img {
     filter: brightness(0) invert(1);
   }
 
-  main .test-drive-booking {
+  main .lixiang-test-drive-booking {
     display: flex;
     min-height: 100svh;
     flex-direction: column;
@@ -866,24 +866,24 @@ main .test-drive-aue-anchor {
     line-height: 16px;
   }
 
-  main .test-drive-booking.is-success {
+  main .lixiang-test-drive-booking.is-success {
     min-height: 100svh;
     background: #fff;
   }
 
-  main .test-drive-booking.is-success .test-drive-booking-hero {
+  main .lixiang-test-drive-booking.is-success .test-drive-booking-hero {
     display: none;
   }
 
-  main .test-drive-booking.is-success .test-drive-booking-panel {
+  main .lixiang-test-drive-booking.is-success .test-drive-booking-panel {
     width: 100%;
     min-height: calc(100svh - 50px);
     margin: 50px 0 0;
     border-radius: 0;
   }
 
-  main .test-drive-booking.is-success .test-drive-booking-panel-inner,
-  main .test-drive-booking.is-success .test-drive-booking-success {
+  main .lixiang-test-drive-booking.is-success .test-drive-booking-panel-inner,
+  main .lixiang-test-drive-booking.is-success .test-drive-booking-success {
     min-height: calc(100svh - 50px);
   }
 
@@ -897,15 +897,15 @@ main .test-drive-aue-anchor {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  main .test-drive-booking *,
-  main .test-drive-booking *::before,
-  main .test-drive-booking *::after {
+  main .lixiang-test-drive-booking *,
+  main .lixiang-test-drive-booking *::before,
+  main .lixiang-test-drive-booking *::after {
     animation-duration: 1ms;
     transition-duration: 1ms;
   }
 }
 
-.adobe-ue-edit main > .section.test-drive-booking-container > .test-drive-booking-wrapper > .test-drive-booking {
+.adobe-ue-edit main > .section.lixiang-test-drive-booking-container > .lixiang-test-drive-booking-wrapper > .lixiang-test-drive-booking {
   height: 900px;
   min-height: 720px;
   max-height: 1080px;

@@ -47,7 +47,7 @@
       "lixiang-product-guide",
       "lixiang-product-download",
       "header-navigation",
-      "test-drive-booking"
+      "lixiang-test-drive-booking"
     ]
   },
   {
@@ -307,6 +307,13 @@
     ]
   },
   {
+    "id": "lixiang-test-drive-booking",
+    "components": [
+      "test-drive-model",
+      "test-drive-store"
+    ]
+  },
+  {
     "id": "locale-directory",
     "components": [
       "locale-option"
@@ -367,13 +374,6 @@
     "components": [
       "official-center-card",
       "official-center-field"
-    ]
-  },
-  {
-    "id": "test-drive-booking",
-    "components": [
-      "test-drive-model",
-      "test-drive-store"
     ]
   }
 ]

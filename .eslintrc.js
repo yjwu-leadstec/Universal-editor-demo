@@ -28,7 +28,7 @@ module.exports = {
       'home-carousel': 6,
       'header-navigation-card': 5,
       'header-settings': 8,
-      'test-drive-booking': 8,
+      'lixiang-test-drive-booking': 8,
       'test-drive-model': 6,
       'lixiang-product-full-screen-intro': 16,
       'lixiang-product-color-full-screen-slider-item': 7,
