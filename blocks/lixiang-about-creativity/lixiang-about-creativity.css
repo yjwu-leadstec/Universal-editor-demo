@@ -226,13 +226,7 @@
   }
 
   .lixiang-about-creativity-card-media {
-    position: absolute;
-    inset: 0;
-  }
-
-  .lixiang-about-creativity-card::after {
-    content: '';
-    display: block;
+    position: relative;
     height: 225px;
     flex-shrink: 0;
   }
@@ -264,13 +258,7 @@
   }
 
   .lixiang-about-creativity-values-media {
-    position: absolute;
-    inset: 0;
-  }
-
-  .lixiang-about-creativity-values::after {
-    content: '';
-    display: block;
+    position: relative;
     height: 230px;
     flex-shrink: 0;
   }
