@@ -51,9 +51,20 @@
 | 721–1024px | `calc(100vw / 1344px)` | vw/12 |
 | ≤720px | 移动端定值（见各 block 移动档） | 60px |
 
-桌面所有字号/位置/内边距/间距写作 `calc(npx * var(--about-scale, 1))`；内容容器为 `83.3333vw`、1600px 封顶（现网同）。特殊覆盖：721–850 hero 文案 top 189px、721–1024 车系标题 `calc(42px * scale)`、721–1024 双栏卡片高宽比 `790/713`。
+桌面所有字号/位置/内边距/间距写作 `calc(npx * var(--about-scale, 1))`；内容容器为 `83.3333vw`、1600px 封顶（现网同）。
 
-hero / vehicle-showcase 场景高度 = `100vh` + `min-height: 56.25vw`（移动端 `100vh` + `min-height: 200vw`),`.adobe-ue-edit` 下有 `max-height: 1080px` 钳制，不会触发 UE 画布高度循环。
+2026-07-28 逐 block 比对后确认的现网规则：
+
+- **Section header（h2 + subtitle）**：h2 `46px*scale`、**line-height 1.5652**；标题文本列宽 = `calc((100vw - 15px) * 0.6)`（现网 60% scene-inner，768/1024 会折 2 行）；标题-副标题间距 `8px*scale`；section pt `80px*scale`、pb `56px*scale`。B4/B5/B6/B7/B9 共用此规则；B3/B8 视频块标题为 `64px*scale` lh 1.4063、间距 24/40。
+- **移动端 375 基准**：现网在任意 ≤720 视口都按 375px 宽渲染（390 视口下 body 仍 375，居中）。移动档容器一律 `box-sizing: border-box; width: 100%; max-width: 375px`；标题区 padding 0 20px（文本宽 335），carousel 卡宽 347（padding 0 14px）。hero/showcase 场景高 = `calc(min(100vw, 375px) * 2.25)`（≈843.75，不随视口高度变化），其余视频/卡片间距用定值。
+- **卡片高度为定档**（非 aspect-ratio）：双栏/creativity 卡 `790px*scale`（≥1025）与 `501.5px*scale`（721–1024）；create-together/design 小卡 `518px*scale` 与 `362px*scale`；creativity values `780px*scale` / 860–1024 `499px*scale` / 721–859 固定 `420px`（**860px 是现网 values 高度跳档点**）。移动端卡片定值（dual 350、create-together 356、design 378、creativity 385/350，文本左对齐黑字在上、图片在下）。
+- **图片裁切 = 整卡 cover**：现网卡片背景图 cover 整张卡，白色文字面板不透明盖在上面；桌面端图片区域=卡高-面板高，移动端仅底部区域 cover。EDS 实现：media `position:absolute; inset:0`，content/footnote 盖其上。
+- **双档图片**：现网所有卡片区只有两档（≥721 桌面 / ≤720 移动），资源已按 `mobileImage`（design/dual 用 `largeImage_mobileImage`/`image_mobileImage` 并入 image 组）补进模型与内容。`tier-desktop`/`tier-mobile` 显隐切换。
+- **字体**：描述类文字桌面端 licium-medium（`styles/styles.css` ≥720px 规则必须同时命中 `p` 子元素，否则被通用 p 规则覆盖回 regular）；hero-description 全断点 medium；dual footnote ≥720 medium、移动 regular、颜色 50% 白；副标题全断点 regular（移动端不再强制 medium）。
+- **双栏 footnote**：`16px*scale` lh 1.75、50% 白、bottom `40px*scale`；移动 12/20、bottom 18。
+- **视频块**：显示高 = 16:9 + 8px（桌面 `967px*scale`、721–1024 `644px*scale`、移动 `min(100vw,375px)*0.525`）；无播放按钮；CTA 需 `margin: 0` 抵消全局 button 样式；移动端底部 padding 30px。
+- **流式字体特例**：vehicle-showcase 描述在 721–1024 用 `1.5625vw`（vw/1024，与 --about-scale 不同步）。
+- **flex 陷阱**：卡片基类 `flex: 1` 在移动端纵向 grid 里会压塌定高（flex-basis 0%），移动档必须 `flex: none`。
 
 ## 动效
 
