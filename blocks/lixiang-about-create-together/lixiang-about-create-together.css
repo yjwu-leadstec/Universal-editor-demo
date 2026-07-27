@@ -8,7 +8,7 @@
   width: 83.3333vw;
   max-width: 1600px;
   margin: 0 auto;
-  padding: calc(80px * var(--about-scale, 1)) 0;
+  padding: calc(80px * var(--about-scale, 1)) 0 80px;
 }
 
 .lixiang-about-create-together-header {
