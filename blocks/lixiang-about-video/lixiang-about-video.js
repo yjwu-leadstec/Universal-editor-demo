@@ -42,23 +42,6 @@ export default function decorate(block) {
     player.preload = 'metadata';
     if (posterUrl) player.poster = posterUrl;
     media.append(player);
-
-    const toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'lixiang-about-video-toggle';
-    toggle.setAttribute('aria-label', 'Pause video');
-    toggle.addEventListener('click', () => {
-      if (player.paused) {
-        player.play();
-        toggle.classList.remove('is-paused');
-        toggle.setAttribute('aria-label', 'Pause video');
-      } else {
-        player.pause();
-        toggle.classList.add('is-paused');
-        toggle.setAttribute('aria-label', 'Play video');
-      }
-    });
-    media.append(toggle);
   } else if (picture) {
     const img = picture.querySelector('img');
     if (img) {

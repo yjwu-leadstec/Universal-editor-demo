@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   gap: calc(40px * var(--about-scale, 1));
-  padding: calc(160px * var(--about-scale, 1)) calc(100px * var(--about-scale, 1)) calc(27px * var(--about-scale, 1));
+  padding: calc(160px * var(--about-scale, 1)) calc(100px * var(--about-scale, 1)) 0;
   max-width: 1920px;
   margin: 0 auto;
 }
@@ -31,6 +31,7 @@
   display: inline-flex;
   align-items: center;
   gap: 3px;
+  margin: 0;
   padding: 0;
   background: none;
   border: none;
@@ -56,7 +57,11 @@
   overflow: hidden;
   width: 100%;
   max-width: calc(1720px * var(--about-scale, 1));
-  aspect-ratio: 1720 / 967;
+  height: calc(967px * var(--about-scale, 1));
+}
+
+@media (width >= 721px) and (width <= 1024px) {
+  .lixiang-about-video-media { height: calc(644px * var(--about-scale, 1)); }
 }
 
 .lixiang-about-video-media picture,
@@ -67,50 +72,6 @@
   object-fit: cover;
   display: block;
 }
-
-.lixiang-about-video-toggle {
-  position: absolute;
-  z-index: 3;
-  left: 50%;
-  bottom: calc(40px * var(--about-scale, 1));
-  transform: translateX(-50%);
-  width: 48px;
-  height: 48px;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: rgb(239 239 239 / 30%);
-  cursor: pointer;
-  transition: background 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
-}
-
-.lixiang-about-video-toggle:hover { background: rgb(239 239 239 / 70%); }
-
-.lixiang-about-video-toggle::before,
-.lixiang-about-video-toggle::after {
-  content: '';
-  position: absolute;
-  top: 15px;
-  width: 5px;
-  height: 18px;
-  background: rgb(0 0 0 / 60%);
-  border-radius: 1px;
-}
-
-.lixiang-about-video-toggle::before { left: 17px; }
-.lixiang-about-video-toggle::after { right: 17px; }
-
-.lixiang-about-video-toggle.is-paused::before {
-  top: 14px;
-  left: 19px;
-  width: 16px;
-  height: 20px;
-  background: rgb(0 0 0 / 60%);
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
-  border-radius: 0;
-}
-
-.lixiang-about-video-toggle.is-paused::after { content: none; }
 
 .lixiang-about-video-dialog {
   border: none;
@@ -132,8 +93,8 @@
 
 @media (width <= 719px) {
   .lixiang-about-video-inner {
-    gap: 22px;
-    padding: 80px 20px 30px;
+    gap: 24px;
+    padding: 80px 20px 0;
   }
 
   .lixiang-about-video-header { gap: 16px; }
@@ -153,6 +114,6 @@
 
   .lixiang-about-video-media {
     border-radius: 8px;
-    aspect-ratio: 16 / 9;
+    height: calc(min(100vw, 375px) * 0.525);
   }
 }
