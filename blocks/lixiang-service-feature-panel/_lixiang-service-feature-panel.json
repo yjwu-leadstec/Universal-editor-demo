@@ -2,15 +2,15 @@
   "definitions": [
     {
       "title": "Li Auto Service Feature Panel",
-      "id": "support-feature-panel",
+      "id": "lixiang-service-feature-panel",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "Service Feature Panel",
-              "model": "support-feature-panel",
-              "filter": "support-feature-panel"
+              "name": "Lixiang Service Feature Panel",
+              "model": "lixiang-service-feature-panel",
+              "filter": "lixiang-service-feature-panel"
             }
           }
         }
@@ -18,14 +18,14 @@
     },
     {
       "title": "Service Feature",
-      "id": "support-feature-item",
+      "id": "lixiang-service-feature-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Service Feature",
-              "model": "support-feature-item"
+              "name": "Lixiang Service Feature",
+              "model": "lixiang-service-feature-item"
             }
           }
         }
@@ -34,7 +34,7 @@
   ],
   "models": [
     {
-      "id": "support-feature-panel",
+      "id": "lixiang-service-feature-panel",
       "fields": [
         {
           "component": "select",
@@ -105,7 +105,7 @@
       ]
     },
     {
-      "id": "support-feature-item",
+      "id": "lixiang-service-feature-item",
       "fields": [
         {
           "component": "text",
@@ -124,9 +124,9 @@
   ],
   "filters": [
     {
-      "id": "support-feature-panel",
+      "id": "lixiang-service-feature-panel",
       "components": [
-        "support-feature-item"
+        "lixiang-service-feature-item"
       ]
     }
   ]

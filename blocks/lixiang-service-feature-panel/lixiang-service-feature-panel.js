@@ -16,11 +16,11 @@ import {
   propSource,
   propText,
   revealElements,
-} from '../../scripts/service-block-utils.js';
+} from '../../scripts/lixiang-service-block-utils.js';
 
 function featureRows(rows) {
   return rows.filter((row) => {
-    if (row.dataset.serviceKind === 'feature' || hasModel(row, 'support-feature-item')) return true;
+    if (row.dataset.serviceKind === 'feature' || hasModel(row, 'lixiang-service-feature-item')) return true;
     if (isPropertyRow(row)) return false;
     return directCells(row).filter((cell) => cell.textContent.trim()).length >= 2;
   });
@@ -31,7 +31,7 @@ function createFeature(row) {
   const titleCell = cells[0];
   const descriptionCell = cells[1] || (titleCell?.querySelector('p, ul, ol, blockquote') ? titleCell : null);
   const article = document.createElement('article');
-  article.className = 'support-feature-item';
+  article.className = 'lixiang-service-feature-item';
   const title = titleCell?.querySelector('h2, h3, h4')?.textContent.trim()
     || titleCell?.textContent.trim()
     || '';
@@ -41,7 +41,7 @@ function createFeature(row) {
     article.append(heading);
   }
   if (descriptionCell?.textContent.trim()) {
-    const description = createRichText(descriptionCell, 'support-feature-item-description');
+    const description = createRichText(descriptionCell, 'lixiang-service-feature-item-description');
     instrument(descriptionCell, description);
     article.append(description);
   }
@@ -85,23 +85,23 @@ export default function decorate(block) {
     || imageAlt(mobilePicture)
     || imageAltText;
 
-  block.classList.add(`support-feature-panel-${variant}`);
+  block.classList.add(`lixiang-service-feature-panel-${variant}`);
   const shell = document.createElement('div');
-  shell.className = 'support-feature-shell';
+  shell.className = 'lixiang-service-feature-shell';
 
   if (headingText) {
     const sectionHeading = createHeading(headingText, 2);
-    sectionHeading.className = 'support-feature-section-heading';
+    sectionHeading.className = 'lixiang-service-feature-section-heading';
     instrumentProp(rows, 'copy_heading', sectionHeading);
     shell.append(sectionHeading);
   }
 
   const panel = document.createElement('div');
-  panel.className = 'support-feature-panel-inner';
+  panel.className = 'lixiang-service-feature-panel-inner';
   const lead = document.createElement('div');
-  lead.className = 'support-feature-lead';
+  lead.className = 'lixiang-service-feature-lead';
   const intro = document.createElement('div');
-  intro.className = 'support-feature-intro';
+  intro.className = 'lixiang-service-feature-intro';
 
   if (introTitle) {
     const introHeading = createHeading(introTitle, variant === 'list' ? 2 : 3);
@@ -109,7 +109,7 @@ export default function decorate(block) {
     intro.append(introHeading);
   }
   if (introSource?.textContent.trim()) {
-    const description = createRichText(introSource, 'support-feature-intro-description');
+    const description = createRichText(introSource, 'lixiang-service-feature-intro-description');
     instrumentProp(rows, 'copy_leadDescription', description);
     intro.append(description);
   }
@@ -117,10 +117,10 @@ export default function decorate(block) {
 
   if (picture || mobilePicture) {
     const media = document.createElement('div');
-    media.className = 'support-feature-media';
+    media.className = 'lixiang-service-feature-media';
     if (picture) {
       const desktopSlot = document.createElement('div');
-      desktopSlot.className = 'support-feature-picture support-feature-picture-desktop';
+      desktopSlot.className = 'lixiang-service-feature-picture lixiang-service-feature-picture-desktop';
       const image = appendPicture(desktopSlot, picture, {
         alt: imageAltText, fallbackLabel: 'LI AUTO SERVICE',
       });
@@ -131,7 +131,7 @@ export default function decorate(block) {
     if (mobilePicture) {
       media.classList.add('has-mobile-media');
       const mobileSlot = document.createElement('div');
-      mobileSlot.className = 'support-feature-picture support-feature-picture-mobile';
+      mobileSlot.className = 'lixiang-service-feature-picture lixiang-service-feature-picture-mobile';
       const mobileImage = appendPicture(mobileSlot, mobilePicture, {
         alt: mobileImageAltText,
         fallbackLabel: 'LI AUTO SERVICE',
@@ -144,12 +144,12 @@ export default function decorate(block) {
   }
 
   const items = document.createElement('div');
-  items.className = 'support-feature-items';
+  items.className = 'lixiang-service-feature-items';
   items.append(...featureRows(rows).map(createFeature));
   panel.append(lead, items);
   shell.append(panel);
 
   block.replaceChildren(shell);
   addBlockAnchor(block, rows);
-  revealElements(block, '.support-feature-section-heading, .support-feature-intro, .support-feature-media, .support-feature-item');
+  revealElements(block, '.lixiang-service-feature-section-heading, .lixiang-service-feature-intro, .lixiang-service-feature-media, .lixiang-service-feature-item');
 }

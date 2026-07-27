@@ -12,7 +12,7 @@ import {
   propSource,
   propText,
   revealElements,
-} from '../../scripts/service-block-utils.js';
+} from '../../scripts/lixiang-service-block-utils.js';
 
 function combineNodes(nodes) {
   if (!nodes || nodes.length === 0) return null;
@@ -54,14 +54,14 @@ export default function decorate(block) {
   const mobileImageAltText = propText(rows, 'media_mobileImageAlt') || imageAlt(mobileImage) || imageAltText;
 
   const shell = document.createElement('div');
-  shell.className = 'support-hero-shell';
+  shell.className = 'lixiang-service-hero-shell';
 
   const copy = document.createElement('div');
-  copy.className = 'support-hero-copy';
+  copy.className = 'lixiang-service-hero-copy';
 
   if (eyebrow) {
     const eyebrowElement = document.createElement('p');
-    eyebrowElement.className = 'support-hero-eyebrow';
+    eyebrowElement.className = 'lixiang-service-hero-eyebrow';
     eyebrowElement.textContent = eyebrow;
     instrumentProp(rows, 'copy_eyebrow', eyebrowElement);
     copy.append(eyebrowElement);
@@ -74,15 +74,15 @@ export default function decorate(block) {
   }
 
   if (descriptionSource?.textContent.trim()) {
-    const description = createRichText(descriptionSource, 'support-hero-description');
+    const description = createRichText(descriptionSource, 'lixiang-service-hero-description');
     instrumentProp(rows, 'copy_description', description);
     copy.append(description);
   }
 
   const media = document.createElement('div');
-  media.className = 'support-hero-media';
+  media.className = 'lixiang-service-hero-media';
   const desktopSlot = document.createElement('div');
-  desktopSlot.className = 'support-hero-picture support-hero-picture-desktop';
+  desktopSlot.className = 'lixiang-service-hero-picture lixiang-service-hero-picture-desktop';
   const desktopImage = appendPicture(desktopSlot, image, {
     alt: imageAltText, loading: 'eager', fallbackLabel: 'LI AUTO SERVICE',
   });
@@ -93,7 +93,7 @@ export default function decorate(block) {
   if (mobileImage) {
     media.classList.add('has-mobile-media');
     const mobileSlot = document.createElement('div');
-    mobileSlot.className = 'support-hero-picture support-hero-picture-mobile';
+    mobileSlot.className = 'lixiang-service-hero-picture lixiang-service-hero-picture-mobile';
     const mobileImg = appendPicture(mobileSlot, mobileImage, {
       alt: mobileImageAltText,
       loading: 'eager',
@@ -107,5 +107,5 @@ export default function decorate(block) {
   shell.append(copy, media);
   block.replaceChildren(shell);
   addBlockAnchor(block, rows);
-  revealElements(block, '.support-hero-copy, .support-hero-media');
+  revealElements(block, '.lixiang-service-hero-copy, .lixiang-service-hero-media');
 }

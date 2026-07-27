@@ -16,12 +16,12 @@ import {
   semanticSourceAfter,
   semanticText,
   slug,
-} from '../../scripts/service-block-utils.js';
+} from '../../scripts/lixiang-service-block-utils.js';
 
 function rowKind(row) {
   if (row.dataset.serviceKind) return row.dataset.serviceKind;
-  if (hasModel(row, 'support-download-card')) return 'download-card';
-  if (hasModel(row, 'support-download-file')) return 'download-file';
+  if (hasModel(row, 'lixiang-service-download-card')) return 'download-card';
+  if (hasModel(row, 'lixiang-service-download-file')) return 'download-file';
   if (!isPropertyRow(row) && row.querySelector('picture, img')) return 'download-card';
   if (!isPropertyRow(row) && row.querySelector('a')) return 'download-file';
   return '';
@@ -56,7 +56,7 @@ function parseFile(row) {
 
 function createDownloadIcon() {
   const icon = document.createElement('span');
-  icon.className = 'support-download-icon';
+  icon.className = 'lixiang-service-download-icon';
   icon.setAttribute('aria-hidden', 'true');
   return icon;
 }
@@ -75,7 +75,7 @@ function closeDialog(dialog) {
 }
 
 function setupDialog(dialog, opener) {
-  const closeButton = dialog.querySelector('.support-download-modal-close');
+  const closeButton = dialog.querySelector('.lixiang-service-download-modal-close');
   opener.addEventListener('click', () => {
     dialog.showModal();
     closeButton.focus();
@@ -95,34 +95,34 @@ function setupDialog(dialog, opener) {
 
 function createDialog(card) {
   const dialog = document.createElement('dialog');
-  dialog.className = 'support-download-modal';
-  const titleId = `support-download-${slug(card.key)}-title`;
+  dialog.className = 'lixiang-service-download-modal';
+  const titleId = `lixiang-service-download-${slug(card.key)}-title`;
   dialog.setAttribute('aria-labelledby', titleId);
 
   const sheet = document.createElement('div');
-  sheet.className = 'support-download-modal-sheet';
+  sheet.className = 'lixiang-service-download-modal-sheet';
   const header = document.createElement('div');
-  header.className = 'support-download-modal-header';
+  header.className = 'lixiang-service-download-modal-header';
   const title = createHeading(`${card.name} Owners Manual download`, 2);
   title.id = titleId;
   const close = document.createElement('button');
-  close.className = 'support-download-modal-close';
+  close.className = 'lixiang-service-download-modal-close';
   close.type = 'button';
   close.setAttribute('aria-label', 'Close download dialog');
   header.append(title, close);
 
   const list = document.createElement('div');
-  list.className = 'support-download-modal-list';
+  list.className = 'lixiang-service-download-modal-list';
   card.files.forEach((file) => {
     const link = document.createElement('a');
-    link.className = 'support-download-modal-file';
+    link.className = 'lixiang-service-download-modal-file';
     link.href = file.href || '#';
     link.setAttribute('download', '');
     const label = document.createElement('span');
-    label.className = 'support-download-modal-file-name';
+    label.className = 'lixiang-service-download-modal-file-name';
     label.textContent = file.name;
     const size = document.createElement('span');
-    size.className = 'support-download-modal-file-size';
+    size.className = 'lixiang-service-download-modal-file-size';
     size.textContent = file.size;
     link.append(label, size, createDownloadIcon());
     instrument(file.row, link);
@@ -135,12 +135,12 @@ function createDialog(card) {
 
 function createCard(card) {
   const article = document.createElement('article');
-  article.className = 'support-download-card';
+  article.className = 'lixiang-service-download-card';
   const visual = document.createElement('div');
-  visual.className = 'support-download-card-visual';
+  visual.className = 'lixiang-service-download-card-visual';
 
   const identity = document.createElement('div');
-  identity.className = 'support-download-card-identity';
+  identity.className = 'lixiang-service-download-card-identity';
   if (card.logo) {
     appendPicture(identity, card.logo, { alt: card.name, fallbackLabel: card.name });
   } else {
@@ -148,17 +148,17 @@ function createCard(card) {
     identity.append(name);
   }
   const media = document.createElement('div');
-  media.className = 'support-download-card-media';
+  media.className = 'lixiang-service-download-card-media';
   appendPicture(media, card.image, { alt: card.name, fallbackLabel: card.name });
   visual.append(identity, media);
 
   const footer = document.createElement('div');
-  footer.className = 'support-download-card-footer';
+  footer.className = 'lixiang-service-download-card-footer';
   let dialog = null;
   if (card.files.length === 1) {
     const file = card.files[0];
     const link = document.createElement('a');
-    link.className = 'support-download-card-action';
+    link.className = 'lixiang-service-download-card-action';
     link.href = file.href || '#';
     link.setAttribute('download', '');
     const label = document.createElement('span');
@@ -171,7 +171,7 @@ function createCard(card) {
   } else {
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = 'support-download-card-action';
+    button.className = 'lixiang-service-download-card-action';
     const label = document.createElement('span');
     label.textContent = `${card.name} Documents`;
     const count = document.createElement('small');
@@ -196,9 +196,9 @@ export default function decorate(block) {
   });
 
   const shell = document.createElement('div');
-  shell.className = 'support-download-shell';
+  shell.className = 'lixiang-service-download-shell';
   const header = document.createElement('div');
-  header.className = 'support-download-header';
+  header.className = 'lixiang-service-download-header';
   // Published markup has no data-aue markers; title/subtitle/id arrive as leading plain-text
   // rows and items as picture/anchor rows. Derive header text from non-item rows, skipping the
   // slug-like id so it can't leak into the visible header.
@@ -225,7 +225,7 @@ export default function decorate(block) {
   }
 
   const grid = document.createElement('div');
-  grid.className = 'support-download-grid';
+  grid.className = 'lixiang-service-download-grid';
   grid.dataset.count = String(cards.length);
   const dialogs = [];
   cards.forEach((card) => {
@@ -236,5 +236,5 @@ export default function decorate(block) {
   shell.append(header, grid, ...dialogs);
   block.replaceChildren(shell);
   addBlockAnchor(block, rows);
-  revealElements(block, '.support-download-header, .support-download-card');
+  revealElements(block, '.lixiang-service-download-header, .lixiang-service-download-card');
 }

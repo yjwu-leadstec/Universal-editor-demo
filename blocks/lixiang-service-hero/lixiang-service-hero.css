@@ -1,0 +1,171 @@
+/*
+ * Breakpoints mirror the live site (liauto.com/support/service):
+ * a single 720px desktop/mobile switch, and above it a fluid root unit that
+ * matches the production `html { font-size }` ladder — 112px above 1440,
+ * 84px from 1025 to 1440, 8.3333vw at or below 1024. Every desktop length is
+ * `calc(<px-at-1920> * var(--lixiang-service-unit))`, so the literals below read as the
+ * production pixel values at the 1920 breakpoint.
+ */
+
+/* The section wrapper caps content at 1200px and adds a gutter; these blocks are
+   full-bleed on the live site, so neutralise it here rather than with a 100vw
+   pull-out — 100vw counts the scrollbar and shifts the block left by its width. */
+main .section > .lixiang-service-hero-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+main .lixiang-service-hero {
+  --lixiang-service-font-regular: licium-regular, "Segoe UI", arial, sans-serif;
+  --lixiang-service-font-medium: licium-medium, "Segoe UI", arial, sans-serif;
+  --lixiang-service-rem: 112px;
+  --lixiang-service-unit: calc(var(--lixiang-service-rem) / 112);
+
+  position: relative;
+  overflow: hidden;
+  color: rgb(0 0 0 / 90%);
+  font-family: var(--lixiang-service-font-regular);
+  background: #fafafa;
+}
+
+main .lixiang-service-hero .lixiang-service-hero-copy {
+  text-align: center;
+}
+
+main .lixiang-service-hero .lixiang-service-hero-eyebrow {
+  margin: 0 0 calc(8 * var(--lixiang-service-unit));
+  padding-top: calc(176 * var(--lixiang-service-unit));
+  font-family: var(--lixiang-service-font-medium);
+  font-size: calc(24 * var(--lixiang-service-unit));
+  line-height: calc(32 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-hero h1 {
+  margin: 0 0 calc(32 * var(--lixiang-service-unit));
+  font-family: var(--lixiang-service-font-medium);
+  font-size: calc(64 * var(--lixiang-service-unit));
+  font-weight: 500;
+  line-height: calc(84 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-hero .lixiang-service-hero-description {
+  margin: 0 0 calc(80 * var(--lixiang-service-unit));
+  padding-inline: calc(384 * var(--lixiang-service-unit));
+  color: rgb(0 0 0 / 60%);
+  font-size: calc(16 * var(--lixiang-service-unit));
+  line-height: calc(24 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-hero .lixiang-service-hero-description p {
+  margin: 0;
+}
+
+main .lixiang-service-hero .lixiang-service-hero-media {
+  position: relative;
+  height: 32.29vw;
+  max-height: 620px;
+  overflow: hidden;
+  background: #f8f8f8;
+}
+
+main .lixiang-service-hero .lixiang-service-hero-picture,
+main .lixiang-service-hero .lixiang-service-hero-picture picture,
+main .lixiang-service-hero .lixiang-service-hero-picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+main .lixiang-service-hero .lixiang-service-hero-picture img {
+  object-fit: cover;
+  object-position: center;
+}
+
+main .lixiang-service-hero .lixiang-service-hero-picture-mobile {
+  display: none;
+}
+
+main .lixiang-service-hero .is-media-fallback::after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgb(0 0 0 / 35%);
+  font-family: var(--lixiang-service-font-medium);
+  letter-spacing: 0.18em;
+  content: attr(data-fallback-label);
+}
+
+main .lixiang-service-hero .lixiang-service-aue-anchor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+main .lixiang-service-hero .lixiang-service-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+main .lixiang-service-hero .lixiang-service-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (width <= 1440px) {
+  main .lixiang-service-hero {
+    --lixiang-service-rem: 84px;
+  }
+}
+
+@media (width <= 1024px) {
+  main .lixiang-service-hero {
+    --lixiang-service-rem: 8.3333vw;
+  }
+}
+
+@media (width <= 720px) {
+  main .lixiang-service-hero .lixiang-service-hero-eyebrow {
+    margin-bottom: 8px;
+    padding: 160px 40px 0;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  main .lixiang-service-hero h1 {
+    margin-bottom: 16px;
+    padding: 0 40px;
+    font-size: 36px;
+    line-height: 48px;
+  }
+
+  main .lixiang-service-hero .lixiang-service-hero-description {
+    margin-bottom: 40px;
+    padding-inline: 40px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  main .lixiang-service-hero .lixiang-service-hero-media {
+    height: 386px;
+    max-height: none;
+  }
+
+  main .lixiang-service-hero .lixiang-service-hero-media.has-mobile-media .lixiang-service-hero-picture-desktop {
+    display: none;
+  }
+
+  main .lixiang-service-hero .lixiang-service-hero-media.has-mobile-media .lixiang-service-hero-picture-mobile {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main .lixiang-service-hero .lixiang-service-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -213,14 +213,18 @@ width without its matching `--highlight-step` breaks the step, and `CLONE_DEPTH`
 ≥ visible neighbours + 1.
 
 
-### Service page blocks (`service-hero`, `service-feature-panel`)
+### Service page blocks (`lixiang-service-hero`, `lixiang-service-feature-panel`)
 These do **not** follow the site's three-tier layout. The live site drives them from a single
-`720px` desktop/mobile switch plus a fluid root unit (`--service-rem`: 112px above 1440, 84px to
-1025, `8.3333vw` below), so `1440` and `1024` change scale only, never structure. Desktop lengths
-are written `calc(<px-at-1920> * var(--service-unit))`. Their UE model ids and runtime classes are
-`support-*`, not `service-*` — check the mapping table before writing a selector. Before changing
-their breakpoints, sizing, or full-bleed behaviour, read
-`docs/service-page-breakpoint-alignment.md`.
+`720px` desktop/mobile switch plus a fluid root unit (`--lixiang-service-rem`: 112px above 1440,
+84px to 1025, `8.3333vw` below), so `1440` and `1024` change scale only, never structure. Desktop
+lengths are written `calc(<px-at-1920> * var(--lixiang-service-unit))`. Before changing their
+breakpoints, sizing, or full-bleed behaviour, read `docs/service-page-breakpoint-alignment.md`.
+
+**A block's delivery class comes from the JCR `name` property, not the node name.** `name: "Lixiang
+Service Hero"` renders `class="lixiang-service-hero"`. Renaming a block therefore means editing
+authored content (`model`, `name`, and `filter` on every node), not just moving files — otherwise
+existing pages render blank. Node renames also reset sibling order, so re-check document order
+afterwards.
 
 **Never full-bleed a block with `width: 100vw`.** `100vw` includes the scrollbar, so the block sits
 ~7.5px left of the page on desktop. Neutralise the section wrapper instead

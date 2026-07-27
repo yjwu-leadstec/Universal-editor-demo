@@ -200,6 +200,13 @@
     ]
   },
   {
+    "id": "lixiang-official-center-contact-cards",
+    "components": [
+      "lixiang-official-center-contact-card",
+      "lixiang-official-center-contact-field"
+    ]
+  },
+  {
     "id": "lixiang-product-color-full-screen-slider",
     "components": [
       "color-switcher-item"
@@ -236,6 +243,19 @@
     "id": "highlight-slide",
     "components": [
       "highlight-stat"
+    ]
+  },
+  {
+    "id": "lixiang-service-download-cards",
+    "components": [
+      "lixiang-service-download-card",
+      "lixiang-service-download-file"
+    ]
+  },
+  {
+    "id": "lixiang-service-feature-panel",
+    "components": [
+      "lixiang-service-feature-item"
     ]
   },
   {
@@ -348,26 +368,6 @@
   {
     "id": "product-table",
     "components": []
-  },
-  {
-    "id": "support-contact-cards",
-    "components": [
-      "support-contact-card",
-      "support-contact-field"
-    ]
-  },
-  {
-    "id": "support-download-cards",
-    "components": [
-      "support-download-card",
-      "support-download-file"
-    ]
-  },
-  {
-    "id": "support-feature-panel",
-    "components": [
-      "support-feature-item"
-    ]
   },
   {
     "id": "spec-table",

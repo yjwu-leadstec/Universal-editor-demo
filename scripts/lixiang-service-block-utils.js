@@ -4,18 +4,18 @@ import { moveInstrumentation } from './scripts.js';
 // contains positional rows/cells. Keep the runtime independent of author-only data-aue
 // attributes by restoring those field/model markers before decoration (mirrors the
 // approach in product-block-utils.js).
-const SERVICE_MODEL_FIELDS = {
-  'service-contact-cards': [['title', 'text', 'Title'], ['description', 'richtext', 'Description'], ['link', 'aem-content', 'Overview Link'], ['linkText', 'text', 'Overview Link Text'], ['linkType', 'select', 'Overview Link Type'], ['id', 'text', 'ID']],
-  'support-contact-card': [['cardKey', 'text', 'Card Key'], ['title', 'text', 'Card Title']],
-  'support-contact-field': [['cardKey', 'text', 'Card Key'], ['label', 'text', 'Field Label'], ['value', 'richtext', 'Field Value'], ['link', 'aem-content', 'Field Link (optional)']],
+const LIXIANG_SERVICE_MODEL_FIELDS = {
+  'lixiang-official-center-contact-cards': [['title', 'text', 'Title'], ['description', 'richtext', 'Description'], ['link', 'aem-content', 'Overview Link'], ['linkText', 'text', 'Overview Link Text'], ['linkType', 'select', 'Overview Link Type'], ['id', 'text', 'ID']],
+  'lixiang-official-center-contact-card': [['cardKey', 'text', 'Card Key'], ['title', 'text', 'Card Title']],
+  'lixiang-official-center-contact-field': [['cardKey', 'text', 'Card Key'], ['label', 'text', 'Field Label'], ['value', 'richtext', 'Field Value'], ['link', 'aem-content', 'Field Link (optional)']],
 };
 
-const SERVICE_COLLECTION_MODELS = {
-  'service-contact-cards': (row) => (row.children.length <= 2 ? 'support-contact-card' : 'support-contact-field'),
+const LIXIANG_SERVICE_COLLECTION_MODELS = {
+  'lixiang-official-center-contact-cards': (row) => (row.children.length <= 2 ? 'lixiang-official-center-contact-card' : 'lixiang-official-center-contact-field'),
 };
 
 function collectionModelFor(model, row) {
-  const resolver = SERVICE_COLLECTION_MODELS[model];
+  const resolver = LIXIANG_SERVICE_COLLECTION_MODELS[model];
   return typeof resolver === 'function' ? resolver(row) : resolver;
 }
 
@@ -52,7 +52,7 @@ function matchesPublishedField(source, component) {
 }
 
 function restorePublishedModel(root, model) {
-  const fields = SERVICE_MODEL_FIELDS[model];
+  const fields = LIXIANG_SERVICE_MODEL_FIELDS[model];
   if (!fields) return;
   const sources = [...root.children];
   const fieldSources = new Map();
@@ -62,7 +62,7 @@ function restorePublishedModel(root, model) {
     if (restoreLinkField(root, name, fieldSources)) return;
     const source = sources[sourceIndex];
     if (!source) return;
-    if (SERVICE_COLLECTION_MODELS[model] && source.children.length > 1) return;
+    if (LIXIANG_SERVICE_COLLECTION_MODELS[model] && source.children.length > 1) return;
     if (!matchesPublishedField(source, component)) return;
     markField(source, name, component, label);
     fieldSources.set(name, source);
@@ -86,7 +86,7 @@ function restorePublishedModel(root, model) {
 // would slide later fields onto the wrong cells. Stop at the first child the
 // editor already marked so instrumented items are never touched.
 function restoreBlockFields(block, model) {
-  const fields = SERVICE_MODEL_FIELDS[model];
+  const fields = LIXIANG_SERVICE_MODEL_FIELDS[model];
   if (!fields) return;
   const bare = [];
   [...block.children].every((child) => {
@@ -110,7 +110,7 @@ function restoreBlockFields(block, model) {
 
 // Rebuild author-only data-aue markers on published markup so downstream detection
 // (hasModel / propSource / isPropertyRow) works identically in author and delivery.
-export function initServiceBlock(block) {
+export function initLixiangServiceBlock(block) {
   const model = block.dataset.blockName || block.classList[0];
   if (block.querySelector('[data-aue-prop], [data-aue-model]')) {
     restoreBlockFields(block, model);
@@ -270,7 +270,7 @@ export function appendPicture(wrapper, picture, {
 export function addBlockAnchor(block, rows) {
   const id = propText(rows, 'id');
   const anchor = document.createElement('span');
-  anchor.className = 'service-aue-anchor';
+  anchor.className = 'lixiang-service-aue-anchor';
   anchor.setAttribute('aria-hidden', 'true');
   if (id) block.id = id;
   instrumentProp(rows, 'id', anchor);
@@ -280,7 +280,7 @@ export function addBlockAnchor(block, rows) {
 export function revealElements(block, selector) {
   const elements = [...block.querySelectorAll(selector)];
   if (!elements.length) return;
-  elements.forEach((element) => element.classList.add('service-reveal'));
+  elements.forEach((element) => element.classList.add('lixiang-service-reveal'));
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion || !('IntersectionObserver' in window)) {
     elements.forEach((element) => element.classList.add('is-visible'));

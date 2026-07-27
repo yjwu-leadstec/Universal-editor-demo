@@ -16,14 +16,14 @@ import {
   semanticSource,
   semanticSourceAfter,
   semanticText,
-} from '../../scripts/service-block-utils.js';
+} from '../../scripts/lixiang-service-block-utils.js';
 
 export default function decorate(block) {
   const rows = directRows(block);
   const shell = document.createElement('div');
-  shell.className = 'support-bottom-shell';
+  shell.className = 'lixiang-service-bottom-shell';
   const media = document.createElement('div');
-  media.className = 'support-bottom-media';
+  media.className = 'lixiang-service-bottom-media';
   const availablePictures = pictures(rows);
   const desktopPicture = propPicture(rows, 'media_image', 'media_imageAlt')
     || availablePictures[0]
@@ -37,7 +37,7 @@ export default function decorate(block) {
     || imageAltText;
 
   const desktopSlot = document.createElement('div');
-  desktopSlot.className = 'support-bottom-picture support-bottom-picture-desktop';
+  desktopSlot.className = 'lixiang-service-bottom-picture lixiang-service-bottom-picture-desktop';
   const desktopImage = appendPicture(desktopSlot, desktopPicture, {
     alt: imageAltText, fallbackLabel: 'LI AUTO SERVICE',
   });
@@ -48,7 +48,7 @@ export default function decorate(block) {
   if (mobilePicture) {
     media.classList.add('has-mobile-media');
     const mobileSlot = document.createElement('div');
-    mobileSlot.className = 'support-bottom-picture support-bottom-picture-mobile';
+    mobileSlot.className = 'lixiang-service-bottom-picture lixiang-service-bottom-picture-mobile';
     const mobileImage = appendPicture(mobileSlot, mobilePicture, {
       alt: mobileImageAltText,
       fallbackLabel: 'LI AUTO SERVICE',
@@ -59,7 +59,7 @@ export default function decorate(block) {
   }
 
   const copy = document.createElement('div');
-  copy.className = 'support-bottom-copy';
+  copy.className = 'lixiang-service-bottom-copy';
   // Published markup groups copy_title/copy_description into one cell as <p>s (no data-aue);
   // fall back to those so the title/description survive in delivery.
   const copyParagraphs = rows
@@ -76,7 +76,7 @@ export default function decorate(block) {
   const descriptionSource = propSource(rows, 'copy_description')
     || semanticSourceAfter(rows, 'p', titleSource);
   if (descriptionSource?.textContent.trim()) {
-    const description = createRichText(descriptionSource, 'support-bottom-description');
+    const description = createRichText(descriptionSource, 'lixiang-service-bottom-description');
     instrumentProp(rows, 'copy_description', description);
     copy.append(description);
   }
@@ -84,7 +84,7 @@ export default function decorate(block) {
   const linkText = propText(rows, 'cta_linkText') || sourceLink?.textContent.trim();
   if (sourceLink?.href && linkText) {
     const link = document.createElement('a');
-    link.className = `support-bottom-cta support-bottom-cta-${propText(rows, 'cta_linkType') || 'primary'}`;
+    link.className = `lixiang-service-bottom-cta lixiang-service-bottom-cta-${propText(rows, 'cta_linkType') || 'primary'}`;
     link.href = sourceLink.getAttribute('href');
     link.textContent = linkText;
     instrumentProp(rows, 'cta_link', link);
@@ -94,5 +94,5 @@ export default function decorate(block) {
   shell.append(media, copy);
   block.replaceChildren(shell);
   addBlockAnchor(block, rows);
-  revealElements(block, '.support-bottom-media, .support-bottom-copy');
+  revealElements(block, '.lixiang-service-bottom-media, .lixiang-service-bottom-copy');
 }

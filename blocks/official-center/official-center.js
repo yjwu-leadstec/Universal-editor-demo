@@ -17,7 +17,7 @@ const MODEL_FIELDS = {
     ['link', 'aem-content'],
   ],
   // Keep existing authored content renderable until it is migrated to the new model.
-  'service-contact-cards': [
+  'lixiang-official-center-contact-cards': [
     ['title', 'text'],
     ['description', 'richtext'],
     ['link', 'aem-content'],
@@ -25,8 +25,8 @@ const MODEL_FIELDS = {
     ['linkType', 'select'],
     ['id', 'text'],
   ],
-  'support-contact-card': [['cardKey', 'text'], ['title', 'text']],
-  'support-contact-field': [
+  'lixiang-official-center-contact-card': [['cardKey', 'text'], ['title', 'text']],
+  'lixiang-official-center-contact-field': [
     ['cardKey', 'text'],
     ['label', 'text'],
     ['value', 'richtext'],
@@ -34,8 +34,8 @@ const MODEL_FIELDS = {
   ],
 };
 
-const CARD_MODELS = ['official-center-card', 'support-contact-card'];
-const FIELD_MODELS = ['official-center-field', 'support-contact-field'];
+const CARD_MODELS = ['official-center-card', 'lixiang-official-center-contact-card'];
+const FIELD_MODELS = ['official-center-field', 'lixiang-official-center-contact-field'];
 
 function directCells(row) {
   return [...row.children];
@@ -77,8 +77,8 @@ function collectionModelFor(model, row) {
   if (model === 'official-center') {
     return row.children.length <= 2 ? 'official-center-card' : 'official-center-field';
   }
-  if (model === 'service-contact-cards') {
-    return row.children.length <= 2 ? 'support-contact-card' : 'support-contact-field';
+  if (model === 'lixiang-official-center-contact-cards') {
+    return row.children.length <= 2 ? 'lixiang-official-center-contact-card' : 'lixiang-official-center-contact-field';
   }
   return '';
 }

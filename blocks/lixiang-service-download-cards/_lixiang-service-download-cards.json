@@ -2,15 +2,15 @@
   "definitions": [
     {
       "title": "Li Auto Service Download Cards",
-      "id": "support-download-cards",
+      "id": "lixiang-service-download-cards",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "Service Download Cards",
-              "model": "support-download-cards",
-              "filter": "support-download-cards"
+              "name": "Lixiang Service Download Cards",
+              "model": "lixiang-service-download-cards",
+              "filter": "lixiang-service-download-cards"
             }
           }
         }
@@ -18,14 +18,14 @@
     },
     {
       "title": "Vehicle Download Card",
-      "id": "support-download-card",
+      "id": "lixiang-service-download-card",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Vehicle Download Card",
-              "model": "support-download-card"
+              "name": "Lixiang Service Download Card",
+              "model": "lixiang-service-download-card"
             }
           }
         }
@@ -33,14 +33,14 @@
     },
     {
       "title": "Vehicle Manual File",
-      "id": "support-download-file",
+      "id": "lixiang-service-download-file",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Vehicle Manual File",
-              "model": "support-download-file"
+              "name": "Lixiang Service Download File",
+              "model": "lixiang-service-download-file"
             }
           }
         }
@@ -49,7 +49,7 @@
   ],
   "models": [
     {
-      "id": "support-download-cards",
+      "id": "lixiang-service-download-cards",
       "fields": [
         {
           "component": "text",
@@ -84,7 +84,7 @@
       ]
     },
     {
-      "id": "support-download-card",
+      "id": "lixiang-service-download-card",
       "fields": [
         {
           "component": "text",
@@ -128,7 +128,7 @@
       ]
     },
     {
-      "id": "support-download-file",
+      "id": "lixiang-service-download-file",
       "fields": [
         {
           "component": "text",
@@ -161,10 +161,10 @@
   ],
   "filters": [
     {
-      "id": "support-download-cards",
+      "id": "lixiang-service-download-cards",
       "components": [
-        "support-download-card",
-        "support-download-file"
+        "lixiang-service-download-card",
+        "lixiang-service-download-file"
       ]
     }
   ]

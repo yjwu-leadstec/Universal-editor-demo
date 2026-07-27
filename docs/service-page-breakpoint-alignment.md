@@ -6,20 +6,20 @@
 - 官网样式表：`static-eu.liauto.com/fed/fed-liauto-web/chunk-2606/css/support/common/index.*.css`。
 - 本项目页面：`/content/demo-site/language-master/en/service`，交付地址
   `https://main--universal-editor-demo--yjwu-leadstec.aem.page/language-master/en/service`。
-- 涉及 block：`service-hero`、`service-feature-panel`（`list` / `app` / `diagnosis` 三个变体）。
+- 涉及 block：`lixiang-service-hero`、`lixiang-service-feature-panel`（`list` / `app` / `diagnosis` 三个变体）。
 
-## 命名对照（block 名与模型名不一致）
+## 命名对照（本项目 ↔ 官网场景）
 
-Block 目录是 `service-*`，但 Universal Editor 模型 id、运行时 class 和官网场景名各不相同。改动前先对齐这张表，
-否则会在错误的选择器上改样式：
+本项目的 block 名、UE 模型 id 和运行时 class 前缀现已完全统一为 `lixiang-service-*`；只有官网侧的
+场景 class 是另一套命名，比对官网样式时按下表换算：
 
-| 本项目 block | UE 模型 id | 运行时 class 前缀 | 官网场景 class |
-| --- | --- | --- | --- |
-| `service-hero` | `support-hero` | `.support-hero-*` | `.sceneservicehome` |
-| `service-feature-panel`（`list`） | `support-feature-panel` / `support-feature-item` | `.support-feature-*` | `.sceneserviceservice2` |
-| `service-feature-panel`（`app` / `diagnosis`） | 同上 | `.support-feature-*` | `.sceneserviceservice1` |
+| 本项目 block / 模型 id / class 前缀 | 官网场景 class |
+| --- | --- |
+| `lixiang-service-hero` | `.sceneservicehome` |
+| `lixiang-service-feature-panel`（`list`，item 模型 `lixiang-service-feature-item`） | `.sceneserviceservice2` |
+| `lixiang-service-feature-panel`（`app` / `diagnosis`） | `.sceneserviceservice1` |
 
-`support-*` 只是模型与 class 的历史命名，`blocks/support-*/` 目录已不存在；不要据此新建 block 目录。
+历史命名 `support-*` 与 `service-*`（无前缀）已于 2026-07-27 全部移除，代码与 JCR 授权内容中都不应再出现。
 
 ## 断点模型（与全站三档不同）
 
@@ -42,13 +42,13 @@ Block 目录是 `service-*`，但 Universal Editor 模型 id、运行时 class �
 正确做法是消解 section wrapper 的宽度限制：
 
 ```css
-main .section > .service-hero-wrapper {
+main .section > .lixiang-service-hero-wrapper {
   max-width: none;
   padding: 0;
 }
 ```
 
-水平留白改由 block 内部的 `.support-feature-shell`（`box-sizing: border-box` + `max-width: 1920px`）承担，
+水平留白改由 block 内部的 `.lixiang-service-feature-shell`（`box-sizing: border-box` + `max-width: 1920px`）承担，
 与官网把 gutter 挂在 1920 容器上的做法一致。
 
 ## 已验证基准值

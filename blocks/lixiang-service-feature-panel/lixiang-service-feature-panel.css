@@ -1,0 +1,367 @@
+/*
+ * Breakpoints mirror the live site (liauto.com/support/service):
+ * a single 720px desktop/mobile switch, and above it a fluid root unit that
+ * matches the production `html { font-size }` ladder — 112px above 1440,
+ * 84px from 1025 to 1440, 8.3333vw at or below 1024. Every desktop length is
+ * `calc(<px-at-1920> * var(--lixiang-service-unit))`, so the literals below read as the
+ * production pixel values at the 1920 breakpoint.
+ *
+ * The `list` variant maps to production `.sceneserviceservice2`;
+ * `app` / `diagnosis` map to `.sceneserviceservice1`.
+ */
+
+/* The section wrapper caps content at 1200px and adds a gutter; these blocks are
+   full-bleed on the live site, so neutralise it here rather than with a 100vw
+   pull-out — 100vw counts the scrollbar and shifts the block left by its width. */
+main .section > .lixiang-service-feature-panel-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+main .lixiang-service-feature-panel {
+  --lixiang-service-font-regular: licium-regular, "Segoe UI", arial, sans-serif;
+  --lixiang-service-font-medium: licium-medium, "Segoe UI", arial, sans-serif;
+  --lixiang-service-rem: 112px;
+  --lixiang-service-unit: calc(var(--lixiang-service-rem) / 112);
+
+  position: relative;
+  color: rgb(0 0 0 / 90%);
+  font-family: var(--lixiang-service-font-regular);
+  background: #fff;
+}
+
+/* Production caps the scene at 1920 and hangs the horizontal gutter off that
+   container, so the gutter has to live on the shell, not on the full-bleed block. */
+main .lixiang-service-feature-panel .lixiang-service-feature-shell {
+  box-sizing: border-box;
+  max-width: 1920px;
+  margin-inline: auto;
+  padding-inline: calc(160 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-feature-panel:not(.list) .lixiang-service-feature-shell {
+  padding-bottom: calc(20 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-feature-panel.list .lixiang-service-feature-shell {
+  padding-top: calc(80 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-section-heading {
+  margin: 0;
+  padding: calc(120 * var(--lixiang-service-unit)) 0 calc(56 * var(--lixiang-service-unit));
+  font-family: var(--lixiang-service-font-medium);
+  font-size: calc(48 * var(--lixiang-service-unit));
+  font-weight: 500;
+  line-height: calc(60 * var(--lixiang-service-unit));
+  text-align: center;
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-panel-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  border-radius: 4px;
+  background: #fafafa;
+}
+
+main .lixiang-service-feature-panel.list .lixiang-service-feature-panel-inner {
+  align-items: center;
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-lead {
+  display: flex;
+  flex-direction: column;
+  padding:
+    calc(80 * var(--lixiang-service-unit))
+    calc(114 * var(--lixiang-service-unit))
+    0
+    calc(124 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-feature-panel.list .lixiang-service-feature-lead {
+  padding-block: 0;
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-intro {
+  margin-bottom: calc(24 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-feature-panel.list .lixiang-service-feature-intro {
+  margin-bottom: 0;
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-intro h2,
+main .lixiang-service-feature-panel .lixiang-service-feature-intro h3 {
+  margin: 0;
+  padding-bottom: calc(16 * var(--lixiang-service-unit));
+  font-family: var(--lixiang-service-font-medium);
+  font-size: calc(36 * var(--lixiang-service-unit));
+  font-weight: 500;
+  line-height: calc(48 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-intro-description {
+  margin: 0;
+  color: rgb(0 0 0 / 60%);
+  font-size: calc(16 * var(--lixiang-service-unit));
+  line-height: calc(28 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-intro-description p,
+main .lixiang-service-feature-panel .lixiang-service-feature-item-description p {
+  margin: 0;
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding:
+    calc(120 * var(--lixiang-service-unit))
+    calc(124 * var(--lixiang-service-unit))
+    calc(120 * var(--lixiang-service-unit))
+    calc(10 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-feature-panel:not(.list) .lixiang-service-feature-items {
+  align-self: center;
+  justify-content: flex-start;
+  gap: calc(56 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-item h3 {
+  margin: 0 0 calc(8 * var(--lixiang-service-unit));
+  color: #191919;
+  font-family: var(--lixiang-service-font-medium);
+  font-size: calc(24 * var(--lixiang-service-unit));
+  font-weight: 500;
+  line-height: calc(32 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-item-description {
+  margin: 0;
+  color: rgb(0 0 0 / 60%);
+  font-size: calc(16 * var(--lixiang-service-unit));
+  line-height: calc(28 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-feature-panel.list .lixiang-service-feature-intro h2,
+main .lixiang-service-feature-panel.list .lixiang-service-feature-intro h3 {
+  padding-bottom: calc(7 * var(--lixiang-service-unit));
+}
+
+/* Production pins the media to the bottom of the copy column with absolute
+   positioning and reserves its box with an equally sized placeholder; keeping it
+   in flow and pushing it down with auto margin lands on the same geometry. */
+main .lixiang-service-feature-panel .lixiang-service-feature-media {
+  position: relative;
+  width: 28.22vw;
+  max-width: 562px;
+  height: 19.79vw;
+  max-height: 380px;
+  margin-top: auto;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+main .lixiang-service-feature-panel.list .lixiang-service-feature-media {
+  display: none;
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-picture,
+main .lixiang-service-feature-panel .lixiang-service-feature-picture picture,
+main .lixiang-service-feature-panel .lixiang-service-feature-picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-picture img {
+  object-fit: cover;
+  object-position: center;
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-picture-mobile {
+  display: none;
+}
+
+main .lixiang-service-feature-panel .is-media-fallback {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: rgb(0 0 0 / 35%);
+  background: #eee;
+  font-family: var(--lixiang-service-font-medium);
+  letter-spacing: 0.16em;
+}
+
+main .lixiang-service-feature-panel .is-media-fallback::after {
+  content: attr(data-fallback-label);
+}
+
+main .lixiang-service-feature-panel .lixiang-service-aue-anchor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+main .lixiang-service-feature-panel .lixiang-service-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 650ms ease, transform 650ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-item:nth-child(2) {
+  transition-delay: 80ms;
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-item:nth-child(3) {
+  transition-delay: 160ms;
+}
+
+main .lixiang-service-feature-panel .lixiang-service-feature-item:nth-child(4) {
+  transition-delay: 240ms;
+}
+
+main .lixiang-service-feature-panel .lixiang-service-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (width <= 1440px) {
+  main .lixiang-service-feature-panel {
+    --lixiang-service-rem: 84px;
+  }
+}
+
+@media (width <= 1024px) {
+  main .lixiang-service-feature-panel {
+    --lixiang-service-rem: 8.3333vw;
+  }
+}
+
+@media (width <= 720px) {
+  main .lixiang-service-feature-panel {
+    background: #fafafa;
+  }
+
+  main .lixiang-service-feature-panel .lixiang-service-feature-shell {
+    max-width: none;
+    padding: 0 20px 20px;
+  }
+
+  main .lixiang-service-feature-panel.list .lixiang-service-feature-shell {
+    padding-top: 80px;
+  }
+
+  main .lixiang-service-feature-panel:not(.list) .lixiang-service-feature-shell {
+    padding-bottom: 20px;
+  }
+
+  main .lixiang-service-feature-panel .lixiang-service-feature-section-heading {
+    padding: 60px 0 32px;
+    font-size: 32px;
+    line-height: 44px;
+  }
+
+  main .lixiang-service-feature-panel .lixiang-service-feature-panel-inner {
+    display: block;
+    background: #fff;
+  }
+
+  main .lixiang-service-feature-panel.list .lixiang-service-feature-panel-inner {
+    padding-bottom: 40px;
+  }
+
+  main .lixiang-service-feature-panel .lixiang-service-feature-lead {
+    padding: 0;
+  }
+
+  /* Production paints the media above the copy on mobile (it is absolutely
+     positioned at the top of the column); reorder instead of re-positioning.
+     It sizes the app variant with `calc(100vw - 40px)`, which counts the
+     scrollbar and overhangs the gutter by its width — `100%` is the same
+     intended box and is what the list variant already resolves to. */
+  main .lixiang-service-feature-panel .lixiang-service-feature-media {
+    order: -1;
+    width: 100%;
+    max-width: none;
+    height: calc(56.12vw - 22.448px);
+    max-height: none;
+    margin-top: 0;
+    border-radius: 4px 4px 0 0;
+  }
+
+  main .lixiang-service-feature-panel.list .lixiang-service-feature-media {
+    display: block;
+    height: 50.13vw;
+    margin-bottom: 40px;
+  }
+
+  main .lixiang-service-feature-panel .lixiang-service-feature-media.has-mobile-media .lixiang-service-feature-picture-desktop {
+    display: none;
+  }
+
+  main .lixiang-service-feature-panel .lixiang-service-feature-media.has-mobile-media .lixiang-service-feature-picture-mobile {
+    display: block;
+  }
+
+  main .lixiang-service-feature-panel .lixiang-service-feature-intro {
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+  main .lixiang-service-feature-panel .lixiang-service-feature-intro h2,
+  main .lixiang-service-feature-panel .lixiang-service-feature-intro h3 {
+    padding: 0 20px 8px;
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  main .lixiang-service-feature-panel .lixiang-service-feature-intro-description {
+    padding-inline: 20px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  main .lixiang-service-feature-panel .lixiang-service-feature-items {
+    gap: 32px;
+    margin-top: 40px;
+    padding: 0 20px 68px;
+    text-align: center;
+  }
+
+  main .lixiang-service-feature-panel.list .lixiang-service-feature-items {
+    padding-bottom: 0;
+  }
+
+  main .lixiang-service-feature-panel .lixiang-service-feature-item h3 {
+    margin-bottom: 4px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  main .lixiang-service-feature-panel .lixiang-service-feature-item-description {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  main .lixiang-service-feature-panel.list .lixiang-service-feature-intro h2,
+  main .lixiang-service-feature-panel.list .lixiang-service-feature-intro h3 {
+    padding-bottom: 4px;
+    line-height: 32px;
+  }
+
+  main .lixiang-service-feature-panel.list .lixiang-service-feature-item h3 {
+    margin-bottom: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main .lixiang-service-feature-panel .lixiang-service-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
