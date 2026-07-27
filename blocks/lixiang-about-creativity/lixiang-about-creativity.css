@@ -46,6 +46,7 @@
 }
 
 .lixiang-about-creativity-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: calc(790px * var(--about-scale, 1));
@@ -54,6 +55,8 @@
 }
 
 .lixiang-about-creativity-card-content {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,9 +87,9 @@
 .lixiang-about-creativity-card-description p { margin: 0; }
 
 .lixiang-about-creativity-card-media {
-  flex: 1;
-  min-height: 0;
-  margin: 0 calc(80px * var(--about-scale, 1)) calc(40px * var(--about-scale, 1));
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
 .lixiang-about-creativity-card-media picture,
@@ -100,6 +103,7 @@
 .lixiang-about-creativity .tier-mobile { display: none; }
 
 .lixiang-about-creativity-values {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -109,6 +113,8 @@
 }
 
 .lixiang-about-creativity-values-band {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -137,9 +143,9 @@
 .lixiang-about-creativity-values-description p { margin: 0; }
 
 .lixiang-about-creativity-values-media {
-  flex: 1;
-  min-height: 0;
-  margin: 0 calc(224px * var(--about-scale, 1)) calc(40px * var(--about-scale, 1));
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
 .lixiang-about-creativity-values-media picture,
@@ -162,10 +168,6 @@
   .lixiang-about-creativity-card { height: calc(501.5px * var(--about-scale, 1)); }
 
   .lixiang-about-creativity-card-content { padding: 24px; }
-
-  .lixiang-about-creativity-card-media {
-    margin: 0 24px calc(40px * var(--about-scale, 1));
-  }
 }
 
 @media (width <= 719px) {
@@ -224,9 +226,15 @@
   }
 
   .lixiang-about-creativity-card-media {
-    flex: none;
-    height: 207px;
-    margin: 0 20px 18px;
+    position: absolute;
+    inset: 0;
+  }
+
+  .lixiang-about-creativity-card::after {
+    content: '';
+    display: block;
+    height: 225px;
+    flex-shrink: 0;
   }
 
   .lixiang-about-creativity .tier-desktop { display: none; }
@@ -256,8 +264,14 @@
   }
 
   .lixiang-about-creativity-values-media {
-    flex: none;
-    height: 212px;
-    margin: 0 20px 18px;
+    position: absolute;
+    inset: 0;
+  }
+
+  .lixiang-about-creativity-values::after {
+    content: '';
+    display: block;
+    height: 230px;
+    flex-shrink: 0;
   }
 }
