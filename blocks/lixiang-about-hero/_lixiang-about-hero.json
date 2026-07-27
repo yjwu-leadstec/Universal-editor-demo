@@ -48,6 +48,19 @@
         },
         {
           "component": "reference",
+          "name": "image_pad",
+          "label": "Pad Background Image (Optional)",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "image_padAlt",
+          "label": "Pad Image Alt Text",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
           "name": "mobileImage",
           "label": "Mobile Background Image (Optional)",
           "description": "Optional override for screens up to 768px",

@@ -2,6 +2,7 @@ import {
   initAboutBlock,
   propText,
   propPicture,
+  propSource,
   instrumentProp,
   modelItems,
   moveItemInstrumentation,
@@ -14,8 +15,12 @@ export default function decorate(block) {
   const title = propText(block, 'title');
   const subtitle = propText(block, 'subtitle');
   const desktopPicture = propPicture(block, 'image');
+  const imageCell = propSource(block, 'image');
+  const imageCellPics = imageCell ? [...imageCell.querySelectorAll('picture')] : [];
+  const padPicture = imageCellPics[1] || propPicture(block, 'image_pad');
   const mobilePicture = propPicture(block, 'mobileImage');
   const desktopAlt = propText(block, 'imageAlt');
+  const padAlt = propText(block, 'image_padAlt');
   const mobileAlt = propText(block, 'mobileImageAlt');
 
   const media = document.createElement('div');
@@ -27,6 +32,16 @@ export default function decorate(block) {
         { width: '1920' }, { width: '1200' }, { width: '768' },
       ]);
       optimized.classList.add('lixiang-about-vehicle-showcase-bg-desktop');
+      media.append(optimized);
+    }
+  }
+  if (padPicture) {
+    const img = padPicture.querySelector('img');
+    if (img) {
+      const optimized = createOptimizedPicture(img.src, padAlt || '', true, [
+        { width: '1200' }, { width: '768' },
+      ]);
+      optimized.classList.add('lixiang-about-vehicle-showcase-bg-pad');
       media.append(optimized);
     }
   }
