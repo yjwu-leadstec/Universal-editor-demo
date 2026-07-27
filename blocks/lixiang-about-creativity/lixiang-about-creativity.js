@@ -18,6 +18,7 @@ export default function decorate(block) {
   let valuesTitle = propText(block, 'values_title');
   let valuesDescSource = propSource(block, 'values_description');
   let valuesPicture = propPicture(block, 'values_image');
+  let valuesMobilePicture = propPicture(block, 'values_mobileImage');
   if (!valuesTitle && !valuesDescSource && !valuesPicture) {
     const valuesGroup = propSource(block, 'values');
     if (valuesGroup) {
@@ -25,11 +26,13 @@ export default function decorate(block) {
       const texts = [...cell.children].filter(
         (el) => !el.querySelector('picture') && el.textContent.trim(),
       );
-      const pic = cell.querySelector('picture');
+      const pics = [...cell.querySelectorAll('picture')];
       const [first, second] = texts;
+      const [desktopPic, mobilePic] = pics;
       if (first) valuesTitle = first.textContent.trim();
       if (second) valuesDescSource = second;
-      if (pic) valuesPicture = pic;
+      if (desktopPic) valuesPicture = desktopPic;
+      if (mobilePic) valuesMobilePicture = mobilePic;
     }
   }
 
@@ -56,6 +59,8 @@ export default function decorate(block) {
   items.forEach((item) => {
     const picture = propPicture(item, 'image');
     const imageAlt = propText(item, 'imageAlt');
+    const mobilePicture = propPicture(item, 'mobileImage');
+    const mobileAlt = propText(item, 'mobileImageAlt');
     const cardTitle = propText(item, 'title');
     const descSource = propSource(item, 'description');
 
@@ -68,6 +73,15 @@ export default function decorate(block) {
       const img = picture.querySelector('img');
       if (img) {
         const optimized = createOptimizedPicture(img.src, imageAlt || '', false, [{ width: '1200' }]);
+        optimized.classList.add('tier-desktop');
+        media.append(optimized);
+      }
+    }
+    if (mobilePicture) {
+      const img = mobilePicture.querySelector('img');
+      if (img) {
+        const optimized = createOptimizedPicture(img.src, mobileAlt || imageAlt || '', false, [{ width: '750' }]);
+        optimized.classList.add('tier-mobile');
         media.append(optimized);
       }
     }
@@ -108,15 +122,26 @@ export default function decorate(block) {
     valuesBand.append(desc);
   }
   values.append(valuesBand);
-  if (valuesPicture) {
+  if (valuesPicture || valuesMobilePicture) {
     const valuesMedia = document.createElement('div');
     valuesMedia.className = 'lixiang-about-creativity-values-media';
-    const img = valuesPicture.querySelector('img');
-    if (img) {
-      const optimized = createOptimizedPicture(img.src, valuesAlt || '', false, [
-        { width: '1920' }, { width: '1200' }, { width: '768' },
-      ]);
-      valuesMedia.append(optimized);
+    if (valuesPicture) {
+      const img = valuesPicture.querySelector('img');
+      if (img) {
+        const optimized = createOptimizedPicture(img.src, valuesAlt || '', false, [
+          { width: '1920' }, { width: '1200' }, { width: '768' },
+        ]);
+        optimized.classList.add('tier-desktop');
+        valuesMedia.append(optimized);
+      }
+    }
+    if (valuesMobilePicture) {
+      const img = valuesMobilePicture.querySelector('img');
+      if (img) {
+        const optimized = createOptimizedPicture(img.src, valuesAlt || '', false, [{ width: '750' }]);
+        optimized.classList.add('tier-mobile');
+        valuesMedia.append(optimized);
+      }
     }
     values.append(valuesMedia);
   }

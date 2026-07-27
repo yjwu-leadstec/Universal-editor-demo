@@ -97,6 +97,8 @@
   display: block;
 }
 
+.lixiang-about-creativity .tier-mobile { display: none; }
+
 .lixiang-about-creativity-values {
   display: flex;
   flex-direction: column;
@@ -226,6 +228,10 @@
     height: 207px;
     margin: 0 20px 18px;
   }
+
+  .lixiang-about-creativity .tier-desktop { display: none; }
+
+  .lixiang-about-creativity .tier-mobile { display: block; }
 
   .lixiang-about-creativity-values {
     height: auto;

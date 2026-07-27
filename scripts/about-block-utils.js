@@ -10,7 +10,7 @@ const ABOUT_MODEL_FIELDS = {
   'lixiang-about-design-language': [['title', 'text'], ['subtitle', 'text'], ['largeImage', 'reference'], ['largeImageAlt', 'text'], ['big', 'group']],
   'lixiang-about-design-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],
   'lixiang-about-creativity': [['title', 'text'], ['subtitle', 'richtext'], ['values', 'group']],
-  'lixiang-about-creativity-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],
+  'lixiang-about-creativity-card': [['image', 'reference'], ['imageAlt', 'text'], ['mobileImage', 'reference'], ['mobileImageAlt', 'text'], ['title', 'text'], ['description', 'richtext']],
   'lixiang-about-create-together': [['title', 'text'], ['subtitle', 'text']],
   'lixiang-about-create-together-card': [['image', 'reference'], ['imageAlt', 'text'], ['title', 'text'], ['description', 'richtext'], ['footnote', 'text']],
 };
