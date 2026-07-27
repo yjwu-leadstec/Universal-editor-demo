@@ -166,8 +166,10 @@
   .lixiang-about-create-together-grid::-webkit-scrollbar { display: none; }
 
   .lixiang-about-create-together-card {
+    display: flex;
+    flex-direction: column;
     flex: 0 0 calc(min(100vw, 375px) - 28px);
-    aspect-ratio: auto;
+    aspect-ratio: 347 / 356;
     border-radius: 8px;
     background: #fff;
     scroll-snap-align: start;
@@ -200,10 +202,11 @@
 
   .lixiang-about-create-together-card-media {
     position: relative;
+    flex: 1;
+    min-height: 0;
     margin: 0;
     border-radius: 0 0 8px 8px;
     overflow: hidden;
-    aspect-ratio: 33 / 20;
   }
 
   .lixiang-about-create-together-card-media picture { display: block; }
