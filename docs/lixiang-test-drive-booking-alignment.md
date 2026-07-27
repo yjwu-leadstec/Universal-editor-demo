@@ -32,3 +32,6 @@ each vehicle, but they remain independent authoring fields.
   model/store selection plus form validation remain functional.
 - Universal Editor retains selectable instrumentation for all four model items
   and four store items.
+
+Authoring, publication, and troubleshooting procedures are documented in
+[`component-manual/试驾页-使用配置手册.md`](./component-manual/试驾页-使用配置手册.md).

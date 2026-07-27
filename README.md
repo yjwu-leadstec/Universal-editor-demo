@@ -66,6 +66,7 @@ Local screenshots or `aem up` checks are useful during development, but they are
 
 - [Project rules](./AGENTS.md)
 - [Component inventory](./docs/component-manual/官网组件清单.md)
+- [Test Drive authoring manual](./docs/component-manual/试驾页-使用配置手册.md)
 - [Media Center v2 manual](./docs/component-manual/Media%20Center%20v2-使用配置手册.md)
 - [Navigation manual](./docs/component-manual/导航-使用配置手册.md)
 - [Homepage manual](./docs/component-manual/首页-使用配置手册.md)
