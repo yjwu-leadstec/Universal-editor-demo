@@ -4,19 +4,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: calc(40px * var(--about-scale, 1));
+  gap: calc(56px * var(--about-scale, 1));
   width: 83.3333vw;
   max-width: 1600px;
   margin: 0 auto;
-  padding: calc(85px * var(--about-scale, 1)) 0 calc(80px * var(--about-scale, 1));
+  padding: calc(80px * var(--about-scale, 1)) 0 calc(80px * var(--about-scale, 1));
 }
 
 .lixiang-about-create-together-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: calc(13px * var(--about-scale, 1));
-  max-width: 1099px;
+  gap: calc(8px * var(--about-scale, 1));
+  max-width: calc((100vw - 15px) * 0.6);
   text-align: center;
 }
 
@@ -24,7 +24,7 @@
   margin: 0;
   font-size: calc(46px * var(--about-scale, 1));
   font-weight: 400;
-  line-height: 1.3478;
+  line-height: 1.5652;
   color: #191919;
 }
 
@@ -50,7 +50,7 @@
   flex: 1;
   min-width: 0;
   max-width: 520px;
-  border-radius: 4px;
+  border-radius: 0;
   overflow: hidden;
   aspect-ratio: 520 / 518;
   background: #191919;
@@ -83,12 +83,12 @@
   position: absolute;
   z-index: 2;
   top: calc(56px * var(--about-scale, 1));
-  left: calc(80px * var(--about-scale, 1));
-  right: calc(80px * var(--about-scale, 1));
+  left: calc(32px * var(--about-scale, 1));
+  right: calc(32px * var(--about-scale, 1));
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: calc(8px * var(--about-scale, 1));
+  gap: calc(16px * var(--about-scale, 1));
   text-align: center;
 }
 
@@ -114,8 +114,8 @@
 .lixiang-about-create-together-card-footnote {
   position: absolute;
   z-index: 2;
-  left: calc(80px * var(--about-scale, 1));
-  right: calc(80px * var(--about-scale, 1));
+  left: calc(32px * var(--about-scale, 1));
+  right: calc(32px * var(--about-scale, 1));
   bottom: calc(40px * var(--about-scale, 1));
   margin: 0;
   font-size: calc(14px * var(--about-scale, 1));
@@ -128,10 +128,16 @@
 @media (width <= 719px) {
   .lixiang-about-create-together-inner {
     gap: 24px;
-    padding: 60px 20px 20px;
+    width: 100%;
+    max-width: none;
+    padding: 24px 0 0;
   }
 
-  .lixiang-about-create-together-header { gap: 8px; }
+  .lixiang-about-create-together-header {
+    gap: 4px;
+    max-width: 375px;
+    padding: 0 20px;
+  }
 
   .lixiang-about-create-together-header h2 {
     font-size: 20px;
@@ -140,17 +146,18 @@
   }
 
   .lixiang-about-create-together-subtitle {
+    font-family: licium-regular, roboto, roboto-fallback, sans-serif;
     font-size: 14px;
-    line-height: 1.7143;
+    line-height: 1.5714;
   }
 
   .lixiang-about-create-together-grid {
     flex-wrap: nowrap;
     justify-content: flex-start;
-    gap: 12px;
-    width: calc(100% + 28px);
-    margin: 0 -14px;
-    padding: 0 14px 20px;
+    gap: 6px;
+    width: 100%;
+    margin: 0;
+    padding: 0 6px 20px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -159,7 +166,7 @@
   .lixiang-about-create-together-grid::-webkit-scrollbar { display: none; }
 
   .lixiang-about-create-together-card {
-    flex: 0 0 calc(100vw - 40px);
+    flex: 0 0 calc(min(100vw, 375px) - 28px);
     aspect-ratio: auto;
     border-radius: 8px;
     background: #fff;
@@ -172,6 +179,8 @@
     position: static;
     padding: 24px 20px;
     gap: 4px;
+    align-items: stretch;
+    text-align: left;
   }
 
   .lixiang-about-create-together-card-content h3 {
@@ -179,12 +188,14 @@
     font-weight: 400;
     line-height: 1.75;
     color: rgb(0 0 0 / 90%);
+    text-align: left;
   }
 
   .lixiang-about-create-together-card-description {
     font-size: 14px;
     line-height: 1.5714;
     color: rgb(0 0 0 / 90%);
+    text-align: left;
   }
 
   .lixiang-about-create-together-card-media {
@@ -192,7 +203,7 @@
     margin: 0;
     border-radius: 0 0 8px 8px;
     overflow: hidden;
-    aspect-ratio: 335 / 188;
+    aspect-ratio: 33 / 20;
   }
 
   .lixiang-about-create-together-card-media picture { display: block; }
@@ -201,11 +212,11 @@
     position: absolute;
     left: 20px;
     right: 20px;
-    bottom: 16px;
+    bottom: 24px;
     padding: 0;
     font-size: 12px;
     line-height: 1.6667;
     color: #fff;
-    text-align: center;
+    text-align: left;
   }
 }
