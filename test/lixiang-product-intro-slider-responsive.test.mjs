@@ -17,7 +17,9 @@ const [
 ]);
 const carouselConfig = JSON.parse(carouselModelSource);
 const carouselModel = carouselConfig.models.find(({ id }) => id === 'lixiang-product-intro-slider');
-const slideModel = carouselConfig.models.find(({ id }) => id === 'highlight-slide');
+const slideModel = carouselConfig.models.find(
+  ({ id }) => id === 'lixiang-product-intro-slider-slide',
+);
 const carouselDefinition = carouselConfig.definitions.find(({ id }) => id === 'lixiang-product-intro-slider');
 
 test('highlight carousel keeps overlay copy in media and renders notes in the reserved footer gap', () => {

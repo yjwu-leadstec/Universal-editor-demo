@@ -84,14 +84,14 @@ multiselect. AEM only turns a field literally named `classes` into block classes
 so the block applies these two by hand. Heading colour follows the background
 (white on dark/gray, black on light) and has no field of its own.
 
-Child `highlight-slide` fields:
+Child `lixiang-product-intro-slider-slide` fields:
 
 - responsive media group plus optional video;
 - `eyebrow`, multiline `title`, `description`, multiline `note`;
 - optional `copyColor`, `showNote`, and multiline `indicatorLabel`;
 - optional standard link group.
 
-Statistics are a separate `highlight-stat` collection model (`value`, `unit`,
+Statistics are a separate `lixiang-product-intro-slider-stat` collection model (`value`, `unit`,
 `label`, `description`), not fields on the slide. Delivery ships nested
 collection items as **siblings** of their parent rather than children, so the
 block groups each stat onto the slide that precedes it.
@@ -144,7 +144,7 @@ row order, determines the item type.
 
 Block fields: `id`, `title`, `mobileTitle`, `description`, `classes` (theme/spacing/copy).
 
-Child `color-switcher-item` fields:
+Child `lixiang-product-color-full-screen-slider-item` fields:
 
 - `name`;
 - `swatch` reference plus `swatchAlt`;

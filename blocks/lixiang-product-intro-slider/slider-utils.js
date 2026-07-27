@@ -56,8 +56,8 @@ const PRODUCT_MEDIA_FALLBACKS = {
 // data-aue attributes by restoring those field/model markers before decoration.
 const PRODUCT_MODEL_FIELDS = {
   'lixiang-product-intro-slider': [['id', 'text', 'ID'], ['title', 'textarea', 'Desktop Title'], ['mobileTitle', 'textarea', 'Mobile Title Override'], ['description', 'richtext', 'Description'], ['accentColor', 'text', 'Indicator Color'], ['autoPlay', 'boolean', 'Desktop Autoplay'], ['interval', 'number', 'Autoplay Interval (seconds)'], ['showProgress', 'boolean', 'Show Video Progress'], ['showVideoControl', 'boolean', 'Show Video Play / Pause'], ['background', 'select', 'Background'], ['spacing', 'select', 'Spacing']],
-  'highlight-slide': [['image', 'reference', 'Desktop Poster / Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'aem-content', 'Desktop Video URL'], ['mobileVideo', 'aem-content', 'Mobile Video URL'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'textarea', 'Card Title'], ['description', 'richtext', 'Card Description'], ['note', 'textarea', 'Note'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type'], ['copyColor', 'select', 'Desktop Card Text Color'], ['showNote', 'boolean', 'Show Note'], ['indicatorLabel', 'textarea', 'Indicator Label']],
-  'highlight-stat': [['value', 'text', 'Value'], ['unit', 'text', 'Unit'], ['label', 'text', 'Label'], ['description', 'richtext', 'Description']],
+  'lixiang-product-intro-slider-slide': [['image', 'reference', 'Desktop Poster / Image'], ['imageAlt', 'text', 'Desktop Image Alt Text'], ['mobileImage', 'reference', 'Mobile Poster / Image'], ['mobileImageAlt', 'text', 'Mobile Image Alt Text'], ['video', 'aem-content', 'Desktop Video URL'], ['mobileVideo', 'aem-content', 'Mobile Video URL'], ['eyebrow', 'text', 'Eyebrow'], ['title', 'textarea', 'Card Title'], ['description', 'richtext', 'Card Description'], ['note', 'textarea', 'Note'], ['link', 'aem-content', 'Link'], ['linkText', 'text', 'Link Text'], ['linkType', 'select', 'Link Type'], ['copyColor', 'select', 'Desktop Card Text Color'], ['showNote', 'boolean', 'Show Note'], ['indicatorLabel', 'textarea', 'Indicator Label']],
+  'lixiang-product-intro-slider-stat': [['value', 'text', 'Value'], ['unit', 'text', 'Unit'], ['label', 'text', 'Label'], ['description', 'richtext', 'Description']],
 };
 
 const PRODUCT_COLLECTION_MODELS = {
@@ -66,10 +66,10 @@ const PRODUCT_COLLECTION_MODELS = {
   // carries its 12 authored fields (and usually media), a statistic only four.
   'lixiang-product-intro-slider': (row) => (
     row.querySelector('picture, img, video') || row.children.length > 6
-      ? 'highlight-slide'
-      : 'highlight-stat'
+      ? 'lixiang-product-intro-slider-slide'
+      : 'lixiang-product-intro-slider-stat'
   ),
-  'highlight-slide': 'highlight-stat',
+  'lixiang-product-intro-slider-slide': 'lixiang-product-intro-slider-stat',
 };
 
 function collectionModelFor(model, row) {

@@ -2730,6 +2730,68 @@
     ]
   },
   {
+    "id": "lixiang-product-color-full-screen-slider-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "name",
+        "label": "Color Name",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "reference",
+        "name": "swatch",
+        "label": "Swatch / Material",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "swatchAlt",
+        "label": "Swatch Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "colorValue",
+        "label": "CSS Color",
+        "description": "Optional hex fallback, for example #ffffff",
+        "valueType": "string",
+        "validation": {
+          "regExp": "^$|^#[0-9a-fA-F]{6}$",
+          "customErrorMsg": "Enter a six-digit hex color or leave empty"
+        }
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Desktop Vehicle Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Desktop Image Alt Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobileImage",
+        "label": "Mobile Vehicle Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "lixiang-product-detail-picture-group",
     "fields": [
       {
@@ -4482,7 +4544,7 @@
     ]
   },
   {
-    "id": "highlight-slide",
+    "id": "lixiang-product-intro-slider-slide",
     "fields": [
       {
         "component": "reference",
@@ -4617,7 +4679,7 @@
     ]
   },
   {
-    "id": "highlight-stat",
+    "id": "lixiang-product-intro-slider-stat",
     "fields": [
       {
         "component": "text",

@@ -134,7 +134,7 @@ function createSlide(block, item, index, statItems = []) {
 // rendered.
 function groupSlideStats(block, slides) {
   const slideSet = new Set(slides);
-  const statSet = new Set(modelItems(block, 'highlight-stat'));
+  const statSet = new Set(modelItems(block, 'lixiang-product-intro-slider-stat'));
   const byslide = new Map(slides.map((slide) => [slide, []]));
   let current = null;
   [...block.children].forEach((child) => {
@@ -162,7 +162,7 @@ export default function decorate(block) {
   if (['space-large', 'space-small', 'space-none'].includes(spacing)) block.classList.add(spacing);
   const sectionTitle = propText(block, 'title');
   const autoPlay = propBoolean(block, 'autoPlay', true);
-  const items = modelItems(block, 'highlight-slide');
+  const items = modelItems(block, 'lixiang-product-intro-slider-slide');
   const shell = document.createElement('div');
   shell.className = 'highlight-shell';
   const header = createSectionHeader(block);

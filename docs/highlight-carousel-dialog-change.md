@@ -51,11 +51,11 @@ New optional fields are `headingColor` and `showVideoControl`; the existing
 > `classes` 多选拆成了 `background` + `spacing` 两个独立 select。当前字段以
 > `docs/li-l6-content-models.md` 为准。
 
-### `highlight-slide`
+### `lixiang-product-intro-slider-slide`
 
 Existing media, copy, metrics, and link fields remain. `title` and `note`
 become multiline inputs. New optional fields are `copyColor`, `showNote`, and
 `indicatorLabel`.
 
-> **后续变更 (2026-07-26)**：统计数字已从卡片字段独立成 `highlight-stat` 集合模型
+> **后续变更 (2026-07-26)**：统计数字已从卡片字段独立成 `lixiang-product-intro-slider-stat` 集合模型
 > （`value` / `unit` / `label` / `description`）。

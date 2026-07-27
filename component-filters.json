@@ -196,7 +196,7 @@
   {
     "id": "lixiang-product-color-full-screen-slider",
     "components": [
-      "color-switcher-item"
+      "lixiang-product-color-full-screen-slider-item"
     ]
   },
   {
@@ -262,13 +262,13 @@
   {
     "id": "lixiang-product-intro-slider",
     "components": [
-      "highlight-slide"
+      "lixiang-product-intro-slider-slide"
     ]
   },
   {
-    "id": "highlight-slide",
+    "id": "lixiang-product-intro-slider-slide",
     "components": [
-      "highlight-stat"
+      "lixiang-product-intro-slider-stat"
     ]
   },
   {

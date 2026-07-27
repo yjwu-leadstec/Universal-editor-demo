@@ -16,6 +16,21 @@
           }
         }
       }
+    },
+    {
+      "title": "Li Auto Product Color Full Screen Slider Item",
+      "id": "lixiang-product-color-full-screen-slider-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Li Auto Product Color Full Screen Slider Item",
+              "model": "lixiang-product-color-full-screen-slider-item"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -64,12 +79,74 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lixiang-product-color-full-screen-slider-item",
+      "fields": [
+        {
+          "component": "text",
+          "name": "name",
+          "label": "Color Name",
+          "valueType": "string",
+          "required": true
+        },
+        {
+          "component": "reference",
+          "name": "swatch",
+          "label": "Swatch / Material",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "swatchAlt",
+          "label": "Swatch Alt Text",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "colorValue",
+          "label": "CSS Color",
+          "description": "Optional hex fallback, for example #ffffff",
+          "valueType": "string",
+          "validation": {
+            "regExp": "^$|^#[0-9a-fA-F]{6}$",
+            "customErrorMsg": "Enter a six-digit hex color or leave empty"
+          }
+        },
+        {
+          "component": "reference",
+          "name": "image",
+          "label": "Desktop Vehicle Image",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "imageAlt",
+          "label": "Desktop Image Alt Text",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "mobileImage",
+          "label": "Mobile Vehicle Image",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "mobileImageAlt",
+          "label": "Mobile Image Alt Text",
+          "valueType": "string"
+        }
+      ]
     }
   ],
   "filters": [
     {
       "id": "lixiang-product-color-full-screen-slider",
-      "components": ["color-switcher-item"]
+      "components": ["lixiang-product-color-full-screen-slider-item"]
     }
   ]
 }

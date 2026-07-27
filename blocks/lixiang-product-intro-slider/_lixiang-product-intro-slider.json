@@ -24,15 +24,15 @@
     },
     {
       "title": "Highlight Slide",
-      "id": "highlight-slide",
+      "id": "lixiang-product-intro-slider-slide",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "name": "Highlight Slide",
-              "model": "highlight-slide",
-              "filter": "highlight-slide",
+              "model": "lixiang-product-intro-slider-slide",
+              "filter": "lixiang-product-intro-slider-slide",
               "linkType": "text",
               "copyColor": "white",
               "showNote": true
@@ -43,14 +43,14 @@
     },
     {
       "title": "Highlight Statistic",
-      "id": "highlight-stat",
+      "id": "lixiang-product-intro-slider-stat",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "name": "Highlight Statistic",
-              "model": "highlight-stat"
+              "model": "lixiang-product-intro-slider-stat"
             }
           }
         }
@@ -181,7 +181,7 @@
       ]
     },
     {
-      "id": "highlight-slide",
+      "id": "lixiang-product-intro-slider-slide",
       "fields": [
         {
           "component": "reference",
@@ -316,7 +316,7 @@
       ]
     },
     {
-      "id": "highlight-stat",
+      "id": "lixiang-product-intro-slider-stat",
       "fields": [
         {
           "component": "text",
@@ -350,13 +350,13 @@
     {
       "id": "lixiang-product-intro-slider",
       "components": [
-        "highlight-slide"
+        "lixiang-product-intro-slider-slide"
       ]
     },
     {
-      "id": "highlight-slide",
+      "id": "lixiang-product-intro-slider-slide",
       "components": [
-        "highlight-stat"
+        "lixiang-product-intro-slider-stat"
       ]
     }
   ]

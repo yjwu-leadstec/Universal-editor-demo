@@ -172,7 +172,7 @@ function setupColorSlider(block, buttons, panels) {
 
 export default function decorate(block) {
   initProductBlock(block);
-  const items = modelItems(block, 'color-switcher-item');
+  const items = modelItems(block, 'lixiang-product-color-full-screen-slider-item');
   const shell = document.createElement('div');
   shell.className = 'lixiang-product-color-full-screen-slider-shell';
   const stage = document.createElement('div');

@@ -17,8 +17,13 @@ test('full-screen color slider keeps an independent block model', () => {
   const model = JSON.parse(blockModel);
   assert.equal(model.definitions[0].id, 'lixiang-product-color-full-screen-slider');
   assert.equal(model.models[0].id, 'lixiang-product-color-full-screen-slider');
-  assert.deepEqual(model.filters[0].components, ['color-switcher-item']);
-  assert.match(productUtils, /'lixiang-product-color-full-screen-slider': 'color-switcher-item'/);
+  assert.deepEqual(model.filters[0].components, [
+    'lixiang-product-color-full-screen-slider-item',
+  ]);
+  assert.match(
+    productUtils,
+    /'lixiang-product-color-full-screen-slider': 'lixiang-product-color-full-screen-slider-item'/,
+  );
 });
 
 test('full-screen color slider preserves responsive media and swatches', () => {
