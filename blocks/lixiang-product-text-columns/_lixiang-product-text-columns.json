@@ -2,18 +2,18 @@
   "definitions": [
     {
       "title": "Text Columns",
-      "id": "text-columns",
-      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Text Columns", "model": "text-columns", "filter": "text-columns", "classes": ["light", "space-small"] } } } }
+      "id": "lixiang-product-text-columns",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Text Columns", "model": "lixiang-product-text-columns", "filter": "lixiang-product-text-columns", "classes": ["light", "space-small"] } } } }
     },
     {
       "title": "Text Column",
-      "id": "text-column-item",
-      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Text Column", "model": "text-column-item" } } } }
+      "id": "lixiang-product-text-columns-item",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Text Column", "model": "lixiang-product-text-columns-item" } } } }
     }
   ],
   "models": [
     {
-      "id": "text-columns",
+      "id": "lixiang-product-text-columns",
       "fields": [
         { "component": "text", "name": "id", "label": "ID", "description": "Optional page anchor", "valueType": "string" },
         { "component": "text", "name": "title", "label": "Desktop Title", "valueType": "string" },
@@ -33,12 +33,12 @@
       ]
     },
     {
-      "id": "text-column-item",
+      "id": "lixiang-product-text-columns-item",
       "fields": [
         { "component": "text", "name": "title", "label": "Column Title", "valueType": "string" },
         { "component": "richtext", "name": "text", "label": "Column Text", "valueType": "string", "required": true }
       ]
     }
   ],
-  "filters": [{ "id": "text-columns", "components": ["text-column-item"] }]
+  "filters": [{ "id": "lixiang-product-text-columns", "components": ["lixiang-product-text-columns-item"] }]
 }

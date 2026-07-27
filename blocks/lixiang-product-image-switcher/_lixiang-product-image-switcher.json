@@ -2,18 +2,18 @@
   "definitions": [
     {
       "title": "Image Switcher",
-      "id": "image-switcher",
-      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Image Switcher", "model": "image-switcher", "filter": "image-switcher", "autoPlay": true, "interval": 4, "showVideoControl": true, "showProgress": true, "accentColor": "#dbad76", "classes": ["light", "dark-copy", "space-small"] } } } }
+      "id": "lixiang-product-image-switcher",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block", "template": { "name": "Image Switcher", "model": "lixiang-product-image-switcher", "filter": "lixiang-product-image-switcher", "autoPlay": true, "interval": 4, "showVideoControl": true, "showProgress": true, "accentColor": "#dbad76", "classes": ["light", "dark-copy", "space-small"] } } } }
     },
     {
       "title": "Image Switcher Item",
-      "id": "image-switcher-item",
-      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Image Switcher Item", "model": "image-switcher-item" } } } }
+      "id": "lixiang-product-image-switcher-item",
+      "plugins": { "xwalk": { "page": { "resourceType": "core/franklin/components/block/v1/block/item", "template": { "name": "Image Switcher Item", "model": "lixiang-product-image-switcher-item" } } } }
     }
   ],
   "models": [
     {
-      "id": "image-switcher",
+      "id": "lixiang-product-image-switcher",
       "fields": [
         { "component": "text", "name": "id", "label": "ID", "description": "Optional page anchor", "valueType": "string" },
         { "component": "text", "name": "eyebrow", "label": "Eyebrow", "valueType": "string" },
@@ -36,7 +36,7 @@
       ]
     },
     {
-      "id": "image-switcher-item",
+      "id": "lixiang-product-image-switcher-item",
       "fields": [
         { "component": "reference", "name": "image", "label": "Desktop Poster / Image", "valueType": "string", "multi": false },
         { "component": "text", "name": "imageAlt", "label": "Desktop Image Alt Text", "valueType": "string" },
@@ -53,5 +53,5 @@
       ]
     }
   ],
-  "filters": [{ "id": "image-switcher", "components": ["image-switcher-item"] }]
+  "filters": [{ "id": "lixiang-product-image-switcher", "components": ["lixiang-product-image-switcher-item"] }]
 }

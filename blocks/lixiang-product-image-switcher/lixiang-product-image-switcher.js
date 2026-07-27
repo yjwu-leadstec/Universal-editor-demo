@@ -17,14 +17,14 @@ import {
 
 function createPanel(block, item) {
   const panel = document.createElement('article');
-  panel.className = 'image-switcher-panel';
+  panel.className = 'lixiang-product-image-switcher-panel';
   const { element: media } = createMedia(item, {
     autoplay: true,
     showControls: propBoolean(block, 'showVideoControl', true),
     showProgress: propBoolean(block, 'showProgress', true),
   });
   const copy = document.createElement('div');
-  copy.className = 'image-switcher-copy';
+  copy.className = 'lixiang-product-image-switcher-copy';
   const title = propText(item, 'title');
   if (title) {
     const heading = document.createElement('h3');
@@ -34,7 +34,7 @@ function createPanel(block, item) {
   }
   const descriptionSource = propSource(item, 'description');
   if (descriptionSource?.textContent.trim()) {
-    const description = createRichText(descriptionSource, 'image-switcher-description');
+    const description = createRichText(descriptionSource, 'lixiang-product-image-switcher-description');
     instrumentProp(item, 'description', description);
     copy.append(description);
   }
@@ -42,7 +42,7 @@ function createPanel(block, item) {
   const unit = propText(item, 'unit');
   if (value || unit) {
     const metric = document.createElement('p');
-    metric.className = 'image-switcher-metric';
+    metric.className = 'lixiang-product-image-switcher-metric';
     const strong = document.createElement('strong');
     strong.textContent = value;
     const suffix = document.createElement('span');
@@ -53,7 +53,7 @@ function createPanel(block, item) {
   const note = propText(item, 'note');
   if (note) {
     const element = document.createElement('p');
-    element.className = 'image-switcher-note';
+    element.className = 'lixiang-product-image-switcher-note';
     element.textContent = note;
     instrumentProp(item, 'note', element);
     copy.append(element);
@@ -67,17 +67,17 @@ export default function decorate(block) {
   initProductBlock(block);
   const accentColor = propText(block, 'accentColor');
   if (accentColor) block.style.setProperty('--product-accent', accentColor);
-  const items = modelItems(block, 'image-switcher-item');
+  const items = modelItems(block, 'lixiang-product-image-switcher-item');
   const shell = document.createElement('div');
-  shell.className = 'image-switcher-shell';
+  shell.className = 'lixiang-product-image-switcher-shell';
   const header = createSectionHeader(block);
   if (header.childElementCount) shell.append(header);
 
   const stage = document.createElement('div');
-  stage.className = 'image-switcher-stage';
+  stage.className = 'lixiang-product-image-switcher-stage';
   const panels = items.map((item) => createPanel(block, item));
   const tabs = document.createElement('div');
-  tabs.className = 'image-switcher-tabs';
+  tabs.className = 'lixiang-product-image-switcher-tabs';
   tabs.setAttribute('role', 'tablist');
   tabs.setAttribute('aria-label', 'Media options');
   const buttons = items.map((item, index) => {
@@ -99,5 +99,5 @@ export default function decorate(block) {
       interval: propNumber(block, 'interval', 4) * 1000,
     });
   }
-  revealElements(block, '.product-section-header, .image-switcher-stage');
+  revealElements(block, '.product-section-header, .lixiang-product-image-switcher-stage');
 }

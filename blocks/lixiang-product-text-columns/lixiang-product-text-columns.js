@@ -14,12 +14,12 @@ import {
 export default function decorate(block) {
   initProductBlock(block);
   const shell = document.createElement('div');
-  shell.className = 'text-columns-shell';
+  shell.className = 'lixiang-product-text-columns-shell';
   const header = createSectionHeader(block);
   if (header.childElementCount) shell.append(header);
   const list = document.createElement('div');
-  list.className = 'text-columns-list';
-  modelItems(block, 'text-column-item').forEach((item) => {
+  list.className = 'lixiang-product-text-columns-list';
+  modelItems(block, 'lixiang-product-text-columns-item').forEach((item) => {
     const article = document.createElement('article');
     article.className = 'text-column';
     const title = propText(item, 'title');

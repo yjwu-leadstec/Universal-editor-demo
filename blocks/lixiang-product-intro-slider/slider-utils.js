@@ -397,8 +397,8 @@ export function createProductLink(root, prefix = '', className = 'product-link')
     'lixiang-product-feature-grid-item': 'text',
     'lixiang-product-guide-item': 'primary',
     'lixiang-product-ending': prefix ? 'secondary' : 'primary',
-    'product-param-cta': prefix ? 'text' : 'primary',
-    'product-download': prefix === 'android' ? 'secondary' : 'primary',
+    'lixiang-product-param-cta': prefix ? 'text' : 'primary',
+    'lixiang-product-download': prefix === 'android' ? 'secondary' : 'primary',
   };
   const link = document.createElement('a');
   link.className = `${className} ${className}-${propText(root, typeField) || defaultTypes[model] || 'text'}`;

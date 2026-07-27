@@ -17,11 +17,11 @@ import {
 
 function createStat(item) {
   const stat = document.createElement('div');
-  stat.className = 'big-small-stat';
+  stat.className = 'lixiang-product-big-small-gallery-stat';
   const eyebrow = propText(item, 'eyebrow');
   if (eyebrow) {
     const label = document.createElement('p');
-    label.className = 'big-small-stat-eyebrow';
+    label.className = 'lixiang-product-big-small-gallery-stat-eyebrow';
     label.textContent = eyebrow;
     instrumentProp(item, 'eyebrow', label);
     stat.append(label);
@@ -30,7 +30,7 @@ function createStat(item) {
   const unit = propText(item, 'unit');
   if (value || unit) {
     const metric = document.createElement('p');
-    metric.className = 'big-small-stat-value';
+    metric.className = 'lixiang-product-big-small-gallery-stat-value';
     const strong = document.createElement('strong');
     strong.textContent = value;
     const suffix = document.createElement('span');
@@ -40,7 +40,7 @@ function createStat(item) {
   }
   const descriptionSource = propSource(item, 'description');
   if (descriptionSource?.textContent.trim()) {
-    const description = createRichText(descriptionSource, 'big-small-stat-description');
+    const description = createRichText(descriptionSource, 'lixiang-product-big-small-gallery-stat-description');
     instrumentProp(item, 'description', description);
     stat.append(description);
   }
@@ -82,7 +82,7 @@ function createCard(block, item) {
 export default function decorate(block) {
   initProductBlock(block);
   const shell = document.createElement('div');
-  shell.className = 'big-small-gallery-shell';
+  shell.className = 'lixiang-product-big-small-gallery-shell';
   const header = createSectionHeader(block);
   const videoLink = propUrl(block, 'videoLink');
   if (videoLink) {
@@ -95,14 +95,14 @@ export default function decorate(block) {
   }
   if (header.childElementCount) shell.append(header);
 
-  const stats = modelItems(block, 'big-small-stat');
+  const stats = modelItems(block, 'lixiang-product-big-small-gallery-stat');
   if (stats.length) {
     const list = document.createElement('div');
-    list.className = 'big-small-stats';
+    list.className = 'lixiang-product-big-small-gallery-stats';
     stats.forEach((item) => list.append(createStat(item)));
     shell.append(list);
   }
-  const items = modelItems(block, 'big-small-item');
+  const items = modelItems(block, 'lixiang-product-big-small-gallery-item');
   if (items.length) {
     const gallery = document.createElement('div');
     gallery.className = 'big-small-list';
@@ -111,5 +111,5 @@ export default function decorate(block) {
   }
   addBlockAnchor(block, block, shell);
   block.replaceChildren(shell);
-  revealElements(block, '.product-section-header, .big-small-stat, .big-small-card', propBoolean(block, 'enableMotion', true));
+  revealElements(block, '.product-section-header, .lixiang-product-big-small-gallery-stat, .big-small-card', propBoolean(block, 'enableMotion', true));
 }

@@ -173,7 +173,7 @@ Child `lixiang-product-note-item` field: one required `richtext` field named `te
 
 Block fields: `id`, `title`, `mobileTitle`, `description`, `classes`.
 
-Child `text-column-item` fields: `title`, `text` (`richtext`).
+Child `lixiang-product-text-columns-item` fields: `title`, `text` (`richtext`).
 
 ## Li Xiang Product Detail Picture Group — ordered sibling collection
 
@@ -189,9 +189,9 @@ Both child models are ordered siblings because EDS/Universal Editor serializes o
 
 Block fields: `id`, `title`, `mobileTitle`, `description`, `classes`.
 
-Child `overlay-panel` fields: `panelKey`, `title`, `description`, responsive image group, `mask`, `mobileMask`, `maskAlt`. Its filter accepts `overlay-hotspot` children.
+Child `lixiang-product-icon-overlay-showcase-panel` fields: `panelKey`, `title`, `description`, responsive image group, `mask`, `mobileMask`, `maskAlt`. Its filter accepts `lixiang-product-icon-overlay-showcase-hotspot` children.
 
-Child `overlay-hotspot` fields:
+Child `lixiang-product-icon-overlay-showcase-hotspot` fields:
 
 | Field | Type | Validation |
 | --- | --- | --- |

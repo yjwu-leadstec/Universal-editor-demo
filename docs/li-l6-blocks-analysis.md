@@ -39,12 +39,12 @@ The captured Li L6 `pmsData` contains 37 component instances:
 | `product-power` | 1 | `lixiang-product-spec-table` (`icon-grid`) |
 | `lixiang-product-ending` | 1 | `lixiang-product-ending` |
 | `SceneGuide` | 1 | `lixiang-product-guide` |
-| `product-download` | 1 | `product-download` |
+| `product-download` (captured `pmsData` source type) | 1 | `lixiang-product-download` |
 | `product-home-share` | 1 | page metadata, not a visible block |
 | `SceneMegaContentNote` | 1 | `lixiang-product-notes` |
 | `product-l7-subheader` | 1 | `lixiang-product-sticky-nav` |
 
-The Pencil document contains eight reusable design families: hero, highlight carousel, content display, image-over switcher, big/small image composition, single-image text overlay, multi-image composition, and ending/flagship configuration. These designs add five product-family blocks or variants that are not present as source instances on the captured L6 page: `color-switcher`, `text-columns`, `icon-overlay-showcase`, `lixiang-product-feature-grid`, and `product-param-cta`.
+The Pencil document contains eight reusable design families: hero, highlight carousel, content display, image-over switcher, big/small image composition, single-image text overlay, multi-image composition, and ending/flagship configuration. These designs add five product-family blocks or variants that are not present as source instances on the captured L6 page: `lixiang-product-color-full-screen-slider`, `lixiang-product-text-columns`, `lixiang-product-icon-overlay-showcase`, `lixiang-product-feature-grid`, and `lixiang-product-param-cta`.
 
 ## Delivery scope
 
@@ -55,17 +55,17 @@ The Pencil document contains eight reusable design families: hero, highlight car
 3. `lixiang-product-intro-slider`
 4. `lixiang-product-full-screen-intro`
 5. `lixiang-product-intro-carousel`
-6. `color-switcher`
+6. `lixiang-product-color-full-screen-slider`
 7. `lixiang-product-spec-table`
 8. `lixiang-product-notes`
-9. `text-columns`
+9. `lixiang-product-text-columns`
 10. `lixiang-product-detail-picture-group`
-11. `icon-overlay-showcase`
+11. `lixiang-product-icon-overlay-showcase`
 12. `lixiang-product-feature-grid`
-13. `product-param-cta`
+13. `lixiang-product-param-cta`
 14. `lixiang-product-ending`
 15. `lixiang-product-guide`
-16. `product-download`
+16. `lixiang-product-download`
 17. `lixiang-product-feature-picture-group` — ending "flagship configuration" image-card grid (Pencil segment 8 「结尾总结」); overlaid-copy sibling of `lixiang-product-feature-grid`. See `li-l6-content-models.md`.
 
 ### Non-visible content

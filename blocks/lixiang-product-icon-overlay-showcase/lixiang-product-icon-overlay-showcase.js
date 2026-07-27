@@ -19,9 +19,9 @@ import {
 
 function createPanel(panelSource, hotspotItems = []) {
   const panel = document.createElement('section');
-  panel.className = 'overlay-panel';
+  panel.className = 'lixiang-product-icon-overlay-showcase-panel';
   const media = createMedia(panelSource, { autoplay: false, showControls: false }).element;
-  media.classList.add('overlay-panel-media');
+  media.classList.add('lixiang-product-icon-overlay-showcase-panel-media');
   const mask = propPicture(panelSource, 'mask');
   if (mask) {
     const layer = document.createElement('div');
@@ -31,7 +31,7 @@ function createPanel(panelSource, hotspotItems = []) {
   }
   hotspotItems.forEach((item) => {
     const hotspot = document.createElement('div');
-    hotspot.className = 'overlay-hotspot';
+    hotspot.className = 'lixiang-product-icon-overlay-showcase-hotspot';
     const x = clamp(propNumber(item, 'x', 50), 0, 100);
     const y = clamp(propNumber(item, 'y', 50), 0, 100);
     const mobileX = clamp(propNumber(item, 'mobileX', x), 0, 100);
@@ -40,20 +40,20 @@ function createPanel(panelSource, hotspotItems = []) {
     hotspot.style.setProperty('--hotspot-y', `${y}%`);
     hotspot.style.setProperty('--hotspot-mobile-x', `${mobileX}%`);
     hotspot.style.setProperty('--hotspot-mobile-y', `${mobileY}%`);
-    if (x >= 70) hotspot.classList.add('overlay-hotspot-right');
-    if (x <= 30) hotspot.classList.add('overlay-hotspot-left');
-    if (y <= 25) hotspot.classList.add('overlay-hotspot-top');
-    if (mobileX >= 70) hotspot.classList.add('overlay-hotspot-mobile-right');
-    if (mobileX <= 30) hotspot.classList.add('overlay-hotspot-mobile-left');
-    if (mobileY <= 25) hotspot.classList.add('overlay-hotspot-mobile-top');
+    if (x >= 70) hotspot.classList.add('lixiang-product-icon-overlay-showcase-hotspot-right');
+    if (x <= 30) hotspot.classList.add('lixiang-product-icon-overlay-showcase-hotspot-left');
+    if (y <= 25) hotspot.classList.add('lixiang-product-icon-overlay-showcase-hotspot-top');
+    if (mobileX >= 70) hotspot.classList.add('lixiang-product-icon-overlay-showcase-hotspot-mobile-right');
+    if (mobileX <= 30) hotspot.classList.add('lixiang-product-icon-overlay-showcase-hotspot-mobile-left');
+    if (mobileY <= 25) hotspot.classList.add('lixiang-product-icon-overlay-showcase-hotspot-mobile-top');
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = 'overlay-hotspot-button';
+    button.className = 'lixiang-product-icon-overlay-showcase-hotspot-button';
     button.setAttribute('aria-expanded', 'false');
     button.setAttribute('aria-label', propText(item, 'label') || 'Feature hotspot');
     button.textContent = '+';
     const detail = document.createElement('div');
-    detail.className = 'overlay-hotspot-detail';
+    detail.className = 'lixiang-product-icon-overlay-showcase-hotspot-detail';
     const title = document.createElement('strong');
     title.textContent = propText(item, 'label');
     detail.append(title);
@@ -75,15 +75,15 @@ function createPanel(panelSource, hotspotItems = []) {
 
 export default function decorate(block) {
   initProductBlock(block);
-  const sources = modelItems(block, 'overlay-panel');
+  const sources = modelItems(block, 'lixiang-product-icon-overlay-showcase-panel');
   const shell = document.createElement('div');
   shell.className = 'overlay-showcase-shell';
   const header = createSectionHeader(block);
   if (header.childElementCount) shell.append(header);
-  const hotspotsByPanel = groupChildItems(block, sources, 'overlay-hotspot');
+  const hotspotsByPanel = groupChildItems(block, sources, 'lixiang-product-icon-overlay-showcase-hotspot');
   const panels = sources.map((source) => createPanel(source, hotspotsByPanel.get(source) || []));
   const panelList = document.createElement('div');
-  panelList.className = 'overlay-panels';
+  panelList.className = 'lixiang-product-icon-overlay-showcase-panels';
   panelList.append(...panels);
   if (panels.length > 1) {
     const tabs = document.createElement('div');
@@ -101,5 +101,5 @@ export default function decorate(block) {
   } else shell.append(panelList);
   addBlockAnchor(block, block, shell);
   block.replaceChildren(shell);
-  revealElements(block, '.product-section-header, .overlay-panel');
+  revealElements(block, '.product-section-header, .lixiang-product-icon-overlay-showcase-panel');
 }

@@ -10,18 +10,18 @@ import {
 export default function decorate(block) {
   initProductBlock(block);
   const shell = document.createElement('div');
-  shell.className = 'product-download-shell';
+  shell.className = 'lixiang-product-download-shell';
   const { element: media } = createMedia(block, {
     autoplay: false,
     showControls: false,
     showProgress: false,
   });
   const copy = document.createElement('div');
-  copy.className = 'product-download-copy';
+  copy.className = 'lixiang-product-download-copy';
   const header = createSectionHeader(block);
   if (header.childElementCount) copy.append(header);
   const actions = document.createElement('div');
-  actions.className = 'product-download-actions';
+  actions.className = 'lixiang-product-download-actions';
   const ios = createProductLink(block, 'ios');
   const android = createProductLink(block, 'android');
   if (ios) actions.append(ios);
@@ -30,5 +30,5 @@ export default function decorate(block) {
   shell.append(media, copy);
   addBlockAnchor(block, block, shell);
   block.replaceChildren(shell);
-  revealElements(block, '.product-download-copy');
+  revealElements(block, '.lixiang-product-download-copy');
 }

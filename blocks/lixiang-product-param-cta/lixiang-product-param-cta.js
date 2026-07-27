@@ -10,13 +10,13 @@ import {
 export default function decorate(block) {
   initProductBlock(block);
   const shell = document.createElement('div');
-  shell.className = 'product-param-cta-shell';
+  shell.className = 'lixiang-product-param-cta-shell';
   const copy = document.createElement('div');
-  copy.className = 'product-param-cta-copy';
+  copy.className = 'lixiang-product-param-cta-copy';
   const header = createSectionHeader(block);
   if (header.childElementCount) copy.append(header);
   const actions = document.createElement('div');
-  actions.className = 'product-param-cta-actions';
+  actions.className = 'lixiang-product-param-cta-actions';
   const primary = createProductLink(block);
   const secondary = createProductLink(block, 'secondary');
   if (primary) actions.append(primary);
@@ -31,5 +31,5 @@ export default function decorate(block) {
   shell.append(copy, media);
   addBlockAnchor(block, block, shell);
   block.replaceChildren(shell);
-  revealElements(block, '.product-param-cta-copy, .product-media');
+  revealElements(block, '.lixiang-product-param-cta-copy, .product-media');
 }
