@@ -126,7 +126,7 @@
 }
 
 .lixiang-about-creativity-values-description {
-  font-size: 16px;
+  font-size: calc(16px * var(--about-scale, 1));
   font-weight: 400;
   line-height: 1.75;
   color: #666;
@@ -195,7 +195,7 @@
   .lixiang-about-creativity-grid {
     grid-template-columns: 1fr;
     gap: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 56px;
   }
 
   .lixiang-about-creativity-card {
@@ -249,6 +249,7 @@
   }
 
   .lixiang-about-creativity-values-media {
+    flex: none;
     height: 212px;
     margin: 0 20px 18px;
   }
