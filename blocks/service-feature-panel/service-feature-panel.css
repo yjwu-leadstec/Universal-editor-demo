@@ -9,6 +9,7 @@
  * The `list` variant maps to production `.sceneserviceservice2`;
  * `app` / `diagnosis` map to `.sceneserviceservice1`.
  */
+
 /* The section wrapper caps content at 1200px and adds a gutter; these blocks are
    full-bleed on the live site, so neutralise it here rather than with a 100vw
    pull-out — 100vw counts the scrollbar and shifts the block left by its width. */
@@ -291,6 +292,7 @@ main .service-feature-panel .service-reveal.is-visible {
     margin-top: 0;
     border-radius: 4px 4px 0 0;
   }
+
   main .service-feature-panel.list .support-feature-media {
     display: block;
     height: 50.13vw;
@@ -350,6 +352,7 @@ main .service-feature-panel .service-reveal.is-visible {
     padding-bottom: 4px;
     line-height: 32px;
   }
+
   main .service-feature-panel.list .support-feature-item h3 {
     margin-bottom: 2px;
   }

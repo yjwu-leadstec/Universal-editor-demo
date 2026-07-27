@@ -6,6 +6,7 @@
  * `calc(<px-at-1920> * var(--service-unit))`, so the literals below read as the
  * production pixel values at the 1920 breakpoint.
  */
+
 /* The section wrapper caps content at 1200px and adds a gutter; these blocks are
    full-bleed on the live site, so neutralise it here rather than with a 100vw
    pull-out — 100vw counts the scrollbar and shifts the block left by its width. */

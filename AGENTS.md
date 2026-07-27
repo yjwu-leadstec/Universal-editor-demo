@@ -195,7 +195,7 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 
 ## Header 响应式强制规则
 
-- 全站布局仍是三档：`1441px+` 大屏、`720-1440px` 中屏、`719px-` 小屏；Header 另有组件级 `1000px` 行为断点，不得把它解释为第四套全站布局。
+- 全站布局仍是三档：`1441px+` 大屏、`720-1440px` 中屏、`719px-` 小屏；Header 另有组件级 `1000px` 行为断点，不得把它解释为第四套全站布局。Service 页（`service-hero` / `service-feature-panel`）另有组件级单断点 `720px` + rem 流式缩放模型，同样只是组件级实现，不改变全站三档；细节见 `docs/service-page-breakpoint-alignment.md`。
 - `>=1000px` 使用桌面导航；首页顶部透明态使用渐变和 `20px` 背景模糊。
 - `<1000px` 使用汉堡导航；首页顶部必须完全透明，不得保留渐变或 `backdrop-filter`。
 - 首页透明 Header 在所有尺寸下都覆盖首个组件；滚动、打开导航/面板/语言弹窗时切换为白底、无模糊和深色前景。
