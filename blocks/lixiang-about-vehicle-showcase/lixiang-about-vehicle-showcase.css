@@ -110,10 +110,9 @@
 
 @media (width <= 719px) {
   .lixiang-about-vehicle-showcase {
-    height: auto;
+    height: 100vh;
+    min-height: 200vw;
     max-height: none;
-    aspect-ratio: 375 / 812;
-    background: #f6f6f6;
   }
 
   .lixiang-about-vehicle-showcase-bg-desktop { display: none; }
@@ -125,16 +124,18 @@
   }
 
   .lixiang-about-vehicle-showcase-copy h2 {
+    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 24px;
+    font-weight: 400;
     line-height: 1.3333;
-    color: rgb(0 0 0 / 90%);
+    color: #fff;
   }
 
   .lixiang-about-vehicle-showcase-copy > p {
     font-size: 14px;
     line-height: 1.5714;
     letter-spacing: 0;
-    color: rgb(0 0 0 / 60%);
+    color: #fff;
   }
 
   .lixiang-about-vehicle-models {
@@ -149,15 +150,17 @@
 
   .lixiang-about-vehicle-model-name {
     font-size: 16px;
+    font-weight: 400;
     line-height: 1.75;
-    color: rgb(0 0 0 / 90%);
+    color: #fff;
   }
 
   .lixiang-about-vehicle-model-desc {
     margin-top: 0;
     font-size: 12px;
+    font-weight: 400;
     line-height: 1.6667;
-    color: rgb(0 0 0 / 90%);
+    color: #fff;
   }
 }
 

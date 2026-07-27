@@ -148,16 +148,27 @@
   }
 
   .lixiang-about-create-together-header { gap: 8px; }
-  .lixiang-about-create-together-header h2 { font-size: 24px; }
-  .lixiang-about-create-together-subtitle { font-size: 14px; }
+
+  .lixiang-about-create-together-header h2 {
+    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .lixiang-about-create-together-subtitle {
+    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
+    font-size: 14px;
+    line-height: 1.7143;
+  }
 
   .lixiang-about-create-together-grid {
     flex-wrap: nowrap;
     justify-content: flex-start;
     gap: 12px;
-    width: calc(100% + 40px);
-    margin: 0 -20px;
-    padding: 0 20px 20px;
+    width: calc(100% + 28px);
+    margin: 0 -14px;
+    padding: 0 14px 20px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -166,10 +177,9 @@
   .lixiang-about-create-together-grid::-webkit-scrollbar { display: none; }
 
   .lixiang-about-create-together-card {
-    flex: 0 0 calc(100vw - 60px);
-    max-width: 335px;
+    flex: 0 0 calc(100vw - 40px);
     aspect-ratio: auto;
-    border-radius: 16px;
+    border-radius: 8px;
     background: #fff;
     scroll-snap-align: start;
   }
@@ -178,40 +188,43 @@
 
   .lixiang-about-create-together-card-content {
     position: static;
-    padding: 24px 20px 16px;
+    padding: 24px 20px;
+    gap: 4px;
   }
 
   .lixiang-about-create-together-card-content h3 {
+    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 16px;
+    font-weight: 400;
     line-height: 1.75;
     color: rgb(0 0 0 / 90%);
   }
 
   .lixiang-about-create-together-card-description {
     font-size: 14px;
-    font-weight: 400;
     line-height: 1.5714;
     color: rgb(0 0 0 / 90%);
   }
 
   .lixiang-about-create-together-card-media {
-    position: static;
-    margin: 0 8px 8px;
-    aspect-ratio: auto;
-  }
-
-  .lixiang-about-create-together-card-media picture {
-    border-radius: 16px;
+    position: relative;
+    margin: 0;
+    border-radius: 0 0 8px 8px;
     overflow: hidden;
     aspect-ratio: 335 / 188;
   }
 
+  .lixiang-about-create-together-card-media picture { display: block; }
+
   .lixiang-about-create-together-card-footnote {
-    position: static;
-    padding: 12px 20px 4px;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 16px;
+    padding: 0;
     font-size: 12px;
     line-height: 1.6667;
-    color: rgb(0 0 0 / 60%);
+    color: #fff;
     text-align: center;
   }
 }

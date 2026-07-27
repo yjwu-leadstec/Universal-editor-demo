@@ -65,9 +65,9 @@
 
 @media (width <= 719px) {
   .lixiang-about-hero {
-    height: auto;
+    height: 100vh;
+    min-height: 200vw;
     max-height: none;
-    aspect-ratio: 375 / 812;
   }
 
   .lixiang-about-hero-bg-desktop { display: none; }
@@ -80,14 +80,15 @@
   }
 
   .lixiang-about-hero-copy h1 {
-    font-size: 36px;
-    font-weight: 500;
-    line-height: 1.3333;
+    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.5;
   }
 
   .lixiang-about-hero-copy p {
-    font-size: 12px;
-    line-height: 1.6667;
+    font-size: 14px;
+    line-height: 1.4286;
   }
 }
 

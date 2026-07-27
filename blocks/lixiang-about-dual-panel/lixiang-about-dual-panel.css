@@ -158,8 +158,19 @@
   }
 
   .lixiang-about-dual-panel-header { gap: 8px; }
-  .lixiang-about-dual-panel-header h2 { font-size: 24px; }
-  .lixiang-about-dual-panel-subtitle { font-size: 14px; }
+
+  .lixiang-about-dual-panel-header h2 {
+    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .lixiang-about-dual-panel-subtitle {
+    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
+    font-size: 14px;
+    line-height: 1.7143;
+  }
 
   .lixiang-about-dual-panel-grid {
     flex-direction: column;
@@ -167,43 +178,40 @@
   }
 
   .lixiang-about-dual-panel-card {
-    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 1 / 1;
     border-radius: 8px;
-    background: #fff;
   }
 
-  .lixiang-about-dual-panel-card::after { content: none; }
-
   .lixiang-about-dual-panel-card-content {
-    position: static;
-    padding: 24px 20px 20px;
-    gap: 8px;
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    padding: 32px 20px 16px;
+    gap: 4px;
   }
 
   .lixiang-about-dual-panel-card-content h3 {
+    font-family: licium-medium, roboto, roboto-fallback, sans-serif;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.4;
-    color: rgb(0 0 0 / 90%);
   }
 
   .lixiang-about-dual-panel-card-description {
     font-size: 12px;
-    font-weight: 400;
     line-height: 1.6667;
-    color: rgb(0 0 0 / 60%);
-  }
-
-  .lixiang-about-dual-panel-card-media {
-    position: static;
-    aspect-ratio: 335 / 215;
   }
 
   .lixiang-about-dual-panel-card-footnote {
-    position: static;
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    margin-top: auto;
     padding: 0 20px 16px;
     font-size: 12px;
-    line-height: 1.6667;
-    color: rgb(0 0 0 / 60%);
   }
 }
