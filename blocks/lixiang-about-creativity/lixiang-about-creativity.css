@@ -196,6 +196,7 @@
     grid-template-columns: 1fr;
     gap: 16px;
     margin-bottom: 56px;
+    padding-bottom: 14px;
   }
 
   .lixiang-about-creativity-card {
