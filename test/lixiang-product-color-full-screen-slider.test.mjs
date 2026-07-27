@@ -38,5 +38,6 @@ test('full-screen color slider exposes accessible manual controls', () => {
 test('full-screen color slider matches desktop and mobile design ratios', () => {
   assert.match(blockCss, /aspect-ratio: 16 \/ 9/);
   assert.match(blockCss, /aspect-ratio: 3 \/ 4/);
+  assert.match(blockCss, /width: calc\(100% - 24px\);[\s\S]*justify-content: space-between/);
   assert.match(blockCss, /\.adobe-ue-edit[\s\S]*max-height: 1080px/);
 });

@@ -260,9 +260,9 @@ main .lixiang-product-color-full-screen-slider
     right: auto;
     bottom: 74px;
     left: 50%;
-    width: max-content;
-    max-width: calc(100% - 24px);
-    gap: min(23px, calc((100vw - 230px) / 8));
+    width: calc(100% - 24px);
+    gap: 0;
+    justify-content: space-between;
     transform: translateX(-50%);
   }
 
