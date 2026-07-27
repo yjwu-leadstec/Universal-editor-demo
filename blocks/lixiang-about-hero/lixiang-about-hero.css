@@ -22,12 +22,12 @@
   display: block;
 }
 
-.lixiang-about-hero-bg-mobile { display: none; }
-.lixiang-about-hero-bg-pad { display: none; }
+.lixiang-about-hero-media .lixiang-about-hero-bg-mobile { display: none; }
+.lixiang-about-hero-media .lixiang-about-hero-bg-pad { display: none; }
 
 @media (width >= 721px) and (width <= 1024px) {
-  .lixiang-about-hero-bg-desktop { display: none; }
-  .lixiang-about-hero-bg-pad { display: block; }
+  .lixiang-about-hero-media .lixiang-about-hero-bg-desktop { display: none; }
+  .lixiang-about-hero-media .lixiang-about-hero-bg-pad { display: block; }
 }
 
 .lixiang-about-hero-copy {
@@ -75,8 +75,8 @@
     max-height: none;
   }
 
-  .lixiang-about-hero-bg-desktop, .lixiang-about-hero-bg-pad { display: none; }
-  .lixiang-about-hero-bg-mobile { display: block; }
+  .lixiang-about-hero-bg-desktop, .lixiang-about-hero-media .lixiang-about-hero-bg-pad { display: none; }
+  .lixiang-about-hero-media .lixiang-about-hero-bg-mobile { display: block; }
 
   .lixiang-about-hero-copy {
     top: 160px;

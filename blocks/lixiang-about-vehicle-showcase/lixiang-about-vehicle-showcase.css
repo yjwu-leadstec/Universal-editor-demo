@@ -22,12 +22,12 @@
   display: block;
 }
 
-.lixiang-about-vehicle-showcase-bg-mobile { display: none; }
-.lixiang-about-vehicle-showcase-bg-pad { display: none; }
+.lixiang-about-vehicle-showcase-media .lixiang-about-vehicle-showcase-bg-mobile { display: none; }
+.lixiang-about-vehicle-showcase-media .lixiang-about-vehicle-showcase-bg-pad { display: none; }
 
 @media (width >= 721px) and (width <= 1024px) {
-  .lixiang-about-vehicle-showcase-bg-desktop { display: none; }
-  .lixiang-about-vehicle-showcase-bg-pad { display: block; }
+  .lixiang-about-vehicle-showcase-media .lixiang-about-vehicle-showcase-bg-desktop { display: none; }
+  .lixiang-about-vehicle-showcase-media .lixiang-about-vehicle-showcase-bg-pad { display: block; }
 }
 
 .lixiang-about-vehicle-showcase-copy {
@@ -120,8 +120,8 @@
     max-height: none;
   }
 
-  .lixiang-about-vehicle-showcase-bg-desktop, .lixiang-about-vehicle-showcase-bg-pad { display: none; }
-  .lixiang-about-vehicle-showcase-bg-mobile { display: block; }
+  .lixiang-about-vehicle-showcase-bg-desktop, .lixiang-about-vehicle-showcase-media .lixiang-about-vehicle-showcase-bg-pad { display: none; }
+  .lixiang-about-vehicle-showcase-media .lixiang-about-vehicle-showcase-bg-mobile { display: block; }
 
   .lixiang-about-vehicle-showcase-copy {
     top: 160px;
