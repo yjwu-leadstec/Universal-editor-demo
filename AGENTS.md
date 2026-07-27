@@ -102,6 +102,13 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 - `npm run build:json` produces `component-models.json`, `component-definition.json`, and `component-filters.json` in the repository root.
 - The Husky pre-commit hook runs `build:json` and stages all three generated files whenever a staged `_<name>.json` partial changes. Run it manually when validating model work before commit.
 
+### 模型字段强制约定
+
+- xwalk `max-cells` 上限为 4 个字段组。需要更多字段时，用下划线前缀并入同组（`values_title` / `values_image` 同属 `values` 组），`*Alt` 在基础字段存在时自动折叠不占格。
+- 同组字段发布时序列化成一个合并 cell（多段文本与图片混在一个 div);block JS 必须同时兼容 UE 形态（独立 `data-aue-prop`）与发布形态（解析合并 cell)，参考 `lixiang-about-creativity` 的 `values` 组与 `lixiang-about-design-language` 的 `big` 组。
+- 不得把模型字段命名为 `name`（保留作块显示名，序列化会丢弃），改用 `modelName`、`title` 等。
+- About Us 页面的最终视觉与文案基准是现网 `www.liauto.com/about.html`；对齐口径与发布工作流见 `docs/about-us-alignment.md`。
+
 ### Script Loading Phases
 
 - **Eager** (`loadEager`): critical above-the-fold content and the first section.
