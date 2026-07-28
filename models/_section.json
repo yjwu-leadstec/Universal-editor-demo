@@ -33,18 +33,39 @@
             {
               "name": "Visual",
               "children": [
-                { "name": "Highlight", "value": "highlight" },
-                { "name": "Dark Background", "value": "dark-bg" }
+                {
+                  "name": "Highlight",
+                  "value": "highlight"
+                },
+                {
+                  "name": "Dark Background",
+                  "value": "dark-bg"
+                }
               ]
             },
             {
               "name": "Layout",
               "children": [
-                { "name": "Hero (Full Height)", "value": "hero" },
-                { "name": "Feature Showcase", "value": "feature" },
-                { "name": "Banner Carousel", "value": "banner" },
-                { "name": "CTA Banner", "value": "cta" },
-                { "name": "Full Width", "value": "full-width" }
+                {
+                  "name": "Hero (Full Height)",
+                  "value": "hero"
+                },
+                {
+                  "name": "Feature Showcase",
+                  "value": "feature"
+                },
+                {
+                  "name": "Banner Carousel",
+                  "value": "banner"
+                },
+                {
+                  "name": "CTA Banner",
+                  "value": "cta"
+                },
+                {
+                  "name": "Full Width",
+                  "value": "full-width"
+                }
               ]
             }
           ]
@@ -85,7 +106,10 @@
         "lixiang-product-guide",
         "lixiang-product-download",
         "header-navigation",
-        "lixiang-test-drive-booking"
+        "lixiang-test-drive-booking",
+        "lixiang-service-hero",
+        "lixiang-service-feature-panel",
+        "lixiang-service-download-cards"
       ]
     }
   ]

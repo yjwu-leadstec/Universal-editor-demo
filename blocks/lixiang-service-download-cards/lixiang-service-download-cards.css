@@ -1,10 +1,27 @@
+/*
+ * Breakpoints mirror the live site (liauto.com/ru_kz/support/service, the
+ * `SceneWarrantyManual` scene): a single 720px desktop/mobile switch plus the
+ * fluid root unit shared with the other service blocks — 112px above 1440,
+ * 84px from 1025 to 1440, 8.3333vw at or below 1024. Desktop lengths are
+ * written `calc(<px-at-1920> * var(--lixiang-service-unit))`, so the literals
+ * read as the production pixel values at the 1920 breakpoint.
+ */
+
+/* The section wrapper caps content at 1200px and adds a gutter; this block is
+   full-bleed on the live site, so neutralise it here rather than with a 100vw
+   pull-out — 100vw counts the scrollbar and shifts the block left by its width. */
+main .section > .lixiang-service-download-cards-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
 main .lixiang-service-download-cards {
   --lixiang-service-font-regular: licium-regular, "Segoe UI", arial, sans-serif;
   --lixiang-service-font-medium: licium-medium, "Segoe UI", arial, sans-serif;
+  --lixiang-service-rem: 112px;
+  --lixiang-service-unit: calc(var(--lixiang-service-rem) / 112);
 
   position: relative;
-  width: 100vw;
-  margin-inline: calc(50% - 50vw);
   color: rgb(0 0 0 / 90%);
   font-family: var(--lixiang-service-font-regular);
   background: #fff;
@@ -15,43 +32,53 @@ main .lixiang-service-download-cards.gray {
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-shell {
-  max-width: 1480px;
+  box-sizing: border-box;
+  max-width: 1920px;
   margin-inline: auto;
-  padding: 72px 20px 80px;
+  padding:
+    calc(120 * var(--lixiang-service-unit))
+    calc(218 * var(--lixiang-service-unit));
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-header {
-  margin-bottom: 42px;
+  margin-bottom: calc(40 * var(--lixiang-service-unit));
   text-align: center;
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-header h2 {
   margin: 0;
   font-family: var(--lixiang-service-font-medium);
-  font-size: 32px;
+  font-size: calc(48 * var(--lixiang-service-unit));
   font-weight: 500;
-  line-height: 1.3;
+  line-height: calc(67 * var(--lixiang-service-unit));
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-header p {
-  margin: 10px 0 0;
+  margin: calc(10 * var(--lixiang-service-unit)) 0 0;
   color: rgb(0 0 0 / 40%);
-  font-size: 14px;
-  line-height: 1.55;
+  font-size: calc(14 * var(--lixiang-service-unit));
+  line-height: calc(22 * var(--lixiang-service-unit));
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: calc(16 * var(--lixiang-service-unit));
+}
+
+main .lixiang-service-download-cards .lixiang-service-download-grid[data-count="1"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+main .lixiang-service-download-cards .lixiang-service-download-grid[data-count="2"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-card {
-  display: grid;
-  grid-template-rows: minmax(277px, 1fr) minmax(100px, auto);
-  min-height: 377px;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 4px;
   background: #f8f8f8;
 }
 
@@ -59,34 +86,37 @@ main .lixiang-service-download-cards.gray .lixiang-service-download-card {
   background: #fff;
 }
 
+
+/* Production stacks the vehicle shot with the wordmark overlaid near the top;
+   the card has no gradient of its own — the artwork carries the background. */
 main .lixiang-service-download-cards .lixiang-service-download-card-visual {
   position: relative;
-  display: grid;
-  grid-template-rows: 72px 1fr;
+  aspect-ratio: 479 / 375;
   overflow: hidden;
-  background: linear-gradient(135deg, #eef0ef, #d8e1e1);
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-card-identity {
-  position: relative;
+  position: absolute;
   z-index: 1;
+  inset: calc(24 * var(--lixiang-service-unit)) 0 auto;
   display: grid;
   place-items: center;
-  padding-top: 18px;
+  padding-top: 0;
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-card-identity h3 {
   margin: 0;
   font-family: var(--lixiang-service-font-medium);
-  font-size: 26px;
+  font-size: calc(20 * var(--lixiang-service-unit));
   font-weight: 500;
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-card-identity picture,
 main .lixiang-service-download-cards .lixiang-service-download-card-identity img {
   display: block;
-  width: min(130px, 46%);
-  max-height: 42px;
+  width: auto;
+  height: calc(48 * var(--lixiang-service-unit));
+  max-height: none;
   object-fit: contain;
 }
 
@@ -99,16 +129,16 @@ main .lixiang-service-download-cards .lixiang-service-download-card-media img {
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-card-media img {
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
-  transform: scale(0.92);
   transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-card:hover .lixiang-service-download-card-media img,
 main .lixiang-service-download-cards .lixiang-service-download-card:focus-within .lixiang-service-download-card-media img {
-  transform: scale(0.98);
+  transform: scale(1.03);
 }
+
 
 main .lixiang-service-download-cards .lixiang-service-download-card-media.is-media-fallback {
   display: grid;
@@ -124,32 +154,32 @@ main .lixiang-service-download-cards .lixiang-service-download-card-media.is-med
 
 main .lixiang-service-download-cards .lixiang-service-download-card-footer {
   display: flex;
-  min-height: 100px;
-  background: #f8f8f8;
+  min-height: 0;
+  background: transparent;
 }
 
 main .lixiang-service-download-cards.gray .lixiang-service-download-card-footer {
-  background: #fff;
+  background: transparent;
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-card-action,
 main .lixiang-service-download-cards a.lixiang-service-download-card-action:any-link {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto 36px;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: center;
-  gap: 12px;
+  gap: calc(12 * var(--lixiang-service-unit));
   width: 100%;
-  min-height: 100px;
+  min-height: 0;
   margin: 0;
-  padding: 20px 22px;
+  padding: calc(24 * var(--lixiang-service-unit));
   border: 0;
   border-radius: 0;
   color: #191919;
   background: transparent;
   font-family: var(--lixiang-service-font-regular);
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: calc(14 * var(--lixiang-service-unit));
+  line-height: calc(22 * var(--lixiang-service-unit));
   text-align: left;
   text-decoration: none;
   white-space: normal;
@@ -164,24 +194,26 @@ main .lixiang-service-download-cards .lixiang-service-download-card-action:focus
 
 main .lixiang-service-download-cards .lixiang-service-download-card-action small {
   color: rgb(0 0 0 / 40%);
-  font-size: 13px;
+  font-size: calc(12 * var(--lixiang-service-unit));
 }
 
+/* Production uses a plain glyph, not a filled circle. */
 main .lixiang-service-download-cards .lixiang-service-download-icon {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  color: #fff;
-  background: rgb(0 0 0 / 90%);
+  width: calc(20 * var(--lixiang-service-unit));
+  height: calc(20 * var(--lixiang-service-unit));
+  border-radius: 0;
+  color: #191919;
+  background: transparent;
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-icon::before {
-  font-size: 18px;
+  font-size: calc(18 * var(--lixiang-service-unit));
   line-height: 1;
   content: "↓";
 }
+
 
 main .lixiang-service-download-cards .lixiang-service-download-modal {
   width: min(580px, calc(100vw - 32px));
@@ -364,59 +396,94 @@ main .lixiang-service-download-cards .lixiang-service-reveal.is-visible {
   to { background: rgb(0 0 0 / 0%); }
 }
 
-@media (width >= 600px) {
-  main .lixiang-service-download-cards .lixiang-service-download-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  main .lixiang-service-download-cards .lixiang-service-download-grid[data-count="1"] {
-    grid-template-columns: 1fr;
+@media (width <= 1440px) {
+  main .lixiang-service-download-cards {
+    --lixiang-service-rem: 84px;
   }
 }
 
-@media (width >= 900px) {
+@media (width <= 1024px) {
+  main .lixiang-service-download-cards {
+    --lixiang-service-rem: 8.3333vw;
+  }
+}
+
+/* Below 720px production turns the row into a horizontally scrolling track of
+   fixed-width cards rather than reflowing them into a column. */
+@media (width <= 720px) {
   main .lixiang-service-download-cards .lixiang-service-download-shell {
-    padding-top: 120px;
+    max-width: none;
+    padding: 60px 20px;
   }
 
   main .lixiang-service-download-cards .lixiang-service-download-header {
-    margin-bottom: 64px;
+    margin-bottom: 24px;
   }
 
   main .lixiang-service-download-cards .lixiang-service-download-header h2 {
-    font-size: 48px;
+    font-size: 20px;
+    line-height: 32px;
   }
 
   main .lixiang-service-download-cards .lixiang-service-download-header p {
-    font-size: 20px;
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 20px;
   }
 
-  main .lixiang-service-download-cards .lixiang-service-download-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
-  }
-
-  main .lixiang-service-download-cards .lixiang-service-download-grid[data-count="1"] {
-    grid-template-columns: 1fr;
-  }
-
+  main .lixiang-service-download-cards .lixiang-service-download-grid,
+  main .lixiang-service-download-cards .lixiang-service-download-grid[data-count="1"],
   main .lixiang-service-download-cards .lixiang-service-download-grid[data-count="2"] {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    gap: 8px;
+    margin-inline: -20px;
+    padding-inline: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  main .lixiang-service-download-cards .lixiang-service-download-grid::-webkit-scrollbar {
+    display: none;
   }
 
   main .lixiang-service-download-cards .lixiang-service-download-card {
-    grid-template-rows: 377px minmax(100px, auto);
-    min-height: 477px;
+    flex: 0 0 334px;
+    border-radius: 0;
+    scroll-snap-align: start;
+  }
+
+  main .lixiang-service-download-cards .lixiang-service-download-card-identity {
+    inset: 16px 0 auto;
+  }
+
+  main .lixiang-service-download-cards .lixiang-service-download-card-identity img {
+    height: 48px;
+  }
+
+  main .lixiang-service-download-cards .lixiang-service-download-card-action,
+  main .lixiang-service-download-cards a.lixiang-service-download-card-action:any-link {
+    gap: 12px;
+    padding: 16px 20px 20px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  main .lixiang-service-download-cards .lixiang-service-download-card-action small {
+    font-size: 12px;
+  }
+
+  main .lixiang-service-download-cards .lixiang-service-download-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  main .lixiang-service-download-cards .lixiang-service-download-icon::before {
+    font-size: 18px;
   }
 }
 
-@media (width >= 1200px) {
-  main .lixiang-service-download-cards .lixiang-service-download-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (width < 600px) {
+@media (width <= 720px) {
   main .lixiang-service-download-cards .lixiang-service-download-modal {
     width: 100vw;
     max-width: none;

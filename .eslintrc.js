@@ -20,6 +20,7 @@ module.exports = {
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
     'xwalk/max-cells': ['error', {
       carousel: 6,
+      'lixiang-service-download-card': 6,
       slide: 8,
       'product-card': 8,
       'vehicle-tile': 8,
