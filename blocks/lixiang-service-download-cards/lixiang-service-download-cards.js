@@ -138,6 +138,10 @@ function createCard(card) {
   article.className = 'lixiang-service-download-card';
   const visual = document.createElement('div');
   visual.className = 'lixiang-service-download-card-visual';
+  // Each model has its own backdrop gradient in the design; expose the key so
+  // CSS can pick it. Unknown keys fall back to the neutral default gradient.
+  const vehicle = (card.key || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  if (vehicle) visual.dataset.vehicle = vehicle;
 
   const identity = document.createElement('div');
   identity.className = 'lixiang-service-download-card-identity';
