@@ -31,13 +31,15 @@ main .lixiang-service-download-cards.gray {
   background: #f8f8f8;
 }
 
+/* Production keeps the vertical rhythm on the rem ladder but drives the
+   horizontal gutter from a percentage (11.4583%, the shared site gutter), so
+   the three-column track widens proportionally rather than by the rem step. */
 main .lixiang-service-download-cards .lixiang-service-download-shell {
   box-sizing: border-box;
   max-width: 1920px;
   margin-inline: auto;
-  padding:
-    calc(120 * var(--lixiang-service-unit))
-    calc(218 * var(--lixiang-service-unit));
+  padding-block: calc(120 * var(--lixiang-service-unit));
+  padding-inline: 11.4583%;
 }
 
 main .lixiang-service-download-cards .lixiang-service-download-header {
@@ -166,7 +168,7 @@ main .lixiang-service-download-cards .lixiang-service-download-card-action,
 main .lixiang-service-download-cards a.lixiang-service-download-card-action:any-link {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: calc(12 * var(--lixiang-service-unit));
   width: 100%;
@@ -451,6 +453,12 @@ main .lixiang-service-download-cards .lixiang-service-reveal.is-visible {
     flex: 0 0 334px;
     border-radius: 0;
     scroll-snap-align: start;
+  }
+
+  /* Mobile keeps a taller fixed-height artwork box rather than the desktop ratio. */
+  main .lixiang-service-download-cards .lixiang-service-download-card-visual {
+    aspect-ratio: auto;
+    height: 377px;
   }
 
   main .lixiang-service-download-cards .lixiang-service-download-card-identity {

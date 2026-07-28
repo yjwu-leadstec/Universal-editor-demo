@@ -162,21 +162,19 @@ function createCard(card) {
     link.href = file.href || '#';
     link.setAttribute('download', '');
     const label = document.createElement('span');
-    label.textContent = file.name;
-    const size = document.createElement('small');
-    size.textContent = file.size;
-    link.append(label, size, createDownloadIcon());
+    label.textContent = card.name;
+    link.append(label, createDownloadIcon());
     instrument(file.row, link);
     footer.append(link);
   } else {
+    // Production shows just the manual title on the card face; the file count
+    // lives in the dialog, so no secondary line here.
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'lixiang-service-download-card-action';
     const label = document.createElement('span');
-    label.textContent = `${card.name} Documents`;
-    const count = document.createElement('small');
-    count.textContent = `${card.files.length} files`;
-    button.append(label, count, createDownloadIcon());
+    label.textContent = card.name;
+    button.append(label, createDownloadIcon());
     footer.append(button);
     dialog = createDialog(card);
     setupDialog(dialog, button);
@@ -213,10 +211,14 @@ export default function decorate(block) {
     instrumentProp(rows, 'title', heading);
     header.append(heading);
   }
-  const subtitleText = propText(rows, 'subtitle')
+  // The subtitle is optional. Both fallbacks can echo the title when no subtitle was
+  // authored (published markup keeps title and subtitle in the same cell), so drop any
+  // candidate that just repeats it.
+  const subtitleCandidate = propText(rows, 'subtitle')
     || semanticSourceAfter(rows.filter((row) => !rowKind(row)), 'p', propSource(rows, 'title'))?.textContent.trim()
     || headerTexts[1]
     || '';
+  const subtitleText = subtitleCandidate === title ? '' : subtitleCandidate;
   if (subtitleText) {
     const subtitle = document.createElement('p');
     subtitle.textContent = subtitleText;
