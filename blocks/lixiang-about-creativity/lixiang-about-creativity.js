@@ -151,23 +151,37 @@ export default function decorate(block) {
   block.append(inner);
   animateAboutBlock(block, { containers: [header, ...grid.children, values] });
 
-  const equalizeContents = () => {
-    const contents = [...grid.querySelectorAll('.lixiang-about-creativity-card-content')];
-    contents.forEach((c) => { c.style.minHeight = ''; });
-    if (window.matchMedia('(width <= 719px)').matches) return;
+  const contents = [...grid.querySelectorAll('.lixiang-about-creativity-card-content')];
+  const equalizeContents = (reset) => {
+    if (window.matchMedia('(width <= 719px)').matches) {
+      contents.forEach((c) => { c.style.minHeight = ''; });
+      return;
+    }
     for (let i = 0; i < contents.length; i += 2) {
       const pair = contents.slice(i, i + 2);
-      const max = Math.max(...pair.map((c) => c.offsetHeight));
-      pair.forEach((c) => { c.style.minHeight = `${max}px`; });
+      if (reset) pair.forEach((c) => { c.style.minHeight = ''; });
+      const heights = pair.map((c) => c.offsetHeight);
+      const max = Math.max(...heights);
+      if (heights[0] !== heights[1]) {
+        pair.forEach((c) => { if (c.offsetHeight < max) c.style.minHeight = `${max}px`; });
+      }
     }
   };
-  equalizeContents();
-  if (document.fonts?.ready) document.fonts.ready.then(equalizeContents);
+  equalizeContents(true);
+  let raf = 0;
+  const schedule = (reset) => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => equalizeContents(reset));
+  };
+  if (document.fonts?.ready) document.fonts.ready.then(() => schedule(false));
   let lastWidth = grid.offsetWidth;
   new ResizeObserver(() => {
     if (grid.offsetWidth !== lastWidth) {
       lastWidth = grid.offsetWidth;
-      equalizeContents();
+      schedule(true);
+    } else {
+      schedule(false);
     }
   }).observe(grid);
+  contents.forEach((c) => new ResizeObserver(() => schedule(false)).observe(c));
 }
