@@ -27,6 +27,8 @@
 
 - Remote implementation commit:
   `d7248a0357b65b4690ca660c7f7268edc540f26c`.
+- Source-diagnostic and contract-test follow-up:
+  `660b9ca776723f9f3f7ad83bdd6ffebc5752e188`.
 - `npm run build:json`, full lint, and all 124 tests passed.
 - The real read-only KZ store smoke returned the three documented store codes;
   no real lead POST was performed.
