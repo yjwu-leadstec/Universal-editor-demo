@@ -1,4 +1,10 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import {
+  buildLeadRequest,
+  createTestDriveApiClient,
+  isChallengeRequiredError,
+  TEST_DRIVE_API,
+} from './test-drive-api.js';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^[0-9+()\s-]{6,24}$/;
@@ -424,6 +430,34 @@ function createAuthorItems(content) {
   return rail;
 }
 
+async function submitToOntest(block, payload) {
+  const client = createTestDriveApiClient({
+    baseUrl: block.dataset.apiBaseUrl || TEST_DRIVE_API.baseUrl,
+  });
+  const leadRequest = buildLeadRequest(payload, {
+    sourceUrl: window.location.href,
+    leadSource: block.dataset.leadSource,
+    leadsLanguage: block.dataset.leadsLanguage,
+    countryCode: block.dataset.countryCode,
+    phoneCountryCode: block.dataset.phoneCountryCode,
+    agreementId: block.dataset.agreementId,
+    agreementVersion: block.dataset.agreementVersion,
+  });
+
+  try {
+    await client.addLead(leadRequest);
+  } catch (error) {
+    if (!isChallengeRequiredError(error)) throw error;
+    block.dispatchEvent(new CustomEvent('testdrive:challenge-required', {
+      bubbles: true,
+      detail: { code: error.code },
+    }));
+    if (typeof block.testDriveChallengeProvider !== 'function') throw error;
+    const challengeToken = await block.testDriveChallengeProvider({ code: error.code });
+    await client.addLeadWithCaptcha(leadRequest, challengeToken);
+  }
+}
+
 function setupBooking(block, content, elements, controller) {
   const {
     form, success, hero, chooser, toast,
@@ -734,6 +768,11 @@ function setupBooking(block, content, elements, controller) {
     }
 
     try {
+      if (block.dataset.apiMode === TEST_DRIVE_API.mode) {
+        await submitToOntest(block, payload);
+        showSuccess();
+        return;
+      }
       const endpoint = block.dataset.submitEndpoint;
       if (!endpoint) throw new Error('No test-drive submission endpoint configured');
       const url = new URL(endpoint, window.location.href);
@@ -746,8 +785,10 @@ function setupBooking(block, content, elements, controller) {
       });
       if (!response.ok) throw new Error(`Submission failed (${response.status})`);
       showSuccess();
-    } catch {
-      showToast('We could not submit your request. Please try again.');
+    } catch (error) {
+      showToast(isChallengeRequiredError(error)
+        ? 'Please complete verification and try again.'
+        : 'We could not submit your request. Please try again.');
       submit.disabled = false;
       submit.classList.remove('is-loading');
     }

@@ -2,8 +2,9 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
-const [blockJs, blockCss, modelRaw, sectionRaw] = await Promise.all([
+const [blockJs, apiJs, blockCss, modelRaw, sectionRaw] = await Promise.all([
   readFile(new URL('../blocks/lixiang-test-drive-booking/lixiang-test-drive-booking.js', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/lixiang-test-drive-booking/test-drive-api.js', import.meta.url), 'utf8'),
   readFile(new URL('../blocks/lixiang-test-drive-booking/lixiang-test-drive-booking.css', import.meta.url), 'utf8'),
   readFile(new URL('../blocks/lixiang-test-drive-booking/_lixiang-test-drive-booking.json', import.meta.url), 'utf8'),
   readFile(new URL('../models/_section.json', import.meta.url), 'utf8'),
@@ -50,8 +51,12 @@ test('lixiang test drive booking keeps Universal Editor instrumentation and PII 
   assert.match(blockJs, /new CustomEvent\('testdrive:submit'/);
   assert.match(blockJs, /credentials: 'same-origin'/);
   assert.match(blockJs, /url\.origin !== window\.location\.origin/);
+  assert.match(blockJs, /block\.dataset\.apiMode === TEST_DRIVE_API\.mode/);
+  assert.match(blockJs, /testdrive:challenge-required/);
+  assert.match(apiJs, /Unapproved Test Drive API origin/);
+  assert.match(apiJs, /add-with-captcha/);
   assert.doesNotMatch(blockJs, /localStorage|sessionStorage/);
-  assert.doesNotMatch(blockJs, /console\.(?:log|info|warn|error)/);
+  assert.doesNotMatch(`${blockJs}\n${apiJs}`, /console\.(?:log|info|warn|error)/);
 });
 
 test('lixiang test drive booking has the approved responsive and author geometry', () => {
