@@ -48,23 +48,26 @@ const STORE_CODE_BY_STORE_KEY = {
   'doscar-almaty': 'KZ_RBNTFD',
 };
 
-export class TestDriveError extends Error {
-  constructor(message, { type = 'api', code, status } = {}) {
-    super(message);
-    this.name = 'TestDriveError';
-    this.type = type;
-    this.code = code;
-    this.status = status;
-  }
+function testDriveError(message, type, code, status) {
+  return Object.assign(new Error(message), {
+    name: 'TestDriveError',
+    type,
+    code,
+    status,
+  });
+}
+
+export function isTestDriveError(error) {
+  return error instanceof Error && error.name === 'TestDriveError';
 }
 
 export function isChallengeRequiredError(error) {
-  return error instanceof TestDriveError && error.type === 'challenge';
+  return isTestDriveError(error) && error.type === 'challenge';
 }
 
 function requiredString(value, name) {
   const normalized = String(value || '').trim();
-  if (!normalized) throw new TestDriveError(`Missing ${name}`, { type: 'configuration' });
+  if (!normalized) throw testDriveError(`Missing ${name}`, 'configuration', null, null);
   return normalized;
 }
 
@@ -73,19 +76,17 @@ function allowedBaseUrl(value = ONTEST_BASE_URL) {
   try {
     url = new URL(value);
   } catch {
-    throw new TestDriveError('Invalid Test Drive API base URL', { type: 'configuration' });
+    throw testDriveError('Invalid Test Drive API base URL', 'configuration', null, null);
   }
   if (url.origin !== ONTEST_BASE_URL) {
-    throw new TestDriveError('Unapproved Test Drive API origin', { type: 'configuration' });
+    throw testDriveError('Unapproved Test Drive API origin', 'configuration', null, null);
   }
   return url;
 }
 
 function secureBytes(length, cryptoImpl) {
   if (!cryptoImpl?.getRandomValues) {
-    throw new TestDriveError('Secure random generator is unavailable', {
-      type: 'configuration',
-    });
+    throw testDriveError('Secure random generator is unavailable', 'configuration', null, null);
   }
   const bytes = new Uint8Array(length);
   cryptoImpl.getRandomValues(bytes);
@@ -117,12 +118,12 @@ export function resolveLeadSource(sourceUrl, configuredLeadSource = '') {
   try {
     url = new URL(requiredString(sourceUrl, 'sourceUrl'));
   } catch (error) {
-    if (error instanceof TestDriveError) throw error;
-    throw new TestDriveError('Invalid sourceUrl', { type: 'configuration' });
+    if (isTestDriveError(error)) throw error;
+    throw testDriveError('Invalid sourceUrl', 'configuration', null, null);
   }
   const leadSource = String(configuredLeadSource || url.searchParams.get('chjchannelcode') || '').trim();
   if (!LEAD_SOURCES.has(leadSource)) {
-    throw new TestDriveError('Missing or unsupported leadSource', { type: 'configuration' });
+    throw testDriveError('Missing or unsupported leadSource', 'configuration', null, null);
   }
   return leadSource;
 }
@@ -130,9 +131,12 @@ export function resolveLeadSource(sourceUrl, configuredLeadSource = '') {
 function resolveLanguage(countryCode, language) {
   const normalized = requiredString(language, 'leadsLanguage').toLowerCase();
   if (!LANGUAGES_BY_COUNTRY[countryCode]?.has(normalized)) {
-    throw new TestDriveError('Unsupported leadsLanguage for countryCode', {
-      type: 'configuration',
-    });
+    throw testDriveError(
+      'Unsupported leadsLanguage for countryCode',
+      'configuration',
+      null,
+      null,
+    );
   }
   return normalized;
 }
@@ -141,7 +145,7 @@ function resolveVehicleSeries(modelKey) {
   const normalized = requiredString(modelKey, 'model').toLowerCase();
   const vehicleSeries = VEHICLE_SERIES_BY_MODEL_KEY[normalized];
   if (!vehicleSeries) {
-    throw new TestDriveError('Unmapped Test Drive model', { type: 'configuration' });
+    throw testDriveError('Unmapped Test Drive model', 'configuration', null, null);
   }
   return vehicleSeries;
 }
@@ -150,7 +154,7 @@ function resolveStoreCode(storeKey) {
   const normalized = requiredString(storeKey, 'store').toLowerCase();
   const storeCode = STORE_CODE_BY_STORE_KEY[normalized];
   if (!storeCode) {
-    throw new TestDriveError('Unmapped Test Drive store', { type: 'configuration' });
+    throw testDriveError('Unmapped Test Drive store', 'configuration', null, null);
   }
   return storeCode;
 }
@@ -196,7 +200,9 @@ export function buildLeadRequest(formValues, runtimeConfig, {
 
 function normalizeStores(data) {
   const stores = data?.storeCodes;
-  if (!Array.isArray(stores)) throw new TestDriveError('Invalid Test Drive store response');
+  if (!Array.isArray(stores)) {
+    throw testDriveError('Invalid Test Drive store response', 'api', null, null);
+  }
   return stores.map((store) => ({
     code: requiredString(store?.code, 'store code'),
     name: requiredString(store?.name, 'store name'),
@@ -209,7 +215,7 @@ export function createTestDriveApiClient({
 } = {}) {
   const apiBaseUrl = allowedBaseUrl(baseUrl);
   if (typeof fetchImpl !== 'function') {
-    throw new TestDriveError('Fetch implementation is unavailable', { type: 'configuration' });
+    throw testDriveError('Fetch implementation is unavailable', 'configuration', null, null);
   }
 
   async function request(path, options = {}) {
@@ -221,23 +227,19 @@ export function createTestDriveApiClient({
     try {
       body = await response.json();
     } catch {
-      throw new TestDriveError('Invalid Test Drive API response', {
-        status: response.status,
-      });
+      throw testDriveError('Invalid Test Drive API response', 'api', null, response.status);
     }
 
     if (Number(body?.code) === CHALLENGE_REQUIRED_CODE) {
-      throw new TestDriveError('Test drive verification is required', {
-        type: 'challenge',
-        code: CHALLENGE_REQUIRED_CODE,
-        status: response.status,
-      });
+      throw testDriveError(
+        'Test drive verification is required',
+        'challenge',
+        CHALLENGE_REQUIRED_CODE,
+        response.status,
+      );
     }
     if (!response.ok || Number(body?.code) !== SUCCESS_CODE) {
-      throw new TestDriveError('Test Drive API request failed', {
-        code: body?.code,
-        status: response.status,
-      });
+      throw testDriveError('Test Drive API request failed', 'api', body?.code, response.status);
     }
     return body.data;
   }

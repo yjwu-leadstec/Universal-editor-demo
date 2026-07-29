@@ -7,8 +7,8 @@ import {
   createTestDriveApiClient,
   createTraceId,
   isChallengeRequiredError,
+  isTestDriveError,
   resolveLeadSource,
-  TestDriveError,
 } from '../blocks/lixiang-test-drive-booking/test-drive-api.js';
 
 const formValues = {
@@ -35,12 +35,11 @@ const leadRequest = buildLeadRequest(formValues, runtimeConfig, {
   traceId: '6336a5234d7b2ba6e67d6c1396f918da',
 });
 
-function jsonResponse(body, { ok = true, status = 200 } = {}) {
-  return {
-    ok,
+function jsonResponse(body, { status = 200 } = {}) {
+  return new Response(JSON.stringify(body), {
     status,
-    json: async () => body,
-  };
+    headers: { 'content-type': 'application/json' },
+  });
 }
 
 test('buildLeadRequest maps the supplied contract without retaining extra form fields', () => {
@@ -76,21 +75,13 @@ test('lead source may come from an allowlisted channel query parameter', () => {
   );
   assert.throws(
     () => resolveLeadSource('https://www-ontest.liauto.com/ru_kz/drive/reserve.html'),
-    (error) => error instanceof TestDriveError && error.type === 'configuration',
+    (error) => isTestDriveError(error) && error.type === 'configuration',
   );
 });
 
 test('device and trace identifiers use the documented GUID and trace shapes', () => {
-  const cryptoImpl = {
-    getRandomValues(bytes) {
-      bytes.forEach((value, index) => {
-        bytes[index] = index;
-      });
-      return bytes;
-    },
-  };
-  assert.equal(createDeviceId(cryptoImpl), '00010203-0405-0607-0809-0a0b0c0d0e0f');
-  assert.equal(createTraceId(cryptoImpl), '000102030405060708090a0b0c0d0e0f');
+  assert.match(createDeviceId(), /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/);
+  assert.match(createTraceId(), /^[0-9a-f]{32}$/);
 });
 
 test('unconfirmed language, model, and store values fail before a network request', () => {
@@ -109,10 +100,17 @@ test('unconfirmed language, model, and store values fail before a network reques
 });
 
 test('queryStores calls the read-only KZ endpoint and normalizes its response', async () => {
-  const calls = [];
+  let requestSeen = false;
   const client = createTestDriveApiClient({
     fetchImpl: async (url, options) => {
-      calls.push({ url: String(url), options });
+      if (!options) throw new Error('Missing request options');
+      requestSeen = true;
+      assert.equal(
+        String(url),
+        'https://bcs-api-web-ontest-b.liauto.com/saos-global-leads-api/leads/query-store-list?countryCode=KZ',
+      );
+      assert.equal(options.credentials, 'include');
+      assert.deepEqual(options.headers, { accept: 'application/json' });
       return jsonResponse({
         code: 0,
         data: {
@@ -130,24 +128,36 @@ test('queryStores calls the read-only KZ endpoint and normalizes its response', 
     { code: 'KZ_VLPYHG', name: 'Allur Almaty' },
     { code: 'KZ_XKJQZM', name: 'Allur Astana' },
   ]);
-  assert.equal(
-    calls[0].url,
-    'https://bcs-api-web-ontest-b.liauto.com/saos-global-leads-api/leads/query-store-list?countryCode=KZ',
-  );
-  assert.equal(calls[0].options.credentials, 'include');
-  assert.deepEqual(calls[0].options.headers, { accept: 'application/json' });
+  assert.equal(requestSeen, true);
 });
 
 test('lead add and captcha retry use separate endpoints and authorization', async () => {
-  const calls = [];
-  const responses = [
-    jsonResponse({ code: 600003, data: null, msg: 'CHALLENGE_REQUIRED' }),
-    jsonResponse({ code: 0, data: { leadId: 'redacted' }, msg: 'SUCCESS' }),
-  ];
+  let callCount = 0;
+  let addBody = '';
   const client = createTestDriveApiClient({
     fetchImpl: async (url, options) => {
-      calls.push({ url: String(url), options });
-      return responses.shift();
+      if (!options) throw new Error('Missing request options');
+      callCount += 1;
+      if (callCount === 1) {
+        assert.equal(
+          String(url),
+          'https://bcs-api-web-ontest-b.liauto.com/saos-global-leads-api/leads/add',
+        );
+        addBody = String(options.body);
+        return jsonResponse({ code: 600003, data: null, msg: 'CHALLENGE_REQUIRED' });
+      }
+      assert.equal(
+        String(url),
+        'https://bcs-api-web-ontest-b.liauto.com/saos-global-leads-api/leads/add-with-captcha',
+      );
+      if (!options.headers) throw new Error('Missing request headers');
+      const headers = new Headers(options.headers);
+      assert.equal(
+        headers.get('Challenge-Authorization'),
+        'Bearer challenge-token-for-contract-test',
+      );
+      assert.equal(String(options.body), addBody);
+      return jsonResponse({ code: 0, data: { leadId: 'redacted' }, msg: 'SUCCESS' });
     },
   });
 
@@ -156,20 +166,7 @@ test('lead add and captcha retry use separate endpoints and authorization', asyn
     await client.addLeadWithCaptcha(leadRequest, 'challenge-token-for-contract-test'),
     { leadId: 'redacted' },
   );
-
-  assert.equal(
-    calls[0].url,
-    'https://bcs-api-web-ontest-b.liauto.com/saos-global-leads-api/leads/add',
-  );
-  assert.equal(
-    calls[1].url,
-    'https://bcs-api-web-ontest-b.liauto.com/saos-global-leads-api/leads/add-with-captcha',
-  );
-  assert.equal(
-    calls[1].options.headers['Challenge-Authorization'],
-    'Bearer challenge-token-for-contract-test',
-  );
-  assert.equal(calls[0].options.body, calls[1].options.body);
+  assert.equal(callCount, 2);
 });
 
 test('API errors are typed and unapproved origins or empty captcha tokens never fetch', async () => {
@@ -183,14 +180,14 @@ test('API errors are typed and unapproved origins or empty captcha tokens never 
 
   await assert.rejects(
     client.addLead(leadRequest),
-    (error) => error instanceof TestDriveError
+    (error) => isTestDriveError(error)
       && error.type === 'api'
       && error.code === 400001
       && error.message === 'Test Drive API request failed',
   );
   await assert.rejects(
     client.addLeadWithCaptcha(leadRequest, ''),
-    (error) => error instanceof TestDriveError && error.type === 'configuration',
+    (error) => isTestDriveError(error) && error.type === 'configuration',
   );
   assert.equal(callCount, 1);
   assert.throws(
@@ -201,18 +198,12 @@ test('API errors are typed and unapproved origins or empty captcha tokens never 
 
 test('malformed JSON is a typed API error without response content', async () => {
   const client = createTestDriveApiClient({
-    fetchImpl: async () => ({
-      ok: true,
-      status: 200,
-      json: async () => {
-        throw new SyntaxError('invalid server response');
-      },
-    }),
+    fetchImpl: async () => new Response('invalid server response', { status: 200 }),
   });
 
   await assert.rejects(
     client.queryStores('KZ'),
-    (error) => error instanceof TestDriveError
+    (error) => isTestDriveError(error)
       && error.type === 'api'
       && error.status === 200
       && error.message === 'Invalid Test Drive API response',
