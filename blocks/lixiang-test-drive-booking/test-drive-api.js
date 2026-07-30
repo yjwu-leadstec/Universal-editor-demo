@@ -30,10 +30,7 @@ const LEAD_SOURCES = new Set([
   'chinatour_kol3_kz',
 ]);
 
-const LANGUAGES_BY_COUNTRY = {
-  KZ: new Set(['kk', 'ru']),
-  UZ: new Set(['ru', 'uz']),
-};
+const ISO_639_LANGUAGE_CODE = /^[a-z]{2}$/;
 
 const VEHICLE_SERIES_BY_MODEL_KEY = {
   l9: 'L9',
@@ -128,11 +125,11 @@ export function resolveLeadSource(sourceUrl, configuredLeadSource = '') {
   return leadSource;
 }
 
-function resolveLanguage(countryCode, language) {
+function resolveLanguage(language) {
   const normalized = requiredString(language, 'leadsLanguage').toLowerCase();
-  if (!LANGUAGES_BY_COUNTRY[countryCode]?.has(normalized)) {
+  if (!ISO_639_LANGUAGE_CODE.test(normalized)) {
     throw testDriveError(
-      'Unsupported leadsLanguage for countryCode',
+      'leadsLanguage must be an ISO 639 two-letter code',
       'configuration',
       null,
       null,
@@ -171,7 +168,7 @@ export function buildLeadRequest(formValues, runtimeConfig, {
   const resolvedTraceId = traceId || createTraceId(cryptoImpl);
   const payload = {
     leadSource,
-    leadsLanguage: resolveLanguage(countryCode, runtimeConfig?.leadsLanguage),
+    leadsLanguage: resolveLanguage(runtimeConfig?.leadsLanguage),
     countryCode,
     vehicleSeries: resolveVehicleSeries(formValues?.model),
     storeCode: resolveStoreCode(formValues?.store),
