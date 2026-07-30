@@ -71,4 +71,5 @@ Local screenshots or `aem up` checks are useful during development, but they are
 - [Navigation manual](./docs/component-manual/导航-使用配置手册.md)
 - [Homepage manual](./docs/component-manual/首页-使用配置手册.md)
 - [Product intro slider carousel architecture](./docs/lixiang-product-intro-slider-carousel-architecture.md) — read before changing that block's animation, sizing, or breakpoints
+- [About Us alignment](./docs/about-us-alignment.md) — read before touching any `lixiang-about-*` block; full live-site alignment spec (breakpoints, fonts, motion, model conventions)
 - [L6 content models](./docs/li-l6-content-models.md)

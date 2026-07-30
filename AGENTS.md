@@ -33,9 +33,23 @@ npm run lint:js  # Run ESLint only
 npm run lint:css # Run Stylelint only
 npm run lint:fix # Apply automatic lint fixes
 npm run build:json # Merge partial models into the root component JSON files
+npm test         # Run all node:test suites (test/*.test.mjs)
+node --test test/header-responsive.test.mjs  # Run a single test file
 ```
 
 Prerequisites: Node.js 18.3.x or newer and AEM CLI (`npm install -g @adobe/aem-cli`). Run commands from this repository root.
+
+## Tests and CI
+
+- Tests are `node:test` files under `test/*.test.mjs` that assert directly against block CSS/JS source (regex on media queries, selector order, instrumentation patterns) plus a few HTML fixtures under `test/fixtures/`. When a 强制规则 below demands a regression test, this source-assertion style is the established pattern — no browser runner is configured.
+- The GitHub `Build` workflow (`.github/workflows/main.yaml`) runs on every push and only executes `npm ci` + `npm run lint`. Tests are local-only; a green remote Build does not mean tests passed.
+- Per 铁律 #2, delivery acceptance is the remote EDS Preview, not local checks: push to `main`, wait for the remote Build, then verify on the Preview URL.
+
+## Repository Layout
+
+- This repo is the only implementation surface. `../lixiang2/` is a read-only reference repo (live-site screenshots, extracted content, design requirements) — never implement features there.
+- `docs/component-manual/` holds per-block authoring manuals (组件清单、首页、导航、试驾页 etc.); consult them before changing a block's model or fields. Other alignment/breakpoint docs live directly under `docs/` and are referenced from the rules below.
+- `CLAUDE.md` is the Claude Code companion rules doc (verification workflow, product-block checklists); shared rules must stay consistent between the two files.
 
 ## Architecture
 
@@ -117,7 +131,9 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 
 ### Core Utilities
 
-`scripts/aem.js` provides `loadBlock()`, `decorateBlock()`, `buildBlock()`, `createOptimizedPicture()`, `decorateSections()`, `decorateButtons()`, and `decorateIcons()`.
+- `scripts/aem.js` provides `loadBlock()`, `decorateBlock()`, `buildBlock()`, `createOptimizedPicture()`, `decorateSections()`, `decorateButtons()`, and `decorateIcons()`.
+- `scripts/site-shell.mjs` resolves `/{market}/{language}` locale roots (market codes, language tags, RTL languages) used for local `nav`/`footer`/link resolution.
+- Shared block helpers live in `scripts/*-utils.js` (`product-block-utils.js`, `about-block-utils.js`, `lixiang-service-block-utils.js`, `media-center-*.js`); check them before writing new block utilities.
 
 ### Editor Support
 
@@ -143,7 +159,8 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 - ESLint uses `airbnb-base` and `plugin:xwalk/recommended`.
 - JavaScript imports require the `.js` extension and Unix line endings.
 - Parameter property modification is allowed (`no-param-reassign` with `props: false`).
-- The xwalk cell limits are 6 for carousel and 8 for slide.
+- `xwalk/max-cells` defaults to 4 field groups per model; ~40 per-block overrides (e.g. `lixiang-product-hero: 13`, `lixiang-product-intro-carousel: 20`) live in `.eslintrc.js`. When a new or expanded model exceeds 4 groups, add an override entry there — do not restructure the model just to satisfy the default limit.
+- `xwalk/no-orphan-collapsible-fields` is disabled intentionally: `mobileTitle` and Open Graph field names are real domain names, not collapse suffixes.
 - CSS uses `stylelint-config-standard`.
 
 ## 组件样式隔离强制规则
@@ -156,10 +173,10 @@ Available exports from `scripts/lit.js`: `html`, `svg`, `render`, `nothing`, `no
 
 ## Content Source and Environments
 
-`fstab.yaml` mounts AEM Cloud Service author content as `markup` with an `.html` suffix.
+`fstab.yaml` mounts AEM Cloud Service author content as `markup` with an `.html` suffix. `paths.json` maps `/content/demo-site/` to `/`, `/content/dam/li-auto/` to `/assets/`, and exposes `/content/demo-site/configuration` and `/content/demo-site/metadata` as the `.helix/config.json` / `metadata.json` pseudo-files.
 
-- Preview: `https://main--{repo}--{owner}.aem.page/`
-- Live: `https://main--{repo}--{owner}.aem.live/`
+- Preview: `https://main--universal-editor-demo--yjwu-leadstec.aem.page/`
+- Live: `https://main--universal-editor-demo--yjwu-leadstec.aem.live/`
 
 ## DAM 与 Dynamic Media 强制边界
 

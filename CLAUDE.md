@@ -252,17 +252,18 @@ inner shell.
 - `.js` extension required in all imports
 - Unix linebreaks enforced
 - Parameter property modification allowed (`no-param-reassign` props: false)
-- Custom cell limits: carousel: 6, slide: 8 (`xwalk/max-cells`)
+- `xwalk/max-cells` defaults to 4 field groups per model; ~40 per-block overrides live in `.eslintrc.js` — add an override entry there when a model exceeds 4 groups, do not restructure the model
+- `xwalk/no-orphan-collapsible-fields` is off intentionally (`mobileTitle`, Open Graph fields are real names)
 
 **Stylelint**: `stylelint-config-standard`
 
 ## Content Source
 
-Content is delivered from AEM Cloud Service via the `fstab.yaml` mountpoint configuration pointing to the author instance (markup type with `.html` suffix).
+Content is delivered from AEM Cloud Service via the `fstab.yaml` mountpoint configuration pointing to the author instance (markup type with `.html` suffix). `paths.json` maps `/content/demo-site/` to `/`, `/content/dam/li-auto/` to `/assets/`, and exposes `/content/demo-site/configuration` and `/content/demo-site/metadata` as the `.helix/config.json` / `metadata.json` pseudo-files.
 
 ## Environment URLs
-- Preview: `https://main--{repo}--{owner}.aem.page/`
-- Live: `https://main--{repo}--{owner}.aem.live/`
+- Preview: `https://main--universal-editor-demo--yjwu-leadstec.aem.page/`
+- Live: `https://main--universal-editor-demo--yjwu-leadstec.aem.live/`
 
 Content paths drop the `/content/demo-site/` prefix the author instance uses: the L6 page authored
 at `/content/demo-site/language-master/en/li-l6` is delivered at
