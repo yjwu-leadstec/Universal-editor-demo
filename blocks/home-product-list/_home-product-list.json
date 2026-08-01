@@ -40,7 +40,7 @@
           "component": "text",
           "name": "id",
           "label": "ID",
-          "description": "页内锚点/自动化定位（可选）",
+          "description": "Optional page anchor",
           "valueType": "string"
         }
       ]
@@ -52,7 +52,7 @@
           "component": "reference",
           "name": "image",
           "label": "Background Image",
-          "description": "方形面板背景图（约 732×732）",
+          "description": "Square panel background image (approx. 732×732)",
           "valueType": "string",
           "multi": false
         },
@@ -66,7 +66,7 @@
           "component": "text",
           "name": "title",
           "label": "Title",
-          "description": "如 We Create Mobile Homes",
+          "description": "For example, We Create Mobile Homes",
           "valueType": "string"
         },
         {

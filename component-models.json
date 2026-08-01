@@ -821,7 +821,7 @@
         "component": "boolean",
         "name": "showOnSmallScreens",
         "label": "Show on Small Screens",
-        "description": "关闭后在小屏（宽度小于 720px）隐藏整个 Banner；中屏和大屏仍显示",
+        "description": "When off, the whole banner is hidden below 720px; medium and large screens still show it",
         "valueType": "boolean",
         "value": true
       },
@@ -829,7 +829,7 @@
         "component": "reference",
         "name": "mobileImage",
         "label": "Mobile Feature Image",
-        "description": "小屏独立主视觉（建议 720×1080，比例 2:3）",
+        "description": "Dedicated hero image for small screens (720×1080 recommended, 2:3 ratio)",
         "valueType": "string",
         "multi": false
       },
@@ -843,7 +843,7 @@
         "component": "reference",
         "name": "mobileLogo",
         "label": "Mobile Feature Logo",
-        "description": "小屏主视觉车型字标；缺省时显示移动端标题和副标题",
+        "description": "Vehicle wordmark for the small-screen hero; falls back to the mobile title and subtitle",
         "valueType": "string",
         "multi": false
       },
@@ -851,7 +851,7 @@
         "component": "text",
         "name": "mobileDamFolder",
         "label": "Mobile DAM Folder",
-        "description": "移动端主图与 Logo 所在 DAM 文件夹；优化地址不可用时自动读取同目录原图",
+        "description": "DAM folder holding the mobile hero and logo; the original in the same folder is used when the optimised URL is unavailable",
         "valueType": "string"
       }
     ]
@@ -863,7 +863,7 @@
         "component": "reference",
         "name": "image",
         "label": "Background Image",
-        "description": "Banner 图（约 1920×817）",
+        "description": "Banner image (approx. 1920×817)",
         "valueType": "string",
         "multi": false
       },
@@ -877,7 +877,7 @@
         "component": "reference",
         "name": "logo",
         "label": "Vehicle Logo",
-        "description": "车型 Logo 字标；缺省时显示标题 + 副标题",
+        "description": "Vehicle wordmark; falls back to the title and subtitle",
         "valueType": "string",
         "multi": false
       },
@@ -885,21 +885,21 @@
         "component": "text",
         "name": "title",
         "label": "Title",
-        "description": "如 Li i6",
+        "description": "For example, Li i6",
         "valueType": "string"
       },
       {
         "component": "text",
         "name": "subtitle",
         "label": "Subtitle",
-        "description": "如 New-Form 5-Seat SUV",
+        "description": "For example, New-Form 5-Seat SUV",
         "valueType": "string"
       },
       {
         "component": "aem-content",
         "name": "link",
         "label": "Link",
-        "description": "车型详情页链接",
+        "description": "Link to the vehicle detail page",
         "valueType": "string"
       },
       {
@@ -918,28 +918,28 @@
         "component": "text",
         "name": "eyebrow",
         "label": "Eyebrow",
-        "description": "小标题（tech 变体显示，如 Li Technology）",
+        "description": "Small line above the heading, shown on the Tech variant (e.g. Li Technology)",
         "valueType": "string"
       },
       {
         "component": "text",
         "name": "heading",
         "label": "Heading",
-        "description": "区块标题（桌面）",
+        "description": "Section heading shown on desktop",
         "valueType": "string"
       },
       {
         "component": "text",
         "name": "mobileHeading",
         "label": "Mobile Heading",
-        "description": "移动端标题（可选，支持换行，用 \\n 分行）",
+        "description": "Optional heading for small screens; use \\n to force a line break",
         "valueType": "string"
       },
       {
         "component": "select",
         "name": "classes",
         "label": "Variant",
-        "description": "story 品牌故事（含视频卡）/ tech 技术卡片（图片 + eyebrow）",
+        "description": "Story: brand stories with video cards. Tech: image cards with an eyebrow",
         "value": "story",
         "valueType": "string",
         "options": [
@@ -954,10 +954,18 @@
         ]
       },
       {
+        "component": "boolean",
+        "name": "loopVideo",
+        "label": "Loop Videos",
+        "description": "Replay card videos continuously. When off, a video plays once and shows a Replay button",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
         "component": "text",
         "name": "id",
         "label": "ID",
-        "description": "页内锚点/自动化定位（可选）",
+        "description": "Optional page anchor",
         "valueType": "string"
       }
     ]
@@ -969,7 +977,7 @@
         "component": "reference",
         "name": "image",
         "label": "Poster / Background Image",
-        "description": "卡片背景图；视频卡的封面兜底图",
+        "description": "Card background image, and the poster fallback for video cards",
         "valueType": "string",
         "multi": false
       },
@@ -983,21 +991,21 @@
         "component": "reference",
         "name": "video",
         "label": "Video (optional)",
-        "description": "story 视频卡的 AEM Assets MP4；填写后居中卡片自动播放",
+        "description": "MP4 from AEM Assets for a Story card; plays automatically while the card is centred",
         "valueType": "string"
       },
       {
         "component": "text",
         "name": "title",
         "label": "Card Title",
-        "description": "卡片文案，用 \\n 分行",
+        "description": "Card copy; use \\n to force a line break",
         "valueType": "string"
       },
       {
         "component": "text",
         "name": "actionLabel",
         "label": "Action Text (optional)",
-        "description": "如 View Full Video（story 卡片显示）",
+        "description": "Shown on Story cards, e.g. View Full Video",
         "valueType": "string"
       },
       {
@@ -1015,7 +1023,7 @@
         "component": "text",
         "name": "id",
         "label": "ID",
-        "description": "页内锚点/自动化定位（可选）",
+        "description": "Optional page anchor",
         "valueType": "string"
       }
     ]
@@ -1027,7 +1035,7 @@
         "component": "reference",
         "name": "image",
         "label": "Background Image",
-        "description": "方形面板背景图（约 732×732）",
+        "description": "Square panel background image (approx. 732×732)",
         "valueType": "string",
         "multi": false
       },
@@ -1041,7 +1049,7 @@
         "component": "text",
         "name": "title",
         "label": "Title",
-        "description": "如 We Create Mobile Homes",
+        "description": "For example, We Create Mobile Homes",
         "valueType": "string"
       },
       {
@@ -1066,7 +1074,7 @@
         "component": "multiselect",
         "name": "classes",
         "label": "Options",
-        "description": "响应式显隐选项",
+        "description": "Responsive visibility options",
         "valueType": "string",
         "options": [
           {
@@ -1093,7 +1101,7 @@
         "component": "text",
         "name": "id",
         "label": "ID",
-        "description": "页内锚点/自动化定位（可选）",
+        "description": "Optional page anchor",
         "valueType": "string"
       }
     ]
@@ -1105,7 +1113,7 @@
         "component": "reference",
         "name": "image",
         "label": "Background Image",
-        "description": "卡片背景图（大卡 960×540、小卡 480×540）",
+        "description": "Card background image (large 960×540, small 480×540)",
         "valueType": "string",
         "multi": false
       },
@@ -1119,7 +1127,7 @@
         "component": "reference",
         "name": "mobileImage",
         "label": "Mobile Background Image",
-        "description": "移动端专用背景图（可选）；缺省时使用桌面背景图",
+        "description": "Optional background image for mobile; the desktop image is used when empty",
         "valueType": "string",
         "multi": false
       },
@@ -1133,7 +1141,7 @@
         "component": "reference",
         "name": "logo",
         "label": "Vehicle Logo",
-        "description": "车型 Logo 字标（透明 PNG）；缺省时显示车型名文本",
+        "description": "Vehicle wordmark as a transparent PNG; the vehicle name text is shown when empty",
         "valueType": "string",
         "multi": false
       },
@@ -1141,21 +1149,21 @@
         "component": "text",
         "name": "vehicleName",
         "label": "Vehicle Name",
-        "description": "如 Li i6、Li L9",
+        "description": "For example, Li i6、Li L9",
         "valueType": "string"
       },
       {
         "component": "text",
         "name": "subtitle",
         "label": "Subtitle",
-        "description": "如 New-Form 5-Seat SUV",
+        "description": "For example, New-Form 5-Seat SUV",
         "valueType": "string"
       },
       {
         "component": "select",
         "name": "size",
         "label": "Card Size",
-        "description": "large 卡片跨 2 列（用于首张大卡）",
+        "description": "Large spans two columns, used for the first feature tile",
         "value": "small",
         "valueType": "string",
         "options": [
@@ -1173,7 +1181,7 @@
         "component": "select",
         "name": "kind",
         "label": "Tile Kind",
-        "description": "Charging 为充电促销卡（文案底部对齐，仅一个 CTA）",
+        "description": "Charging renders a charging promo tile: copy aligned to the bottom with a single CTA",
         "value": "vehicle",
         "valueType": "string",
         "options": [
@@ -1191,7 +1199,7 @@
         "component": "aem-content",
         "name": "link",
         "label": "Link",
-        "description": "车型详情页链接",
+        "description": "Link to the vehicle detail page",
         "valueType": "string"
       }
     ]

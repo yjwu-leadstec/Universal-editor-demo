@@ -74,56 +74,60 @@
   width: var(--home-card-w);
   height: var(--home-card-h);
   margin: 0 auto;
+
+  /* The track centres itself with 50cqw, so this box is the query container it
+   * measures against. */
+  container-type: inline-size;
   overflow: visible;
 }
 
+/* One rigid strip: every card sits side by side and the whole track shifts by
+ * --active-card, so all cards travel the same distance in the same direction.
+ * Positioning each card into its own prev/active/next slot made a retiring card
+ * sweep the full viewport width at 60% opacity — a ghost overlapping the
+ * incoming card. See docs/lixiang-product-intro-slider-carousel-architecture.md.
+ *
+ * The strip is far wider than the viewport, so margin auto cannot centre it.
+ * Centre against the clip box: half its own width, then back half a card. */
+.home-carousel .home-horizontal-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  transform: translateX(
+    calc(50cqw - var(--home-card-step) / 2 - var(--active-card, 0) * var(--home-card-step))
+  );
+  transition: transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+.home-carousel .home-horizontal-track.is-instant {
+  transition: none;
+}
+
 .home-carousel .home-horizontal-card {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: var(--home-card-w);
-  height: var(--home-card-h);
+  position: relative;
+
+  /* Sized off the step, not 100% — with loop clones the track is wider than one
+   * card, so a percentage basis would stretch every card. */
+  flex: 0 0 var(--home-card-step);
+  width: var(--home-card-step);
+  height: 100%;
   padding: 0 8px;
   overflow: hidden;
   box-sizing: border-box;
   border-radius: 2px;
   color: #fff;
   background: transparent;
-  opacity: 0;
-  z-index: 0;
-  pointer-events: none;
-  transform: translateX(calc(-50% + var(--home-card-step) * 2));
-  transition: opacity 620ms ease, transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  will-change: transform, opacity;
-}
-
-.home-carousel .home-horizontal-card.is-prev,
-.home-carousel .home-horizontal-card.is-next {
-  z-index: 1;
+  opacity: 0.6;
+  transition: opacity 620ms ease;
 }
 
 .home-carousel .home-horizontal-card.is-active {
-  z-index: 2;
   opacity: 1;
-  pointer-events: auto;
-  transform: translateX(-50%);
-  transition: transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 120ms ease;
 }
 
-.home-carousel .home-horizontal-card.is-prev {
-  opacity: 0.6;
-  transform: translateX(calc(-50% - var(--home-card-step)));
-}
-
-.home-carousel .home-horizontal-card.is-next {
-  opacity: 0.6;
-  transform: translateX(calc(-50% + var(--home-card-step)));
-}
-
-.home-carousel .home-horizontal-card.is-hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(calc(-50% + var(--home-card-step) * 2));
+.home-carousel .home-horizontal-card.is-near {
+  cursor: pointer;
 }
 
 /* ── 媒体层 ── */
@@ -238,6 +242,8 @@
   text-align: center;
 }
 
+/* Wraps rather than clipping: `white-space: nowrap` against the fixed width cut
+ * the longest story title mid-word (measured 879px of text in a 617px box). */
 .home-carousel .home-horizontal-copy h3 {
   display: block;
   width: clamp(617.45px, 42.8784vw, 823.27px);
@@ -247,7 +253,7 @@
   font-size: clamp(24px, 1.6667vw, 32px);
   line-height: clamp(33px, 2.2917vw, 44px);
   font-weight: 400;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .home-carousel .home-horizontal-copy span {
@@ -376,6 +382,10 @@
     transition: none;
   }
 
+  .home-carousel .home-horizontal-track {
+    transition: none;
+  }
+
   .home-carousel .home-horizontal-card {
     transition: opacity 200ms ease;
   }
@@ -441,36 +451,22 @@
 
     width: var(--home-card-w);
     height: calc(var(--home-card-h) + 22px);
-    overflow: visible;
+
+    /* One card at a time on mobile — neighbours must not bleed past the edge. */
+    overflow: hidden;
+  }
+
+  /* Full opacity: with the strip clipped, only the active card is on screen. */
+  .home-carousel .home-horizontal-card {
+    opacity: 1;
   }
 
   .home-carousel .home-horizontal-card {
-    left: 50%;
-    width: var(--home-card-w);
+    width: var(--home-card-step);
     height: var(--home-card-h);
     padding: 0 4px;
     color: #111;
     background: #fff;
-    transform: translateX(calc(-50% + var(--home-card-step) * 2));
-  }
-
-  .home-carousel .home-horizontal-card.is-active {
-    transform: translateX(-50%);
-  }
-
-  .home-carousel .home-horizontal-card.is-prev {
-    opacity: 0;
-    transform: translateX(calc(-50% - var(--home-card-step)));
-  }
-
-  .home-carousel .home-horizontal-card.is-next {
-    opacity: 0.6;
-    transform: translateX(calc(-50% + var(--home-card-step)));
-  }
-
-  .home-carousel .home-horizontal-card.is-hidden {
-    opacity: 0;
-    transform: translateX(calc(-50% + var(--home-card-step) * 2));
   }
 
   .home-carousel .home-horizontal-media {
@@ -520,8 +516,7 @@
   }
 
   .home-carousel.tech .home-horizontal-card {
-    left: 50%;
-    width: var(--home-card-w);
+    width: var(--home-card-step);
     height: var(--home-card-h);
   }
 

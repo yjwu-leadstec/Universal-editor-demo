@@ -60,17 +60,18 @@ function extractCard(row, index) {
   };
 }
 
-function cardMarkup(card) {
+function cardMarkup(card, loopVideo) {
   const hasVideo = !!card.videoSrc;
   return html`
-    <article class="home-horizontal-card ${card.index === 0 ? 'is-active' : ''}" data-horizontal-card ${ref(card.cardRef)}>
+    <article class="home-horizontal-card" data-horizontal-card ${ref(card.cardRef)}>
       <div class="home-horizontal-media ${hasVideo ? '' : ''}" ?data-replay-video=${hasVideo} ${ref(card.mediaRef)}>
         ${hasVideo ? html`
-          <video src="${card.videoSrc}" preload="auto" muted playsinline></video>
-          <button class="home-horizontal-replay" type="button" data-replay-button aria-label="Replay video">
-            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 5V1L7 6l5 5V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>
-            <span>Replay</span>
-          </button>` : nothing}
+          <video src="${card.videoSrc}" preload="auto" muted playsinline ?loop=${loopVideo}></video>
+          ${loopVideo ? nothing : html`
+            <button class="home-horizontal-replay" type="button" data-replay-button aria-label="Replay video">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 5V1L7 6l5 5V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>
+              <span>Replay</span>
+            </button>`}` : nothing}
       </div>
       <div class="home-horizontal-copy">
         <h3>${multiline(card.title)}</h3>
@@ -83,48 +84,64 @@ function cardMarkup(card) {
 const ARROW_PREV = html`<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></svg>`;
 const ARROW_NEXT = html`<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>`;
 
+// Cards either side of the active one peek in, so the strip must still have a
+// card in the slot beyond the clone it lands on. CLONE_DEPTH >= visible
+// neighbours + 1. See docs/lixiang-product-intro-slider-carousel-architecture.md.
+const CLONE_DEPTH = 2;
+// Bounded by the CSS transform duration (620ms) — the wrap settles after the
+// step has visually landed on the clone.
+const WRAP_SETTLE_MS = 640;
+
+// Clones are decorative duplicates: strip the editor instrumentation so the
+// Universal Editor does not see duplicate fields, drop the video so the browser
+// never decodes the same clip twice, and clear ids to keep the DOM unique.
+function cloneCard(card) {
+  const clone = card.cloneNode(true);
+  clone.classList.add('is-clone');
+  clone.classList.remove('is-active', 'is-near');
+  clone.setAttribute('aria-hidden', 'true');
+  clone.setAttribute('inert', '');
+  clone.querySelectorAll('video, [data-replay-button]').forEach((node) => node.remove());
+  [clone, ...clone.querySelectorAll('*')].forEach((node) => {
+    Object.keys(node.dataset)
+      .filter((key) => key.startsWith('aue') || key.startsWith('richtext'))
+      .forEach((key) => delete node.dataset[key]);
+    node.removeAttribute('id');
+  });
+  return clone;
+}
+
 /**
- * coverflow 切换：is-active / is-prev / is-next / is-hidden，带瞬移防拖影
+ * coverflow 切换：整条轨道做一次位移（单轨道 + 边缘克隆），不是每张卡各自定位
  */
 function setupCoverflow(slider) {
-  const cards = Array.from(slider.querySelectorAll('[data-horizontal-card]'));
+  const track = slider.querySelector('[data-horizontal-track]');
   const dots = Array.from(slider.querySelectorAll('[data-horizontal-dot]'));
+  if (!track) return () => {};
+  const cards = Array.from(track.querySelectorAll('[data-horizontal-card]:not(.is-clone)'));
   if (!cards.length) return () => {};
+
+  const looped = cards.length > 1;
+  const cloneDepth = looped ? Math.min(CLONE_DEPTH, cards.length) : 0;
+  if (cloneDepth) {
+    const headClones = cards.slice(cards.length - cloneDepth).map(cloneCard);
+    const tailClones = cards.slice(0, cloneDepth).map(cloneCard);
+    track.prepend(...headClones);
+    track.append(...tailClones);
+  }
+
   let active = 0;
-  let previous = 0;
+  let rendered = false;
+  let releaseFrame = null;
+  let wrapTimer = null;
 
-  const normalize = (i) => (i + cards.length) % cards.length;
-  const offsetFrom = (i, from) => {
-    const raw = i - from;
-    const half = cards.length / 2;
-    if (raw > half) return raw - cards.length;
-    if (raw < -half) return raw + cards.length;
-    return raw;
-  };
-
-  const render2 = () => {
-    let teleported = false;
+  const paint = () => {
     cards.forEach((card, i) => {
-      const offset = offsetFrom(i, active);
-      if (Math.abs(offset - offsetFrom(i, previous)) > 1) {
-        card.style.transition = 'none';
-        teleported = true;
-      }
+      const offset = i - active;
       card.classList.toggle('is-active', offset === 0);
-      card.classList.toggle('is-prev', offset === -1);
-      card.classList.toggle('is-next', offset === 1);
-      card.classList.toggle('is-hidden', Math.abs(offset) > 1);
+      card.classList.toggle('is-near', Math.abs(offset) === 1);
       card.setAttribute('aria-hidden', String(offset !== 0));
-      // 侧卡露出部分作为切换热区：prev/next 可点，隐藏卡不可点
-      card.style.pointerEvents = Math.abs(offset) <= 1 ? 'auto' : 'none';
-      card.style.cursor = Math.abs(offset) === 1 ? 'pointer' : '';
     });
-    if (teleported) {
-      slider.getBoundingClientRect();
-      window.requestAnimationFrame(() => {
-        cards.forEach((card) => { card.style.transition = ''; });
-      });
-    }
     dots.forEach((dot, i) => {
       const current = i === active;
       dot.classList.toggle('current', current);
@@ -132,19 +149,62 @@ function setupCoverflow(slider) {
     });
   };
 
-  const setActive = (i) => {
-    previous = active;
-    active = normalize(i);
-    render2();
+  // After the track animates onto a clone, drop the transition and jump to the
+  // matching real card. Clone and original show the same image, so the swap is
+  // invisible. A timer is used rather than transitionend, which an interrupted
+  // transform never fires.
+  const settleWrap = (position) => {
+    if (wrapTimer) window.clearTimeout(wrapTimer);
+    wrapTimer = window.setTimeout(() => {
+      wrapTimer = null;
+      track.classList.add('is-instant');
+      track.style.setProperty('--active-card', position);
+      track.getBoundingClientRect();
+      releaseFrame = window.requestAnimationFrame(() => {
+        track.classList.remove('is-instant');
+        releaseFrame = null;
+      });
+    }, WRAP_SETTLE_MS);
+  };
+
+  // The strip moves as one: a single transform on the track, driven by
+  // --active-card, so every card travels the same distance in the same
+  // direction. Positioning each card into its own prev/active/next slot made a
+  // retiring card sweep the full width of the viewport at 60% opacity, which
+  // read as a ghost overlapping the incoming card.
+  const setActive = (next) => {
+    const previous = active;
+    active = (next + cards.length) % cards.length;
+    const wrappedForward = looped && previous === cards.length - 1 && active === 0;
+    const wrappedBack = looped && previous === 0 && active === cards.length - 1;
+    let position = active + cloneDepth;
+    if (wrappedForward) position = cards.length + cloneDepth;
+    if (wrappedBack) position = cloneDepth - 1;
+
+    if (releaseFrame !== null) window.cancelAnimationFrame(releaseFrame);
+    releaseFrame = null;
+    track.classList.toggle('is-instant', !rendered);
+    track.style.setProperty('--active-card', position);
+    paint();
+
+    if (!rendered) {
+      track.getBoundingClientRect();
+      releaseFrame = window.requestAnimationFrame(() => {
+        track.classList.remove('is-instant');
+        releaseFrame = null;
+      });
+    } else if (wrappedForward || wrappedBack) {
+      settleWrap(active + cloneDepth);
+    }
+    rendered = true;
   };
 
   slider.querySelector('[data-horizontal-prev]')?.addEventListener('click', () => setActive(active - 1));
   slider.querySelector('[data-horizontal-next]')?.addEventListener('click', () => setActive(active + 1));
-  // 点击当前 active 两侧露出的 prev/next 卡片 → 切到该卡
+  // The neighbouring cards peek in at the edges; clicking one steps to it.
   cards.forEach((card, i) => {
     card.addEventListener('click', () => {
-      const offset = offsetFrom(i, active);
-      if (offset === -1 || offset === 1) setActive(i);
+      if (Math.abs(i - active) === 1 || card.classList.contains('is-near')) setActive(i);
     });
   });
   dots.forEach((dot, i) => {
@@ -156,8 +216,8 @@ function setupCoverflow(slider) {
       }
     });
   });
-  render2();
-  return render2;
+  setActive(0);
+  return paint;
 }
 
 /**
@@ -170,9 +230,10 @@ function setupVideos(block) {
 
   medias.forEach((media) => {
     const video = media.querySelector('video');
+    // Absent when the block loops its videos — there is nothing to replay.
     const replay = media.querySelector('[data-replay-button]');
     const card = media.closest('.home-horizontal-card');
-    if (!video || !replay) return;
+    if (!video) return;
     let inView = false;
     const isActive = () => !card || card.classList.contains('is-active');
 
@@ -188,7 +249,7 @@ function setupVideos(block) {
       media.classList.add('is-ended');
       media.classList.remove('is-playing');
     });
-    replay.addEventListener('click', () => { if (isActive()) playFromStart(); });
+    replay?.addEventListener('click', () => { if (isActive()) playFromStart(); });
 
     const sync = () => {
       if (reduceMotion) {
@@ -245,7 +306,13 @@ export default function decorate(block) {
   if (!cardRows.length) return;
 
   const cards = cardRows.map((row, index) => extractCard(row, index));
-  const fieldText = (i) => (fieldRows[i] ? fieldRows[i].textContent.trim() : '');
+  // A boolean field delivers the literal string "true"/"false". Matching on the
+  // value rather than a row index keeps the text fields' positions stable for
+  // content authored before this field existed.
+  const boolRows = fieldRows.filter((row) => /^(true|false)$/i.test(row.textContent.trim()));
+  const loopVideo = boolRows.some((row) => /^true$/i.test(row.textContent.trim()));
+  const textRows = fieldRows.filter((row) => !boolRows.includes(row));
+  const fieldText = (i) => (textRows[i] ? textRows[i].textContent.trim() : '');
   const eyebrow = fieldText(0);
   const heading = fieldText(1);
   const mobileHeading = fieldText(2);
@@ -260,7 +327,9 @@ export default function decorate(block) {
       ${heading ? html`<h2>${headingMarkup}</h2>` : nothing}
     </div>
     <div class="home-horizontal" data-home-horizontal>
-      ${cards.map((card) => cardMarkup(card))}
+      <div class="home-horizontal-track" data-horizontal-track>
+        ${cards.map((card) => cardMarkup(card, loopVideo))}
+      </div>
       ${cards.length > 1 ? html`
         ${cards.length > 2 ? html`<button class="home-horizontal-arrow home-horizontal-arrow-prev" type="button" data-horizontal-prev aria-label="Previous">${ARROW_PREV}</button>` : nothing}
         <button class="home-horizontal-arrow home-horizontal-arrow-next" type="button" data-horizontal-next aria-label="Next">${ARROW_NEXT}</button>

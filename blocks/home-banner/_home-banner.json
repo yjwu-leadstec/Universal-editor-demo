@@ -41,7 +41,7 @@
           "component": "boolean",
           "name": "showOnSmallScreens",
           "label": "Show on Small Screens",
-          "description": "关闭后在小屏（宽度小于 720px）隐藏整个 Banner；中屏和大屏仍显示",
+          "description": "When off, the whole banner is hidden below 720px; medium and large screens still show it",
           "valueType": "boolean",
           "value": true
         },
@@ -49,7 +49,7 @@
           "component": "reference",
           "name": "mobileImage",
           "label": "Mobile Feature Image",
-          "description": "小屏独立主视觉（建议 720×1080，比例 2:3）",
+          "description": "Dedicated hero image for small screens (720×1080 recommended, 2:3 ratio)",
           "valueType": "string",
           "multi": false
         },
@@ -63,7 +63,7 @@
           "component": "reference",
           "name": "mobileLogo",
           "label": "Mobile Feature Logo",
-          "description": "小屏主视觉车型字标；缺省时显示移动端标题和副标题",
+          "description": "Vehicle wordmark for the small-screen hero; falls back to the mobile title and subtitle",
           "valueType": "string",
           "multi": false
         },
@@ -71,7 +71,7 @@
           "component": "text",
           "name": "mobileDamFolder",
           "label": "Mobile DAM Folder",
-          "description": "移动端主图与 Logo 所在 DAM 文件夹；优化地址不可用时自动读取同目录原图",
+          "description": "DAM folder holding the mobile hero and logo; the original in the same folder is used when the optimised URL is unavailable",
           "valueType": "string"
         }
       ]
@@ -83,7 +83,7 @@
           "component": "reference",
           "name": "image",
           "label": "Background Image",
-          "description": "Banner 图（约 1920×817）",
+          "description": "Banner image (approx. 1920×817)",
           "valueType": "string",
           "multi": false
         },
@@ -97,7 +97,7 @@
           "component": "reference",
           "name": "logo",
           "label": "Vehicle Logo",
-          "description": "车型 Logo 字标；缺省时显示标题 + 副标题",
+          "description": "Vehicle wordmark; falls back to the title and subtitle",
           "valueType": "string",
           "multi": false
         },
@@ -105,21 +105,21 @@
           "component": "text",
           "name": "title",
           "label": "Title",
-          "description": "如 Li i6",
+          "description": "For example, Li i6",
           "valueType": "string"
         },
         {
           "component": "text",
           "name": "subtitle",
           "label": "Subtitle",
-          "description": "如 New-Form 5-Seat SUV",
+          "description": "For example, New-Form 5-Seat SUV",
           "valueType": "string"
         },
         {
           "component": "aem-content",
           "name": "link",
           "label": "Link",
-          "description": "车型详情页链接",
+          "description": "Link to the vehicle detail page",
           "valueType": "string"
         },
         {

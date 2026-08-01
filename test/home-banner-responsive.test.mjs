@@ -41,7 +41,7 @@ test('authors can hide the banner on small screens without changing larger break
       component: 'boolean',
       name: 'showOnSmallScreens',
       label: 'Show on Small Screens',
-      description: '关闭后在小屏（宽度小于 720px）隐藏整个 Banner；中屏和大屏仍显示',
+      description: 'When off, the whole banner is hidden below 720px; medium and large screens still show it',
       valueType: 'boolean',
       value: true,
     },

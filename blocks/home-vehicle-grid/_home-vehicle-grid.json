@@ -40,7 +40,7 @@
           "component": "multiselect",
           "name": "classes",
           "label": "Options",
-          "description": "响应式显隐选项",
+          "description": "Responsive visibility options",
           "valueType": "string",
           "options": [
             {
@@ -61,7 +61,7 @@
           "component": "text",
           "name": "id",
           "label": "ID",
-          "description": "页内锚点/自动化定位（可选）",
+          "description": "Optional page anchor",
           "valueType": "string"
         }
       ]
@@ -73,7 +73,7 @@
           "component": "reference",
           "name": "image",
           "label": "Background Image",
-          "description": "卡片背景图（大卡 960×540、小卡 480×540）",
+          "description": "Card background image (large 960×540, small 480×540)",
           "valueType": "string",
           "multi": false
         },
@@ -87,7 +87,7 @@
           "component": "reference",
           "name": "mobileImage",
           "label": "Mobile Background Image",
-          "description": "移动端专用背景图（可选）；缺省时使用桌面背景图",
+          "description": "Optional background image for mobile; the desktop image is used when empty",
           "valueType": "string",
           "multi": false
         },
@@ -101,7 +101,7 @@
           "component": "reference",
           "name": "logo",
           "label": "Vehicle Logo",
-          "description": "车型 Logo 字标（透明 PNG）；缺省时显示车型名文本",
+          "description": "Vehicle wordmark as a transparent PNG; the vehicle name text is shown when empty",
           "valueType": "string",
           "multi": false
         },
@@ -109,21 +109,21 @@
           "component": "text",
           "name": "vehicleName",
           "label": "Vehicle Name",
-          "description": "如 Li i6、Li L9",
+          "description": "For example, Li i6、Li L9",
           "valueType": "string"
         },
         {
           "component": "text",
           "name": "subtitle",
           "label": "Subtitle",
-          "description": "如 New-Form 5-Seat SUV",
+          "description": "For example, New-Form 5-Seat SUV",
           "valueType": "string"
         },
         {
           "component": "select",
           "name": "size",
           "label": "Card Size",
-          "description": "large 卡片跨 2 列（用于首张大卡）",
+          "description": "Large spans two columns, used for the first feature tile",
           "value": "small",
           "valueType": "string",
           "options": [
@@ -135,7 +135,7 @@
           "component": "select",
           "name": "kind",
           "label": "Tile Kind",
-          "description": "Charging 为充电促销卡（文案底部对齐，仅一个 CTA）",
+          "description": "Charging renders a charging promo tile: copy aligned to the bottom with a single CTA",
           "value": "vehicle",
           "valueType": "string",
           "options": [
@@ -147,7 +147,7 @@
           "component": "aem-content",
           "name": "link",
           "label": "Link",
-          "description": "车型详情页链接",
+          "description": "Link to the vehicle detail page",
           "valueType": "string"
         }
       ]

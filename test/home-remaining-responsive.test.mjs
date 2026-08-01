@@ -2,10 +2,17 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
-const [carouselCss, carouselJs, productCss] = await Promise.all([
+const [
+  carouselCss, carouselJs, productCss,
+  carouselModel, bannerModel, vehicleGridModel, productListModel,
+] = await Promise.all([
   readFile(new URL('../blocks/home-carousel/home-carousel.css', import.meta.url), 'utf8'),
   readFile(new URL('../blocks/home-carousel/home-carousel.js', import.meta.url), 'utf8'),
   readFile(new URL('../blocks/home-product-list/home-product-list.css', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/home-carousel/_home-carousel.json', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/home-banner/_home-banner.json', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/home-vehicle-grid/_home-vehicle-grid.json', import.meta.url), 'utf8'),
+  readFile(new URL('../blocks/home-product-list/_home-product-list.json', import.meta.url), 'utf8'),
 ]);
 
 test('desktop carousels derive their height from the official responsive card geometry', () => {
@@ -53,6 +60,56 @@ test('mobile story and tech carousels keep their independent official spacing', 
 
 test('optional empty UE cells cannot shift a tech title into the action slot', () => {
   assert.match(carouselJs, /textCells\(row\)\.filter\(Boolean\)/);
+});
+
+// A retiring card used to travel from the left slot to the right-hand hidden
+// slot, sweeping the viewport at 60% opacity and ghosting over the incoming
+// card. The strip now moves as one track, so no card crosses another.
+test('the carousel moves one track instead of per-card slots', () => {
+  assert.match(carouselJs, /data-horizontal-track/);
+  assert.match(carouselCss, /\.home-horizontal-track\s*\{[^}]*display:\s*flex/);
+  assert.match(carouselCss, /--active-card/);
+  assert.match(
+    carouselCss,
+    /transform:\s*translateX\(\s*calc\(50cqw - var\(--home-card-step\) \/ 2 - var\(--active-card, 0\) \* var\(--home-card-step\)\)/,
+  );
+  assert.match(carouselCss, /container-type:\s*inline-size/);
+  // The retired slot classes must not come back.
+  assert.doesNotMatch(carouselCss, /\.home-horizontal-card\.is-(prev|next|hidden)/);
+  assert.doesNotMatch(carouselJs, /is-hidden/);
+});
+
+// CLONE_DEPTH must stay >= visible neighbours + 1, else the slot beyond the
+// clone the track lands on is empty and the next card appears a beat late.
+test('loop clones bracket the strip and stay inert for the editor', () => {
+  assert.match(carouselJs, /const CLONE_DEPTH = 2;/);
+  assert.match(carouselJs, /is-clone/);
+  assert.match(carouselJs, /startsWith\('aue'\)/);
+  assert.match(carouselJs, /querySelectorAll\('video, \[data-replay-button\]'\)/);
+  assert.match(carouselCss, /\.home-horizontal-track\.is-instant\s*\{[^}]*transition:\s*none/);
+});
+
+// The longest story title measured 879px of text inside a 617px box, so nowrap
+// clipped it mid-word.
+test('card titles wrap instead of being clipped', () => {
+  // Strip comments so the rationale above the rule is not mistaken for a
+  // declaration.
+  const declarations = carouselCss.replace(/\/\*[\s\S]*?\*\//g, '');
+  assert.doesNotMatch(declarations, /white-space:\s*nowrap/);
+  assert.match(declarations, /\.home-horizontal-copy h3\s*\{[^}]*white-space:\s*normal/);
+});
+
+test('authors can loop card videos instead of showing a replay button', () => {
+  assert.match(carouselJs, /\?loop=\$\{loopVideo\}/);
+  assert.match(carouselJs, /loopVideo \? nothing : html`/);
+  assert.match(carouselModel, /"name":\s*"loopVideo"/);
+  assert.match(carouselModel, /"component":\s*"boolean"/);
+});
+
+test('home block dialogs are authored in English', () => {
+  [carouselModel, bannerModel, vehicleGridModel, productListModel].forEach((model) => {
+    assert.doesNotMatch(model, /[一-鿿]/);
+  });
 });
 
 test('product tiles scale gap, copy inset, and typography across desktop and medium screens', () => {

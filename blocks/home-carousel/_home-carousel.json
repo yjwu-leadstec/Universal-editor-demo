@@ -40,28 +40,28 @@
           "component": "text",
           "name": "eyebrow",
           "label": "Eyebrow",
-          "description": "小标题（tech 变体显示，如 Li Technology）",
+          "description": "Small line above the heading, shown on the Tech variant (e.g. Li Technology)",
           "valueType": "string"
         },
         {
           "component": "text",
           "name": "heading",
           "label": "Heading",
-          "description": "区块标题（桌面）",
+          "description": "Section heading shown on desktop",
           "valueType": "string"
         },
         {
           "component": "text",
           "name": "mobileHeading",
           "label": "Mobile Heading",
-          "description": "移动端标题（可选，支持换行，用 \\n 分行）",
+          "description": "Optional heading for small screens; use \\n to force a line break",
           "valueType": "string"
         },
         {
           "component": "select",
           "name": "classes",
           "label": "Variant",
-          "description": "story 品牌故事（含视频卡）/ tech 技术卡片（图片 + eyebrow）",
+          "description": "Story: brand stories with video cards. Tech: image cards with an eyebrow",
           "value": "story",
           "valueType": "string",
           "options": [
@@ -70,10 +70,18 @@
           ]
         },
         {
+          "component": "boolean",
+          "name": "loopVideo",
+          "label": "Loop Videos",
+          "description": "Replay card videos continuously. When off, a video plays once and shows a Replay button",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
           "component": "text",
           "name": "id",
           "label": "ID",
-          "description": "页内锚点/自动化定位（可选）",
+          "description": "Optional page anchor",
           "valueType": "string"
         }
       ]
@@ -85,7 +93,7 @@
           "component": "reference",
           "name": "image",
           "label": "Poster / Background Image",
-          "description": "卡片背景图；视频卡的封面兜底图",
+          "description": "Card background image, and the poster fallback for video cards",
           "valueType": "string",
           "multi": false
         },
@@ -99,21 +107,21 @@
           "component": "reference",
           "name": "video",
           "label": "Video (optional)",
-          "description": "story 视频卡的 AEM Assets MP4；填写后居中卡片自动播放",
+          "description": "MP4 from AEM Assets for a Story card; plays automatically while the card is centred",
           "valueType": "string"
         },
         {
           "component": "text",
           "name": "title",
           "label": "Card Title",
-          "description": "卡片文案，用 \\n 分行",
+          "description": "Card copy; use \\n to force a line break",
           "valueType": "string"
         },
         {
           "component": "text",
           "name": "actionLabel",
           "label": "Action Text (optional)",
-          "description": "如 View Full Video（story 卡片显示）",
+          "description": "Shown on Story cards, e.g. View Full Video",
           "valueType": "string"
         },
         {
