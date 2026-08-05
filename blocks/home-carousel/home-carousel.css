@@ -458,15 +458,12 @@
 
   /* Full opacity: with the strip clipped, only the active card is on screen. */
   .home-carousel .home-horizontal-card {
-    opacity: 1;
-  }
-
-  .home-carousel .home-horizontal-card {
     width: var(--home-card-step);
     height: var(--home-card-h);
     padding: 0 4px;
     color: #111;
     background: #fff;
+    opacity: 1;
   }
 
   .home-carousel .home-horizontal-media {
