@@ -1846,36 +1846,6 @@
     ]
   },
   {
-    "id": "lixiang-cookie-banner",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Title",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "body",
-        "label": "Body",
-        "description": "Consent copy, including the Cookies Policy link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "acceptLabel",
-        "label": "Accept Button Label",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "rejectLabel",
-        "label": "Reject Button Label",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "lixiang-official-center-contact-cards",
     "fields": [
       {
