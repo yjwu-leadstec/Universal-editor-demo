@@ -1,0 +1,159 @@
+.lixiang-cookie-banner-wrapper,
+.lixiang-cookie-banner-container {
+  height: 0;
+}
+
+.lixiang-cookie-banner {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 200;
+  height: 100px;
+  background: rgb(255 255 255 / 90%);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -4px 8px rgb(0 0 0 / 4%);
+}
+
+.lixiang-cookie-banner.lixiang-cookie-banner-hidden {
+  display: none;
+}
+
+.lixiang-cookie-banner-region {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 100%;
+  padding: 0 80px;
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+
+.lixiang-cookie-banner-region.is-exiting {
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
+}
+
+.lixiang-cookie-banner-content {
+  max-width: 1385px;
+}
+
+.lixiang-cookie-banner-title {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: rgb(0 0 0 / 90%);
+}
+
+.lixiang-cookie-banner-body {
+  margin: 8px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgb(0 0 0 / 60%);
+}
+
+.lixiang-cookie-banner-body p {
+  margin: 0;
+  padding: 0;
+}
+
+.lixiang-cookie-banner-body a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.lixiang-cookie-banner-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 16px;
+}
+
+.lixiang-cookie-banner-button {
+  appearance: none;
+  width: 135px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #191919;
+  border-radius: 100px;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  color: rgb(0 0 0 / 90%);
+  cursor: pointer;
+}
+
+.lixiang-cookie-banner-button:hover,
+.lixiang-cookie-banner-button:focus {
+  background: rgb(0 0 0 / 4%);
+  color: rgb(0 0 0 / 90%);
+}
+
+.lixiang-cookie-banner-button:focus-visible {
+  outline: 2px solid #191919;
+  outline-offset: 2px;
+}
+
+@media (width <= 719px) {
+  .lixiang-cookie-banner {
+    height: auto;
+    border-radius: 16px 16px 0 0;
+    background: #fff;
+    box-shadow: 0 -4px 16px rgb(0 0 0 / 8%);
+  }
+
+  .lixiang-cookie-banner-region {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .lixiang-cookie-banner-title {
+    font-size: 14px;
+  }
+
+  .lixiang-cookie-banner-body {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+
+  .lixiang-cookie-banner-actions {
+    flex-wrap: wrap;
+    gap: 11px;
+  }
+
+  .lixiang-cookie-banner-button {
+    flex: 1 1 0;
+    width: auto;
+    min-width: max-content;
+    border: 0;
+    background: #f5f5f5;
+  }
+
+  .lixiang-cookie-banner-button:hover,
+  .lixiang-cookie-banner-button:focus {
+    background: #ebebeb;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lixiang-cookie-banner-region {
+    transition: none;
+  }
+}
+
+.adobe-ue-edit main .lixiang-cookie-banner-wrapper,
+.adobe-ue-edit main .lixiang-cookie-banner-container {
+  height: auto;
+}
+
+.adobe-ue-edit main .lixiang-cookie-banner {
+  position: static;
+}
