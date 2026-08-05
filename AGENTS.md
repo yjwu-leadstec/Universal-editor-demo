@@ -21,6 +21,8 @@ Keep this managed block so 'openspec update' can refresh the instructions.
 
 ## Project Overview
 
+> ⚠️ **新 block 开发已迁至 `LiAutoWebsiteStage`（工作区铁律，2026-08 起）。** 本仓库是旧实现层，只作存量参考，不再承接新功能开发。
+
 This is the deployable implementation layer for the Li Auto Global English website migration. It is an AEM Edge Delivery Services project configured for Universal Editor visual editing of Franklin blocks. Content is sourced from an AEM Cloud Service author instance and delivered through Edge Delivery.
 
 ## Development Commands
